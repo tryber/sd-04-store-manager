@@ -1,11 +1,10 @@
-require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const productsController = require('./controllers/productsController');
 
 const app = express();
 
-const port = process.env.PORT;
+const port = 3000;
 
 app.use(bodyParser.json());
 

@@ -2,7 +2,7 @@ const express = require('express');
 const { productsRouter } = require('./controllers/productsRouter');
 // const { salesRouter } = require('./controllers/salesRouter');
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const app = express();
 
 // não remova esse endpoint, é para o avaliador funcionar

@@ -451,6 +451,7 @@ Se a venda esta sendo listada, o resultado retornado deverá ser conforme exibid
 
 Se a venda não esta sendo listada, o resultado retornado deverá ser conforme exibido abaixo, com status http `404`:
 
+![Listar uma venda que não existe](./public/vendanaoexiste.png)
 
 ### 7 - Crie um endpoint para atualizar uma venda
 

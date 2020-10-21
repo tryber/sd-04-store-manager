@@ -40,14 +40,22 @@ router.put(
   async (req, res) => {
     const { id } = req.params;
     const { name, quantity } = req.body;
-
     const updated = await productsModel.updateProduct(id, name, quantity);
-
     if (updated) {
       const product = await productsModel.getProductById(id);
       return res.status(200).json(product);
     }
   },
 );
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const product = await productsModel.getProductById(id);
+  const deleted = await productsModel.removeProduct(id);
+  if (deleted) {
+    return res.status(200).json(product);
+  }
+  return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
+});
 
 module.exports = router;

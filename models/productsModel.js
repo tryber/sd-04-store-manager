@@ -32,4 +32,17 @@ const updateProduct = async (id, name, quantity) => {
   return true;
 };
 
-module.exports = { getProducts, getProductById, getProductByName, addProduct, updateProduct };
+const removeProduct = async (id) => {
+  if (!(await getProductById(id))) return false;
+  await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+  return true;
+};
+
+module.exports = {
+  getProducts,
+  getProductById,
+  getProductByName,
+  addProduct,
+  updateProduct,
+  removeProduct,
+};

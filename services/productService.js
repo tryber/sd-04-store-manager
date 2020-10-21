@@ -30,7 +30,7 @@ const validateQuantityType = (quantity) => {
   return true;
 };
 
-const avaliateName = (name) => {
+const avaliateName = async (name) => {
   if (!validateNameLength(name)) {
     return {
       err: {
@@ -40,7 +40,7 @@ const avaliateName = (name) => {
     };
   }
 
-  if (Products.findByName(name) !== null) {
+  if (await Products.findByName(name) !== null) {
     return {
       err: {
         code,
@@ -50,7 +50,7 @@ const avaliateName = (name) => {
   }
 };
 
-const avaliateQuantity = (quantity) => {
+const avaliateQuantity = async (quantity) => {
   if (!validateQuantity(quantity)) {
     return {
       err: {
@@ -71,8 +71,8 @@ const avaliateQuantity = (quantity) => {
 };
 
 const addAProduct = async (name, quantity) => {
-  const nameValidation = avaliateName(name);
-  const quantityValidation = avaliateQuantity(quantity);
+  const nameValidation = await avaliateName(name);
+  const quantityValidation = await avaliateQuantity(quantity);
 
   if (nameValidation) {
     return nameValidation;

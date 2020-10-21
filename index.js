@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { port } = require('./src/config');
+const routes = require('./src/routes');
 
 const app = express();
 
@@ -12,4 +13,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(port, () => console.log(`Server listening on ${port}`));
+app.use('/products', routes.productRouter);
+
+app.listen(port, () => console.log(`Server listening on ${port}!`));

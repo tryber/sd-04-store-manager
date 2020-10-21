@@ -8,4 +8,9 @@ module.exports = {
   nameDB: process.env.DB_NAME,
   prodCollection: process.env.PROD_DB_COLLECTION,
   saleColletion: process.env.SALE_DB_COLLECTION,
+  HTTPStatus: {
+    OK: 200,
+    INTERN_ERROR: 500,
+    NOT_FOUND: 404,
+  },
 };

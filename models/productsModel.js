@@ -11,6 +11,11 @@ const getProductById = async (id) => {
   return product;
 };
 
+const getProductByName = async (name) => {
+  const product = await connection().then((db) => db.collection('products').findOne({ name }));
+  return product;
+};
+
 const addProduct = async (name, quantity) => {
   const result = await connection().then((db) =>
     db.collection('products').insertOne({ name, quantity }),
@@ -19,4 +24,4 @@ const addProduct = async (name, quantity) => {
   return result.ops[0];
 };
 
-module.exports = { getProducts, getProductById, addProduct };
+module.exports = { getProducts, getProductById, getProductByName, addProduct };

@@ -1,0 +1,14 @@
+GET http://localhost:3000/products  HTTP/1.1
+
+###
+
+POST http://localhost:3000/products HTTP/1.1
+content-type: application/json
+
+
+{ "name" : "popopopopo", "quantity" : 10 }
+
+###
+
+DELETE http://localhost:3000/products/5f904b4f9d0ad269e2a40100 HTTP/1.1
+content-type: application/json

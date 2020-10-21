@@ -1,5 +1,6 @@
 const express = require('express');
 const productService = require('../services/productService');
+
 const route = express.Router();
 
 // Cadastro de produtos

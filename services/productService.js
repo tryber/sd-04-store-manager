@@ -30,7 +30,7 @@ const validateQuantityType = (quantity) => {
   return true;
 };
 
-const addAProduct = async (name, quantity) => {
+const avaliateName = (name) => {
   if (!validateNameLength(name)) {
     return {
       err: {
@@ -40,7 +40,7 @@ const addAProduct = async (name, quantity) => {
     };
   }
 
-  if ((await Products.findByName(name)) !== null) {
+  if (Products.findByName(name) !== null) {
     return {
       err: {
         code,
@@ -48,7 +48,9 @@ const addAProduct = async (name, quantity) => {
       },
     };
   }
+};
 
+const avaliateQuantity = (quantity) => {
   if (!validateQuantity(quantity)) {
     return {
       err: {
@@ -65,6 +67,19 @@ const addAProduct = async (name, quantity) => {
         message: '"quantity" must be a number',
       },
     };
+  }
+};
+
+const addAProduct = async (name, quantity) => {
+  const nameValidation = avaliateName(name);
+  const quantityValidation = avaliateQuantity(quantity);
+
+  if (nameValidation) {
+    return nameValidation;
+  }
+
+  if (quantityValidation) {
+    return quantityValidation;
   }
 
   const addResultResponse = await Products.addProduct(name, quantity);

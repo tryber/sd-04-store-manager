@@ -1,9 +1,9 @@
 const express = require('express');
-const route = express.Router();
 const productService = require('../services/productService');
+const route = express.Router();
 
 // Cadastro de produtos
-route.post('/products', async (req, res, next) => {
+route.post('/products', async (req, res, _next) => {
   const { name, quantity } = req.body;
   try {
     const resultOfAddingProduct = await productService.addAProduct(name, quantity);

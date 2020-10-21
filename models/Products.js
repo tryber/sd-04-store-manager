@@ -1,5 +1,5 @@
 const connection = require('./connection');
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 
 const addProduct = async (name, quantity) => {
   try {
@@ -7,9 +7,9 @@ const addProduct = async (name, quantity) => {
     const addResult = await db.collection('products')
       .insertOne({ name, quantity });
     return {
-      "_id": addResult.insertedId,
-      "name": "Produto Silva",
-      "quantity": 10
+      _id: addResult.insertedId,
+      name: addResult.ops[0].name,
+      quantity: addResult.ops[0].quantity,
     };
   } catch (error) {
     return process.exit(1);

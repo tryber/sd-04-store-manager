@@ -1,5 +1,5 @@
 const { findByName } = require('../models/productsModels');
-const rescue = require('express-rescue')
+const rescue = require('express-rescue');
 
 const isValidProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
@@ -11,11 +11,11 @@ const isValidProduct = async (req, res, next) => {
 
   if (quantity <= 0) return res.status(422).json({ message: '"quantity" must be larger than or equal to 1' });
 
-  if (typeof quantity === 'string') return res.status(422).json({ message: '"quantity" must be a number' })
+  if (typeof quantity === 'string') return res.status(422).json({ message: '"quantity" must be a number' });
 
-  return next();
-}
+  next();
+};
 
 module.exports = {
   isValidProduct,
-}
+};

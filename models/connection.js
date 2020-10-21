@@ -9,7 +9,7 @@ const connection = async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
-    const database = await session.db('products');
+    const database = await session.db(DB_NAME);
     return database;
   } catch (error) {
     return process.exit(1);

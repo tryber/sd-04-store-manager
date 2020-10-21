@@ -5,7 +5,7 @@ const getAllProducts = async () => {
 };
 
 const getProductByName = async (item) => {
-  return connection().then((db) => db.collection('products').findOne({name:{$eq: item}}));
+  return connection().then((db) => db.collection('products').findOne({ name: { $eq: item } }));
 };
 
 const addProduct = async (name, quantity) => {

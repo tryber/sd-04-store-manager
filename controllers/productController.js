@@ -24,13 +24,12 @@ const registerProduct = async (req, res) => {
 
       res.status(201).json(product);
     } else {
-      res.status(422).json({err:{ code: 'invalid_data', message: 'Product already exists' }});
+      res.status(422).json({ err: { code: 'invalid_data', message: 'Product already exists' } });
     }
   } catch (er) {
     console.log('erros', er);
-    res.status(422).json({err:{ code: 'invalid_data', message: er.details[0].message }});
+    res.status(422).json({ err: { code: 'invalid_data', message: er.details[0].message } });
   }
-
 };
 
 module.exports = {

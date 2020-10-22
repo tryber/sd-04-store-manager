@@ -15,8 +15,9 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const product = await productModel.getById(id);
 
-  if (!product)
+  if (!product){
     return res.status(422).json(validate.buildErrors('invalid_data', 'Wrong id format'));
+  }
 
   return res.status(200).json(product);
 });
@@ -40,8 +41,9 @@ router.put('/:id', validate.validateName, validate.validateQuantity, async (req,
   const { name, quantity } = req.body;
   const oldProduct = await productModel.getById(id);
 
-  if (!oldProduct)
+  if (!oldProduct) {
     return res.status(422).json(validate.buildErrors('invalid_data', 'Wrong id format'));
+  }
 
   await productModel.update(id, name, quantity);
   const product = await productModel.getById(id);
@@ -53,9 +55,10 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const removeProduct = await productModel.getById(id);
 
-  if (!removeProduct)
+  if (!removeProduct) {
     return res.status(422).json(validate.buildErrors('invalid_data', 'Wrong id format'));
-
+  }
+  
   await productModel.remove(id);
   return res.status(200).json(removeProduct);
 });

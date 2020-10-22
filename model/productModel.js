@@ -30,13 +30,15 @@ const add = async (name, quantity) => {
 
 const update = async (id, name, quantity) => {
   const db = await connection();
-  const product = await db.collection('products').updateOne({_id: ObjectId(id)}, { $set: { name, quantity } });
+  const product = await db
+    .collection('products')
+    .updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
   return product;
 };
 
 const remove = async (id) => {
   const db = await connection();
-  await db.collection('products').deleteOne({_id: ObjectId(id)});
+  await db.collection('products').deleteOne({ _id: ObjectId(id) });
 };
 
 module.exports = {

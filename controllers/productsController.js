@@ -6,7 +6,7 @@ const nameLength = (req, res, next) => {
     return res.status(422).send({
       err: {
         code: 'invalid_data',
-        message: '"name" length must be at least 5 characters long',
+        message: '\"name\" length must be at least 5 characters long',
       },
     });
   }
@@ -33,7 +33,7 @@ const quantityLessThanZero = (req, res, next) => {
     return res.status(422).send({
       err: {
         code: 'invalid_data',
-        message: '\'quantity\' must be larger than or equal to 1',
+        message: '\"quantity\" must be larger than or equal to 1',
       },
     });
   }
@@ -46,7 +46,7 @@ const quantityNotANumber = (req, res, next) => {
     return res.status(422).send({
       err: {
         code: 'invalid_data',
-        message: '\'quantity\' must be a number',
+        message: '\"quantity\" must be a number',
       },
     });
   }

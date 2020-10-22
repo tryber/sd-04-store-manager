@@ -11,7 +11,7 @@ const connection = () => (
   mongoClient
     .connect(MONGO_DB_URL, {
       useNewUrlParser: true,
-      useUnifieldTopology: true,
+      useUnifiedTopology: true,
     })
     .then((conn) => conn.db(DB_NAME))
     .catch((err) => err)

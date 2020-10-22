@@ -2,6 +2,8 @@ const express = require('express');
 
 const productModel = require('../models/productModel');
 
+const productValidator = require('../middlewares/productValidator');
+
 const router = express.Router();
 
 const buildResponse = (code, message) => ({ error: { message, code } });
@@ -9,8 +11,6 @@ const buildResponse = (code, message) => ({ error: { message, code } });
 router.get('/', async (req, res) => {
   try {
     const products = await productModel.getAllProducts();
-
-    console.log('linha 11, controller, products', products);
 
     res.status(200).json(products);
   } catch (_err) {
@@ -36,18 +36,23 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const { name, quantity } = req.body;
+router.post(
+  '/',
+  productValidator.validateProductName,
+  productValidator.isProductNameUnique,
+  productValidator.validateProductQuantityisNumber,
+  productValidator.validateProductQuantity,
+  async (req, res) => {
+    try {
+      const { name, quantity } = req.body;
 
-    return productModel
-      .addProduct(name, quantity)
-      .then((product) => res.status(201).json({ product }))
-      .catch(() => res.status(500).json({ message: 'Erro...' }));
-  } catch (_err) {
-    res.status(500).json({ message: 'Erro inesperado' });
-  }
-});
+      const product = await productModel.addProduct(name, quantity);
+      res.status(201).json(product);
+    } catch (_err) {
+      res.status(500).json({ message: 'Fail to register product' });
+    }
+  },
+);
 
 router.put('/:id', async (req, res) => {
   const { id } = req.params;

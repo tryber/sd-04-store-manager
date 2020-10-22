@@ -20,7 +20,7 @@ route.get('/products/:id', async (req, res, _next) => {
   const { id } = req.params;
   try {
     const productResult = await productService.showASpecificProductById(id);
-    const keysOfResult = Object.keys(product);
+    const keysOfResult = Object.keys(productResult);
     // console.log(productResult);
     // console.log(keysOfResult);
     if (keysOfResult && keysOfResult[0] === 'err') {

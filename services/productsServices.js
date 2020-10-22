@@ -1,11 +1,16 @@
-const { insertProdMod, getAllProdMod, validateNameMod } = require('../models/productsModel');
+const {
+  insertProdMod,
+  getAllProdMod,
+  validateNameMod,
+  getByIdProdMod,
+} = require('../models/productsModel');
 
-const invalidData = (message) => ({
-  err: { err: true, code: 'invalid_data', status: 422, message },
-});
+const invalidData = (message) => ({ err: { code: 'invalid_data', status: 422, message } });
+// const notFound = (message) => ({ err: { code: 'not_found', status: 404, message } });
+// const stockProblem = (message) => ({ err: { code: 'stock_problem', status: 404, message } });
+
 const isNumber = (quantity) => /^[0-9]+$/.test(quantity);
-// // const notFound = (message) => ({ error: true, code: 'not_found', status: 404, message });
-// // const stockProblem = (message) => ({ error: true,code: 'stock_problem',status: 404,message });
+const idRegex = (id) => /^[0-9a-fA-F]{24}$/.test(id);
 
 const validateName = async (name) => {
   if (name.length < 5) {
@@ -35,6 +40,12 @@ const validateExistProd = async (name) => {
   }
 };
 
+// const validateID = (id) => {
+//   const idRegex = /^[0-9a-fA-F]{24}$/.test(id);
+//   if (!idRegex) return invalidData('Wrong id format');
+//   return false;
+// };
+
 const registerProdServ = async (name, quantity) => {
   const insertProd = await insertProdMod(name, quantity);
   return insertProd;
@@ -45,11 +56,24 @@ const listAllProdServ = async () => {
   return products;
 };
 
+const listByIdProdServ = async (id) => {
+  if (!idRegex(id)) {
+    return invalidData('Wrong id format');
+  }
+  const productId = await getByIdProdMod(id);
+  if (!productId) {
+    return invalidData('Wrong id format');
+  }
+  return productId;
+};
+
 module.exports = {
-  registerProdServ,
-  listAllProdServ,
   validateName,
   validateQuantity,
   validateIsNumber,
   validateExistProd,
+  /*   validateID, */
+  registerProdServ,
+  listAllProdServ,
+  listByIdProdServ,
 };

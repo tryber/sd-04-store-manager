@@ -3,6 +3,7 @@ const {
   validateIsNumber,
   validateQuantity,
   validateExistProd,
+/*   validateID, */
 } = require('../services/productsServices');
 
 const validateProd = async (req, res, next) => {
@@ -31,4 +32,16 @@ const validateProd = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateProd };
+// const validatProductId = async (req, res, next) => {
+//   const { id } = req.body;
+
+//   const validateProdID = await validateID(id);
+
+//   if (!validateProdID) {
+//     return res.status(422).json(validateProdID);
+//   }
+
+//   next();
+// };
+
+module.exports = { validateProd/* , validatProductId */ };

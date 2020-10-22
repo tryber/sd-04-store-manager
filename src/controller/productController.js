@@ -7,7 +7,6 @@ const registerProdController = async (req, res) => {
     const { name, quantity } = req.body;
     const registerProd = await productModels.registerProduct(name, quantity);
 
-    console.log('registerProd', registerProd);
     return res.status(HTTPStatus.CREATED).json(registerProd);
   } catch (_err) {
     return errors.errorIntern(res);
@@ -24,12 +23,12 @@ const getAllProdController = async (_req, res) => {
   }
 };
 
-const getProdByIdController = async (req, res, next) => {
+const getProdByIdController = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await productModels.getProdById(id);
     if (product === null) {
-      return next(errors.errorUnprocessableEntity(res, 'Wrong id format'));
+      return errors.errorUnprocessableEntity(res, 'Wrong id format');
     }
     return res.status(HTTPStatus.OK).json(product);
   } catch (_err) {
@@ -37,4 +36,26 @@ const getProdByIdController = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllProdController, registerProdController, getProdByIdController };
+const updateProductController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await productModels.getProdById(id);
+    console.log('product', product);
+
+    await productModels.updateProduct(product);
+
+    const productUpdated = await productModels.getProdById(id);
+    console.log('productUpdated', productUpdated);
+
+    return res.status(HTTPStatus.OK).json(productUpdated);
+  } catch (_err) {
+    return errors.errorIntern(res);
+  }
+};
+
+module.exports = {
+  getAllProdController,
+  registerProdController,
+  getProdByIdController,
+  updateProductController,
+};

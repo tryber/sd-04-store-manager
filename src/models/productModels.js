@@ -4,7 +4,7 @@ const connection = require('./connection');
 const registerProduct = async (name, quantity) => {
   const db = await connection();
   const insertData = await db.collection('products').insertOne({ name, quantity });
-  console.log('insertData', insertData);
+
   return insertData.ops[0];
 };
 
@@ -28,9 +28,15 @@ const getAllProducts = async () => {
   return getArrayProducts;
 };
 
+const updateProduct = async ({ id, name, quantity }) => {
+  const db = await connection();
+  await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+};
+
 module.exports = {
   registerProduct,
   getProdByName,
   getAllProducts,
   getProdById,
+  updateProduct,
 };

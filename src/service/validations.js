@@ -1,9 +1,9 @@
 const { productModels } = require('../models');
 const { errorUnprocessableEntity } = require('./errors');
 
-const validationRegister = async (req, res, next) => {
+const validationNameQuantity = async (req, res, next) => {
   const { name, quantity } = req.body;
-  const existOrNotProduct = await productModels.getProdByName(name);
+
   if (!Number.isNaN(Number(name)) || name.length < 5) {
     return errorUnprocessableEntity(res, '"name" length must be at least 5 characters long');
   }
@@ -13,10 +13,17 @@ const validationRegister = async (req, res, next) => {
   if (Number.isNaN(Number(quantity))) {
     return errorUnprocessableEntity(res, '"quantity" must be a number');
   }
+
+  next();
+};
+
+const validationExistProd = async (req, res, next) => {
+  const { name } = req.body;
+  const existOrNotProduct = await productModels.getProdByName(name);
   if (existOrNotProduct) {
     return errorUnprocessableEntity(res, 'Product already exists');
   }
   next();
 };
 
-module.exports = validationRegister;
+module.exports = { validationNameQuantity, validationExistProd };

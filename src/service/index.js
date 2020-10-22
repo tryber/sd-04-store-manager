@@ -1,7 +1,7 @@
-const registerValid = require('./registerValid');
+const validations = require('./validations');
 const errors = require('./errors');
 
 module.exports = {
-  registerValid,
+  validations,
   errors,
 };

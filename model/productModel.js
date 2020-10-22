@@ -15,8 +15,9 @@ const getByName = async (name) => {
 };
 
 const getById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
   const db = await connection();
-  if (ObjectId.isValid(id)) return null;
   const stmt = await db.collection('products').findOne(ObjectId(id));
   return stmt;
 };

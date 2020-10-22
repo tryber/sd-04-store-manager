@@ -1,7 +1,14 @@
 const router = require('express').Router();
 const rescue = require('express-rescue');
 const Boom = require('@hapi/boom');
-const { validateProduct, addNewProduct, getAll, getById } = require('../models/productsModel');
+const {
+  validateProduct,
+  addNewProduct,
+  getAll,
+  getById,
+  updateProduct,
+  deleteProduct,
+} = require('../models/productsModel');
 
 router.post('/', rescue(async ({ body: { name, quantity } = {} }, res) => {
   try {
@@ -13,6 +20,29 @@ router.post('/', rescue(async ({ body: { name, quantity } = {} }, res) => {
   } catch (err) {
     if (Boom.isBoom(err)) throw err;
     throw Boom.badRequest(err);
+  }
+}));
+
+router.put('/:id', rescue(async ({ body: { name, quantity } = {}, params: { id } }, res) => {
+  try {
+    const message = await validateProduct({ name, quantity }, false);
+    if (message) throw Boom.badData(message);
+
+    await updateProduct(id, { name, quantity });
+    res.json({ _id: id, name, quantity });
+  } catch (err) {
+    if (Boom.isBoom(err)) throw err;
+    throw Boom.badRequest(err);
+  }
+}));
+
+router.delete('/:id', rescue(async ({ params: { id } }, res) => {
+  try {
+    const result = await deleteProduct(id);
+    res.json(result);
+  } catch (err) {
+    if (Boom.isBoom(err)) throw err;
+    throw Boom.badData(err);
   }
 }));
 

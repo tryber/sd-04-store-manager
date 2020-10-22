@@ -10,7 +10,17 @@ const productSchema = Joi.object({
 
 const getProducts = async (req, res) => {
   const products = await productModel.getAllProducts();
-  res.json(products);
+  res.status(200).json({ products: products});
+};
+
+const getProductById = async (req, res) => {
+  const { id } = req.params;
+  const product = await productModel.getProductById(id);
+
+  if (!product) {
+    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
+  }
+  res.status(200).json(product);
 };
 
 const registerProduct = async (req, res) => {
@@ -34,5 +44,6 @@ const registerProduct = async (req, res) => {
 
 module.exports = {
   getProducts,
+  getProductById,
   registerProduct,
 };

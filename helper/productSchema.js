@@ -5,4 +5,8 @@ const productSchema = Joi.object({
   quantity: Joi.number().integer().min(1).required(),
 });
 
-module.exports = productSchema;
+const checkProduct = async (item) => {
+    return await productSchema.validate(item);
+  };
+
+module.exports = checkProduct;

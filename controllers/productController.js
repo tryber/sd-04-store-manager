@@ -1,5 +1,5 @@
 const express = require('express');
-const productSchema = require('../helper/productSchema');
+const checkProduct = require('../helper/productSchema');
 const productModel = require('../models/productModel');
 
 const router = express.Router();
@@ -22,7 +22,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { name, quantity } = req.body;
-    await productSchema.validate(req.body);
+    await checkProduct(req.body);
 
     const exists = await productModel.getProductByName(name);
     if (!exists) {
@@ -39,10 +39,10 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { name, quantity } = req.body;
   try {
-    await productSchema.validate(req.body);
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+    await checkProduct(req.body);
 
     await productModel.updateProduct(id, name, quantity);
 

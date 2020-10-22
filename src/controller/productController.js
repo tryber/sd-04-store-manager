@@ -6,10 +6,9 @@ const registerProdController = async (req, res) => {
     const data = req.body;
     const registerProd = await productModels.registerProduct(data);
 
-    res.status(HTTPStatus.CREATED).json(registerProd);
-  } catch (err) {
-    console.log(err);
-    res
+    return res.status(HTTPStatus.CREATED).json(registerProd);
+  } catch (_err) {
+    return res
       .status(HTTPStatus.INTERN_ERROR)
       .json({ error: { message: 'Erro Interno', code: HTTPStatus.INTERN_ERROR } });
   }
@@ -23,9 +22,9 @@ const getAllProdController = async (_req, res) => {
         .status(HTTPStatus.UNPROCESSABLE_ENTITY)
         .json({ message: 'Produto não encontrado' });
     }
-    res.status(HTTPStatus.OK).json(allProducts);
+    return res.status(HTTPStatus.OK).json(allProducts);
   } catch (_err) {
-    res
+    return res
       .status(HTTPStatus.INTERN_ERROR)
       .json({ error: { message: 'Erro Interno', code: HTTPStatus.INTERN_ERROR } });
   }

@@ -1,10 +1,8 @@
 const { HTTPStatus } = require('../config');
 const { productModels } = require('../models');
 
-const resgisterValid = async (req, res, next) => {
+const validation = (req, res) => {
   const { name, quantity } = req.body;
-  const existOrNotProduct = await productModels.getProdByName(name);
-
   if (!Number.isNaN(Number(name)) || name.length < 5) {
     return res.status(HTTPStatus.UNPROCESSABLE_ENTITY).json({
       err: {
@@ -29,6 +27,14 @@ const resgisterValid = async (req, res, next) => {
       },
     });
   }
+};
+
+const validationRegister = async (req, res, next) => {
+  const { name } = req.body;
+  const existOrNotProduct = await productModels.getProdByName(name);
+
+  validation(req, res);
+
   if (existOrNotProduct) {
     return res.status(HTTPStatus.UNPROCESSABLE_ENTITY).json({
       err: {
@@ -40,4 +46,4 @@ const resgisterValid = async (req, res, next) => {
   next();
 };
 
-module.exports = resgisterValid;
+module.exports = validationRegister;

@@ -52,4 +52,23 @@ route.post('/sales', async (req, res, _next) => {
   }
 });
 
+route.put('/sales/:id', async (req, res, _next) => {
+  try {
+    const { id } = req.params;
+    const itensSold = req.body;
+    const updateResult = await salesService.updateASale(id, itensSold);
+    const keysOfResult = Object.keys(updateResult);
+
+    if (keysOfResult && keysOfResult[0] === 'err') {
+      res.status(422).json(updateResult);
+    }
+
+    if (updateResult) {
+      res.status(200).json(updateResult);
+    }
+  } catch (error) {
+    res.status(500);
+  }
+});
+
 module.exports = route;

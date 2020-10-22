@@ -48,8 +48,23 @@ const showASpecificSaleById = async (id) => {
   return saleResult;
 };
 
+const updateASale = async (id, itensSold) => {
+  const { quantity } = itensSold[0];
+  const quantityValidation = await productService.avaliateQuantity(quantity);
+  const quantityIsInvalid = reformatErrorMessage(quantityValidation);
+
+  if (quantityIsInvalid) {
+    return quantityIsInvalid;
+  }
+
+  const updateSaleResponse = await Sales.updateSale(id, itensSold);
+
+  return updateSaleResponse;
+};
+
 module.exports = {
   addSales,
   listSales,
   showASpecificSaleById,
+  updateASale,
 };

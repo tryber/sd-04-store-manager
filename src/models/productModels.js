@@ -33,10 +33,16 @@ const updateProduct = async (id, name, quantity) => {
   await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
 };
 
+const deleteProduct = async (id) => {
+  const db = await connection();
+  await db.collection('products').deleteOne({ _id: ObjectId(id) });
+};
+
 module.exports = {
   registerProduct,
   getProdByName,
   getAllProducts,
   getProdById,
   updateProduct,
+  deleteProduct,
 };

@@ -13,11 +13,14 @@ productRouter.post(
 );
 
 productRouter.get('/:id', productController.getProdByIdController);
+
 productRouter.put(
   '/:id',
   validations.validationNameQuantity,
   validations.validationNameUpdate,
   productController.updateProductController,
 );
+
+productRouter.delete('/:id', productController.deleteProductController);
 
 module.exports = productRouter;

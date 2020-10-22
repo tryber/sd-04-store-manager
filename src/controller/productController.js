@@ -45,9 +45,23 @@ const updateProductController = async (req, res) => {
 
     const productUpdated = await productModels.getProdById(id);
 
-    console.log('productUpdated', productUpdated);
-
     return res.status(HTTPStatus.OK).json(productUpdated);
+  } catch (_err) {
+    return errors.errorIntern(res);
+  }
+};
+
+const deleteProductController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteProd = await productModels.getProdById(id);
+
+    if (!deleteProd) {
+      return errors.errorUnprocessableEntity(res, 'Wrong id format');
+    }
+
+    await productModels.deleteProduct(id);
+    return res.status(HTTPStatus.OK).json(deleteProd);
   } catch (_err) {
     return errors.errorIntern(res);
   }
@@ -58,4 +72,5 @@ module.exports = {
   registerProdController,
   getProdByIdController,
   updateProductController,
+  deleteProductController,
 };

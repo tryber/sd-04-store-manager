@@ -6,13 +6,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use('/products', productController);
+
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });
-
-app.get('/products', productController.getProducts);
-app.get('/products/:id', productController.getProductById);
-app.post('/products', productController.registerProduct);
 
 app.listen(3000, () => console.log('Conectado'));

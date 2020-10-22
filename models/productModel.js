@@ -13,13 +13,21 @@ const getProductByName = async (item) =>
   connection().then((db) => db.collection('products').findOne({ name: { $eq: item } }));
 
 const addProduct = async (name, quantity) => {
-  const result = connection().then((db) => db.collection('products').insertOne({ name, quantity }));
-  return (await result).ops[0];
+  const result = await connection().then((db) =>
+    db.collection('products').insertOne({ name, quantity }),
+  );
+  return result.ops[0];
 };
+
+const updateProduct = async (id, name, quantity) =>
+  connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectID(id) }, { $set: { name, quantity } }),
+  );
 
 module.exports = {
   getAllProducts,
   getProductById,
   getProductByName,
   addProduct,
+  updateProduct,
 };

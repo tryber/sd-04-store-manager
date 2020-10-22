@@ -1,19 +1,14 @@
-// const express = require('express');
-const { Joi } = require('frisby');
+const express = require('express');
+const productSchema = require('../helper/productSchema');
 const productModel = require('../models/productModel');
-// const router = express.Router();
+const router = express.Router();
 
-const productSchema = Joi.object({
-  name: Joi.string().min(5).required(),
-  quantity: Joi.number().integer().min(1).required(),
-});
-
-const getProducts = async (req, res) => {
+router.get('/', async (req, res) => {
   const allProducts = await productModel.getAllProducts();
   res.status(200).json({ products: allProducts });
-};
+});
 
-const getProductById = async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const product = await productModel.getProductById(id);
 
@@ -21,9 +16,9 @@ const getProductById = async (req, res) => {
     return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
   }
   res.status(200).json(product);
-};
+});
 
-const registerProduct = async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { name, quantity } = req.body;
     await productSchema.validate(req.body);
@@ -40,10 +35,23 @@ const registerProduct = async (req, res) => {
     console.log('erros', er);
     res.status(422).json({ err: { code: 'invalid_data', message: er.details[0].message } });
   }
-};
+});
 
-module.exports = {
-  getProducts,
-  getProductById,
-  registerProduct,
-};
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+    await productSchema.validate(req.body);
+
+    await productModel.updateProduct(id, name, quantity);
+
+    const product = await productModel.getProductById(id);
+
+    res.status(200).json(product);
+  } catch (er) {
+    console.log('erros', er);
+    res.status(422).json({ err: { code: 'invalid_data', message: er.details[0].message } });
+  }
+});
+
+module.exports = router;

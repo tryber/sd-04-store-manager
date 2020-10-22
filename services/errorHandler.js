@@ -1,5 +1,5 @@
-const Boom = require("@hapi/boom");
-const productsService = require("./productsService");
+const Boom = require('@hapi/boom');
+const productsService = require('./productsService');
 
 const errorMessages = {
   nameminLength: '"name" length must be at least 5 characters long',
@@ -23,7 +23,7 @@ const verifyId = (req, _res, next) => {
   const isValid = productsService.validateId(id);
   if (!isValid) return next(Boom.badData('Wrong id format', 'invalid_data'));
   return next();
-}
+};
 
 module.exports = {
   errorHandler,

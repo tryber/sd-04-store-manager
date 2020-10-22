@@ -17,10 +17,8 @@ const add = async (name, quantity) => {
   try {
     const db = await connection();
     const addProduct = await db.collection('products').insertOne({ name, quantity });
-    console.log(addProduct)
     return addProduct;
   } catch (err) {
-    console.log(err.message)
     return null;
   }
 };

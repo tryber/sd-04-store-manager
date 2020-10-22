@@ -60,7 +60,7 @@ const add = async (req, res) => {
     return res.status(201).json(addProduct);
   } catch (err) {
     return res.status(500).send({ message: err.message });
-  };
+  }
 };
 
 const getAll = async (req, res) => {

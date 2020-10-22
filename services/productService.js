@@ -114,7 +114,7 @@ const wrongIdResponse = () => ({
 const deleteAProduct = async (id) => {
   const deletedProductResponse = await Products.deleteById(id);
 
-  if (!deletedProductResponse) {
+  if (deletedProductResponse === null) {
     return wrongIdResponse();
   }
 

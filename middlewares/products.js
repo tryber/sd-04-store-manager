@@ -1,4 +1,4 @@
-const productsModel = require('../models/productsModel');
+const model = require('../models/model');
 
 const nameLength = async (req, res, next) => {
   const { name } = req.body;
@@ -15,7 +15,7 @@ const nameLength = async (req, res, next) => {
 
 const nameExists = async (req, res, next) => {
   const { name } = req.body;
-  const product = await productsModel.getProductByName(name);
+  const product = await model.getProductByName(name);
   if (product) {
     return res.status(422).json({
       err: {

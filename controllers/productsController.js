@@ -1,17 +1,17 @@
 const express = require('express');
-const productsModel = require('../models/productsModel');
+const model = require('../models/model');
 const productValidation = require('../middlewares/products');
 
 const router = express.Router();
 
 router.get('/', async (_req, res) => {
-  const products = await productsModel.getProducts();
+  const products = await model.getProductsOrSales('products');
   res.status(200).json({ products });
 });
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const product = await productsModel.getProductById(id);
+  const product = await model.getProductOrSaleById(id, 'products');
 
   if (!product) {
     return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
@@ -27,7 +27,7 @@ router.post(
   productValidation.quantityType,
   async (req, res) => {
     const { name, quantity } = req.body;
-    const product = await productsModel.addProduct(name, quantity);
+    const product = await model.addProduct(name, quantity);
     res.status(201).json(product);
   },
 );
@@ -40,9 +40,9 @@ router.put(
   async (req, res) => {
     const { id } = req.params;
     const { name, quantity } = req.body;
-    const updated = await productsModel.updateProduct(id, name, quantity);
+    const updated = await model.updateProduct(id, name, quantity);
     if (updated) {
-      const product = await productsModel.getProductById(id);
+      const product = await model.getProductOrSaleById(id, 'products');
       return res.status(200).json(product);
     }
   },
@@ -50,12 +50,14 @@ router.put(
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  const product = await productsModel.getProductById(id);
-  const deleted = await productsModel.removeProduct(id);
+  const product = await model.getProductOrSaleById(id, 'products');
+  if (!product) {
+    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
+  }
+  const deleted = await model.removeProductOrSale(id, 'products');
   if (deleted) {
     return res.status(200).json(product);
   }
-  return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
 });
 
 module.exports = router;

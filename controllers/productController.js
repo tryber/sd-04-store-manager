@@ -9,8 +9,8 @@ const productSchema = Joi.object({
 });
 
 const getProducts = async (req, res) => {
-  const products = await productModel.getAllProducts();
-  res.status(200).json({ products: products});
+  const allProducts = await productModel.getAllProducts();
+  res.status(200).json({ products: allProducts });
 };
 
 const getProductById = async (req, res) => {

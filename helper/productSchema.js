@@ -6,7 +6,7 @@ const productSchema = Joi.object({
 });
 
 const checkProduct = async (item) => {
-    return await productSchema.validate(item);
-  };
+  return productSchema.validate(item);
+};
 
 module.exports = checkProduct;

@@ -20,6 +20,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  
   try {
     const { name, quantity } = req.body;
     await checkProduct(req.body);
@@ -39,9 +40,9 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
+  const { name, quantity } = req.body;
+  const { id } = req.params;
   try {
-    const { id } = req.params;
-    const { name, quantity } = req.body;
     await checkProduct(req.body);
 
     await productModel.updateProduct(id, name, quantity);

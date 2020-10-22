@@ -21,8 +21,7 @@ route.get('/products/:id', async (req, res, _next) => {
   try {
     const productResult = await productService.showASpecificProductById(id);
     const keysOfResult = Object.keys(productResult);
-    // console.log(productResult);
-    // console.log(keysOfResult);
+
     if (keysOfResult && keysOfResult[0] === 'err') {
       res.status(422).json(productResult);
     }
@@ -48,6 +47,25 @@ route.post('/products', async (req, res, _next) => {
 
     if (resultOfAddingProduct) {
       res.status(201).json(resultOfAddingProduct);
+    }
+  } catch (error) {
+    res.status(500);
+  }
+});
+
+route.put('/products/:id', async (req, res, _next) => {
+  const { id } = req.params;
+  const { name, quantity } = req.body;
+  try {
+    const updateResult = await productService.updateAProduct(id, name, quantity);
+    const keysOfResult = Object.keys(updateResult);
+
+    if (keysOfResult && keysOfResult[0] === 'err') {
+      res.status(422).json(updateResult);
+    }
+
+    if (updateResult) {
+      res.status(200).json(updateResult);
     }
   } catch (error) {
     res.status(500);

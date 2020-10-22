@@ -53,9 +53,25 @@ const findByName = async (name) => {
   }
 };
 
+const updateValues = async (id, name, quantity) => {
+  try {
+    const db = await connection();
+    await db.collection(dbCollection)
+      .updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+    return {
+      _id: id,
+      name,
+      quantity,
+    };
+  } catch (error) {
+    return process.exit(1);
+  }
+};
+
 module.exports = {
   addProduct,
   findAll,
   findById,
   findByName,
+  updateValues,
 };

@@ -30,7 +30,7 @@ const validateQuantityType = (quantity) => {
   return true;
 };
 
-const avaliateName = async (name) => {
+const avaliateName = async (name, flag = false) => {
   if (!validateNameLength(name)) {
     return {
       err: {
@@ -40,7 +40,7 @@ const avaliateName = async (name) => {
     };
   }
 
-  if (await Products.findByName(name) !== null) {
+  if (flag && await Products.findByName(name) !== null) {
     return {
       err: {
         code,
@@ -71,7 +71,7 @@ const avaliateQuantity = async (quantity) => {
 };
 
 const addAProduct = async (name, quantity) => {
-  const nameValidation = await avaliateName(name);
+  const nameValidation = await avaliateName(name, true);
   const quantityValidation = await avaliateQuantity(quantity);
 
   if (nameValidation) {
@@ -87,11 +87,28 @@ const addAProduct = async (name, quantity) => {
   return addResultResponse;
 };
 
+const updateAProduct = async (id, name, quantity) => {
+  const nameValidation = await avaliateName(name);
+  const quantityValidation = await avaliateQuantity(quantity);
+
+  if (nameValidation) {
+    return nameValidation;
+  }
+
+  if (quantityValidation) {
+    return quantityValidation;
+  }
+
+  const updateResultResponse = await Products.updateValues(id, name, quantity);
+
+  return updateResultResponse;
+};
+
 const listProducts = async () => Products.findAll();
 
 const showASpecificProductById = async (id) => {
   const productResult = await Products.findById(id);
-  console.log(productResult);
+
   if (!productResult) {
     return {
       err: {
@@ -106,6 +123,7 @@ const showASpecificProductById = async (id) => {
 
 module.exports = {
   addAProduct,
+  updateAProduct,
   listProducts,
   showASpecificProductById,
 };

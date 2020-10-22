@@ -1,9 +1,10 @@
 const express = require('express');
+
 const router = express.Router();
 
 const ProductsServices = require('../services/productsServices');
 
-//CRIA NOVO PRODUTO---------------------------------------------------------------------
+// CRIA NOVO PRODUTO---------------------------------------------------------------------
 router.post('/', async (req, res) => {
   try {
     const { name, quantity } = req.body;
@@ -18,14 +19,14 @@ router.post('/', async (req, res) => {
   }
 });
 
-//RETORNA TODOS OS PRODUTOS-------------------------------------------------------------------
+// RETORNA TODOS OS PRODUTOS-------------------------------------------------------------------
 router.get('/', async (_req, res) => {
   const products = await ProductsServices.getAllProducts();
   console.log(products);
   res.status(200).json(products);
 });
 
-//RETORNA OS PRODUTOS POR ID------------------------------------------------------------------
+// RETORNA OS PRODUTOS POR ID------------------------------------------------------------------
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -39,7 +40,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-//ATUALIZA O PRODUTO -------------------------------------------------------------------------
+// ATUALIZA O PRODUTO -------------------------------------------------------------------------
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -54,7 +55,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-//DELETA O PRODUTO -------------------------------------------------------------------------
+// DELETA O PRODUTO -------------------------------------------------------------------------
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;

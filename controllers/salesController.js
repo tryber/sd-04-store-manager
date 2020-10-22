@@ -5,9 +5,8 @@ const route = express.Router();
 
 // Lista as vendas
 route.get('/sales', async (_req, res, _next) => {
+  const salesList = await salesService.listSales();
   try {
-    const salesList = await salesService.listSales();
-
     if (salesList) {
       res.status(200).json(salesList);
     }
@@ -18,9 +17,9 @@ route.get('/sales', async (_req, res, _next) => {
 
 // Busca uma venda pelo id
 route.get('/sales/:id', async (req, res, _next) => {
+  const { id } = req.params;
+  const saleResult = await salesService.showASpecificSaleById(id);
   try {
-    const { id } = req.params;
-    const saleResult = await salesService.showASpecificSaleById(id);
     const keysOfResult = Object.keys(saleResult);
 
     if (keysOfResult && keysOfResult[0] === 'err') {

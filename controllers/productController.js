@@ -4,7 +4,7 @@ const productModel = require('../models/productModel');
 
 const router = express.Router();
 
-router.get('/products', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const products = await productModel.getAllProducts();
 
@@ -16,7 +16,7 @@ router.get('/products', async (req, res) => {
   }
 });
 
-router.get('/products/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -34,13 +34,13 @@ router.get('/products/:id', async (req, res) => {
   }
 });
 
-router.post('', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { name, quantity } = req.body;
 
     return productModel
       .addProduct(name, quantity)
-      .then((product) => res.status(201).json({ message: product }))
+      .then((product) => res.status(201).json({ product }))
       .catch(() => res.status(500).json({ message: 'Erro...' }));
   } catch (_err) {
     res.status(500).json({ message: 'Erro inesperado' });

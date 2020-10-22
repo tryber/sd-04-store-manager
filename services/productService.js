@@ -87,6 +87,12 @@ const addAProduct = async (name, quantity) => {
   return addResultResponse;
 };
 
+const listProducts = async () => Products.findAll();
+
+const showASpecificProductById = async (id) => Products.findById(id);
+
 module.exports = {
   addAProduct,
+  listProducts,
+  showASpecificProductById,
 };

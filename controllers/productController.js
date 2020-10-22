@@ -6,7 +6,9 @@ const productValidator = require('../middlewares/productValidator');
 
 const router = express.Router();
 
-const buildResponse = (code, message) => ({ error: { message, code } });
+const responseMessage = (code, message) => ({ error: { message, code } });
+
+// busca todos os produtos
 
 router.get('/', async (req, res) => {
   try {
@@ -18,6 +20,8 @@ router.get('/', async (req, res) => {
   }
 });
 
+// busca produto de acordo com id
+
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -27,7 +31,7 @@ router.get('/:id', async (req, res) => {
     console.log('linha 25, controller, product: ', product);
 
     if (!product) {
-      return res.status(404).json(buildResponse('not_found', 'Produto não encontrado'));
+      return res.status(404).json(responseMessage('not_found', 'Wrong id format'));
     }
 
     return res.status(200).json({ product });
@@ -35,6 +39,8 @@ router.get('/:id', async (req, res) => {
     return res.status(500).json({ message: 'Erro inesperado' });
   }
 });
+
+// cria um produto
 
 router.post(
   '/',
@@ -54,6 +60,8 @@ router.post(
   },
 );
 
+// atualiza um produto
+
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
@@ -61,19 +69,21 @@ router.put('/:id', async (req, res) => {
   const product = await productModel.getProductById(id);
 
   if (!product) {
-    return res.sendStatus(404).json(buildResponse('not_found', 'Produto não encontrado'));
+    return res.sendStatus(404).json(responseMessage('not_found', 'Produto não encontrado'));
   }
 
   await productModel.updateProduct(id, name, quantity);
   return res.status(200).json(product);
 });
 
+// deleta um produto
+
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const product = await productModel.getProductById(id);
 
   if (!product) {
-    return res.status(404).json(buildResponse('not_found', 'Produto não encontrado'));
+    return res.status(404).json(responseMessage('not_found', 'Produto não encontrado'));
   }
   await productModel.removeProduct(id);
   return res.status(200).json(product);

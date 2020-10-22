@@ -13,7 +13,6 @@ const validationNameQuantity = async (req, res, next) => {
   if (Number.isNaN(Number(quantity))) {
     return errorUnprocessableEntity(res, '"quantity" must be a number');
   }
-
   next();
 };
 
@@ -26,4 +25,14 @@ const validationExistProd = async (req, res, next) => {
   next();
 };
 
-module.exports = { validationNameQuantity, validationExistProd };
+const validationNameUpdate = async (req, res, next) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const idExist = await productModels.getProdByName(name);
+  if (idExist && id !== idExist.id) {
+    return errorUnprocessableEntity(res, 'Product already exists');
+  }
+  next();
+};
+
+module.exports = { validationNameQuantity, validationExistProd, validationNameUpdate };

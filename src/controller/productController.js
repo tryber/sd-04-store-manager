@@ -39,12 +39,12 @@ const getProdByIdController = async (req, res) => {
 const updateProductController = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await productModels.getProdById(id);
-    console.log('product', product);
+    const { name, quantity } = req.body;
 
-    await productModels.updateProduct(product);
+    await productModels.updateProduct(id, name, quantity);
 
     const productUpdated = await productModels.getProdById(id);
+
     console.log('productUpdated', productUpdated);
 
     return res.status(HTTPStatus.OK).json(productUpdated);

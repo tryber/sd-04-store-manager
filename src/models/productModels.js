@@ -28,7 +28,7 @@ const getAllProducts = async () => {
   return getArrayProducts;
 };
 
-const updateProduct = async ({ id, name, quantity }) => {
+const updateProduct = async (id, name, quantity) => {
   const db = await connection();
   await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
 };

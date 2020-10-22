@@ -30,9 +30,12 @@ const findAll = async () => {
 
 const findById = async (productId) => {
   try {
+    if (!ObjectId.isValid(productId)) {
+      return null;
+    }
     const db = await connection();
     const findByIdResult = await db.collection(dbCollection)
-      .findOne({ _id: ObjectId(productId) });
+      .findOne(ObjectId(productId));
     return findByIdResult;
   } catch (error) {
     return process.exit(1);

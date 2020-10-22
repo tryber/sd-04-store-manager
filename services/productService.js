@@ -89,7 +89,20 @@ const addAProduct = async (name, quantity) => {
 
 const listProducts = async () => Products.findAll();
 
-const showASpecificProductById = async (id) => Products.findById(id);
+const showASpecificProductById = async (id) => {
+  const productResult = await Products.findById(id);
+  console.log(productResult);
+  if (!productResult) {
+    return {
+      err: {
+        code,
+        message: 'Wrong id format',
+      },
+    };
+  }
+
+  return productResult;
+};
 
 module.exports = {
   addAProduct,

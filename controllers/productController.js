@@ -16,12 +16,19 @@ route.get('/products', async (_req, res, _next) => {
 });
 
 // Busca um produto pelo id
-route.get('/products/:id', async (req, res, next) => {
+route.get('/products/:id', async (req, res, _next) => {
   const { id } = req.params;
   try {
-    const product = await productService.showASpecificProductById(id);
-    if (product) {
-      res.status(200).json(product);
+    const productResult = await productService.showASpecificProductById(id);
+    const keysOfResult = Object.keys(product);
+    // console.log(productResult);
+    // console.log(keysOfResult);
+    if (keysOfResult && keysOfResult[0] === 'err') {
+      res.status(422).json(productResult);
+    }
+
+    if (productResult) {
+      res.status(200).json(productResult);
     }
   } catch (error) {
     res.status(500);

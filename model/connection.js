@@ -18,5 +18,5 @@ function connection() {
       console.error(error);
       process.exit(1);
     });
-};
+}
 module.exports = connection;

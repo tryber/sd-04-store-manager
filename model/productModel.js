@@ -4,18 +4,21 @@ const { ObjectId } = require('mongodb');
 
 const getAll = async () => {
   const db = await connection();
-  return await db.collection('products').find().toArray();
+  const stmt = await db.collection('products').find().toArray();
+  return stmt;
 };
 
 const getByName = async (name) => {
   const db = await connection();
-  return await db.collection('products').findOne({ name });
+  const stmt = await db.collection('products').findOne({ name });
+  return stmt;
 };
 
 const getById = async (id) => {
   const db = await connection();
   if (ObjectId.isValid(id)) return null;
-  return await db.collection('products').findOne(ObjectId(id));
+  const stmt = await db.collection('products').findOne(ObjectId(id));
+  return stmt;
 };
 
 const add = async (name, quantity) => {

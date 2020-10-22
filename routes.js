@@ -19,4 +19,12 @@ routes.get(
   errorHandler,
 );
 
+routes.put(
+  '/products/:id',
+  verifyId,
+  productsController.validateProduct,
+  productsController.updateProduct,
+  errorHandler,
+);
+
 module.exports = routes;

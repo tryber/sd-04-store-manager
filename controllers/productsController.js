@@ -33,9 +33,21 @@ const newProduct = rescue(async (req, res, next) => {
 
 const validateProduct = productsService.validateProduct;
 
+const updateProduct = async (req, res, next) => {
+  try {
+    const { name, quantity } = req.body;
+    const { id } = req.params;
+    const product = await productsService.updateProduct(id, name, quantity);
+    res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   listProducts,
   newProduct,
   validateProduct,
   getProductById,
+  updateProduct,
 };

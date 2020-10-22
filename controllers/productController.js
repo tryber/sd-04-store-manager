@@ -38,22 +38,22 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { name, quantity } = req.body;
-  try {
-    await checkProduct(req.body);
+// router.put('/:id', async (req, res) => {
+//   const { id } = req.params;
+//   const { name, quantity } = req.body;
+//   try {
+//     await checkProduct(req.body);
 
-    await productModel.updateProduct(id, name, quantity);
+//     await productModel.updateProduct(id, name, quantity);
 
-    const product = await productModel.getProductById(id);
+//     const product = await productModel.getProductById(id);
 
-    res.status(200).json(product);
-  } catch (er) {
-    console.log('erros', er);
-    res.status(422).json({ err: { code: 'invalid_data', message: er.details[0].message } });
-  }
-});
+//     res.status(200).json(product);
+//   } catch (er) {
+//     console.log('erros', er);
+//     res.status(422).json({ err: { code: 'invalid_data', message: er.details[0].message } });
+//   }
+// });
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;

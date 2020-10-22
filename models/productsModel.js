@@ -1,4 +1,3 @@
-const { connect } = require('mongodb');
 const connection = require('./connection');
 
 const getAll = async () =>

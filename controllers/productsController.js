@@ -7,7 +7,7 @@ const nameLength = (req, res, next) => {
       err: {
         code: 'invalid_data',
         message: '\'name\' length must be at least 5 characters long',
-      }
+      },
     });
   }
   return next();
@@ -21,7 +21,7 @@ const nameExists = async (req, res, next) => {
       err: {
         code: 'invalid_data',
         message: 'Product already exists',
-      }
+      },
     });
   }
   return next();
@@ -34,7 +34,7 @@ const quantityLessThanZero = (req, res, next) => {
       err: {
         code: 'invalid_data',
         message: '\'quantity\' must be larger than or equal to 1',
-      }
+      },
     });
   }
   return next();
@@ -47,7 +47,7 @@ const quantityNotANumber = (req, res, next) => {
       err: {
         code: 'invalid_data',
         message: '\'quantity\' must be a number',
-      }
+      },
     });
   }
   return next();
@@ -71,8 +71,8 @@ const getAll = async (req, res) => {
   res.status(599).send({
     err: {
       msg: 'Deu ruim',
-    }
-  })
+    },
+  });
 };
 
 module.exports = {

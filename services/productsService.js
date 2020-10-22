@@ -21,7 +21,12 @@ const validateProduct = validate(productsSchema);
 
 const getAll = () => productsModel.getAll();
 
+const errorMsg = (code, message) => ({ err: { code, message } });
+
 const newProduct = async (name, quantity) => {
+  const existProduct = await productsModel.getProductByName(name);
+  if (existProduct) return errorMsg('invalid_data', 'Product already exists');
+
   const product = await productsModel.newProduct(name, quantity);
   return { _id: product.insertedId, name, quantity };
 };

@@ -1,3 +1,4 @@
+const { connect } = require('mongodb');
 const connection = require('./connection');
 
 const getAll = async () =>
@@ -8,7 +9,11 @@ const newProduct = async (name, quantity) => {
   return db.collection('products').insertOne({ name, quantity });
 };
 
+const getProductByName = async (searchName) =>
+  connection().then((db) => db.collection('products').findOne({ name: searchName }));
+
 module.exports = {
   getAll,
   newProduct,
+  getProductByName,
 };

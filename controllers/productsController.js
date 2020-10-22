@@ -10,7 +10,12 @@ const newProduct = rescue(async (req, res, next) => {
   try {
     const { name, quantity } = req.body;
     const newProductResult = await productsService.newProduct(name, quantity);
-    res.status(201).json(newProductResult);
+
+    if (newProductResult.err) {
+      return res.status(422).json(newProductResult);
+    }
+
+    return res.status(201).json(newProductResult);
   } catch (err) {
     next(err);
   }

@@ -5,11 +5,7 @@ const getAllProducts = async () =>
     .then((db) => db.collection('products').find().toArray())
     .then((products) =>
       products.map(({ _id, name, quantity }) => {
-        return {
-          _id,
-          name,
-          quantity,
-        };
+        return { _id, name, quantity };
       }),
     )
     .catch((err) => console.error(err));

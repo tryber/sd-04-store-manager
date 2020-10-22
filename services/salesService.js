@@ -1,6 +1,13 @@
 const Sales = require('../models/Sales');
 const productService = require('./productService');
 
+const objectErro = {
+  err: {
+    code: 'not_found',
+    message: 'Sale not found',
+  },
+};
+
 const reformatErrorMessage = (errorObject) => {
   if (errorObject) {
     return {
@@ -29,6 +36,20 @@ const addSales = async (salesArray) => {
   return addSaleResultResponse;
 };
 
+const listSales = async () => Sales.findAll();
+
+const showASpecificSaleById = async (id) => {
+  const saleResult = await Sales.findById(id);
+
+  if (!saleResult) {
+    return objectErro;
+  }
+
+  return saleResult;
+};
+
 module.exports = {
   addSales,
+  listSales,
+  showASpecificSaleById,
 };

@@ -1,4 +1,3 @@
-const { HTTPStatus } = require('../config');
 const { productModels } = require('../models');
 const { errorUnprocessableEntity } = require('./errors');
 

@@ -25,4 +25,17 @@ const getAllProdController = async (_req, res) => {
   }
 };
 
-module.exports = { getAllProdController, registerProdController };
+const getProdByIdController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await productModels.getProdById(id);
+    if (product === null) {
+      return errors.errorUnprocessableEntity(res, 'Wrong id format');
+    }
+    return res.status(HTTPStatus.OK).json(product);
+  } catch (_err) {
+    return errors.errorIntern(res);
+  }
+};
+
+module.exports = { getAllProdController, registerProdController, getProdByIdController };

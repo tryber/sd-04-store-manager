@@ -1,5 +1,3 @@
-const Boom = require('@hapi/boom');
-
 const errorMessages = {
   minLength: '"name" length must be at least 5 characters long',
   quantityMin: '"quantity" must be larger than or equal to 1',

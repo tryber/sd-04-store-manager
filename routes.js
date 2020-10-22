@@ -9,7 +9,7 @@ routes.post(
   '/products',
   productsController.validateProduct,
   productsController.newProduct,
-  errorHandler
+  errorHandler,
 );
 
 module.exports = routes;

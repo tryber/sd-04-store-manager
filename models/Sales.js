@@ -17,7 +17,7 @@ const addSales = async (itensSold) => {
   }
 };
 
-const findAll = async (itensSold) => {
+const findAll = async () => {
   try {
     const db = await connection();
     const findAllResult = await db.collection(dbCollection).find().toArray();
@@ -31,10 +31,10 @@ const findAll = async (itensSold) => {
 };
 
 const findById = async (saleId) => {
+  if (!ObjectId.isValid(saleId)) {
+    return null;
+  }
   try {
-    if (!ObjectId.isValid(saleId)) {
-      return null;
-    }
     const db = await connection();
     const findByIdResult = await db.collection(dbCollection)
       .findOne(ObjectId(saleId));

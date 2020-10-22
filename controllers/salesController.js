@@ -7,6 +7,7 @@ const route = express.Router();
 route.get('/sales', async (_req, res, _next) => {
   try {
     const salesList = await salesService.listSales();
+
     if (salesList) {
       res.status(200).json(salesList);
     }
@@ -17,8 +18,8 @@ route.get('/sales', async (_req, res, _next) => {
 
 // Busca uma venda pelo id
 route.get('/sales/:id', async (req, res, _next) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     const saleResult = await salesService.showASpecificSaleById(id);
     const keysOfResult = Object.keys(saleResult);
 

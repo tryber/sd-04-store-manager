@@ -20,14 +20,12 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  
   try {
-    const { name, quantity } = req.body;
     await checkProduct(req.body);
 
-    const exists = await productModel.getProductByName(name);
+    const exists = await productModel.getProductByName(req.body.name);
     if (!exists) {
-      const product = await productModel.addProduct(name, quantity);
+      const product = await productModel.addProduct(req.body.name, req.body.quantity);
 
       res.status(201).json(product);
     } else {

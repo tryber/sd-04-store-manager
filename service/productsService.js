@@ -9,8 +9,7 @@ const nameValidation = async (name) => {
         message: '"name" length must be at least 5 characters long',
       },
     };
-  }
-  if (product) {
+  } else if (product) {
     return {
       err: {
         code: 'invalid_data',

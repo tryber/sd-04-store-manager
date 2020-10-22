@@ -1,9 +1,7 @@
 const productsModel = require('../models/producstModel');
 
 const nameLength = (req, res, next) => {
-
   const { name } = req.body;
-
   if (!name || name.length < 5) {
     return res.status(422).send({
       err: {
@@ -12,17 +10,12 @@ const nameLength = (req, res, next) => {
       }
     });
   }
-
   return next();
-
 };
 
 const nameExists = async (req, res, next) => {
-
   const { name } = req.body;
-
   const findProduct = await productsModel.getByName(name);
-
   if (findProduct) {
     return res.status(422).send({
       err: {
@@ -31,15 +24,11 @@ const nameExists = async (req, res, next) => {
       }
     });
   }
-
   return next();
-
 };
 
 const quantityLessThanZero = (req, res, next) => {
-
   const { quantity } = req.body;
-
   if (quantity < 1) {
     return res.status(422).send({
       err: {
@@ -48,15 +37,11 @@ const quantityLessThanZero = (req, res, next) => {
       }
     });
   }
-
   return next();
-
-}
+};
 
 const quantityNotANumber = (req, res, next) => {
-
   const { quantity } = req.body;
-
   if (isNaN(quantity)) {
     return res.status(422).send({
       err: {
@@ -65,25 +50,17 @@ const quantityNotANumber = (req, res, next) => {
       }
     });
   }
-
   return next();
-
-}
+};
 
 const add = async (req, res) => {
-
   const { name, quantity } = req.body;
-
   try {
     const addProduct = await productsModel.add(name, quantity);
-
     return res.status(201).json(addProduct);
-
   } catch (err) {
-
     return res.status(500).send({ message: err });
   }
-
 };
 
 const getAll = async (req, res) => {
@@ -91,14 +68,12 @@ const getAll = async (req, res) => {
   if (products) {
     res.status(200).json(products);
   }
-
   res.status(599).send({
     err: {
       msg: 'Deu ruim',
     }
   })
-
-}
+};
 
 module.exports = {
   nameLength,

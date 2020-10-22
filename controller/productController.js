@@ -33,4 +33,18 @@ router.post(
   },
 );
 
+// Atualizar um produto
+router.put(
+  '/:id',
+  validate.validateName,
+  validate.validateQuantity,
+  async (req, res) => {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+    await productModel.update(id, name, quantity);
+    const product = await productModel.getById(id);
+    return res.status(200).json(product);
+  },
+);
+
 module.exports = router;

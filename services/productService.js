@@ -1,4 +1,5 @@
 const Products = require('../models/Products');
+const validate = require('../util');
 
 const code = 'invalid_data';
 
@@ -9,29 +10,8 @@ const code = 'invalid_data';
 //   return true;
 // };
 
-const validateNameLength = (name) => {
-  if (name.length < 5) {
-    return false;
-  }
-  return true;
-};
-
-const validateQuantity = (quantity) => {
-  if (quantity <= 0 || String(quantity).includes('.')) {
-    return false;
-  }
-  return true;
-};
-
-const validateQuantityType = (quantity) => {
-  if (typeof quantity !== 'number') {
-    return false;
-  }
-  return true;
-};
-
 const avaliateName = async (name, flag = false) => {
-  if (!validateNameLength(name)) {
+  if (!validate.validateNameLength(name)) {
     return {
       err: {
         code,
@@ -51,7 +31,7 @@ const avaliateName = async (name, flag = false) => {
 };
 
 const avaliateQuantity = async (quantity) => {
-  if (!validateQuantity(quantity)) {
+  if (!validate.validateQuantity(quantity)) {
     return {
       err: {
         code,
@@ -60,7 +40,7 @@ const avaliateQuantity = async (quantity) => {
     };
   }
 
-  if (!validateQuantityType(quantity)) {
+  if (!validate.validateQuantityType(quantity)) {
     return {
       err: {
         code,
@@ -139,4 +119,6 @@ module.exports = {
   deleteAProduct,
   listProducts,
   showASpecificProductById,
+  avaliateName,
+  avaliateQuantity,
 };

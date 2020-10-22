@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/', controllers.productController);
+app.use('/', controllers.productController, controllers.salesController);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {

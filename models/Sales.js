@@ -8,11 +8,7 @@ const addSales = async (itensSold) => {
       .insertOne({ itensSold });
     return {
       _id: addResult.insertedId,
-      itensSold: [
-        {
-          productId: '5f43cbf4c45ff5104986e81d', quantity: 2,
-        },
-      ],
+      itensSold,
     };
   } catch (error) {
     return process.exit(1);

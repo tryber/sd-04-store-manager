@@ -3,19 +3,27 @@ const connection = require('./connection');
 
 const COLLETION = 'products';
 
+const getAll = async () => connection().then((db) => db.collection(COLLETION).find().toArray());
+
 const add = async (name, quantity) => {
-  const result = await connection().then((db) => db.collection(COLLETION).insertOne({ name, quantity}));
+  const result = await connection().then((db) =>
+    db.collection(COLLETION).insertOne({ name, quantity }),
+  );
 
   return result.ops[0];
-}
+};
 
-const getByName = async (name) => {
-  const product =  await connection().then((db) => db.collection(COLLETION).findOne({"name": `${name}`}, {"name": 1}));
+const getByName = async (name) =>
+  connection().then((db) => db.collection(COLLETION).findOne({ name: `${name}` }, { name: 1 }));
 
-  return product;
-}
+const getById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  return connection().then((db) => db.collection(COLLETION).findOne(ObjectId(id)));
+};
 
-module.exports = {
+module.exports = {  
+  getAll,
+  getById,
   getByName,
   add,
-}
+};

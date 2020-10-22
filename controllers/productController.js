@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
 
     const product = await productModel.getProductById(id);
 
-    console.log('linha 25, controller, product: ', product);
+    console.log('linha 31, controller,\nproduct: ', product);
 
     if (!product) {
       return res.status(404).json(responseMessage('not_found', 'Wrong id format'));

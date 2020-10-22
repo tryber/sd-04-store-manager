@@ -30,13 +30,16 @@ const addProduct = async (name, quantity) => {
 
 const removeProduct = async (id) => {
   if (!(await getProductById(id))) return false;
+
   await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
   return true;
 };
 
-const updateProduct = async (id) => {
+const updateProduct = async (id, name, quantity) => {
   if (!(await getProductById(id))) return false;
-  await connection.then((db) => db.collection('products').updateOne({ _id: ObjectId(id) }));
+
+  await connection.then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
   return true;
 };
 

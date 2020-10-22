@@ -1,4 +1,5 @@
-const { cadastro } = require('../models/productsModels');
+const { cadastro, findAll, findById } = require('../models/productsModels');
+
 
 const cadastroProduto = async (req, res) => {
   try {
@@ -11,6 +12,29 @@ const cadastroProduto = async (req, res) => {
   }
 };
 
+const listaDeProdutos = async (_req, res) => {
+  const produtos = await findAll();
+
+  if(!produtos) return res.status(404).json({ message: 'Produtos não encontrado' });
+  res.status(200).json(produtos);
+};
+
+const produtoPorId = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const produto = await findById(id);
+
+    if (!produto) return res.status(404).json({ message: 'Produto não encontrado' });
+
+    res.status(200).json(produto);
+  } catch {
+    return res.status(500).json({ message: 'Requisição mal sucedida'});
+  }
+}
+
 module.exports = {
   cadastroProduto,
+  produtoPorId,
+  listaDeProdutos
 };

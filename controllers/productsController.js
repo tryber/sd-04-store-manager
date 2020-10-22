@@ -4,18 +4,16 @@ const nameLength = (req, res, next) => {
 
   const { name } = req.body;
 
-  
-
   if (!name || name.length < 5) {
-    res.status(422).send({
-      "err": {
-        "code": "invalid_data",
-        "message": "\"name\" length must be at least 5 characters long"
+    return res.status(422).send({
+      err: {
+        code: 'invalid_data',
+        message: '\'name\' length must be at least 5 characters long',
       }
     });
   }
 
-  next();
+  return next();
 
 };
 
@@ -26,15 +24,15 @@ const nameExists = async (req, res, next) => {
   const findProduct = await productsModel.getByName(name);
 
   if (findProduct) {
-    res.status(422).send({
-      "err": {
-        "code": "invalid_data",
-        "message": "Product already exists"
+    return res.status(422).send({
+      err: {
+        code: 'invalid_data',
+        message: 'Product already exists',
       }
     });
   }
 
-  next();
+  return next();
 
 };
 
@@ -43,15 +41,15 @@ const quantityLessThanZero = (req, res, next) => {
   const { quantity } = req.body;
 
   if (quantity < 1) {
-    res.status(422).send({
-      "err": {
-        "code": "invalid_data",
-        "message": "\"quantity\" must be larger than or equal to 1"
+    return res.status(422).send({
+      err: {
+        code: 'invalid_data',
+        message: '\'quantity\' must be larger than or equal to 1',
       }
     });
   }
 
-  next();
+  return next();
 
 }
 
@@ -60,15 +58,15 @@ const quantityNotANumber = (req, res, next) => {
   const { quantity } = req.body;
 
   if (isNaN(quantity)) {
-    res.status(422).send({
-      "err": {
-        "code": "invalid_data",
-        "message": "\"quantity\" must be a number"
+    return res.status(422).send({
+      err: {
+        code: 'invalid_data',
+        message: '\'quantity\' must be a number',
       }
     });
   }
 
-  next();
+  return next();
 
 }
 
@@ -79,11 +77,11 @@ const add = async (req, res) => {
   try {
     const addProduct = await productsModel.add(name, quantity);
 
-    res.status(201).json(addProduct);
+    return res.status(201).json(addProduct);
 
   } catch (err) {
 
-    res.status(500).send({ message: err });
+    return res.status(500).send({ message: err });
   }
 
 };
@@ -95,10 +93,9 @@ const getAll = async (req, res) => {
   }
 
   res.status(599).send({
-    "err": {
-      "msg": 'Deu ruim',
+    err: {
+      msg: 'Deu ruim',
     }
-
   })
 
 }
@@ -110,4 +107,4 @@ module.exports = {
   quantityNotANumber,
   add,
   getAll
-}
+};

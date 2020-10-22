@@ -19,7 +19,11 @@ const productsSchema = {
 
 const validateProduct = validate(productsSchema);
 
-const getAll = () => productsModel.getAll();
+const validateId = (id) => id && id.length === 24;
+
+const getAll = async () => ({ products: await productsModel.getAll() });
+
+const getProductById = (id) => productsModel.getProductById(id);
 
 const errorMsg = (code, message) => ({ err: { code, message } });
 
@@ -35,4 +39,6 @@ module.exports = {
   getAll,
   newProduct,
   validateProduct,
+  getProductById,
+  validateId,
 };

@@ -28,7 +28,7 @@ const validateProd = async (req, res, next) => {
     return res.status(422).json(validateNameSize);
   }
 
-  return next();
+  next();
 };
 
 module.exports = { validateProd };

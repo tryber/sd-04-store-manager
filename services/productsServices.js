@@ -18,6 +18,7 @@ const validateQuantity = async (quantity) => {
   if (quantity <= 0) {
     return invalidData('"quantity" must be larger than or equal to 1');
   }
+  return false;
 };
 
 const validateIsNumber = async (quantity) => {

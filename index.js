@@ -6,7 +6,7 @@ const { port } = require('./config');
 const app = express();
 
 app.use(express.json());
-// bodyParser - middleware para conseguir RECEBER requisições no body em json. 
+// bodyParser - middleware para conseguir RECEBER requisições no body em json.
 // Lembrando que funciona para PUT E POST
 app.use(bodyParser.json());
 

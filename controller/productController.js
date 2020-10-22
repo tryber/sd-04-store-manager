@@ -15,7 +15,7 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const product = await productModel.getById(id);
 
-  if (!product){
+  if (!product) {
     return res.status(422).json(validate.buildErrors('invalid_data', 'Wrong id format'));
   }
 
@@ -58,7 +58,7 @@ router.delete('/:id', async (req, res) => {
   if (!removeProduct) {
     return res.status(422).json(validate.buildErrors('invalid_data', 'Wrong id format'));
   }
-  
+
   await productModel.remove(id);
   return res.status(200).json(removeProduct);
 });

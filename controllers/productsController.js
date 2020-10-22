@@ -81,5 +81,5 @@ module.exports = {
   quantityLessThanZero,
   quantityNotANumber,
   add,
-  getAll
+  getAll,
 };

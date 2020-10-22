@@ -1,7 +1,7 @@
 const productsModel = require('../model/productsModel');
 
 const nameValidation = async (name) => {
-  const product = await productsModel.findByName(name);
+  const product = await productsModel.findByName(name)[0];
   if (name.length < 5) {
     return {
       err: {
@@ -17,7 +17,7 @@ const nameValidation = async (name) => {
       },
     };
   }
-  return product;
+  return null;
 };
 
 const quantityValidation = async (quantity) => {
@@ -25,7 +25,7 @@ const quantityValidation = async (quantity) => {
     return {
       err: {
         code: 'invalid_data',
-        message: '"quantity" length must be larger than or equal to 1',
+        message: '"quantity" must be larger than or equal to 1',
       },
     };
   }

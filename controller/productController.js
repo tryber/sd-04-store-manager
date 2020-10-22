@@ -7,7 +7,7 @@ const router = express.Router();
 // Listar todos os produtos
 router.get('/', async (_req, res) => {
   const products = await productModel.getAll();
-  return res.status(200).json(products);
+  return res.status(200).json({ products });
 });
 
 // Listar produto especifico por ID

@@ -10,7 +10,6 @@ app.get('/', (_request, response) => {
     response.send();
 });
 
-
 app.use(bodyParser.json());
 
 //  Requisito 1

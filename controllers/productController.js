@@ -1,5 +1,5 @@
 const express = require('express');
-const checkProduct = require('../helper/productSchema');
+const { checkProduct } = require('../helper/productSchema');
 const productModel = require('../models/productModel');
 
 const router = express.Router();
@@ -21,11 +21,12 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
+    const { name, quantity } = req.body;
     await checkProduct(req.body);
 
-    const exists = await productModel.getProductByName(req.body.name);
+    const exists = await productModel.getProductByName(name);
     if (!exists) {
-      const product = await productModel.addProduct(req.body.name, req.body.quantity);
+      const product = await productModel.addProduct(name, quantity);
 
       res.status(201).json(product);
     } else {
@@ -38,8 +39,8 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const { name, quantity } = req.body;
   const { id } = req.params;
+  const { name, quantity } = req.body;
   try {
     await checkProduct(req.body);
 
@@ -51,6 +52,18 @@ router.put('/:id', async (req, res) => {
   } catch (er) {
     console.log('erros', er);
     res.status(422).json({ err: { code: 'invalid_data', message: er.details[0].message } });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await productModel.getProductById(id);
+    await productModel.removeProduct(id);
+    res.status(200).json(product);
+  } catch (_e) {
+    console.log(_e.message);
+    res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
   }
 });
 

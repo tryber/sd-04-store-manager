@@ -18,7 +18,7 @@ const getProductByName = async (searchName) =>
 const updateProduct = async (id, name, quantity) => {
   const db = await connection();
   return db.collection('products').updateOne({ _id: ObjectID(id) }, { $set: { name, quantity } });
-}
+};
 
 module.exports = {
   getAll,

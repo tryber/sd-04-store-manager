@@ -1,6 +1,7 @@
 const express = require('express');
 const productSchema = require('../helper/productSchema');
 const productModel = require('../models/productModel');
+
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -38,9 +39,9 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, quantity } = req.body;
   try {
-    const { id } = req.params;
-    const { name, quantity } = req.body;
     await productSchema.validate(req.body);
 
     await productModel.updateProduct(id, name, quantity);

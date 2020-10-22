@@ -3,6 +3,25 @@ const productService = require('../services/productService');
 
 const route = express.Router();
 
+// Deleta um produto
+route.delete('/products/:id', async (req, res, _next) => {
+  const { id } = req.params;
+  try {
+    const deletedResult = await productService.deleteAProduct(id);
+    const keysOfResult = Object.keys(deletedResult);
+
+    if (keysOfResult && keysOfResult[0] === 'err') {
+      res.status(422).json(deletedResult);
+    }
+
+    if (deletedResult) {
+      res.status(200).json(deletedResult);
+    }
+  } catch (error) {
+    res.status(500);
+  }
+});
+
 // Lista os produtos
 route.get('/products', async (_req, res, _next) => {
   try {
@@ -53,6 +72,7 @@ route.post('/products', async (req, res, _next) => {
   }
 });
 
+// Atualiza um produto
 route.put('/products/:id', async (req, res, _next) => {
   const { id } = req.params;
   const { name, quantity } = req.body;

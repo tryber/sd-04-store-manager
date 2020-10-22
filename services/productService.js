@@ -104,6 +104,21 @@ const updateAProduct = async (id, name, quantity) => {
   return updateResultResponse;
 };
 
+const deleteAProduct = async (id) => {
+  const deletedProductResponse = await Products.deleteById(id);
+
+  if (!deletedProductResponse) {
+    return {
+      err: {
+        code,
+        message: 'Wrong id format',
+      },
+    };
+  }
+
+  return deletedProductResponse;
+};
+
 const listProducts = async () => Products.findAll();
 
 const showASpecificProductById = async (id) => {
@@ -124,6 +139,7 @@ const showASpecificProductById = async (id) => {
 module.exports = {
   addAProduct,
   updateAProduct,
+  deleteAProduct,
   listProducts,
   showASpecificProductById,
 };

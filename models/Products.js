@@ -68,10 +68,26 @@ const updateValues = async (id, name, quantity) => {
   }
 };
 
+const deleteById = async (id) => {
+  try {
+    if (!ObjectId.isValid(id)) {
+      return null;
+    }
+    const db = await connection();
+    const productBeforeDelete =  await findById(id);
+    await db.collection(dbCollection)
+      .deleteOne({ _id: ObjectId(id) });
+    return productBeforeDelete;
+  } catch (error) {
+    return process.exit(1);
+  }
+};
+
 module.exports = {
   addProduct,
   findAll,
   findById,
   findByName,
   updateValues,
+  deleteById,
 };

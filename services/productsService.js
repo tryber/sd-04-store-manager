@@ -40,6 +40,8 @@ const updateProduct = async (id, name, quantity) => {
   return { _id: id, name, quantity };
 };
 
+const deleteProduct = (id) => productsModel.deleteProduct(id);
+
 module.exports = {
   getAll,
   newProduct,
@@ -47,4 +49,5 @@ module.exports = {
   getProductById,
   validateId,
   updateProduct,
+  deleteProduct,
 };

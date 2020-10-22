@@ -27,4 +27,11 @@ routes.put(
   errorHandler,
 );
 
+routes.delete(
+  '/products/:id',
+  verifyId,
+  productsController.deleteProduct,
+  errorHandler,
+);
+
 module.exports = routes;

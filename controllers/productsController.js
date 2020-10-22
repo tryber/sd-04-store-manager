@@ -6,7 +6,7 @@ const nameLength = (req, res, next) => {
     return res.status(422).send({
       err: {
         code: 'invalid_data',
-        message: '\'name\' length must be at least 5 characters long',
+        message: '"name" length must be at least 5 characters long',
       },
     });
   }
@@ -59,8 +59,8 @@ const add = async (req, res) => {
     const addProduct = await productsModel.add(name, quantity);
     return res.status(201).json(addProduct);
   } catch (err) {
-    return res.status(500).send({ message: err });
-  }
+    return res.status(500).send({ message: err.message });
+  };
 };
 
 const getAll = async (req, res) => {

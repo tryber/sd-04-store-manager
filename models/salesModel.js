@@ -17,8 +17,22 @@ const addSale = async (products) => {
   return result.ops[0];
 };
 
+const updateSale = async (id, productId, quantity) => {
+  if (!(await getSaleById(id))) return false;
+  await connection().then((db) =>
+    db
+      .collection('sales')
+      .updateOne(
+        { _id: ObjectId(id) },
+        { $set: { 'itensSold.0.productId': productId, 'itensSold.0.quantity': quantity } },
+      ),
+  );
+  return true;
+};
+
 module.exports = {
   getSales,
   getSaleById,
   addSale,
+  updateSale,
 };

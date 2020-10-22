@@ -1,5 +1,6 @@
 const express = require('express');
 const salesModel = require('../models/salesModel');
+const handleQuantity = require('../middlewares/sales');
 
 const router = express.Router();
 
@@ -22,26 +23,20 @@ router.get('/:id', async (req, res) => {
   });
 });
 
-router.post('/', async (req, res, next) => {
-  const products = req.body;
-  const filterQuantity = products.filter(
-    (item) => item.quantity < 1 || typeof item.quantity !== 'number',
-  );
-  if (filterQuantity.length > 0) {
-    return res.status(422).json({
-      err: {
-        code: 'invalid_data',
-        message: 'Wrong product ID or invalid quantity',
-      },
-    });
-  }
-  return next();
-});
-
-router.post('/', async (req, res) => {
+router.post('/', handleQuantity.validateQuantity, async (req, res) => {
   const products = req.body;
   const sales = await salesModel.addSale(products);
   res.status(200).json(sales);
+});
+
+router.put('/:id', handleQuantity.validateQuantity, async (req, res) => {
+  const { id } = req.params;
+  const [product] = req.body;
+  const updated = await salesModel.updateSale(id, product.productId, product.quantity);
+  if (updated) {
+    const sale = await salesModel.getSaleById(id);
+    return res.status(200).json(sale);
+  }
 });
 
 module.exports = router;

@@ -7,7 +7,7 @@ const cadastraProduto = async (req, res) => {
     res.status(422).json({ message: 'Nome do produto deve ter 5 caracteres no minimo' });
   }
 
-  await dataStore.cadastraProduto({ name: name, quantity: quantity });
+  await dataStore.cadastraProduto({ name, quantity });
 };
 
 module.exports = {

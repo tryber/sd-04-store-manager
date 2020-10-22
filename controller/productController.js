@@ -1,6 +1,7 @@
 const express = require('express');
 const productModel = require('../model/productModel');
 const validate = require('../middlewares/validate');
+
 const router = express.Router();
 
 // Listar todos os produtos

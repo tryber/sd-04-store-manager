@@ -74,7 +74,7 @@ const deleteById = async (id) => {
       return null;
     }
     const db = await connection();
-    const productBeforeDelete =  await findById(id);
+    const productBeforeDelete = await findById(id);
     await db.collection(dbCollection)
       .deleteOne({ _id: ObjectId(id) });
     return productBeforeDelete;

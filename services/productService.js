@@ -104,16 +104,18 @@ const updateAProduct = async (id, name, quantity) => {
   return updateResultResponse;
 };
 
+const wrongIdResponse = () => ({
+  err: {
+    code,
+    message: 'Wrong id format',
+  },
+});
+
 const deleteAProduct = async (id) => {
   const deletedProductResponse = await Products.deleteById(id);
 
   if (!deletedProductResponse) {
-    return {
-      err: {
-        code,
-        message: 'Wrong id format',
-      },
-    };
+    return wrongIdResponse();
   }
 
   return deletedProductResponse;
@@ -125,12 +127,7 @@ const showASpecificProductById = async (id) => {
   const productResult = await Products.findById(id);
 
   if (!productResult) {
-    return {
-      err: {
-        code,
-        message: 'Wrong id format',
-      },
-    };
+    return wrongIdResponse();
   }
 
   return productResult;

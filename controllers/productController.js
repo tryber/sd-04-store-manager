@@ -5,8 +5,8 @@ const route = express.Router();
 
 // Deleta um produto
 route.delete('/products/:id', async (req, res, _next) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     const deletedResult = await productService.deleteAProduct(id);
     const keysOfResult = Object.keys(deletedResult);
 

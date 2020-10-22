@@ -8,8 +8,10 @@ router.get('/products', async (req, res) => {
   res.json(products);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/products/:id', async (req, res) => {
+  // console.log('getById', req.params.id);
   const product = await productModel.getById(req.params.id);
+  // console.log('product', product);
 
   if (!product) {
     return res.status(422).json({
@@ -19,8 +21,10 @@ router.get('/:id', async (req, res) => {
       },
     });
   }
-
-  res.status(200).json({ person });
+  res.status(200).json({
+    name: product.name,
+    quantity: product.quantity,
+  });
 });
 
 router.post('/products', async (req, res) => {
@@ -34,23 +38,44 @@ router.post('/products', async (req, res) => {
     });
   }
 
-  // const productName = await productModel.getByName(name);
+  if (quantity < 1) {
+    res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: '"quantity" must be larger than or equal to 1',
+      },
+    });
+  }
 
-  // if (!productName) {
-  //   return res.status(422).json({
-  //     err: {
-  //       code: 'invalid_data',
-  //       message: 'Product already exists',
-  //     },
-  //   });
-  // }
+  if (typeof quantity === 'string') {
+    res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: '"quantity" must be a number',
+      },
+    });
+  }
+
+  const products = await productModel.getAll();
+  if (products.some((product) => product.name === name)) {
+    return res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: 'Product already exists',
+      },
+    });
+  }
+
   try {
     const product = await productModel.add(name, quantity);
-
-    res.status(200).json({ message: 'Cadastrado com sucesso', product });
+    // console.log('product', product);
+    res.status(201).json({
+      _id: product._id,
+      name: name,
+      quantity: quantity,
+    });
   } catch (_e) {
-    console.log(_e.message);
-    res.status(500).json({ message: 'Erro ao cadastrar do product!' });
+    // res.status(500).json({ message: 'Erro ao cadastrar do product!' });
   }
 });
 
@@ -69,8 +94,60 @@ router.delete('/products/:id', async (req, res) => {
       });
     }
   } catch (_e) {
-    console.log(_e.message);
     res.status(500).json({ message: 'Erro ao deletar pessoa!' });
+  }
+});
+
+router.put('/products/:id', async (req, res) => {
+  const { name, quantity } = req.body;
+  console.log('const update', name, quantity);
+  if (name.length < 5) {
+    res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: '"name" length must be at least 5 characters long',
+      },
+    });
+  }
+
+  if (quantity < 1) {
+    res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: '"quantity" must be larger than or equal to 1',
+      },
+    });
+  }
+
+  if (typeof quantity === 'string') {
+    res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: '"quantity" must be a number',
+      },
+    });
+  }
+
+  const products = await productModel.getAll();
+  if (products.some((product) => product.name === name)) {
+    return res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: 'Product already exists',
+      },
+    });
+  }
+
+  try {
+    const product = await productModel.update(req.params.id, name, quantity);
+    res.status(200).json({
+      _id: req.params.id,
+      name: name,
+      quantity: quantity,
+    });
+  } catch (_e) {
+    console.log(_e);
+    res.status(500).send({ message: 'Algo deu errado' });
   }
 });
 

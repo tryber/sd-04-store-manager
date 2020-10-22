@@ -27,15 +27,13 @@ const getAllProdController = async (_req, res) => {
 const getProdByIdController = async (req, res, next) => {
   try {
     const { id } = req.params;
-    // console.log('idCont', id);
     const product = await productModels.getProdById(id);
     if (product === null) {
       return next(errors.errorUnprocessableEntity(res, 'Wrong id format'));
     }
-    // console.log('product', product);
     return res.status(HTTPStatus.OK).json(product);
   } catch (_err) {
-    return next(errors.errorUnprocessableEntity(res, 'Wrong id format'));
+    return errors.errorIntern(res);
   }
 };
 

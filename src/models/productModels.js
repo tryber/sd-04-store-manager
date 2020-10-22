@@ -15,12 +15,10 @@ const getProdByName = async (name) => {
 };
 
 const getProdById = async (id) => {
-  // console.log('idMod', id);
   if (!ObjectId.isValid(id)) return null;
 
   const db = await connection();
   const getProd = await db.collection('products').findOne(ObjectId(id));
-  // console.log(getProd, 'getProd');
   return getProd;
 };
 

@@ -17,7 +17,6 @@ const add = async (name, quantity) => {
   try {
     const db = await connection();
     const addProduct = await db.collection('products').insertOne({ name, quantity });
-    console.log(addProduct.ops[0])
     return addProduct.ops[0];
   } catch (err) {
     return null;

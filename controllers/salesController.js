@@ -1,8 +1,8 @@
-const { cadastro, findAll, findById } = require('../models/salesModels');
+const { cadastro, findAll, findById } = require('../models/productsModels');
 
 const cadastroVenda = async (req, res) => {
   try {
-    const cad = await cadastro({ itensSold: req.body});
+    const cad = await cadastro({ itensSold: req.body });
 
     return res.status(200).json(cad);
   } catch (_e) {
@@ -12,14 +12,16 @@ const cadastroVenda = async (req, res) => {
 
 const listAllSales = async (_req, res) => {
   const loadSales = await findAll();
-  if (!loadSales) res.status(404).json({ err: { code: 'not_found', message: "Sale not found" } });
-  return res.status(200).json({ sales: loadSales })
+  if (!loadSales) res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
+  return res.status(200).json({ sales: loadSales });
 };
 
 const listOneSale = async (req, res) => {
   const { id } = req.params;
   const sale = await findById(id);
-}
+  if (!sale) res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
+  return res.status(200).json(sale);
+};
 
 
 module.exports = {

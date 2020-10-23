@@ -1,23 +1,35 @@
 const connection = require('./connection');
 const { ObjectId } = require('mongodb');
 
-const cadastro = async (data) => {
+const cadastro = async (data, type) => {
+  const result;
   const db = await connection();
-  const produto = await db.collection('products').insertOne(data);
+  if (type === prod) {
+    result = await db.collection('products').insertOne(data);
+  } else {
+    result = await db.collection('sales').insertOne(data);
+  }
 
-  return produto.ops[0];
+  return result.ops[0];
 };
 
 const findByName = async (name) =>
   connection().then((db) => db.collection('products').findOne({ name }));
 
-const findById = async (id) => {
+const findById = async (id, type) => {
   if (!ObjectId.isValid(id)) return null;
-  return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+  if (type === prod) {
+    return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+  }
+  return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
 };
 
-const findAll = async () =>
-  connection().then((db) => db.collection('products').find().toArray());
+const findAll = async (type) => {
+  if (type === prod) {
+    return connection().then((db) => db.collection('products').find().toArray());
+  }
+  return connection().then((db) => db.collection('sales').find().toArray());
+};
 
 const atualizacao = async (id, name, quantity) => {
   const product = await findById(id);

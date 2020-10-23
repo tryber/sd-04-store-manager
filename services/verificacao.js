@@ -21,11 +21,11 @@ const isNew = async (req, res, next) => {
 
 const isValidSale = async (req, res, next) => {
   const data = req.body;
-  const compare = data.find(({ quantity } )=> quantity <= 0 || typeof quantity === 'string');
+  const compare = data.find(({ quantity } ) => quantity <= 0 || typeof quantity === 'string');
 
-  if (compare) (
-    res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' } })
-  );
+  if (compare) {
+    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' } })
+  }
 
   next();
 };

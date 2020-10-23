@@ -28,44 +28,65 @@ router.get('/products/:id', async (req, res) => {
   });
 });
 
+const validation = (name, quantity, products) => {
+  let message = 'ok';
+  if (name.length < 5) {
+    message = '"name" length must be at least 5 characters long';
+  }
+  if (quantity < 1) {
+    message = '"quantity" must be larger than or equal to 1';
+  }
+  if (typeof quantity === 'string') {
+    message = '"quantity" must be a number';
+  }
+  if (products.some((product) => product.name === name) && quantity > 1) {
+    message = 'Product already exists';
+  }
+  return message;
+};
+
 router.post('/products', async (req, res) => {
   const { name, quantity } = req.body;
-  if (name.length < 5) {
-    res.status(422).json({
-      err: {
-        message: '"name" length must be at least 5 characters long',
-        code: 'invalid_data',
-      },
-    });
-  }
-
-  if (quantity < 1) {
-    res.status(422).json({
-      err: {
-        message: '"quantity" must be larger than or equal to 1',
-        code: 'invalid_data',
-      },
-    });
-  }
-
-  if (typeof quantity === 'string') {
-    res.status(422).json({
-      err: {
-        code: 'invalid_data',
-        message: '"quantity" must be a number',
-      },
-    });
-  }
-
   const products = await productModel.getAll();
-  if (products.some((product) => product.name === name)) {
-    return res.status(422).json({
+  const validationMessage = await validation(name, quantity, products);
+  console.log('validationMessage', validationMessage);
+
+  if (validationMessage != 'ok') {
+    res.status(422).json({
       err: {
+        message: validationMessage,
         code: 'invalid_data',
-        message: 'Product already exists',
       },
     });
   }
+
+  // if (quantity < 1) {
+  //   res.status(422).json({
+  //     err: {
+  //       message: '"quantity" must be larger than or equal to 1',
+  //       code: 'invalid_data',
+  //     },
+  //   });
+  // }
+
+  // if (typeof quantity === 'string') {
+  //   res.status(422).json({
+  //     err: {
+  //       code: 'invalid_data',
+  //       message: '"quantity" must be a number',
+  //     },
+  //   });
+  // }
+
+
+  // if (products.some((product) => product.name === name)) {
+  //   return res.status(422).json({
+  //     err: {
+  //       message: 'Product already exists',
+  //       code: 'invalid_data',
+  //     },
+  //   });
+  // }
 
   try {
     const product = await productModel.add(name, quantity);

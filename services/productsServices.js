@@ -10,7 +10,7 @@ const invalidData = (message) => ({ err: { code: 'invalid_data', status: 422, me
 // const stockProblem = (message) => ({ err: { code: 'stock_problem', status: 404, message } });
 
 const isNumber = (quantity) => /^[0-9]+$/.test(quantity);
-const idRegex = (id) => /^[0-9a-fA-F]{24}$/.test(id);
+// const idRegex = (id) => /^[0-9a-fA-F]{24}$/.test(id);
 
 const validateName = async (name) => {
   if (name.length < 5) {
@@ -57,9 +57,6 @@ const listAllProdServ = async () => {
 };
 
 const listByIdProdServ = async (id) => {
-  if (!idRegex(id)) {
-    return invalidData('Wrong id format');
-  }
   const productId = await getByIdProdMod(id);
   if (!productId) {
     return invalidData('Wrong id format');
@@ -72,7 +69,6 @@ module.exports = {
   validateQuantity,
   validateIsNumber,
   validateExistProd,
-  /*   validateID, */
   registerProdServ,
   listAllProdServ,
   listByIdProdServ,

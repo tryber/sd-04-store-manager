@@ -29,7 +29,7 @@ const listByIdProdCont = async (req, res) => {
   try {
     const result = await listByIdProdServ(id);
     console.log(result);
-
+    // if (!result) return res.status(422).json({ error: 'Wrong id format' });
     return res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Error listByIdProdCont!' });

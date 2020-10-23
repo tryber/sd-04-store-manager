@@ -34,10 +34,8 @@ router.get('/:id', async (req, res) => {
 
     const product = await productModel.getProductById(id);
 
-    console.log('linha 37, getById,\nproduct: ', product);
-
     const products = await productModel.getAllProducts();
-    console.log('linha 40\n', products[1].name);
+    console.log('linha 38\n', products[0].name);
 
     if (!product) {
       return res
@@ -89,14 +87,21 @@ router.put(
 
     const product = await productModel.getProductById(id);
 
+    console.log('linha 92\n', product);
+
     if (!product) {
       return res
         .sendStatus(422)
         .json(productValidator.responseMessage('invalid_data', 'Wrong id format'));
     }
 
+    const newProduct = {};
+    newProduct.name = name;
+    newProduct.quantity = quantity;
+
     await productModel.updateProduct(id, name, quantity);
-    return res.status(200).json(product);
+
+    return res.status(200).json(newProduct);
   },
 );
 

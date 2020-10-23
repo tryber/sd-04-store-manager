@@ -5,8 +5,6 @@ const responseMessage = (code, message) => ({ err: { message, code } });
 const validateSaleQuantity = async (req, res, next) => {
   const [...itensSold] = req.body;
 
-  console.log('linha 9, validator, itensSold: \n', itensSold);
-
   itensSold.forEach((item) => {
     if (item.quantity < 0 || item.quantity === 0) {
       return res
@@ -21,10 +19,7 @@ const validateSaleQuantity = async (req, res, next) => {
 const validateQuantityIsNumber = async (req, res, next) => {
   const [...itensSold] = req.body;
 
-  console.log(itensSold);
-
   itensSold.forEach((item) => {
-    console.log('linha 31', item);
     if (!Number.isInteger(item.quantity)) {
       return res
         .status(422)

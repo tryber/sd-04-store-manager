@@ -12,9 +12,7 @@ router.get('/', async (_req, res) => {
   try {
     const sales = await saleModel.getAllSales();
 
-    console.log('linha 15, sales\n', sales);
-
-    console.log(sales.length);
+    console.log('linha 15, sales: ', sales);
 
     if (!sales) {
       return res
@@ -61,7 +59,6 @@ router.post(
   async (req, res) => {
     try {
       const [...itensSold] = req.body;
-      console.log('linha 63 itensSold', itensSold);
 
       const sale = await saleModel.addSale(itensSold);
 
@@ -69,9 +66,7 @@ router.post(
     } catch (_err) {
       return res
         .status(422)
-        .json(
-          saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'),
-        );
+        .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
     }
   },
 );
@@ -85,9 +80,7 @@ router.delete('/:id', async (req, res) => {
     if (!sale) {
       return res
         .status(422)
-        .json(
-          saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'),
-        );
+        .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
     }
 
     await saleModel.removeSale(req.params.id);
@@ -96,7 +89,7 @@ router.delete('/:id', async (req, res) => {
   } catch (_err) {
     return res
       .status(422)
-      .json(saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'));
+      .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
   }
 });
 

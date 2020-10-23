@@ -8,7 +8,7 @@ const DB_NAME = 'StoreManager';
 const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
 
 const connection = () => {
-  return mongoClient
+  mongoClient
     .connect(MONGO_DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

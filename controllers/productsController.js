@@ -3,7 +3,6 @@ const productsModel = require('../models/productsModel');
 const { HTTPStatus } = require('../config/index');
 const errors = require('../services/errors');
 const validations = require('../middlewares/productsValidation');
-const { validateUpdate } = require('../middlewares/productsValidation');
 
 const router = express.Router();
 

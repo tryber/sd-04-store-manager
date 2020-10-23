@@ -59,7 +59,6 @@ router.put('/:id',
 
       await productsModel.update(id, name, quantity);
       const updateProduct = await productsModel.getById(id);
-      console.log('updatedProduct: '+ updateProduct );
 
       return res.status(HTTPStatus.OK).json(updateProduct);
     } catch (_e) {
@@ -67,23 +66,21 @@ router.put('/:id',
     }
   });
 
-/* router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-  const { id } = req.params;
-  const removedProduct = await productsModel.getById(id);
+    const { id } = req.params;
+    const removedProduct = await productsModel.getById(id);
 
-  if (!removedProduct) {
-    return errors.clientUnprocessableEntityError(res, 'Wrong id format');
+    if (!removedProduct) {
+      return errors.clientUnprocessableEntityError(res, 'Wrong id format');
+    }
+
+    await productsModel.remove(id);
+
+    res.status(HTTPStatus.OK).json();
+  } catch (_e) {
+    return res.erros.serverInternalError(res);
   }
-
-  await productsModel.remove(id);
-
-  res.status(HTTPStatus.OK).json()
-  } catch (error) {
-    
-  }
-  
-
-}); */
+});
 
 module.exports = router;

@@ -49,8 +49,17 @@ const updateSale = async (id, sale) => {
         { $set: { 'itensSold.0.quantity': qntProd } },
       );
   } catch (err) {
-    console.error('getSaleById', err);
+    console.error('updateSale', err);
   }
 };
 
-module.exports = { registerSales, getAllSales, getSaleById, updateSale };
+const deleteSales = async (id) => {
+  try {
+    const db = await connection();
+    await db.collection('sales').deleteOne({ _id: ObjectId(id) });
+  } catch (err) {
+    console.error('deleteSale', err);
+  }
+};
+
+module.exports = { registerSales, getAllSales, getSaleById, updateSale, deleteSales };

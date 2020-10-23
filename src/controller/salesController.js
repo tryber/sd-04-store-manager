@@ -36,7 +36,7 @@ const getSaleByIdController = async (req, res) => {
     const sale = await salesModels.getSaleById(id);
 
     if (sale === null) {
-      return errors.errorsMessages(res, 'Wrong id format', 'invalid_data');
+      return errors.errorsMessages(res, 'Sale not found', 'not_found');
     }
 
     return res.status(HTTPStatus.OK).json(sale);
@@ -57,7 +57,24 @@ const updateSaleController = async (req, res) => {
 
     return res.status(HTTPStatus.OK).json(saleUpdate);
   } catch (err) {
-    console.error('getSaleByIdController', err);
+    console.error('updateSaleController', err);
+    return errors.errorsMessages(res);
+  }
+};
+
+const deleteSalesController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteSales = await salesModels.getSaleById(id);
+
+    if (deleteSales === null) {
+      return errors.errorsMessages(res, 'Wrong sale ID format', 'invalid_data');
+    }
+
+    await salesModels.deleteSales(id);
+    return res.status(HTTPStatus.OK).json(deleteSales);
+  } catch (err) {
+    console.error('deleteSalesController', err);
     return errors.errorsMessages(res);
   }
 };
@@ -67,4 +84,5 @@ module.exports = {
   getAllSalesController,
   getSaleByIdController,
   updateSaleController,
+  deleteSalesController,
 };

@@ -35,4 +35,22 @@ const getSaleById = async (id) => {
   }
 };
 
-module.exports = { registerSales, getAllSales, getSaleById };
+const updateSale = async (id, sale) => {
+  try {
+    const [{ ...product }] = sale;
+    const idProd = product.productId;
+    const qntProd = product.quantity;
+
+    const db = await connection();
+    await db
+      .collection('sales')
+      .updateOne(
+        { _id: ObjectId(id), 'itensSold.productId': idProd },
+        { $set: { 'itensSold.0.quantity': qntProd } },
+      );
+  } catch (err) {
+    console.error('getSaleById', err);
+  }
+};
+
+module.exports = { registerSales, getAllSales, getSaleById, updateSale };

@@ -46,4 +46,26 @@ const getSaleByIdController = async (req, res) => {
   }
 };
 
-module.exports = { registerSalesController, getAllSalesController, getSaleByIdController };
+const updateSaleController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sale = req.body;
+
+    await salesModels.updateSale(id, sale);
+
+    const saleUpdate = await salesModels.getSaleById(id);
+
+    console.log(saleUpdate);
+    return res.status(HTTPStatus.OK).json(saleUpdate);
+  } catch (err) {
+    console.error('getSaleByIdController', err);
+    return errors.errorsMessages(res);
+  }
+};
+
+module.exports = {
+  registerSalesController,
+  getAllSalesController,
+  getSaleByIdController,
+  updateSaleController,
+};

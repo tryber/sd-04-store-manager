@@ -5,7 +5,7 @@ const DB_NAME = 'StoreManager';
 // Localmente
 const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
 
-// Testes
+// Github
 // const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
 
 const connection = () =>

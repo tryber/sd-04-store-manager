@@ -2,19 +2,23 @@ const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const registerSales = async (itensSold) => {
-  const db = await connection();
-  const sales = await db.collection('sales').insertOne({ itensSold });
+  try {
+    const db = await connection();
+    const sales = await db.collection('sales').insertOne({ itensSold });
 
-  return sales.ops[0];
+    return sales.ops[0];
+  } catch (err) {
+    console.error('registerSales', err);
+  }
 };
 
 const getAllSales = async () => {
   try {
     const db = await connection();
-    const getSales = await db.collection('sales').find().toArray();
+    const getSales = await db.collection('sales').find({}).toArray();
     return getSales;
   } catch (err) {
-    console.error(err);
+    console.error('getAllSales', err);
   }
 };
 
@@ -27,7 +31,7 @@ const getSaleById = async (id) => {
 
     return getSale;
   } catch (err) {
-    console.error(err);
+    console.error('getSaleById', err);
   }
 };
 

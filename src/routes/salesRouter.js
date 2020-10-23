@@ -4,7 +4,12 @@ const { validationsSales } = require('../service');
 
 const router = Router();
 
-router.post('/', validationsSales.validationQuantity, salesController.registerSalesController);
+router.post(
+  '/',
+  validationsSales.validationQuantity,
+  validationsSales.validationProd,
+  salesController.registerSalesController,
+);
 
 router.get('/', salesController.getAllSalesController);
 

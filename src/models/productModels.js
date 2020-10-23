@@ -26,7 +26,7 @@ const getProdById = async (id) => {
   try {
     const db = await connection();
     const getProd = await db.collection('products').findOne(ObjectId(id));
-    console.log(getProd);
+
     return getProd;
   } catch (err) {
     console.error('getProdById', err);

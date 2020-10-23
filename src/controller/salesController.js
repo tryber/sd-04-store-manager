@@ -10,7 +10,7 @@ const registerSalesController = async (req, res) => {
 
     return res.status(HTTPStatus.OK).json(registerSale);
   } catch (err) {
-    console.log(err);
+    console.error('registerSalesController', err);
     return errors.errorsMessages(res);
   }
 };
@@ -25,7 +25,7 @@ const getAllSalesController = async (req, res) => {
 
     return res.status(HTTPStatus.OK).json({ sales });
   } catch (err) {
-    console.error(err);
+    console.error('getAllSalesController', err);
     return errors.errorsMessages(res);
   }
 };
@@ -41,7 +41,7 @@ const getSaleByIdController = async (req, res) => {
 
     return res.status(HTTPStatus.OK).json(sale);
   } catch (err) {
-    console.error(err);
+    console.error('getSaleByIdController', err);
     return errors.errorsMessages(res);
   }
 };

@@ -30,7 +30,7 @@ const getProdByIdController = async (req, res) => {
     const { id } = req.params;
     const product = await productModels.getProdById(id);
 
-    if (product.err) {
+    if (product === null || !product) {
       return errors.errorsMessages(res, 'Wrong id format', 'invalid_data');
     }
 

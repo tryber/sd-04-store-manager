@@ -13,7 +13,16 @@ const isValidSale = (itensSold) => {
   return isValid;
 };
 
+const getAllSales = async () => ({ sales: await salesModel.getAllSales() });
+
+const getSalesById = async (id) => await salesModel.getSalesById(id);
+
+const verifyId = (id) => getSalesById(id);
+
 module.exports = {
   newSale,
   isValidSale,
+  getAllSales,
+  getSalesById,
+  verifyId,
 };

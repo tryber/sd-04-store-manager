@@ -37,4 +37,11 @@ routes.delete(
 
 routes.post('/sales', salesController.addNewSale, errorHandler);
 
+routes.get('/sales', salesController.listSales);
+
+routes.get(
+  '/sales/:id',
+  salesController.getSalesById,
+);
+
 module.exports = routes;

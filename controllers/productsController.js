@@ -1,4 +1,4 @@
-const { cadastro, findAll, findById } = require('../models/productsModels');
+const { cadastro, findAll, findById, atualizacao } = require('../models/productsModels');
 
 
 const cadastroProduto = async (req, res) => {
@@ -33,8 +33,21 @@ const produtoPorId = async (req, res) => {
   }
 };
 
+const atualizarProduto = async (req, res) => {
+  try {
+    const { name, quantity } = req.body;
+    const { id } = req.params;
+    const newProd = await atualizacao(id, name, quantity);
+
+    return res.status(200).json(newProd);
+  } catch (_e) {
+    res.status(500).json({ err: { code: 'invalid_data', message: 'Erro inesperado' } });
+  }
+};
+
 module.exports = {
   cadastroProduto,
   produtoPorId,
   listaDeProdutos,
+  atualizarProduto,
 };

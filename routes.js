@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const productsController = require('./controllers/productsController');
+const salesController = require('./controllers/salesController');
 const { errorHandler, verifyId } = require('./services/errorHandler');
 
 const routes = Router();
@@ -33,5 +34,7 @@ routes.delete(
   productsController.deleteProduct,
   errorHandler,
 );
+
+routes.post('/sales', salesController.newSale, errorHandler);
 
 module.exports = routes;

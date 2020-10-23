@@ -69,11 +69,8 @@ router.post('/products', async (req, res) => {
 
   try {
     const product = await productModel.add(name, quantity);
-    console.log('product', product);
-    const productID = product._id;
     res.status(201).json({
-      _id: productID,
-      _id: 12,
+      _id: product.id,
       name,
       quantity,
     });

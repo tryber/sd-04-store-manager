@@ -16,7 +16,14 @@ const add = async (name, quantity) => {
   const result = await connection().then((db) =>
     db.collection('products').insertOne({ name, quantity }),
   );
-  return result.ops[0];
+  // console.log('result.ops[0]', result.ops[0]);
+  const { _id} = result.ops[0];
+  const product = {
+    id: _id,
+    name,
+    quantity,
+  }
+  return product;
 };
 
 const remove = async (id) => {

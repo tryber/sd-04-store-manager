@@ -40,8 +40,20 @@ const add = async (name, quantity) => {
 const update = async (id, name, quantity) => {
   try {
     const db = await connection();
-    const updateProduct = await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: name, quantity });
-    return updateProduct;
+    await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+    const product = await getById(id);
+    return product;
+  } catch (err) {
+    return null;
+  }
+};
+
+const exclude = async (id) => {
+  try {
+    const db = await connection();
+    const product = await getById(id);
+    await db.collection('products').deleteOne({ _id: ObjectId(id) });
+    return product;
   } catch (err) {
     return null;
   }
@@ -53,4 +65,5 @@ module.exports = {
   getById,
   add,
   update,
+  exclude,
 };

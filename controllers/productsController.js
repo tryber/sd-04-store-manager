@@ -77,10 +77,24 @@ const update = async (req, res) => {
   })
 };
 
+const exclude = async (req, res) => {
+  const { id } = req.params;
+  const product = await productsModel.exclude(id);
+  if (product) {
+    return res.status(200).json(product);
+  }
+  return res.status(422).send({
+    err: {
+      code: 'invalid_data',
+      message: 'Wrong id format',
+    },
+  })
+};
+
 const getAll = async (_req, res) => {
   const products = await productsModel.getAll();
   if (products) {
-    return res.status(200).json(products);
+    return res.status(200).json({ products });
   }
   return res.status(422).send({
     err: {
@@ -111,6 +125,7 @@ module.exports = {
   quantityNotANumber,
   add,
   update,
+  exclude,
   getAll,
   getById,
 };

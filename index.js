@@ -18,13 +18,14 @@ app.get('/products', controllers.productsController.getAll);
 
 app.get('/products/:id', controllers.productsController.getById);
 
-app.put('/products/:id',  
-controllers.productsController.nameLength,
-controllers.productsController.nameExists,
-controllers.productsController.quantityLessThanZero,
-controllers.productsController.quantityNotANumber,
-controllers.productsController.update,
+app.put('/products/:id',
+  controllers.productsController.nameLength,
+  controllers.productsController.quantityLessThanZero,
+  controllers.productsController.quantityNotANumber,
+  controllers.productsController.update,
 );
+
+app.delete('/products/:id', controllers.productsController.exclude);
 
 app.post('/products',
   controllers.productsController.nameLength,
@@ -32,6 +33,11 @@ app.post('/products',
   controllers.productsController.quantityLessThanZero,
   controllers.productsController.quantityNotANumber,
   controllers.productsController.add,
+);
+
+app.post('/sales',
+  controllers.salesController.invalidInput,
+  controllers.salesController.add,
 );
 
 app.listen(3000, () => console.log('Listening on 3000'));

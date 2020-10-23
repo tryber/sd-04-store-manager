@@ -29,10 +29,20 @@ const atualizacao = async (id, name, quantity) => {
   return newProduct;
 }
 
+const deletar = async (id) => {
+  const produto = await findById(id);
+
+  if (!produto) return null;
+
+  connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+  return produto;
+};
+
 module.exports = {
   cadastro,
   findByName,
   findAll,
   findById,
   atualizacao,
+  deletar,
 };

@@ -1,4 +1,4 @@
-const { cadastro, findAll, findById, atualizacao } = require('../models/productsModels');
+const { cadastro, findAll, findById, atualizacao, deletar } = require('../models/productsModels');
 
 
 const cadastroProduto = async (req, res) => {
@@ -45,9 +45,22 @@ const atualizarProduto = async (req, res) => {
   }
 };
 
+const deletarProduto = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletProd = await deletar(id);
+
+    if (!deletProd) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } })
+    res.status(200).json(deletProd)
+  } catch (_e) {
+    res.status(500).json({ err: { code: 'invalid_data', message: 'Erro inesperado' } });
+  }
+};
+
 module.exports = {
   cadastroProduto,
   produtoPorId,
   listaDeProdutos,
   atualizarProduto,
+  deletarProduto,
 };

@@ -63,17 +63,46 @@ const add = async (req, res) => {
   }
 };
 
-const getAll = async (req, res) => {
+const update = async (req, res) => {
+  const { name, quantity } = req.body;
+  const { id } = req.params;
+  const updateProduct = await productsModel.update(id, name, quantity);
+  if (updateProduct) {
+    return res.status(200).json(updateProduct);
+  }
+  return res.status(422).send({
+    err: {
+      message: 'Produto não encontrado',
+    },
+  })
+};
+
+const getAll = async (_req, res) => {
   const products = await productsModel.getAll();
   if (products) {
-    res.status(200).json(products);
+    return res.status(200).json(products);
   }
-  res.status(599).send({
+  return res.status(422).send({
     err: {
-      msg: 'Deu ruim',
+      code: 'invalid_data',
+      msg: 'Wrong id format',
     },
   });
 };
+
+const getById = async (req, res) => {
+  const { id } = req.params;
+  const product = await productsModel.getById(id);
+  if (product) {
+    return res.status(200).json(product);
+  }
+  return res.status(422).send({
+    err: {
+      code: 'invalid_data',
+      message: 'Wrong id format',
+    },
+  });
+}
 
 module.exports = {
   nameLength,
@@ -81,5 +110,7 @@ module.exports = {
   quantityLessThanZero,
   quantityNotANumber,
   add,
+  update,
   getAll,
+  getById,
 };

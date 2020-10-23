@@ -13,9 +13,9 @@ app.get('/', (_request, response) => {
 app.use(bodyParser.json());
 
 //  Requisito 1
-app.post('/products', isValidProduct(), productController.cadastroProduto);
+app.post('/products', isValidProduct, productController.cadastroProduto);
 
-app.get('products', productController.listaDeProdutos);
+app.get('/products', productController.listaDeProdutos);
 app.get('/products/:id', productController.produtoPorId)
 
-app.listen(3000, () => console.log('Amãe ta on na 3000!'));
+app.listen(3000, () => console.log('A mãe ta on na 3000!'));

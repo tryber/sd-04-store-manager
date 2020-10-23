@@ -6,11 +6,12 @@ const rescue = require('express-rescue');
 const cadastro = async (data) => {
   const db = await connection();
   const produto = await db.collection('products').insertOne(data);
-  return produto.insertedId;
+
+  return produto.ops[0];
 };
 
 const findByName = async (name) => {
-  connection().then((db) => db.collection('products').findOne({ name: name }));
+  return connection().then((db) => db.collection('products').findOne({ name: name }));
 };
 
 const findById = async (id) => {

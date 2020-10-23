@@ -7,7 +7,7 @@ const DB_NAME = 'StoreManager';
 // avaliador
 const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
 
-const connection = () => {
+const connection = () =>
   mongoClient
     .connect(MONGO_DB_URL, {
       useNewUrlParser: true,
@@ -18,6 +18,5 @@ const connection = () => {
       console.error(err);
       process.exit(1);
     });
-};
 
 module.exports = connection;

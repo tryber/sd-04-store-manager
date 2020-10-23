@@ -1,13 +1,13 @@
 const salesModel = require('../models/salesModel');
 
-const newSale = async (itens) => {
-  const sale = await salesModel.newSale(itens);
-  return { _id: sale.insertedId, itens };
+const newSale = async (itensSold) => {
+  const sale = await salesModel.newSale(itensSold);
+  return { _id: sale.insertedId, itensSold };
 };
 
-const isValidSale = (itens) => {
+const isValidSale = (itensSold) => {
   let isValid = true;
-  itens.forEach(({ quantity }) => {
+  itensSold.forEach(({ quantity }) => {
     if (quantity <= 0 || typeof quantity !== 'number') isValid = false;
   });
   return isValid;

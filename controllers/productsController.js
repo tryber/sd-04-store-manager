@@ -48,18 +48,12 @@ router.put(
   },
 );
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', productValidation.productIdExists, async (req, res) => {
   const { id } = req.params;
   const product = await model.getProductOrSaleById(id, 'products');
-  try {
-    const deleted = await model.removeProductOrSale(id, 'products');
-    if (deleted) {
-      return res.status(200).json(product);
-    }
-  } catch (_err) {
-    if (!product) {
-      return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
-    }
+  const deleted = await model.removeProductOrSale(id, 'products');
+  if (deleted) {
+    return res.status(200).json(product);
   }
 });
 

@@ -9,7 +9,7 @@ const registerProdController = async (req, res) => {
 
     return res.status(HTTPStatus.CREATED).json(registerProd);
   } catch (_err) {
-    return errors.errorIntern(res);
+    return errors.errorsMessages(res);
   }
 };
 
@@ -19,7 +19,7 @@ const getAllProdController = async (_req, res) => {
 
     return res.status(HTTPStatus.OK).json({ products });
   } catch (_err) {
-    return errors.errorIntern(res);
+    return errors.errorsMessages(res);
   }
 };
 
@@ -27,12 +27,15 @@ const getProdByIdController = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await productModels.getProdById(id);
+
     if (product === null) {
-      return errors.errorUnprocessableEntity(res, 'Wrong id format');
+      return errors.errorsMessages(res, 'Wrong id format', 'invalid_data');
     }
+
     return res.status(HTTPStatus.OK).json(product);
-  } catch (_err) {
-    return errors.errorIntern(res);
+  } catch (err) {
+    console.error(err);
+    return errors.errorsMessages(res);
   }
 };
 
@@ -46,8 +49,9 @@ const updateProductController = async (req, res) => {
     const productUpdated = await productModels.getProdById(id);
 
     return res.status(HTTPStatus.OK).json(productUpdated);
-  } catch (_err) {
-    return errors.errorIntern(res);
+  } catch (err) {
+    console.error(err);
+    return errors.errorsMessages(res);
   }
 };
 
@@ -63,7 +67,7 @@ const deleteProductController = async (req, res) => {
     await productModels.deleteProduct(id);
     return res.status(HTTPStatus.OK).json(deleteProd);
   } catch (_err) {
-    return errors.errorIntern(res);
+    return errors.errorsMessages(res);
   }
 };
 

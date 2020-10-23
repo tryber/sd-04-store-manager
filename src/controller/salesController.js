@@ -1,7 +1,6 @@
 const { salesModels } = require('../models');
 const { errors } = require('../service');
 const { HTTPStatus } = require('../config');
-const { errorUnprocessableEntity } = require('../service/errors');
 
 const registerSalesController = async (req, res) => {
   try {
@@ -12,7 +11,7 @@ const registerSalesController = async (req, res) => {
     return res.status(HTTPStatus.OK).json(registerSale);
   } catch (err) {
     console.log(err);
-    return errors.errorIntern(res);
+    return errors.errorsMessages(res);
   }
 };
 
@@ -27,7 +26,7 @@ const getAllSalesController = async (req, res) => {
     return res.status(HTTPStatus.OK).json({ sales });
   } catch (err) {
     console.error(err);
-    return errors.errorIntern(res);
+    return errors.errorsMessages(res);
   }
 };
 
@@ -36,14 +35,12 @@ const getSaleByIdController = async (req, res) => {
     const { id } = req.params;
     const sale = await salesModels.getSaleById(id);
 
-    if (sale === null) {
-      return errors.errorUnprocessableEntity(res, 'Wrong id format');
-    }
+    errors.wrongIdFormat(res, sale);
 
     return res.status(HTTPStatus.OK).json(sale);
   } catch (err) {
     console.error(err);
-    return errors.errorIntern(res);
+    return errors.errorsMessages(res);
   }
 };
 

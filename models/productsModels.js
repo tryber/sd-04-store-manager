@@ -1,7 +1,5 @@
 const connection = require('./connection');
 const { ObjectId } = require('mongodb');
-const rescue = require('express-rescue');
-
 
 const cadastro = async (data) => {
   const db = await connection();
@@ -19,7 +17,7 @@ const findById = async (id) => {
 };
 
 const findAll = async () =>
-  await connection().then((db) => db.collection('products').find().toArray());
+  connection().then((db) => db.collection('products').find().toArray());
 
 module.exports = {
   cadastro,

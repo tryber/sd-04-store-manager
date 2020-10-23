@@ -71,8 +71,8 @@ router.post('/products', async (req, res) => {
     // console.log('product', product);
     res.status(201).json({
       _id: product._id,
-      name: name,
-      quantity: quantity,
+      name,
+      quantity,
     });
   } catch (_e) {
     // res.status(500).json({ message: 'Erro ao cadastrar do product!' });
@@ -139,14 +139,13 @@ router.put('/products/:id', async (req, res) => {
   }
 
   try {
-    const product = await productModel.update(req.params.id, name, quantity);
+    await productModel.update(req.params.id, name, quantity);
     res.status(200).json({
       _id: req.params.id,
-      name: name,
-      quantity: quantity,
+      name,
+      quantity,
     });
   } catch (_e) {
-    console.log(_e);
     res.status(500).send({ message: 'Algo deu errado' });
   }
 });

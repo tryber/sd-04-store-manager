@@ -12,8 +12,6 @@ router.get('/', async (_req, res) => {
   try {
     const sales = await saleModel.getAllSales();
 
-    console.log('linha 15, sales: ', sales);
-
     if (!sales) {
       return res
         .status(422)
@@ -32,14 +30,12 @@ router.get('/', async (_req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    // const { id } = req.params;
-
     const sale = await saleModel.getSaleById(req.params.id);
 
     if (!sale) {
       return res
-        .status(422)
-        .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
+        .status(404)
+        .json(saleValidator.responseMessage('not_found', 'Sale not found'));
     }
 
     return res.status(200).json(sale);
@@ -75,7 +71,10 @@ router.post(
 
 router.delete('/:id', async (req, res) => {
   try {
-    const sale = await saleModel.getSaleById(req.params.id);
+    const { id } = req.params;
+    const sale = await saleModel.getSaleById(id);
+
+    // console.log('linha 80 controller, delete...', sale);
 
     if (!sale) {
       return res
@@ -83,7 +82,7 @@ router.delete('/:id', async (req, res) => {
         .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
     }
 
-    await saleModel.removeSale(req.params.id);
+    await saleModel.removeSale(id);
 
     return res.status(200).json(sale);
   } catch (_err) {
@@ -101,6 +100,8 @@ router.put('/:id', async (req, res) => {
 
     const sale = await saleModel.getSaleById(id);
 
+    const { newSale } = req.body;
+
     if (!sale) {
       return res
         .status(422)
@@ -109,7 +110,7 @@ router.put('/:id', async (req, res) => {
         );
     }
 
-    await saleModel.updateSale(id, sale);
+    await saleModel.updateSale(id, newSale);
   } catch (_err) {
     return res
       .status(422)

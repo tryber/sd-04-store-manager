@@ -11,9 +11,10 @@ const getAllSales = async () =>
 const getSaleById = async (id) => {
   const idIsValid = ObjectId(id);
   if (!idIsValid) return false;
-  const conn = await connection();
-  return conn
-    .then((db) => db.collection('sales').findOne(ObjectId(id)))
+  const db = await connection();
+  return db
+    .collection('sales')
+    .findOne(ObjectId(id))
     .catch((err) => {
       throw err;
     });
@@ -35,13 +36,13 @@ const updateSale = async (id, sale) => {
   if (!(await getSaleById(id))) return false;
 
   await connection().then((db) =>
-    db.collection('sales').updateOne({ _id: ObjectId(id) }, { sale }),
-  );
+    db.collection('sales').updateOne({ _id: ObjectId(id) }, { sale }));
   return true;
 };
 
 const removeSale = async (id) => {
   const sale = await getSaleById(id);
+
   if (!sale) return false;
 
   const db = await connection();

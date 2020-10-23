@@ -1,7 +1,7 @@
 const { productModels } = require('../models');
 const { errorsMessages } = require('./errors');
 
-const validationNameQuantity = async (req, res, next) => {
+const validationNameQuantity = (req, res, next) => {
   const { name, quantity } = req.body;
 
   if (!Number.isNaN(Number(name)) || name.length < 5) {
@@ -17,22 +17,30 @@ const validationNameQuantity = async (req, res, next) => {
 };
 
 const validationExistProd = async (req, res, next) => {
-  const { name } = req.body;
-  const existOrNotProduct = await productModels.getProdByName(name);
-  if (existOrNotProduct) {
-    return errorsMessages(res, 'Product already exists', 'invalid_data');
+  try {
+    const { name } = req.body;
+    const existOrNotProduct = await productModels.getProdByName(name);
+    if (existOrNotProduct) {
+      return errorsMessages(res, 'Product already exists', 'invalid_data');
+    }
+    next();
+  } catch (err) {
+    console.error('validationExistProd', err);
   }
-  next();
 };
 
 const validationNameUpdate = async (req, res, next) => {
-  const { id } = req.params;
-  const { name } = req.body;
-  const idExist = await productModels.getProdByName(name);
-  if (idExist && id !== idExist.id) {
-    return errorsMessages(res, 'Product already exists', 'invalid_data');
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    const idExist = await productModels.getProdByName(name);
+    if (idExist && id !== idExist.id) {
+      return errorsMessages(res, 'Product already exists', 'invalid_data');
+    }
+    next();
+  } catch (err) {
+    console.error('validationNameUpdate', err);
   }
-  next();
 };
 
 module.exports = { validationNameQuantity, validationExistProd, validationNameUpdate };

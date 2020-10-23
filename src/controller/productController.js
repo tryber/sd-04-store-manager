@@ -8,7 +8,8 @@ const registerProdController = async (req, res) => {
     const registerProd = await productModels.registerProduct(name, quantity);
 
     return res.status(HTTPStatus.CREATED).json(registerProd);
-  } catch (_err) {
+  } catch (err) {
+    console.error('registerProdController', err);
     return errors.errorsMessages(res);
   }
 };
@@ -18,7 +19,8 @@ const getAllProdController = async (_req, res) => {
     const products = await productModels.getAllProducts();
 
     return res.status(HTTPStatus.OK).json({ products });
-  } catch (_err) {
+  } catch (err) {
+    console.error('getAllProdController', err);
     return errors.errorsMessages(res);
   }
 };
@@ -28,13 +30,13 @@ const getProdByIdController = async (req, res) => {
     const { id } = req.params;
     const product = await productModels.getProdById(id);
 
-    if (product === null) {
+    if (product.err) {
       return errors.errorsMessages(res, 'Wrong id format', 'invalid_data');
     }
 
     return res.status(HTTPStatus.OK).json(product);
   } catch (err) {
-    console.error(err);
+    console.error('getProdByIdController', err);
     return errors.errorsMessages(res);
   }
 };
@@ -50,7 +52,7 @@ const updateProductController = async (req, res) => {
 
     return res.status(HTTPStatus.OK).json(productUpdated);
   } catch (err) {
-    console.error(err);
+    console.error('updateProductController', err);
     return errors.errorsMessages(res);
   }
 };
@@ -66,7 +68,8 @@ const deleteProductController = async (req, res) => {
 
     await productModels.deleteProduct(id);
     return res.status(HTTPStatus.OK).json(deleteProd);
-  } catch (_err) {
+  } catch (err) {
+    console.error('deleteProductController', err);
     return errors.errorsMessages(res);
   }
 };

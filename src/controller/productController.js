@@ -61,7 +61,7 @@ const deleteProductController = async (req, res) => {
     const deleteProd = await productModels.getProdById(id);
 
     if (!deleteProd) {
-      return errors.errorUnprocessableEntity(res, 'Wrong id format');
+      return errors.errorsMessages(res, 'Wrong id format', 'invalid_data');
     }
 
     await productModels.deleteProduct(id);

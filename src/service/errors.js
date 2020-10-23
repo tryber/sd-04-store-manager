@@ -1,13 +1,5 @@
 const { HTTPStatus } = require('../config');
 
-const errorUnprocessableEntity = (res, message) =>
-  res.status(HTTPStatus.UNPROCESSABLE_ENTITY).json({
-    err: {
-      code: 'invalid_data',
-      message,
-    },
-  });
-
 const errorMessage = (message, code) => ({
   err: {
     code,
@@ -28,18 +20,6 @@ const errorsMessages = (res, message, code) => {
   }
 };
 
-// const wrongIdFormat = (res, data) => {
-//   if (data === null) {
-//     return res
-//       .status(HTTPStatus.UNPROCESSABLE_ENTITY)
-//       .errorMessage('Wrong id format', 'invalid_data');
-//   }
-//   return true;
-// };
-
 module.exports = {
   errorsMessages,
-  errorUnprocessableEntity,
-  // wrongIdFormat,
-  errorMessage,
 };

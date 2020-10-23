@@ -1,4 +1,4 @@
-const { errorUnprocessableEntity } = require('./errors');
+const { errorsMessages } = require('./errors');
 const { productModels } = require('../models');
 
 const validationQuantity = async (req, res, next) => {
@@ -21,7 +21,7 @@ const validationQuantity = async (req, res, next) => {
     // se não tenho tamanho no array nenhum deu erro
     return next();
   }
-  return errorUnprocessableEntity(res, 'Wrong product ID or invalid quantity');
+  return errorsMessages(res, 'Wrong product ID or invalid quantity', 'invalid_data');
 };
 
 module.exports = { validationQuantity };

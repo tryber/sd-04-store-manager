@@ -31,4 +31,4 @@ const getSaleById = async (id) => {
   }
 };
 
-module.exports = { registerSales, getAllSales };
+module.exports = { registerSales, getAllSales, getSaleById };

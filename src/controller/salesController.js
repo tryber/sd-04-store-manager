@@ -20,7 +20,7 @@ const getAllSalesController = async (req, res) => {
     const sales = await salesModels.getAllSales();
 
     if (!sales) {
-      return errors.errorNotFound(res, 'Sale not found');
+      return errors.errorsMessages(res, 'Sale not found', 'not_found');
     }
 
     return res.status(HTTPStatus.OK).json({ sales });
@@ -35,7 +35,9 @@ const getSaleByIdController = async (req, res) => {
     const { id } = req.params;
     const sale = await salesModels.getSaleById(id);
 
-    errors.wrongIdFormat(res, sale);
+    if (sale === null) {
+      return errors.errorsMessages(res, 'Wrong id format', 'invalid_data');
+    }
 
     return res.status(HTTPStatus.OK).json(sale);
   } catch (err) {

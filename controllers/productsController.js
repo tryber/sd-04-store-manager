@@ -47,11 +47,10 @@ const atualizarProduto = async (req, res) => {
 
 const deletarProduto = async (req, res) => {
   try {
-    const { id } = req.params;
-    const deletProd = await deletar(id);
+    const deletProd = await deletar(req.params.id);
 
-    if (!deletProd) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } })
-    res.status(200).json(deletProd)
+    if (!deletProd) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
+    res.status(200).json(deletProd);
   } catch (_e) {
     res.status(500).json({ err: { code: 'invalid_data', message: 'Erro inesperado' } });
   }

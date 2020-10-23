@@ -2,9 +2,9 @@ const connection = require('./connection');
 const { ObjectId } = require('mongodb');
 
 const cadastro = async (data, type) => {
-  const result = '';
+  let result = '';
   const db = await connection();
-  if (type === prod) {
+  if (type === 'prod') {
     result = await db.collection('products').insertOne(data);
   } else {
     result = await db.collection('sales').insertOne(data);
@@ -18,14 +18,14 @@ const findByName = async (name) =>
 
 const findById = async (id, type) => {
   if (!ObjectId.isValid(id)) return null;
-  if (type === prod) {
+  if (type === 'prod') {
     return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
   }
   return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
 };
 
 const findAll = async (type) => {
-  if (type === prod) {
+  if (type === 'prod') {
     return connection().then((db) => db.collection('products').find().toArray());
   }
   return connection().then((db) => db.collection('sales').find().toArray());

@@ -36,8 +36,26 @@ const validateProductExists = async (req, res, next) => {
   next();
 };
 
+const validateCanBeUpdated = async (req, res, next) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const isIdExist = await productsModel.getById(id);
+  const isNameAlreadyUsed = await productsModel.getByName(name);
+
+  if (!isIdExist) {
+    return errors.clientUnprocessableEntityError(res, 'Product already exists');
+  }
+
+  if (isNameAlreadyUsed) {
+    return errors.clientUnprocessableEntityError(res, 'Product already exists');
+  }
+  next();
+};
+
 module.exports = {
   validateNameLength,
   validateQuantity,
   validateProductExists,
+  validateCanBeUpdated,
 };

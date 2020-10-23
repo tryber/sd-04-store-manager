@@ -27,9 +27,13 @@ const atualizacao = async (id, name, quantity) => {
   await connection().then((db) => db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
   const newProduct = await findById(id);
   return newProduct;
-};
+}
 
 const deletar = async (id) => {
+  const produto = await findById(id);
+
+  if (!produto) return null;
+
   connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
   return produto;
 };

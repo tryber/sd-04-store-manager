@@ -49,9 +49,9 @@ router.post('/products', async (req, res) => {
   const { name, quantity } = req.body;
   const products = await productModel.getAll();
   const validationMessage = await validation(name, quantity, products);
-  console.log('validationMessage', validationMessage);
+  // console.log('validationMessage', validationMessage);
 
-  if (validationMessage != 'ok') {
+  if (validationMessage !== 'ok') {
     res.status(422).json({
       err: {
         message: validationMessage,

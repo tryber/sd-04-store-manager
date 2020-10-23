@@ -11,7 +11,8 @@ const getAllSales = async () =>
 const getSaleById = async (id) => {
   const idIsValid = ObjectId(id);
   if (!idIsValid) return false;
-  return connection()
+  const conn = connection();
+  return conn
     .then((db) => db.collection('sales').findOne(ObjectId(id)))
     .catch((err) => {
       throw err;
@@ -19,7 +20,8 @@ const getSaleById = async (id) => {
 };
 
 const addSale = async (itensSold) => {
-  const result = await connection()
+  const result = connection();
+  result
     .then((db) => db.collection('sales').insertOne({ itensSold }))
     .catch((err) => {
       throw err;

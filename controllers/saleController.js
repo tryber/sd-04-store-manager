@@ -69,7 +69,9 @@ router.post(
     } catch (_err) {
       return res
         .status(422)
-        .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
+        .json(
+          saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'),
+        );
     }
   },
 );
@@ -83,14 +85,18 @@ router.delete('/:id', async (req, res) => {
     if (!sale) {
       return res
         .status(422)
-        .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
+        .json(
+          saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'),
+        );
     }
 
     await saleModel.removeSale(req.params.id);
 
     return res.status(200).json(sale);
   } catch (_err) {
-    return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
+    return res
+      .status(422)
+      .json(saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'));
   }
 });
 

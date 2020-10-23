@@ -10,19 +10,19 @@ router.get('/',
   async (_req, res) => {
     try {
       const products = await productsModel.getAll();
-      return res.status(HTTPStatus.OK).json(products);
+      return res.status(HTTPStatus.OK).json({ products });
     } catch (_err) {
       return errors.serverInternalError(res);
     }
   });
 
 router.get('/:id',
-  async (req, res, next) => {
+  async (req, res) => {
     try {
       const products = await productsModel.getById(req.params.id);
 
       if (products === null) {
-        return next(errors.clientUnprocessableEntityError(res, 'Wrong id format'));
+        return errors.clientUnprocessableEntityError(res, 'Wrong id format');
       }
 
       return res.status(HTTPStatus.OK).json(products);
@@ -32,9 +32,9 @@ router.get('/:id',
   });
 
 router.post('/',
+  validations.validateProductExists,
   validations.validateNameLength,
   validations.validateQuantity,
-  validations.validateProductExists,
   async (req, res) => {
     try {
       const { name, quantity } = req.body;

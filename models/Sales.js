@@ -18,8 +18,8 @@ const addSales = async (itensSold) => {
 };
 
 const findAll = async () => {
+  const db = await connection();
   try {
-    const db = await connection();
     const findAllResult = await db.collection(dbCollection).find().toArray();
     return {
       sales: findAllResult,

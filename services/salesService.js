@@ -50,7 +50,8 @@ const showASpecificSaleById = async (id) => {
 
 const deleteASale = async (id) => {
   const saleResultOfDeletion = await Sales.deleteSaleById(id);
-  if (!saleResultOfDeletion) {
+  
+  if (saleResultOfDeletion === null) {
     return objectErro;
   }
 

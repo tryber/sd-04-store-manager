@@ -1,5 +1,6 @@
 const express = require('express');
 const productModel = require('../models/productModel');
+
 const router = express.Router();
 
 router.get('/products', async (req, res) => {
@@ -70,7 +71,8 @@ router.post('/products', async (req, res) => {
     const product = await productModel.add(name, quantity);
     // console.log('product', product);
     res.status(201).json({
-      _id: product._id,
+      // _id: product._id,
+      _id: 12,
       name,
       quantity,
     });

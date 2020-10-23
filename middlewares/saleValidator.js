@@ -3,24 +3,32 @@
 const responseMessage = (code, message) => ({ err: { message, code } });
 
 const validateSaleQuantity = async (req, res, next) => {
-  const data = req.body.itensSold;
+  const [...itensSold] = req.body;
 
-  const itensSold = await data.map((item) => item);
+  console.log('linha 9, validator, itensSold: \n', itensSold);
 
-  console.log('linha 9, data: \n', itensSold);
+  itensSold.forEach((item) => {
+    if (item.quantity < 0 || item.quantity === 0) {
+      return res
+        .status(422)
+        .json(responseMessage('invalid_data', 'Wrong product ID or invalid quantity'));
+    }
+  });
 
-  if (itensSold.quantity < 0 || itensSold.quantity === 0) {
-    return res.status(422).json(responseMessage('invalid_data', '"quantity" must be a number'));
-  }
   next();
 };
 
 const validateQuantityIsNumber = async (req, res, next) => {
-  const data = req.body;
+  const [...itensSold] = req.body;
 
-  data.forEach((item) => {
+  console.log(itensSold);
+
+  itensSold.forEach((item) => {
+    console.log('linha 31', item);
     if (!Number.isInteger(item.quantity)) {
-      return res.status(422).json(responseMessage('invalid_data', '"quantity" must be a number'));
+      return res
+        .status(422)
+        .json(responseMessage('invalid_data', 'Wrong product ID or invalid quantity'));
     }
   });
 

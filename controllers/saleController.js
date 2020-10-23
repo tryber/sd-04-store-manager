@@ -6,22 +6,31 @@ const saleModel = require('../models/saleModel');
 
 const saleValidator = require('../middlewares/saleValidator');
 
-// buscar todas as vendas
+// BUSCAR TODAS AS VENDAS
 
 router.get('/', async (_req, res) => {
   try {
     const sales = await saleModel.getAllSales();
+
+    console.log('linha 15, sales\n', sales);
+
+    console.log(sales.length);
+
     if (!sales) {
-      return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
+      return res
+        .status(422)
+        .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
     }
 
     res.status(200).json({ sales });
   } catch (_err) {
-    return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
+    return res
+      .status(422)
+      .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
   }
 });
 
-// buscar uma venda por id
+// BUSCAR UMA VENDA POR ID
 
 router.get('/:id', async (req, res) => {
   try {
@@ -30,43 +39,51 @@ router.get('/:id', async (req, res) => {
     const sale = await saleModel.getSaleById(req.params.id);
 
     if (!sale) {
-      return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
+      return res
+        .status(422)
+        .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
     }
 
     return res.status(200).json(sale);
   } catch (_err) {
-    return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
+    return res
+      .status(422)
+      .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
   }
 });
 
-// criar uma venda
+// CRIAR UMA VENDA
 
 router.post(
   '/',
-  // saleValidator.validateSaleQuantity,
-  // saleValidator.validateQuantityIsNumber,
+  saleValidator.validateSaleQuantity,
+  saleValidator.validateQuantityIsNumber,
   async (req, res) => {
     try {
-      const [itensSold] = req.body;
-      console.log('linha 51 itensSold', itensSold);
+      const [...itensSold] = req.body;
+      console.log('linha 63 itensSold', itensSold);
 
       const sale = await saleModel.addSale(itensSold);
 
-      return res.status(201).json(sale);
+      return res.status(200).json(sale);
     } catch (_err) {
-      return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
+      return res
+        .status(422)
+        .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
     }
   },
 );
 
-// deletar uma venda
+// DELETAR UMA VENDA
 
 router.delete('/:id', async (req, res) => {
   try {
     const sale = await saleModel.getSaleById(req.params.id);
 
     if (!sale) {
-      return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
+      return res
+        .status(422)
+        .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
     }
 
     await saleModel.removeSale(req.params.id);
@@ -77,7 +94,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// atualizar uma venda
+// ATUALIZAR UMA VENDA
 
 router.put('/:id', async (req, res) => {
   try {
@@ -86,12 +103,18 @@ router.put('/:id', async (req, res) => {
     const sale = await saleModel.getSaleById(id);
 
     if (!sale) {
-      return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
+      return res
+        .status(422)
+        .json(
+          saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'),
+        );
     }
 
     await saleModel.updateSale(id, sale);
   } catch (_err) {
-    return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
+    return res
+      .status(422)
+      .json(saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'));
   }
 });
 

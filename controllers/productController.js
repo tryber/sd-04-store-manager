@@ -33,8 +33,8 @@ router.post('/products', async (req, res) => {
   if (name.length < 5) {
     res.status(422).json({
       err: {
-        code: 'invalid_data',
         message: '"name" length must be at least 5 characters long',
+        code: 'invalid_data',
       },
     });
   }
@@ -42,8 +42,8 @@ router.post('/products', async (req, res) => {
   if (quantity < 1) {
     res.status(422).json({
       err: {
-        code: 'invalid_data',
         message: '"quantity" must be larger than or equal to 1',
+        code: 'invalid_data',
       },
     });
   }

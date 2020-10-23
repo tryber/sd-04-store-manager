@@ -44,4 +44,11 @@ routes.get(
   salesController.getSalesById,
 );
 
+routes.put(
+  '/sales/:id',
+  verifyId,
+  salesController.updateSale,
+  errorHandler,
+);
+
 module.exports = routes;

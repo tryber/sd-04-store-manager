@@ -19,10 +19,16 @@ const getSalesById = async (id) => salesModel.getSalesById(id);
 
 const verifyId = (id) => getSalesById(id);
 
+const updateSales = async (id, itensSold) => {
+  await salesModel.updateSales(id, itensSold);
+  return { _id: id, itensSold };
+};
+
 module.exports = {
   newSale,
   isValidSale,
   getAllSales,
   getSalesById,
   verifyId,
+  updateSales,
 };

@@ -19,12 +19,12 @@ const VALIDA_PRODUCT = {
 
 const validaRegex = (string, regex) => string.match(regex);
 
-const validaNome = async (name) => {
+const validaNome = async (name, id) => {
   const produto = await productModel.getByName(name);
 
   if (!validaRegex(name, PRODUCT_NAME)) {
     VALIDA_NOME.message = '"name" length must be at least 5 characters long';
-  } else if (produto) {
+  } else if (produto && !id) {
     VALIDA_NOME.message = 'Product already exists';
   } else VALIDA_NOME.message = '';
 

@@ -1,3 +1,4 @@
+const productModel = require('../model/productModel');
 const ProductModel = require('../model/productModel');
 const validaProduct = require('../validate/productValidate');
 
@@ -13,6 +14,19 @@ const add = async (name, quantidade) => {
   else return validaQuantidade;
 };
 
+const update = async (id, name, quantidade) => {
+  const validaNome = await validaProduct.validaNome(name, id);
+  const validaQuantidade = validaProduct.validaQuantidade(quantidade);
+
+  if (validaNome.message === '' && validaQuantidade.message === '') {
+    await ProductModel.update(id, name, quantidade);
+    const result = productModel.getById(id);
+
+    return result;
+  } else if (validaNome.message !== '') return validaNome;
+  else return validaQuantidade;
+};
+
 const getById = async (id) => {
   const { VALIDA_PRODUCT, produto } = await validaProduct.validaExist(id);
 
@@ -23,4 +37,5 @@ const getById = async (id) => {
 module.exports = {
   getById,
   add,
+  update,
 };

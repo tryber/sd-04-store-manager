@@ -20,8 +20,10 @@ const getSaleById = async (id) => {
 };
 
 const addSale = async (itensSold) => {
-  const result = await connection()
-    .then((db) => db.collection('sales').insertOne({ itensSold }))
+  const db = await connection();
+  const result = await db
+    .collection('sales')
+    .insertOne({ itensSold })
     .catch((err) => {
       throw err;
     });

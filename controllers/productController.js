@@ -1,10 +1,10 @@
 const express = require('express');
 
+const router = express.Router();
+
 const productModel = require('../models/productModel');
 
 const productValidator = require('../middlewares/productValidator');
-
-const router = express.Router();
 
 // busca todos os produtos
 
@@ -33,9 +33,6 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     const product = await productModel.getProductById(id);
-
-    const products = await productModel.getAllProducts();
-    console.log('linha 38\n', products[0].name);
 
     if (!product) {
       return res
@@ -86,8 +83,6 @@ router.put(
     const { name, quantity } = req.body;
 
     const product = await productModel.getProductById(id);
-
-    console.log('linha 92\n', product);
 
     if (!product) {
       return res

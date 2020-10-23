@@ -33,9 +33,9 @@ const invalidInput = (req, res, next) => {
 const add = async (req, res) => {
   const { itensSold } = req.body;
   const addSales = await salesModel.add(itensSold);
-  console.log(addSales.itensSold)
+  
   if (addSales) {
-    return res.status(200).json({ addSales });
+    return res.status(200).json(addSales);
   }
   return res.status(422).send({
     err: {

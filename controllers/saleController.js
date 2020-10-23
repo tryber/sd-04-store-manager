@@ -8,7 +8,7 @@ const saleValidator = require('../middlewares/saleValidator');
 
 // buscar todas as vendas
 
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
   try {
     const sales = await saleModel.getAllSales();
     if (!sales) {
@@ -25,9 +25,9 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
+    // const { id } = req.params;
 
-    const sale = await saleModel.getSaleById(id);
+    const sale = await saleModel.getSaleById(req.params.id);
 
     if (!sale) {
       return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
@@ -63,9 +63,7 @@ router.post(
 
 router.delete('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const sale = await saleModel.getSaleById(id);
+    const sale = await saleModel.getSaleById(req.params.id);
 
     if (!sale) {
       return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));

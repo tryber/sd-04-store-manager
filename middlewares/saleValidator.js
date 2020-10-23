@@ -1,4 +1,4 @@
-const saleModel = require('../models/saleModel');
+// const saleModel = require('../models/saleModel');
 
 const responseMessage = (code, message) => ({ err: { message, code } });
 

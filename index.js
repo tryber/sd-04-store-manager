@@ -29,5 +29,7 @@ app.post('/sales', isValidSale, salesController.cadastroVenda);
 //  Requisito 6
 app.get('/sales', salesController.listAllSales);
 app.get('/sales/:id', salesController.listOneSale);
+// Requisito 8
+app.delete('/sales/:id', salesController.deleteSale);
 
 app.listen(3000, () => console.log('A mãe ta on na 3000!'));

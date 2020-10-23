@@ -32,12 +32,12 @@ const findAll = async (type) => {
 };
 
 const atualizacao = async (id, name, quantity) => {
-  const product = await findById(id);
+  const product = await findById(id, 'prod');
 
   if (!product) return null;
 
   await connection().then((db) => db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
-  const newProduct = await findById(id);
+  const newProduct = await findById(id, 'prod');
   return newProduct;
 };
 
@@ -48,7 +48,7 @@ const deletar = async (id, type) => {
     connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
   } else {
     result = await findById(id);
-    connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+    connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
   }
   if (!result) return null;
   return result;

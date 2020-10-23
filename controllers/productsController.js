@@ -13,14 +13,10 @@ router.get('/', async (_req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', productValidation.productIdExists, async (req, res) => {
   const { id } = req.params;
   const product = await model.getProductOrSaleById(id, 'products');
-
-  if (!product) {
-    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
-  }
-  res.status(200).json(product);
+  if (product) return res.status(200).json(product);
 });
 
 router.post(

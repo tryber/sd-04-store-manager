@@ -6,4 +6,8 @@ const router = Router();
 
 router.post('/', validationsSales.validationQuantity, salesController.registerSalesController);
 
+router.get('/', salesController.getAllSalesController);
+
+router.get('/:id', salesController.getSaleByIdController);
+
 module.exports = router;

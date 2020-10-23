@@ -13,4 +13,12 @@ const errorUnprocessableEntity = (res, message) =>
     },
   });
 
-module.exports = { errorIntern, errorUnprocessableEntity };
+const erroNotFound = (res, message) =>
+  res.status(HTTPStatus.NOT_FOUND).json({
+    err: {
+      code: 'not_found',
+      message,
+    },
+  });
+
+module.exports = { errorIntern, errorUnprocessableEntity, erroNotFound };

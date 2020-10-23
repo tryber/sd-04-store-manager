@@ -1,33 +1,24 @@
 const dataStore = require('../models/dataModel');
+const storeService = require('../service/storeService');
 
 const cadastraProduto = async (req, res) => {
   const { name, quantity } = req.body;
   console.log(name);
 
-  if (name.length <= 5) {
-    res.status(422).json({
-      err: { code: 'invalid_data', message: '"name" length must be at least 5 characters long' },
-    });
-  }
-  if (quantity <= 0) {
-    res.status(422).json({
-      err: { code: 'invalid_data', message: '"quantity" must be larger than or equal to 1' },
-    });
-  }
-  if (typeof quantity === 'string') {
-    res.status(422).json({
-      err: { code: 'invalid_data', message: '"quantity" must be a number' },
-    });
-  }
-
   const nameProd = await dataStore.findByName({ name });
 
-  if (nameProd && nameProd.name === name) {
-    res.status(422).json({
-      err: { code: 'invalid_data', message: 'Product already exists' },
-    });
+  if (name.length <= 5) {
+    storeService.countProductSize(res);
   }
-
+  if (quantity <= 0) {
+    storeService.countMoreThenZero(res);
+  }
+  if (typeof quantity === 'string') {
+    storeService.verifyString(res);
+  }
+  if (nameProd && nameProd.name === name) {
+    storeService.verifyWithExist(res);
+  }
   {
     const product = await dataStore.cadastraProduto(name, quantity);
     console.log(product);

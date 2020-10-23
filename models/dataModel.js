@@ -11,7 +11,7 @@ const cadastraProduto = async (name, quantity) => {
 const findByName = async (obj) => {
   const data = await connection()
     .then((db) => db.collection('products').find(obj).toArray())
-    .then((data) => data.map(({ name }) => ({ name })));
+    .then((e) => e.map(({ name }) => ({ name })));
 
   console.log(data);
   return data[0];

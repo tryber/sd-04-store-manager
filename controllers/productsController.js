@@ -13,9 +13,11 @@ router.post(
     try {
       const { name, quantity } = req.body;
       const product = await productsModel.insertProduct(name, quantity);
-      res.status(200).json(product);
+      res.status(201).json(product);
     } catch (_err) {
-      res.status(500).json({ message: 'Error registering product', code: 'internal_error' });
+      res
+        .status(500)
+        .json({ err: { code: 'internal_error', message: 'Error registering product' } });
     }
   },
 );

@@ -2,7 +2,7 @@ const rescue = require('express-rescue');
 const Boom = require('@hapi/boom');
 const { newSale, isValidSale } = require('../services/salesService');
 
-const newSale = rescue(async (req, res, next) => {
+const addNewSale = rescue(async (req, res, next) => {
   try {
     if (!isValidSale(req.body)) {
       next(Boom.badData('Wrong product ID or invalid quantity', 'invalid_data'));
@@ -15,5 +15,5 @@ const newSale = rescue(async (req, res, next) => {
 });
 
 module.exports = {
-  newSale,
+  addNewSale,
 };

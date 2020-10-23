@@ -35,6 +35,6 @@ routes.delete(
   errorHandler,
 );
 
-routes.post('/sales', salesController.newSale, errorHandler);
+routes.post('/sales', salesController.addNewSale, errorHandler);
 
 module.exports = routes;

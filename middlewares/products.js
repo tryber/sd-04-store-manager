@@ -1,10 +1,12 @@
 const model = require('../models/model');
 
+const jsonError = (code, message) => ({ err: { code, message } });
+
 const productIdExists = async (req, res, next) => {
   const { id } = req.params;
   const product = await model.getProductOrSaleById(id, 'products');
   if (!product) {
-    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
+    return res.status(422).json(jsonError('invalid_data', 'Wrong id format'));
   }
   return next();
 };
@@ -62,4 +64,11 @@ const quantityType = async (req, res, next) => {
   return next();
 };
 
-module.exports = { nameLength, nameExists, quantityValue, quantityType, productIdExists };
+module.exports = {
+  nameLength,
+  nameExists,
+  quantityValue,
+  quantityType,
+  productIdExists,
+  jsonError,
+};

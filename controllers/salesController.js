@@ -1,6 +1,7 @@
 const express = require('express');
 const model = require('../models/model');
 const handleQuantity = require('../middlewares/sales');
+const productValidation = require('../middlewares/products');
 
 const router = express.Router();
 
@@ -41,10 +42,12 @@ router.put('/:id', handleQuantity.validateQuantity, async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  const sale = await model.getProductOrSaleById(id, 'sales');
-  if (!sale) {
-    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
+  if (!(await model.getProductOrSaleById(id, 'sales'))) {
+    return res
+      .status(422)
+      .json(productValidation.jsonError('invalid_data', 'Wrong sale ID format'));
   }
+  const sale = await model.getProductOrSaleById(id, 'sales');
   const deleted = await model.removeProductOrSale(id, 'sales');
   if (deleted) {
     return res.status(200).json(sale);

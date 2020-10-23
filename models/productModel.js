@@ -5,7 +5,8 @@ const getAllProducts = async () =>
   connection()
     .then((db) => db.collection('products').find().toArray())
     .catch((err) => {
-      throw err;
+      console.error(err);
+      process.exit(1);
     });
 
 const getProductById = async (id) => {
@@ -46,7 +47,8 @@ const updateProduct = async (id, name, quantity) => {
   if (!(await getProductById(id))) return false;
 
   await connection().then((db) =>
-    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
+  );
   return true;
 };
 

@@ -69,7 +69,7 @@ router.delete('/:id', async (req, res) => {
       return res.status(422).json(saleValidator.responseMessage('invalid_data', 'Wrong id format'));
     }
 
-    await saleModel.removeSale(id);
+    await saleModel.removeSale(req.params.id);
 
     return res.status(200).json(sale);
   } catch (_err) {

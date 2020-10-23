@@ -5,12 +5,12 @@ const getAll = async () => connection().then((db) => db.collection('products').f
 
 const getById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
-  return await connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+  return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
 };
 
-const getByName = async (name) => {
-  return await connection().then((db) => db.collection('products').findOne(name(name)));
-};
+// const getByName = async (name) => {
+//   return await connection().then((db) => db.collection('products').findOne(name(name)));
+// };
 
 const add = async (name, quantity) => {
   const result = await connection().then((db) =>
@@ -40,7 +40,7 @@ const update = async (id, name, quantity) => {
 module.exports = {
   getAll,
   getById,
-  getByName,
+  // getByName,
   add,
   remove,
   update,

@@ -48,6 +48,15 @@ const showASpecificSaleById = async (id) => {
   return saleResult;
 };
 
+const deleteASale = async (id) => {
+  const saleResultOfDeletion = await Sales.deleteSaleById(id);
+  if (!saleResultOfDeletion) {
+    return objectErro;
+  }
+
+  return saleResultOfDeletion;
+};
+
 const updateASale = async (id, itensSold) => {
   const { quantity } = itensSold[0];
   const quantityValidation = await productService.avaliateQuantity(quantity);
@@ -66,5 +75,6 @@ module.exports = {
   addSales,
   listSales,
   showASpecificSaleById,
+  deleteASale,
   updateASale,
 };

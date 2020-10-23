@@ -21,7 +21,6 @@ const findAll = async () => {
   try {
     const db = await connection();
     const findAllResult = await db.collection(dbCollection).find().toArray();
-    console.log(findAllResult);
     return {
       sales: findAllResult,
     };
@@ -46,7 +45,6 @@ const findById = async (saleId) => {
 
 const updateSale = async (id, itensSold) => {
   try {
-    // console.log(id);
     const db = await connection();
     await db.collection(dbCollection)
       .updateOne({ _id: ObjectId(id) }, { $set: { itensSold } });
@@ -59,9 +57,25 @@ const updateSale = async (id, itensSold) => {
   }
 };
 
+const deleteSaleById = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return null;
+  }
+  try {
+    const db = await connection();
+    const saleBeforeDelete = await findById(id);
+    await db.collection(dbCollection)
+      .deleteOne({ _id: ObjectId(id) });
+    return saleBeforeDelete;
+  } catch (error) {
+    return process.exit(1);
+  }
+};
+
 module.exports = {
   addSales,
   findAll,
   findById,
   updateSale,
+  deleteSaleById,
 };

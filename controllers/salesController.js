@@ -3,6 +3,24 @@ const salesService = require('../services/salesService');
 
 const route = express.Router();
 
+// Deleta uma venda
+route.delete('/sales/:id', async (req, res, _next) => {
+  try {
+    const deletedResult = await salesService.deleteASale(req.params.id);
+    const keysOfResult = Object.keys(deletedResult);
+
+    if (keysOfResult && keysOfResult[0] === 'err') {
+      res.status(422).json(deletedResult);
+    }
+
+    if (deletedResult) {
+      res.status(200).json(deletedResult);
+    }
+  } catch (error) {
+    res.status(500);
+  }
+});
+
 // Lista as vendas
 route.get('/sales', async (_req, res, _next) => {
   const salesList = await salesService.listSales();

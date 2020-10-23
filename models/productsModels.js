@@ -10,18 +10,16 @@ const cadastro = async (data) => {
   return produto.ops[0];
 };
 
-const findByName = async (name) => {
-  return connection().then((db) => db.collection('products').findOne({ name: name }));
-};
+const findByName = async (name) =>
+  connection().then((db) => db.collection('products').findOne({ name }));
 
 const findById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
-  return await connection().then((db) => db.collection('products').findOne(ObjectId(id)))
+  return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
 };
 
-const findAll = async () => {
-  return await connection().then((db) => db.collection('products').find().toArray())
-};
+const findAll = async () =>
+  await connection().then((db) => db.collection('products').find().toArray());
 
 module.exports = {
   cadastro,

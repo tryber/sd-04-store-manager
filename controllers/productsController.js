@@ -28,7 +28,7 @@ const produtoPorId = async (req, res) => {
     if (!produto) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' }});
 
     res.status(200).json(produto);
-  } catch {
+  } catch (_e) {
     return res.status(500).json({ err: { code: 'invalid_data', message: 'Requisição mal sucedida'}});
   }
 }

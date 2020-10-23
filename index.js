@@ -16,6 +16,6 @@ app.use(bodyParser.json());
 app.post('/products', isValidProduct, productController.cadastroProduto);
 
 app.get('/products', productController.listaDeProdutos);
-app.get('/products/:id', productController.produtoPorId)
+app.get('/products/:id', productController.produtoPorId);
 
 app.listen(3000, () => console.log('A mãe ta on na 3000!'));

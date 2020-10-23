@@ -4,21 +4,20 @@ const storeService = require('../service/storeService');
 const cadastraProduto = async (req, res) => {
   const { name, quantity } = req.body;
   console.log(name);
-  const errorCode = 422
 
   const nameProd = await dataStore.findByName({ name });
 
   if (name.length <= 5) {
-    storeService.countProductSize(res, errorCode);
+    storeService.countProductSize(res);
   }
   if (quantity <= 0) {
-    storeService.countMoreThenZero(res, errorCode);
+    storeService.countMoreThenZero(res);
   }
   if (typeof quantity === 'string') {
-    storeService.verifyString(res, errorCode);
+    storeService.verifyString(res);
   }
   if (nameProd && nameProd.name === name) {
-    storeService.verifyWithExist(res, errorCode);
+    storeService.verifyWithExist(res);
   }
   {
     const product = await dataStore.cadastraProduto(name, quantity);

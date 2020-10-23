@@ -1,25 +1,23 @@
-const countProductSize = (res, errorCode) => {
-  res.status(errorCode).json({
-    err: { code: 'invalid_data', message: '"name" length must be at least 5 characters long' },
+const status = (res, code, message) => {
+  res.status(422).json({
+    err: { code, message },
   });
 };
 
-const countMoreThenZero = (res, errorCode) => {
-  res.status(errorCode).json({
-    err: { code: 'invalid_data', message: '"quantity" must be larger than or equal to 1' },
-  });
+const countProductSize = (res) => {
+  status(res, 'invalid_data', '"name" length must be at least 5 characters long');
 };
 
-const verifyString = (res, errorCode) => {
-  res.status(errorCode).json({
-    err: { code: 'invalid_data', message: '"quantity" must be a number' },
-  });
+const countMoreThenZero = (res) => {
+  status(res, 'invalid_data', '"quantity" must be larger than or equal to 1');
 };
 
-const verifyWithExist = (res, errorCode) => {
-  res.status(errorCode).json({
-    err: { code: 'invalid_data', message: 'Product already exists' },
-  });
+const verifyString = (res) => {
+  status(res, 'invalid_data', '"quantity" must be a number');
+};
+
+const verifyWithExist = (res) => {
+  status(res, 'invalid_data', 'Product already exists');
 };
 
 module.exports = {

@@ -27,6 +27,25 @@ const cadastraProduto = async (req, res) => {
   }
 };
 
+const listaProdutos = async (_, res) => {
+  const listProd = await dataStore.listProducts();
+
+  res.status(200).json({ products: listProd });
+};
+
+const listProdutosPorId = async (req, res) => {
+  const { id } = req.params;
+  const productById = await dataStore.findById(id);
+
+  if (!productById) {
+    storeService.verifyProductById(res);
+  }
+
+  res.status(200).json(productById);
+};
+
 module.exports = {
   cadastraProduto,
+  listaProdutos,
+  listProdutosPorId,
 };

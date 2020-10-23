@@ -11,6 +11,8 @@ app.get('/', (request, response) => {
 });
 
 app.post('/products', storeController.cadastraProduto);
+app.get('/products', storeController.listaProdutos);
+app.get('/products/:id', storeController.listProdutosPorId);
 
 const PORT = process.env.PORT || 3000;
 

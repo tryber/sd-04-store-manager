@@ -20,9 +20,14 @@ const verifyWithExist = (res) => {
   status(res, 'invalid_data', 'Product already exists');
 };
 
+const verifyProductById = (res) => {
+  status(res, 'invalid_data', 'Wrong id format');
+};
+
 module.exports = {
   countProductSize,
   countMoreThenZero,
   verifyString,
   verifyWithExist,
+  verifyProductById,
 };

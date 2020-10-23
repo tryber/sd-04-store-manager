@@ -41,13 +41,17 @@ const atualizacao = async (id, name, quantity) => {
   return newProduct;
 };
 
-const deletar = async (id) => {
-  const produto = await findById(id);
-
-  if (!produto) return null;
-
-  connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
-  return produto;
+const deletar = async (id, type) => {
+  let result = {};
+  if (type === 'prod') {
+    result = await findById(id, 'prod');
+    connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+  } else {
+    result = await findById(id);
+    connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+  }
+  if (!result) return null;
+  return result;
 };
 
 module.exports = {

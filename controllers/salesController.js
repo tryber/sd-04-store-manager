@@ -1,4 +1,4 @@
-const { cadastro, findAll, findById } = require('../models/productsModels');
+const { cadastro, findAll, findById, deletar } = require('../models/productsModels');
 
 const cadastroVenda = async (req, res) => {
   try {
@@ -23,9 +23,16 @@ const listOneSale = async (req, res) => {
   return res.status(200).json(sale);
 };
 
+const deleteSale = async (req, res) => {
+  const delet = await deletar(req.params.id);
+
+  if (!delet) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
+    res.status(200).json(deletProd);
+};
 
 module.exports = {
   cadastroVenda,
   listAllSales,
   listOneSale,
+  deleteSale,
 };

@@ -47,7 +47,7 @@ const atualizarProduto = async (req, res) => {
 
 const deletarProduto = async (req, res) => {
   try {
-    const deletProd = await deletar(req.params.id);
+    const deletProd = await deletar(req.params.id, 'prod');
 
     if (!deletProd) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
     res.status(200).json(deletProd);

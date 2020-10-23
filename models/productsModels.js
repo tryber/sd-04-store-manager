@@ -2,7 +2,7 @@ const connection = require('./connection');
 const { ObjectId } = require('mongodb');
 
 const cadastro = async (data, type) => {
-  const result;
+  const result = '';
   const db = await connection();
   if (type === prod) {
     result = await db.collection('products').insertOne(data);

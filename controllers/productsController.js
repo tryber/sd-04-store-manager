@@ -4,7 +4,7 @@ const { cadastro, findAll, findById, atualizacao, deletar } = require('../models
 const cadastroProduto = async (req, res) => {
   try {
     const { name, quantity } = req.body;
-    const cad = await cadastro({ name, quantity }, prod);
+    const cad = await cadastro({ name, quantity }, 'prod');
 
     return res.status(201).json(cad);
   } catch (_e) {
@@ -13,7 +13,7 @@ const cadastroProduto = async (req, res) => {
 };
 
 const listaDeProdutos = async (_req, res) => {
-  const produtos = await findAll(prod);
+  const produtos = await findAll('prod');
 
   if (!produtos) return res.status(404).json({ err: { code: 'invalid_data', message: 'Produtos não encontrado' } });
   res.status(200).json({ products: produtos });
@@ -23,7 +23,7 @@ const produtoPorId = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const produto = await findById(id, prod);
+    const produto = await findById(id, 'prod');
 
     if (!produto) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
 

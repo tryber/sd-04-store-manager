@@ -15,7 +15,7 @@ const isValidSale = (itensSold) => {
 
 const getAllSales = async () => ({ sales: await salesModel.getAllSales() });
 
-const getSalesById = async (id) => await salesModel.getSalesById(id);
+const getSalesById = async (id) => salesModel.getSalesById(id);
 
 const verifyId = (id) => getSalesById(id);
 

@@ -45,7 +45,7 @@ const removeProduct = async (id) => {
 const updateProduct = async (id, name, quantity) => {
   if (!(await getProductById(id))) return false;
 
-  await connection.then((db) =>
+  await connection().then((db) =>
     db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
   return true;
 };

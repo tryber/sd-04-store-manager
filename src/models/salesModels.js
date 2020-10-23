@@ -1,10 +1,12 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
+const dbCollection = 'sales';
+
 const registerSales = async (itensSold) => {
   try {
     const db = await connection();
-    const sales = await db.collection('sales').insertOne({ itensSold });
+    const sales = await db.collection(dbCollection).insertOne({ itensSold });
 
     return sales.ops[0];
   } catch (err) {
@@ -15,7 +17,7 @@ const registerSales = async (itensSold) => {
 const getAllSales = async () => {
   try {
     const db = await connection();
-    const getSales = await db.collection('sales').find({}).toArray();
+    const getSales = await db.collection(dbCollection).find({}).toArray();
     return getSales;
   } catch (err) {
     console.error('getAllSales', err);
@@ -27,7 +29,7 @@ const getSaleById = async (id) => {
     if (!ObjectId.isValid(id)) return null;
 
     const db = await connection();
-    const getSale = await db.collection('sales').findOne(ObjectId(id));
+    const getSale = await db.collection(dbCollection).findOne(ObjectId(id));
 
     return getSale;
   } catch (err) {
@@ -43,7 +45,7 @@ const updateSale = async (id, sale) => {
 
     const db = await connection();
     await db
-      .collection('sales')
+      .collection(dbCollection)
       .updateOne(
         { _id: ObjectId(id), 'itensSold.productId': idProd },
         { $set: { 'itensSold.0.quantity': qntProd } },
@@ -56,7 +58,7 @@ const updateSale = async (id, sale) => {
 const deleteSales = async (id) => {
   try {
     const db = await connection();
-    await db.collection('sales').deleteOne({ _id: ObjectId(id) });
+    await db.collection(dbCollection).deleteOne({ _id: ObjectId(id) });
   } catch (err) {
     console.error('deleteSale', err);
   }

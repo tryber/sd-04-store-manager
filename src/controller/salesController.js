@@ -55,7 +55,6 @@ const updateSaleController = async (req, res) => {
 
     const saleUpdate = await salesModels.getSaleById(id);
 
-    console.log(saleUpdate);
     return res.status(HTTPStatus.OK).json(saleUpdate);
   } catch (err) {
     console.error('getSaleByIdController', err);

@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/products', routes.productRouter);
+app.use('/sales', routes.salesRouter);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {

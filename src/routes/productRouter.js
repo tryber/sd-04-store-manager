@@ -1,5 +1,5 @@
 const express = require('express');
-const { validations } = require('../service');
+const { validationsProducts } = require('../service');
 const { productController } = require('../controller');
 
 const productRouter = express.Router();
@@ -7,8 +7,8 @@ const productRouter = express.Router();
 productRouter.get('/', productController.getAllProdController);
 productRouter.post(
   '/',
-  validations.validationExistProd,
-  validations.validationNameQuantity,
+  validationsProducts.validationExistProd,
+  validationsProducts.validationNameQuantity,
   productController.registerProdController,
 );
 
@@ -16,8 +16,8 @@ productRouter.get('/:id', productController.getProdByIdController);
 
 productRouter.put(
   '/:id',
-  validations.validationNameQuantity,
-  validations.validationNameUpdate,
+  validationsProducts.validationNameQuantity,
+  validationsProducts.validationNameUpdate,
   productController.updateProductController,
 );
 

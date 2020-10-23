@@ -17,12 +17,12 @@ const add = async (name, quantity) => {
     db.collection('products').insertOne({ name, quantity }),
   );
   // console.log('result.ops[0]', result.ops[0]);
-  const { _id} = result.ops[0];
+  const { _id } = result.ops[0];
   const product = {
     id: _id,
     name,
     quantity,
-  }
+  };
   return product;
 };
 

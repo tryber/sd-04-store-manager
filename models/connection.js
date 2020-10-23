@@ -3,8 +3,8 @@ const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
 // const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
 const DATABASE_NAME = 'StoreManager';
 
-const connection = () => {
-  return mongoClient
+const connection = () =>
+  mongoClient
     .connect(MONGO_DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -14,6 +14,5 @@ const connection = () => {
       console.error(err);
       process.exit(1);
     });
-};
 
 module.exports = connection;

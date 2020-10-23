@@ -29,7 +29,7 @@ const produtoPorId = async (req, res) => {
 
     res.status(200).json(produto);
   } catch (_e) {
-    return res.status(500).json({ err: { code: 'invalid_data', message: 'Requisição mal sucedida'} });
+    return res.status(500).json({ err: { code: 'invalid_data', message: 'Requisição mal sucedida' } });
   }
 };
 

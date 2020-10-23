@@ -20,7 +20,7 @@ const findById = async (id) => {
 };
 
 const findAll = async () => {
-  await connection().then((db) => db.collection('products').find().toArray())
+  return await connection().then((db) => db.collection('products').find().toArray())
 };
 
 module.exports = {

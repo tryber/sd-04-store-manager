@@ -14,9 +14,9 @@ const cadastroProduto = async (req, res) => {
 
 const listaDeProdutos = async (_req, res) => {
   const produtos = await findAll();
-  console.log(produtos)
+
   if(!produtos) return res.status(404).json({ err: { code: 'invalid_data', message: 'Produtos não encontrado' }});
-  res.status(200).json(produtos);
+  res.status(200).json({products: produtos});
 };
 
 const produtoPorId = async (req, res) => {
@@ -25,7 +25,7 @@ const produtoPorId = async (req, res) => {
 
     const produto = await findById(id);
 
-    if (!produto) return res.status(404).json({ err: { code: 'invalid_data', message: 'Produto não encontrado' }});
+    if (!produto) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' }});
 
     res.status(200).json(produto);
   } catch {

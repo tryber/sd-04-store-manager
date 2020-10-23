@@ -5,8 +5,12 @@ const productValidation = require('../middlewares/products');
 const router = express.Router();
 
 router.get('/', async (_req, res) => {
-  const products = await model.getProductsOrSales('products');
-  res.status(200).json({ products });
+  try {
+    const products = await model.getProductsOrSales('products');
+    if (products) return res.status(200).json({ products });
+  } catch (_err) {
+    res.status(500).json({ message: 'No products found' });
+  }
 });
 
 router.get('/:id', async (req, res) => {
@@ -51,12 +55,15 @@ router.put(
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const product = await model.getProductOrSaleById(id, 'products');
-  if (!product) {
-    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
-  }
-  const deleted = await model.removeProductOrSale(id, 'products');
-  if (deleted) {
-    return res.status(200).json(product);
+  try {
+    const deleted = await model.removeProductOrSale(id, 'products');
+    if (deleted) {
+      return res.status(200).json(product);
+    }
+  } catch (_err) {
+    if (!product) {
+      return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
+    }
   }
 });
 

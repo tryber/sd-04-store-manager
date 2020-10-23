@@ -10,10 +10,8 @@ const getProductOrSaleById = async (id, coll) => {
   return result;
 };
 
-const getProductByName = async (name) => {
-  const product = await connection().then((db) => db.collection('products').findOne({ name }));
-  return product;
-};
+const getProductByName = async (name) =>
+  connection().then((db) => db.collection('products').findOne({ name }));
 
 const addProduct = async (name, quantity) => {
   const result = await connection().then((db) =>

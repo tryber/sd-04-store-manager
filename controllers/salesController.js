@@ -1,7 +1,6 @@
 const rescue = require('express-rescue');
 const Boom = require('@hapi/boom');
 const { newSale, isValidSale } = require('../services/salesService');
-const { getAllSales } = require('../models/salesModel');
 const salesService = require('../services/salesService');
 
 const addNewSale = rescue(async (req, res, next) => {
@@ -17,7 +16,7 @@ const addNewSale = rescue(async (req, res, next) => {
 });
 
 const listSales = async (_req, res) => {
-  const sales = await getAllSales();
+  const sales = await salesService.getAllSales();
   res.status(200).json(sales);
 };
 

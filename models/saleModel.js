@@ -2,20 +2,17 @@ const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const getAllSales = async () => {
-  try {
-    const sales = await connection()
-      .then((db) => db.collection('sales').find().toArray())
-      .catch((err) => {
-        throw err;
-      });
-    return sales;
-  } catch (err) {
-    throw err;
-  }
+  const sales = await connection()
+    .then((db) => db.collection('sales').find().toArray())
+    .catch((err) => {
+      throw err;
+    });
+  return sales;
 };
 
 const getSaleById = async (id) => {
-  if (!ObjectId.isValid(id)) return false;
+  const idIsValid = ObjectId(id);
+  if (!idIsValid) return false;
   await connection()
     .then((db) => db.collection('sales').findOne(ObjectId(id)))
     .catch((err) => {

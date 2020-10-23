@@ -11,7 +11,7 @@ const add = async (name, quantidade) => {
 
     return produto;
   } else if (validaNome.message !== '') return validaNome;
-  else return validaQuantidade;
+  return validaQuantidade;
 };
 
 const update = async (id, name, quantidade) => {
@@ -24,7 +24,7 @@ const update = async (id, name, quantidade) => {
 
     return result;
   } else if (validaNome.message !== '') return validaNome;
-  else return validaQuantidade;
+  return validaQuantidade;
 };
 
 const getById = async (id) => {

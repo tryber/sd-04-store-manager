@@ -34,7 +34,7 @@ const updateSaleModel = async (id, productId, quantity) => {
 
 const deleteModel = async (id) => {
   await connection().then((db) =>
-    db.collection('sales').deleteOne({ _id: ObjectId(id) }, function (err) {
+    db.collection('sales').deleteOne({ _id: ObjectId(id) }, (err) => {
       if (err) throw err;
       console.log('1 document deleted');
     }),

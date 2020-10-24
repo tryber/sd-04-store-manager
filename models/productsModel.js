@@ -12,4 +12,8 @@ const newProduct = async (name, quantity) => {
 const findById = async (id) =>
   connection().then((db) => db.collection('products').findOne(ObjectId(id)));
 
-module.exports = { getAll, newProduct, findById };
+const updateProduct = async (id, name, quantity) =>
+  connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
+
+module.exports = { getAll, newProduct, findById, updateProduct };

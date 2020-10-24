@@ -35,4 +35,17 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.put(
+  '/:id',
+  productValidations.productLengthValidation,
+  productValidations.productQuantityValidation,
+  productValidations.productQuantityTypeOfValidation,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    const { id } = req.params;
+    await product.updateProduct(id, name, quantity);
+    res.status(201).json(await product.findById(id));
+  },
+);
+
 module.exports = router;

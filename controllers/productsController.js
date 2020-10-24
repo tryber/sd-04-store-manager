@@ -58,4 +58,15 @@ router.put(
   },
 );
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedProduct = await productsModel.getProductById(id);
+    await productsModel.deleteProduct(id);
+    res.status(200).json(deletedProduct);
+  } catch (_err) {
+    res.status(422).json(returnResponse('invalid_data', 'Wrong id format'));
+  }
+});
+
 module.exports = router;

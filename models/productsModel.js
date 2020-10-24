@@ -19,7 +19,6 @@ const getProductByName = async (name) => {
 const insertProduct = async (name, quantity) => {
   const conn = await connection();
   const product = await conn.collection('products').insertOne({ name, quantity });
-
   return product.ops[0];
 };
 
@@ -31,10 +30,17 @@ const updateProduct = async (id, name, quantity) => {
   return product;
 };
 
+const deleteProduct = async (id) => {
+  const conn = await connection();
+  await conn.collection('products').deleteOne({ _id: ObjectId(id) });
+  return true;
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   getProductByName,
   insertProduct,
   updateProduct,
+  deleteProduct,
 };

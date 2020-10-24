@@ -3,7 +3,6 @@ const {
   validateIsNumber,
   validateQuantity,
   validateExistProd,
-/*   validateID, */
 } = require('../services/productsServices');
 
 const validateProd = async (req, res, next) => {
@@ -32,16 +31,25 @@ const validateProd = async (req, res, next) => {
   next();
 };
 
-// const validatProductId = async (req, res, next) => {
-//   const { id } = req.body;
+const validateUpdateProd = async (req, res, next) => {
+  const { name, quantity } = req.body;
+  const validateQuant = await validateQuantity(quantity);
+  const validateIsNumb = await validateIsNumber(quantity);
+  const validateNameSize = await validateName(name);
 
-//   const validateProdID = await validateID(id);
+  if (validateQuant) {
+    return res.status(422).json(validateQuant);
+  }
 
-//   if (!validateProdID) {
-//     return res.status(422).json(validateProdID);
-//   }
+  if (validateIsNumb) {
+    return res.status(422).json(validateIsNumb);
+  }
 
-//   next();
-// };
+  if (validateNameSize) {
+    return res.status(422).json(validateNameSize);
+  }
 
-module.exports = { validateProd/* , validatProductId */ };
+  next();
+};
+
+module.exports = { validateProd, validateUpdateProd };

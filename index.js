@@ -1,6 +1,6 @@
 const express = require('express');
 const productsRouter = require('./controllers/productsRouter');
-// const { salesRouter } = require('./controllers/salesRouter');
+const salesRouter = require('./controllers/salesRouter');
 
 const PORT = 3000;
 const app = express();
@@ -13,6 +13,6 @@ app.get('/', (request, response) => {
 });
 
 app.use('/products', productsRouter);
-// app.use('/sales', salesRouter);
+app.use('/sales', salesRouter);
 
 app.listen(PORT, () => console.log(`Listening PORT ${PORT}`));

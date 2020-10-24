@@ -3,14 +3,13 @@ const {
   getAllProdMod,
   validateNameMod,
   getByIdProdMod,
+  updateByIdProdMod,
+  deleteProdMod,
 } = require('../models/productsModel');
 
 const invalidData = (message) => ({ err: { code: 'invalid_data', status: 422, message } });
-// const notFound = (message) => ({ err: { code: 'not_found', status: 404, message } });
-// const stockProblem = (message) => ({ err: { code: 'stock_problem', status: 404, message } });
 
 const isNumber = (quantity) => /^[0-9]+$/.test(quantity);
-// const idRegex = (id) => /^[0-9a-fA-F]{24}$/.test(id);
 
 const validateName = async (name) => {
   if (name.length < 5) {
@@ -40,12 +39,6 @@ const validateExistProd = async (name) => {
   }
 };
 
-// const validateID = (id) => {
-//   const idRegex = /^[0-9a-fA-F]{24}$/.test(id);
-//   if (!idRegex) return invalidData('Wrong id format');
-//   return false;
-// };
-
 const registerProdServ = async (name, quantity) => {
   const insertProd = await insertProdMod(name, quantity);
   return insertProd;
@@ -64,6 +57,19 @@ const listByIdProdServ = async (id) => {
   return productId;
 };
 
+const updateByIdProdServ = async (id, name, quantity) => {
+  const updateProd = await updateByIdProdMod(id, name, quantity);
+  return updateProd;
+};
+
+const deleteProdServ = async (id) => {
+  const deleteProd = await deleteProdMod(id);
+  if (!deleteProd) {
+    return invalidData('Wrong id format');
+  }
+  return deleteProd;
+};
+
 module.exports = {
   validateName,
   validateQuantity,
@@ -72,4 +78,6 @@ module.exports = {
   registerProdServ,
   listAllProdServ,
   listByIdProdServ,
+  updateByIdProdServ,
+  deleteProdServ,
 };

@@ -9,7 +9,7 @@ const insertProdMod = async (name, quantity) => {
     const result = { _id, name, quantity };
     return result;
   } catch (_e) {
-    throw new Error('productRegistration connection failed');
+    throw new Error('insertProdMod connection failed');
   }
 };
 
@@ -20,7 +20,7 @@ const validateNameMod = async (name) => {
 
     return findNameProd;
   } catch (_e) {
-    throw new Error('validateName connection failed');
+    throw new Error('validateNameMod connection failed');
   }
 };
 
@@ -33,9 +33,29 @@ const getAllProdMod = async () => {
 
 const getByIdProdMod = async (id) => {
   if (!ObjectId.isValid(id)) return null;
+
   const db = await connection();
   const productId = await db.collection('products').findOne(ObjectId(id));
   return productId;
+};
+
+const updateByIdProdMod = async (id, name, quantity) => {
+  const db = await connection();
+  const updateProd = await db
+    .collection('products')
+    .updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+
+  return updateProd;
+};
+
+const deleteProdMod = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await connection();
+  const deleteProd = await db.collection('products').deleteOne({ _id: ObjectId(id) });
+
+  console.log(deleteProd);
+  return deleteProd;
 };
 
 module.exports = {
@@ -43,4 +63,6 @@ module.exports = {
   getAllProdMod,
   validateNameMod,
   getByIdProdMod,
+  updateByIdProdMod,
+  deleteProdMod,
 };

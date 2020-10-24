@@ -12,6 +12,8 @@ const add = async (name, quantidade) => {
     return produto;
   } else if (validaNome.message !== '') return validaNome;
   return validaQuantidade;
+
+  // if (result.code === 'invalid_data') return res.status(422).json({ err: result });
 };
 
 const update = async (id, name, quantidade) => {

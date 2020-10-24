@@ -6,71 +6,54 @@ const productModel = require('../model/productModel');
 const router = express.Router();
 
 router.get('/', async (_req, res) => {
-  try {
-    const products = await productModel.getAll();
+  const products = await productModel.getAll();
 
-    res.status(200).json({ products });
-  } catch (_err) {
-    console.log(_err.message);
-    res.status(500).json({ message: 'Erro ao receber os produtos' });
-  }
+  res.status(200).json({ products });
 });
 
 router.get('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await productService.getById(id);
+  const { id } = req.params;
+  const result = await productService.getById(id);
 
-    if (result.code === 'invalid_data') return res.status(422).json({ err: result });
-    res.status(200).json(result);
-  } catch (_err) {
-    console.log(_err.message);
-    res.status(500).json({ message: 'Erro ao receber o produto' });
-  }
+  if (result.code === 'invalid_data') return res.status(422).json({ err: result });
+  res.status(200).json(result);
 });
 
 router.put('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, quantity } = req.body;
+  const { id } = req.params;
+  const { name, quantity } = req.body;
 
-    const result = await productService.update(id, name, quantity);
+  const result = await productService.update(id, name, quantity);
 
-    if (result.code === 'invalid_data') return res.status(422).json({ err: result });
-    res.status(200).json(result);
-  } catch (_err) {
-    console.log(_err.message);
-    res.status(500).json({ message: 'Erro ao atualizar o produto' });
-  }
+  if (result.code === 'invalid_data') return res.status(422).json({ err: result });
+  res.status(200).json(result);
 });
 
 router.delete('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await productModel.remove(id);
+  const { id } = req.params;
+  const result = await productModel.remove(id);
 
-    if (!result) {
-      return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
-    }
-    res.status(200).json(result);
-  } catch (_err) {
-    console.log(_err.message);
-    res.status(500).json({ message: 'Erro ao deletar o produto' });
+  if (!result) {
+    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
   }
+  res.status(200).json(result);
 });
 
 router.post('/', async (req, res) => {
-  try {
-    const { name, quantity } = req.body;
+  const { name, quantity } = req.body;
 
-    const result = await productService.add(name, quantity);
+  const result = await productService.add(name, quantity);
 
-    if (result.code === 'invalid_data') return res.status(422).json({ err: result });
-    res.status(201).json(result);
-  } catch (_err) {
-    console.log(_err.message);
-    res.status(500).json({ message: 'Erro ao cadadastrar o produto' });
-  }
+  if (result.code === 'invalid_data') return res.status(422).json({ err: result });
+  res.status(201).json(result);
+});
+
+router.post('/', async (req, res) => {
+  const { name, quantity } = req.body;
+
+  const result = await productService.add(name, quantity);
+
+  res.status(201).json(result);
 });
 
 module.exports = router;

@@ -17,7 +17,9 @@ app.get('/products/:id', productController.listProdutosPorId);
 app.put('/products/:id', productController.updateProduct);
 app.delete('/products/:id', productController.deleteProduct);
 
-app.post('/sales', salesController.cadastraVenda);
+app.post('/sales', salesController.registerSaleController);
+app.get('/sales', salesController.listSalesController);
+app.get('/sales/:id', salesController.listSaleByID);
 
 const PORT = process.env.PORT || 3000;
 

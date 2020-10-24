@@ -20,6 +20,7 @@ app.delete('/products/:id', productController.deleteProduct);
 app.post('/sales', salesController.registerSaleController);
 app.get('/sales', salesController.listSalesController);
 app.get('/sales/:id', salesController.listSaleByID);
+app.put('/sales/:id', salesController.updateSale);
 
 const PORT = process.env.PORT || 3000;
 

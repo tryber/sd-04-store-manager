@@ -42,8 +42,6 @@ const listProdutosPorId = async (req, res) => {
 const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
-  await productModel.updateProduct(id, name, quantity);
-  const productById = await productModel.findById(id);
 
   if (name.length <= 5) {
     productService.countProductSize(res);
@@ -54,6 +52,9 @@ const updateProduct = async (req, res) => {
   if (typeof quantity === 'string') {
     productService.verifyString(res);
   }
+
+  await productModel.updateProduct(id, name, quantity);
+  const productById = await productModel.findById(id);
   res.status(200).json(productById);
 };
 

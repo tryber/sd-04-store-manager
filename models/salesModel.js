@@ -20,14 +20,22 @@ const listSaleById = async (id) => {
   }
 };
 
-listSaleById();
 const registerSale = async (itensSold) => {
   const data = await connection().then((db) => db.collection('sales').insertOne({ itensSold }));
   return data.ops[0];
+};
+
+const updateSaleModel = async (id, productId, quantity) => {
+  console.log(productId, quantity);
+  const myQuery = { _id: ObjectId(id) };
+  const newValues = { $set: { itensSold: [{productId, quantity}] } };
+
+  await connection().then((db) => db.collection('sales').updateOne(myQuery, newValues));
 };
 
 module.exports = {
   registerSale,
   listSales,
   listSaleById,
+  updateSaleModel,
 };

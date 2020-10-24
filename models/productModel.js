@@ -25,10 +25,21 @@ const findByName = async (obj) => {
 
 const findById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
-
   const data = await connection().then((db) => db.collection('products').findOne(ObjectId(id)));
 
   return data;
+};
+
+const updateProduct = async (id, name, quantity) => {
+  const myQuery = { _id: ObjectId(id) };
+  const newValues = { $set: { name, quantity } };
+
+  await connection().then((db) => db.collection('products').updateOne(myQuery, newValues));
+};
+
+const removeProduct = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
 };
 
 module.exports = {
@@ -36,4 +47,6 @@ module.exports = {
   findByName,
   listProducts,
   findById,
+  updateProduct,
+  removeProduct,
 };

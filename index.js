@@ -1,5 +1,6 @@
 const express = require('express');
-const storeController = require('./controller/storeController');
+const productController = require('./controller/productController');
+const salesController = require('./controller/salesController');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -10,9 +11,13 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.post('/products', storeController.cadastraProduto);
-app.get('/products', storeController.listaProdutos);
-app.get('/products/:id', storeController.listProdutosPorId);
+app.post('/products', productController.cadastraProduto);
+app.get('/products', productController.listaProdutos);
+app.get('/products/:id', productController.listProdutosPorId);
+app.put('/products/:id', productController.updateProduct);
+app.delete('/products/:id', productController.deleteProduct);
+
+app.post('/sales', salesController.cadastraVenda);
 
 const PORT = process.env.PORT || 3000;
 

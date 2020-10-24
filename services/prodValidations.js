@@ -1,0 +1,36 @@
+// na camada de serviço ficam as regras do negócio - e a camada que manda em tudo
+const { productModel } = require('../models');
+const { errorsMessages } = require('./errors');
+
+const validationNameQuantity = (req, res, next) => {
+  const { name, quantity } = req.body;
+
+  if (!Number.isNaN(Number(name)) || name.length < 5) {
+    return errorsMessages(res, '"name" length must be at least 5 characters long', 'invalid_data');
+  }
+  if (quantity <= 0) {
+    return errorsMessages(res, '"quantity" must be larger than or equal to 1', 'invalid_data');
+  }
+  if (Number.isNaN(Number(quantity))) {
+    return errorsMessages(res, '"quantity" must be a number', 'invalid_data');
+  }
+  next();
+};
+
+const validationExistProd = async (req, res, next) => {
+  try {
+    const { name } = req.body;
+    const existOrNotProduct = await productModel.getProdByName(name);
+    if (existOrNotProduct) {
+      return errorsMessages(res, 'Product already exists', 'invalid_data');
+    }
+    next();
+  } catch (err) {
+    console.error('validationExistProd', err);
+  }
+};
+
+module.exports = {
+  validationNameQuantity,
+  validationExistProd,
+};

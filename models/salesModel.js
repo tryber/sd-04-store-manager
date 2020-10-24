@@ -6,7 +6,6 @@ const add = async (itensSold) => {
   try {
     const db = await connection();
     const addSales = await db.collection('sales').insertOne({ itensSold });
-    console.log(addSales.ops)
     return addSales.ops[0];
   } catch (err) {
 

@@ -1,24 +1,12 @@
 const productsModel = require('../models/producstModel');
 const salesModel = require('../models/salesModel');
 
-const existProdutc = async (req, res, next) => {
-  /*  const { itensSold } = req.body;
-   const productId = itensSold[0].productId;
-   const product = await productsModel.getById(productId);
-   if (!product) {
-     res.status(422).send({
-       err: {
-         message: 'Produto não encontrado',
-       },
-     });
-   } */
-  return next();
-};
-
 const invalidInput = (req, res, next) => {
-  const { itensSold } = req.body;
+  const itensSold = req.body;
   let inputNumber = true;
-
+  itensSold.forEach((item) =>
+    isNaN(item.quantity) || item.quantity < 1 ? inputNumber = false : inputNumber
+  );
   if (!inputNumber) {
     return res.status(422).send({
       err: {
@@ -31,9 +19,8 @@ const invalidInput = (req, res, next) => {
 };
 
 const add = async (req, res) => {
-  const { itensSold } = req.body;
+  const itensSold = req.body;
   const addSales = await salesModel.add(itensSold);
-  
   if (addSales) {
     return res.status(200).json(addSales);
   }
@@ -45,7 +32,6 @@ const add = async (req, res) => {
 };
 
 module.exports = {
-  existProdutc,
   invalidInput,
   add,
 };

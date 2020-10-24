@@ -57,9 +57,27 @@ const updateProductController = async (req, res) => {
   }
 };
 
+const deleteProductController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteProd = await productModel.getProdById(id);
+
+    if (!deleteProd) {
+      return errors.errorsMessages(res, 'Wrong id format', 'invalid_data');
+    }
+
+    await productModel.deleteProduct(id);
+    return res.status(200).json(deleteProd);
+  } catch (err) {
+    console.error('deleteProductController', err);
+    return errors.errorsMessages(res);
+  }
+};
+
 module.exports = {
   createProdController,
   getAllProdController,
   getProdByIdController,
   updateProductController,
+  deleteProductController,
 };

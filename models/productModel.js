@@ -45,9 +45,20 @@ const getAllProducts = async () => {
   }
 };
 
+const updateProduct = async (id, name, quantity) => {
+  try {
+    const db = await connection();
+    await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+  } catch (err) {
+    console.error('updateProduct', err);
+  }
+};
+
 module.exports = {
   createProduct,
   getProdByName,
   getProdById,
   getAllProducts,
+  updateProduct,
+
 };

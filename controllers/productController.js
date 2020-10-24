@@ -41,8 +41,25 @@ const getProdByIdController = async (req, res) => {
   }
 };
 
+const updateProductController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+
+    await productModel.updateProduct(id, name, quantity);
+
+    const productUpdated = await productModel.getProdById(id);
+
+    return res.status(200).json(productUpdated);
+  } catch (err) {
+    console.error('updateProductController', err);
+    return errors.errorsMessages(res);
+  }
+};
+
 module.exports = {
   createProdController,
   getAllProdController,
   getProdByIdController,
+  updateProductController,
 };

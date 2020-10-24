@@ -30,7 +30,22 @@ const validationExistProd = async (req, res, next) => {
   }
 };
 
+const validationNameUpdate = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    const idExist = await productModel.getProdByName(name);
+    if (idExist && id !== idExist.id) {
+      return errorsMessages(res, 'Product already exists', 'invalid_data');
+    }
+    next();
+  } catch (err) {
+    console.error('validationNameUpdate', err);
+  }
+};
+
 module.exports = {
   validationNameQuantity,
   validationExistProd,
+  validationNameUpdate,
 };

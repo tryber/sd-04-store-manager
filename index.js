@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const productsController = require('./controllers/productsController');
+const salesController = require('./controllers/salesController');
 
 const app = express();
 
@@ -13,5 +14,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/products', productsController);
+
+app.use('/sales', salesController);
 
 app.listen(3000, () => console.log('Ouvindo a porta 3000'));

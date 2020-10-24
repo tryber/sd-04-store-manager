@@ -28,7 +28,7 @@ const registerSale = async (itensSold) => {
 const updateSaleModel = async (id, productId, quantity) => {
   console.log(productId, quantity);
   const myQuery = { _id: ObjectId(id) };
-  const newValues = { $set: { itensSold: [{productId, quantity}] } };
+  const newValues = { $set: { itensSold: [{ productId, quantity }] } };
 
   await connection().then((db) => db.collection('sales').updateOne(myQuery, newValues));
 };

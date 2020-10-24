@@ -32,7 +32,8 @@ const getAllProdMod = async () => {
 };
 
 const getByIdProdMod = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
+  const x = ObjectId.isValid(id);
+  if (!x) return null;
 
   const db = await connection();
   const productId = await db.collection('products').findOne(ObjectId(id));

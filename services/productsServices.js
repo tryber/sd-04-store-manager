@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 const {
   insertProdMod,
   getAllProdMod,
@@ -61,11 +62,11 @@ const updateByIdProdServ = async (id, name, quantity) => {
 };
 
 const deleteProdServ = async (id) => {
-  const deleteProd = await deleteProdMod(id);
-  if (!deleteProd) {
+  // const deleteProd = await deleteProdMod(id); //POr causa do CC
+  if (!(await deleteProdMod(id))) {
     return invalidData('Wrong id format');
   }
-  return deleteProd;
+  return (await deleteProdMod(id));
 };
 
 module.exports = {

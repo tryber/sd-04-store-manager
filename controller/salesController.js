@@ -1,6 +1,7 @@
 const salesModel = require('../models/salesModel');
 const productService = require('../service/productService');
 
+const succesCode = 200;
 const registerSaleController = async (req, res) => {
   const filteredValue = req.body.filter(
     (value) => value.quantity <= 0 || typeof value.quantity === 'string',
@@ -11,13 +12,13 @@ const registerSaleController = async (req, res) => {
   }
 
   const obj = await salesModel.registerSale(req.body);
-  res.status(200).json(obj);
+  res.status(succesCode).json(obj);
 };
 
-const listSalesController = async (req, res) => {
+const listSalesController = async (_, res) => {
   const listSales = await salesModel.listSales();
-
-  res.status(200).json({ sales: listSales });
+  
+  res.status(succesCode).json({ sales: listSales });
 };
 
 const listSaleByID = async (req, res) => {
@@ -27,7 +28,7 @@ const listSaleByID = async (req, res) => {
     res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
   }
 
-  res.status(200).json({ listedSale });
+  res.status(succesCode).json({ listedSale });
 };
 
 module.exports = {

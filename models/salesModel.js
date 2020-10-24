@@ -7,14 +7,22 @@ const insertSale = async (salesItens) => {
   return sales.ops[0];
 };
 
-const getAllSales = async () => {
-  const conn = await connection();
-  return { sales: await conn.collection('sales').find().toArray() };
+// const getAllSales = async () => {
+//   const conn = await connection();
+//   return { sales: await conn.collection('sales').find().toArray() };
+// };
+
+const getAllSales = () => {
+  connection().then((conn) => conn.collection('sales').find().toArray());
 };
 
-const getSaleById = async (id) => {
-  const conn = await connection();
-  return conn.collection('sales').findOne(ObjectId(id));
+// const getSaleById = async (id) => {
+//   const conn = await connection();
+//   return conn.collection('sales').findOne(ObjectId(id));
+// };
+
+const getSaleById = (id) => {
+  connection().then((conn) => conn.collection('sales').findOne(ObjectId(id)));
 };
 
 module.exports = {

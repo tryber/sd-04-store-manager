@@ -15,23 +15,46 @@ router.post('/', saleValidation.validateQuantity, async (req, res) => {
   }
 });
 
-router.get('/', async (_req, res) => {
-  try {
-    const sales = await salesModel.getAllSales();
-    res.status(200).json(sales);
-  } catch (_err) {
-    res.status(404).json(returnResponse('not_found', 'Sale not found'));
-  }
+// router.get('/', async (_req, res) => {
+//   try {
+//     const sales = await salesModel.getAllSales();
+//     res.status(200).json(sales);
+//   } catch (_err) {
+//     res.status(404).json(returnResponse('not_found', 'Sale not found'));
+//   }
+// });
+
+router.get('/', (_req, res) => {
+  salesModel
+    .getAllSales()
+    .then((sales) => {
+      res.status(200).json(sales);
+    })
+    .catch((_err) => {
+      res.status(404).json(returnResponse('not_found', 'Sale not found'));
+    });
 });
 
-router.get('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const sale = await salesModel.getSaleById(id);
-    res.status(200).json(sale);
-  } catch (_err) {
-    res.status(404).json(returnResponse('not_found', 'Sale not found'));
-  }
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const sale = await salesModel.getSaleById(id);
+//     res.status(200).json(sale);
+//   } catch (_err) {
+//     res.status(404).json(returnResponse('not_found', 'Sale not found'));
+//   }
+// });
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  salesModel
+    .getSaleById(id)
+    .then((sale) => {
+      res.status(200).json(sale);
+    })
+    .catch((_err) => {
+      res.status(404).json(returnResponse('not_found', 'Sale not found'));
+    });
 });
 
 module.exports = router;

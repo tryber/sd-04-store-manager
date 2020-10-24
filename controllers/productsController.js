@@ -1,12 +1,13 @@
 const express = require('express');
 const productsService = require('../services/productsService');
+const { validationProducts } = require('../middlewares/validationsProduct');
 
 const route = express.Router();
 
 // Posting a product on the DB
-route.post('/products', async (req, res, _next) => {
-  const { name, quantity } = req.body;
+route.post('/', validationProducts, async (req, res, _next) => {
   try {
+    const { name, quantity } = req.body;
     const postingProductOnDB = await productsService.addingProduct(name, quantity);
     const newProductKey = Object.keys(postingProductOnDB);
 
@@ -24,9 +25,9 @@ route.post('/products', async (req, res, _next) => {
 
 // Updating a product on the DB
 route.put('/products/:id', async (req, res, _next) => {
-  const { id } = req.params;
-  const { name, quantity } = req.body;
   try {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
     const updatingProductOnDB = await productsService.updatingProduct(id, name, quantity);
     const productKey = Object.keys(updatingProductOnDB);
 
@@ -75,8 +76,8 @@ route.get('/products', async (_req, res, _next) => {
 
 // Busca um produto pelo id
 route.get('/products/:id', async (req, res, _next) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     const productResult = await productsService.showASpecificProductById(id);
     const productKey = Object.keys(productResult);
 

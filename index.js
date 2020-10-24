@@ -1,5 +1,6 @@
 const express = require('express');
-const { productsRouter } = require('./controllers');
+const bodyParser = require('body-parser');
+const controllers = require('./controllers');
 
 const PORT = 3000;
 const app = express();
@@ -9,8 +10,8 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/products', controllers.productsController);
 
-app.use('/products', productsRouter);
-
-app.listen(PORT, () => console.log(`Listening PORT ${PORT}`));
+app.listen(PORT, () => console.log('Aplicação tá ON'));

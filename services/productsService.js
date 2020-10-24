@@ -74,6 +74,8 @@ const quantityCheck = async (quantity) => {
   }
 };
 
+// colocar essas funções em outro arquivo
+
 const addingProduct = async (name, quantity) => {
   const nameValidation = await nameCheck(name, true);
   const quantityValidation = await quantityCheck(quantity);
@@ -139,6 +141,7 @@ const showingProductById = async (id) => {
 
 module.exports = {
   validateNameType,
+  validateNameLength,
   addingProduct,
   updatingProduct,
   deletingProduct,

@@ -24,10 +24,15 @@ const verifyProductById = (res) => {
   statusInvalidData(res, 'invalid_data', 'Wrong id format');
 };
 
+const wrongIdFormat = (res) => {
+  statusInvalidData(res, 'invalid_data', 'Wrong product ID or invalid quantity');
+};
+
 module.exports = {
   countProductSize,
   countMoreThenZero,
   verifyString,
   verifyWithExist,
   verifyProductById,
+  wrongIdFormat,
 };

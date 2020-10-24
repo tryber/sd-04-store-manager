@@ -29,7 +29,7 @@ const updateSale = async (id, itemSold) => {
 
 module.exports = {
   insertSale,
-  findAllSales,
-  findSaleById,
+  // findAllSales,
+  // findSaleById,
   updateSale,
 };

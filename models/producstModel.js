@@ -51,9 +51,8 @@ const update = async (id, name, quantity) => {
 const exclude = async (id) => {
   try {
     const db = await connection();
-    const product = await getById(id);
     await db.collection('products').deleteOne({ _id: ObjectId(id) });
-    return product;
+    return true;
   } catch (err) {
     return null;
   }

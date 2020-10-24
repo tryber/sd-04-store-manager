@@ -79,8 +79,9 @@ const update = async (req, res) => {
 
 const exclude = async (req, res) => {
   const { id } = req.params;
-  const product = await productsModel.exclude(id);
-  if (product) {
+  const product = await productsModel.getById(id);
+  const excludeProduct = await productsModel.exclude(id);
+  if (product && excludeProduct) {
     return res.status(200).json(product);
   }
   return res.status(422).send({

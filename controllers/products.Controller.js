@@ -44,7 +44,7 @@ router.put(
     const { name, quantity } = req.body;
     const { id } = req.params;
     await product.updateProduct(id, name, quantity);
-    res.status(201).json(await product.findById(id));
+    res.status(200).json(await product.findById(id));
   },
 );
 

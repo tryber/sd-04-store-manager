@@ -5,7 +5,7 @@ const productLengthValidation = (req, res, next) => {
 
   if (name.length < 5) {
     return res.status(422).json({
-      err: { code: 'invalid_data', message: '"name\" length must be at least 5 characters long' },
+      err: { code: 'invalid_data', message: '"name" length must be at least 5 characters long' },
     });
   }
   next();
@@ -28,7 +28,7 @@ const productQuantityValidation = (req, res, next) => {
   const { quantity } = req.body;
   if (quantity <= 0) {
     return res.status(422).json({
-      err: { code: 'invalid_data', message: '"quantity\" must be larger than or equal to 1' },
+      err: { code: 'invalid_data', message: '"quantity" must be larger than or equal to 1' },
     });
   }
   next();
@@ -38,7 +38,7 @@ const productQuantityTypeOfValidation = (req, res, next) => {
   const { quantity } = req.body;
   if (!Number.isInteger(quantity)) {
     return res.status(422).json({
-      err: { code: 'invalid_data', message: '"quantity\" must be a number' },
+      err: { code: 'invalid_data', message: '"quantity" must be a number' },
     });
   }
   next();

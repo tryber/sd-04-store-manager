@@ -64,6 +64,7 @@ const deleteSaleById = async (id) => {
   try {
     const db = await connection();
     const saleBeforeDelete = await findById(id);
+    // if (!saleBeforeDelete)
     await db.collection(dbCollection)
       .deleteOne({ _id: ObjectId(id) });
     return saleBeforeDelete;

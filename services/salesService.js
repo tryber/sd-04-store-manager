@@ -8,6 +8,13 @@ const objectErro = {
   },
 };
 
+const objectDeleteErro = {
+  err: {
+    code: 'invalid_data',
+    message: 'Wrong sale ID format',
+  },
+};
+
 const reformatErrorMessage = (errorObject) => {
   if (errorObject) {
     return {
@@ -52,7 +59,7 @@ const deleteASale = async (id) => {
   const saleResultOfDeletion = await Sales.deleteSaleById(id);
 
   if (saleResultOfDeletion === null) {
-    return objectErro;
+    return objectDeleteErro;
   }
 
   return saleResultOfDeletion;

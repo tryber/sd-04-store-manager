@@ -39,9 +39,8 @@ route.get('/sales/:id', async (req, res, _next) => {
   const saleResult = await salesService.showASpecificSaleById(id);
   try {
     const keysOfResult = Object.keys(saleResult);
-
     if (keysOfResult && keysOfResult[0] === 'err') {
-      res.status(422).json(saleResult);
+      res.status(404).json(saleResult);
     }
 
     if (saleResult) {

@@ -30,7 +30,7 @@ const reformatErrorMessage = (errorObject) => {
 };
 
 const addSales = async (salesArray) => {
-  const { quantity } = salesArray[0];
+  const { quantity, productId } = salesArray[0];
   const quantityValidation = await productService.avaliateQuantity(quantity);
   const quantityIsInvalid = reformatErrorMessage(quantityValidation);
 
@@ -39,6 +39,9 @@ const addSales = async (salesArray) => {
   }
 
   const addSaleResultResponse = await Sales.addSales(salesArray);
+  const { quantity: productQuantity } = await productService.showASpecificProductById(productId);
+
+  productService.updateProductQuantity(productId, (productQuantity - quantity));
 
   return addSaleResultResponse;
 };
@@ -61,6 +64,10 @@ const deleteASale = async (id) => {
   if (saleResultOfDeletion === null) {
     return objectDeleteErro;
   }
+  const { productId, quantity } = saleResultOfDeletion.itensSold[0];
+  const { quantity: productQuantity } = await productService.showASpecificProductById(productId);
+
+  productService.updateProductQuantity(productId, (productQuantity + quantity));
 
   return saleResultOfDeletion;
 };

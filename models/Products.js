@@ -68,6 +68,17 @@ const updateValues = async (id, name, quantity) => {
   }
 };
 
+const updateQuantity = async (id, quantity) => {
+  try {
+    const db = await connection();
+    await db.collection(dbCollection)
+      .updateOne({ _id: ObjectId(id) }, { $set: { quantity } });
+    return true;
+  } catch (error) {
+    return process.exit(1);
+  }
+};
+
 const deleteById = async (id) => {
   try {
     if (!ObjectId.isValid(id)) {
@@ -89,5 +100,6 @@ module.exports = {
   findById,
   findByName,
   updateValues,
+  updateQuantity,
   deleteById,
 };

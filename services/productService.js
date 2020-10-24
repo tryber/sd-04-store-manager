@@ -84,6 +84,8 @@ const updateAProduct = async (id, name, quantity) => {
   return updateResultResponse;
 };
 
+const updateProductQuantity = (id, difference) => Products.updateQuantity(id, difference);
+
 const wrongIdResponse = () => ({
   err: {
     code,
@@ -116,6 +118,7 @@ const showASpecificProductById = async (id) => {
 module.exports = {
   addAProduct,
   updateAProduct,
+  updateProductQuantity,
   deleteAProduct,
   listProducts,
   showASpecificProductById,

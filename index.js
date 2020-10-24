@@ -1,6 +1,5 @@
-// não remova esse endpoint, e para o avaliador funcionar
-app.get('/', (request, response) => {
-    response.send();
-});
+const express = require('express');
+const productsRouter = require('./controllers/productsRouter');
 
-Teste
+const PORT = 3000;
+const app = express();

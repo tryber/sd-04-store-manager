@@ -3,7 +3,7 @@ const connection = require('./connection');
 
 const getAllProducts = async () => {
   const conn = await connection();
-  return { products: await conn.collection('products').find({}).toArray() };
+  return { products: await conn.collection('products').find().toArray() };
 };
 
 const getProductById = async (id) => {

@@ -28,7 +28,7 @@ router.get('/', (_req, res) => {
   salesModel
     .getAllSales()
     .then((sales) => {
-      res.status(200).json(sales);
+      res.status(200).json({ sales });
     })
     .catch((_err) => {
       res.status(404).json(returnResponse('not_found', 'Sale not found'));

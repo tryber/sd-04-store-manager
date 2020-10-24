@@ -13,7 +13,8 @@ const insertSale = async (salesItens) => {
 // };
 
 const getAllSales = () => {
-  connection().then((conn) => conn.collection('sales').find().toArray());
+  const sales = connection().then((conn) => conn.collection('sales').find().toArray());
+  return sales;
 };
 
 // const getSaleById = async (id) => {
@@ -22,7 +23,8 @@ const getAllSales = () => {
 // };
 
 const getSaleById = (id) => {
-  connection().then((conn) => conn.collection('sales').findOne(ObjectId(id)));
+  const sale = connection().then((conn) => conn.collection('sales').findOne(ObjectId(id)));
+  return sale;
 };
 
 module.exports = {

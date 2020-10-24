@@ -32,7 +32,67 @@ const add = async (req, res) => {
   });
 };
 
+const getAll = async (_req, res) => {
+  const sales = await salesModel.getAll();
+  if (sales) {
+    return res.status(200).json({ sales });
+  }
+  return res.status(404).send({
+    err: {
+      code: 'not_found',
+      message: 'Sale not found',
+    },
+  });
+};
+
+const getById = async (req, res) => {
+  const { id } = req.params;
+  const sale = await salesModel.getById(id);
+  if (sale) {
+    return res.status(200).json(sale);
+  }
+  return res.status(404).send({
+    err: {
+      code: 'not_found',
+      message: 'Sale not found',
+    },
+  });
+};
+
+const update = async (req, res) => {
+  const { id } = req.params;
+  const itensSold = req.body;
+  const saleUpdate = await salesModel.update(id, itensSold);
+  if (saleUpdate) {
+    return res.status(200).json(saleUpdate);
+  }
+  return res.status(422).send({
+    err: {
+      message: 'Produto não encontrado',
+    },
+  });
+};
+
+const exclude = async (req, res) => {
+  const { id } = req.params;
+  const sale = await salesModel.getById(id);
+  const saleExclude = await salesModel.exclude(id);
+  if (sale && saleExclude) {
+    return res.status(200).json(sale);
+  }
+  return res.status(422).send({
+    err: {
+      code: 'invalid_data',
+      message: 'Wrong sale ID format',
+    },
+  });
+};
+
 module.exports = {
   invalidInput,
   add,
+  getAll,
+  getById,
+  update,
+  exclude,
 };

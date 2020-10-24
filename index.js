@@ -40,4 +40,15 @@ app.post('/sales',
   controllers.salesController.add,
 );
 
+app.get('/sales', controllers.salesController.getAll);
+
+app.get('/sales/:id', controllers.salesController.getById);
+
+app.put('/sales/:id',
+  controllers.salesController.invalidInput,
+  controllers.salesController.update,
+);
+
+app.delete('/sales/:id', controllers.salesController.exclude);
+
 app.listen(3000, () => console.log('Listening on 3000'));

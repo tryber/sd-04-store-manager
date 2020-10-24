@@ -56,7 +56,6 @@ route.post('/sales', async (req, res, _next) => {
   try {
     const resultOfAddingASale = await salesService.addSales(req.body);
     const keysOfResult = Object.keys(resultOfAddingASale);
-    const entriesOfResult = Object.entries(resultOfAddingASale);
 
     if (keysOfResult && keysOfResult[0] === 'err' && resultOfAddingASale.err.code === 'stock_problem') {
       res.status(404).json(resultOfAddingASale);

@@ -74,7 +74,7 @@ const update = async (req, res) => {
     err: {
       message: 'Produto não encontrado',
     },
-  })
+  });
 };
 
 const exclude = async (req, res) => {
@@ -89,7 +89,7 @@ const exclude = async (req, res) => {
       code: 'invalid_data',
       message: 'Wrong id format',
     },
-  })
+  });
 };
 
 const getAll = async (_req, res) => {
@@ -117,7 +117,7 @@ const getById = async (req, res) => {
       message: 'Wrong id format',
     },
   });
-}
+};
 
 module.exports = {
   nameLength,

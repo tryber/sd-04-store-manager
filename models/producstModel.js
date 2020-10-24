@@ -25,7 +25,7 @@ const getById = async (id) => {
   } catch (err) {
     return null;
   }
-}
+};
 
 const add = async (name, quantity) => {
   try {

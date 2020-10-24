@@ -1,12 +1,13 @@
-const productsModel = require('../models/producstModel');
 const salesModel = require('../models/salesModel');
 
 const invalidInput = (req, res, next) => {
   const itensSold = req.body;
   let inputNumber = true;
-  itensSold.forEach((item) =>
-    isNaN(item.quantity) || item.quantity < 1 ? inputNumber = false : inputNumber
-  );
+  itensSold.forEach((item) => {
+    if (isNaN(item.quantity) || item.quantity < 1) {
+      inputNumber = false;
+    }
+  });
   if (!inputNumber) {
     return res.status(422).send({
       err: {

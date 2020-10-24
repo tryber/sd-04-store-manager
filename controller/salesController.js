@@ -17,7 +17,6 @@ const registerSaleController = async (req, res) => {
 
 const listSalesController = async (_, res) => {
   const listSales = await salesModel.listSales();
-  
   res.status(succesCode).json({ sales: listSales });
 };
 

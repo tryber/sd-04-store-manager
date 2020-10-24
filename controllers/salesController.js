@@ -1,5 +1,6 @@
 const express = require('express');
 const salesModel = require('../models/salesModel');
+const generalModel = require('../models/generalModel');
 const saleValidation = require('../middlewares/saleValidations');
 const returnResponse = require('../services/returnResponse');
 
@@ -15,9 +16,9 @@ router.post('/', saleValidation.validateQuantity, async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
   try {
-    const sales = await salesModel.getAllSales();
+    const sales = await generalModel.getAllItems('sales');
     res.status(200).json(sales);
   } catch (_err) {
     res.status(404).json(returnResponse('not_found', 'Sale not found'));
@@ -27,7 +28,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const sale = await salesModel.getSaleById(id);
+    const sale = await generalModel.getItemById(id, 'sales');
     res.status(200).json(sale);
   } catch (_err) {
     res.status(404).json(returnResponse('not_found', 'Sale not found'));

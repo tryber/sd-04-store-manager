@@ -11,7 +11,7 @@ const schema = Joi.array().items(
 
 const validateSale = (sale) => {
   const { error } = schema.validate(sale, { convert: false });
-  if (error) throw new Error('Wrong product ID or invalid quantity');
+  if (error) return 'Wrong product ID or invalid quantity';
 };
 
 module.exports = { validateSale };

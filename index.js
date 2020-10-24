@@ -17,8 +17,9 @@ app.use('/sales', controllers.sales);
 
 app.use((err, _req, res, _next) => {
   const error = Boom.isBoom(err) ? err : Boom.badData(err);
-  const { output: { statusCode, payload: { message } } } = error;
-  res.status(statusCode).json({ err: { code: 'invalid_data', message } });
+  const { output: { statusCode, payload: { message } }, data } = error;
+  const code = data ? data.code : 'invalid_data';
+  res.status(statusCode).json({ err: { code, message } });
 });
 
 app.listen(3000, () => console.log('só alegria'));

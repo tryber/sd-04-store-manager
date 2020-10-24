@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const { ObjectId } = require('mongodb');
+const { getById } = require('.');
 const connection = require('./connection');
 
 const schema = Joi.object({
@@ -10,20 +11,9 @@ const schema = Joi.object({
 const getByName = (name) => connection()
   .then((db) => db.collection('products').findOne({ name }));
 
-const getById = (id) => {
-  if (!ObjectId.isValid(id)) return Promise.reject(new Error('Wrong id format'));
-  return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
-};
-
-const updateProduct = (id, info) => {
-  if (!ObjectId.isValid(id)) return Promise.reject(new Error('Wrong id format'));
-  return connection()
-    .then((db) => db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: info }));
-};
-
 const deleteProduct = async (id) => {
   if (!ObjectId.isValid(id)) return Promise.reject(new Error('Wrong id format'));
-  const product = await getById(id);
+  const product = await getById('products', id);
   const { deletedCount } = await connection()
     .then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
 
@@ -41,5 +31,5 @@ const validateProduct = async (info, searchOnDB) => {
 };
 
 module.exports = {
-  getByName, validateProduct, getById, updateProduct, deleteProduct,
+  getByName, validateProduct, getById, deleteProduct,
 };

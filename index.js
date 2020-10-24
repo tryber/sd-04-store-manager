@@ -12,7 +12,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-// app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/products', controllers.productsController);
 
 app.listen(PORT, () => console.log('Aplicação tá ON'));

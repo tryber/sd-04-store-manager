@@ -9,7 +9,6 @@ const route = express.Router();
 route.post('/',
   productsValidation.validateNameLength,
   productsValidation.validateProductExistsByName,
-  productsValidation.validateProductExistsById,
   productsValidation.validateQuantity,
   async (req, res) => {
     try {
@@ -24,27 +23,29 @@ route.post('/',
 // Updating a product on the DB
 route.put('/:id',
   productsValidation.validateNameLength,
+  productsValidation.validateQuantity,
   productsValidation.validateProductExistsByName,
   productsValidation.validateProductExistsById,
-  productsValidation.validateQuantity,
   async (req, res, _next) => {
     try {
       const { id } = req.params;
       const { name, quantity } = req.body;
-      const updatingProductOnDB = await productsModel.updateValues(id, name, quantity);
+      await productsModel.updateValues(id, name, quantity);
+      const updatingProductOnDB = await productsModel.findById(id);
       res.status(200).json(updatingProductOnDB);
     } catch (error) {
-      res.status(501).json(buildResponse('invalid_data', 'Error updating product'));
+      res.status(500).json(buildResponse('invalid_data', 'Error updating product'));
     }
   });
 
 // Deleting a product
 route.delete('/:id',
-  productsValidation.validateProductExistsById,
+  // productsValidation.validateProductExistsById,
   async (req, res, _next) => {
     try {
       const { id } = req.params;
-      const deletedItem = await productsModel.deleteById(id);
+      const deletedItem = await productsModel.findById(id);
+      await productsModel.deleteById(id);
       res.status(200).json(deletedItem);
     } catch (error) {
       res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
@@ -55,7 +56,7 @@ route.delete('/:id',
 route.get('/',
   async (_req, res, _next) => {
     try {
-      const ItemsList = await productsValidation.findAll();
+      const ItemsList = await productsModel.findAll();
       if (ItemsList) {
         res.status(200).json(ItemsList);
       }
@@ -66,11 +67,10 @@ route.get('/',
 
 // Busca um produto pelo id
 route.get('/:id',
-  productsValidation.validateProductExistsById,
   async (req, res, _next) => {
     try {
       const { id } = req.params;
-      const productResult = await productsValidation.findById(id);
+      const productResult = await productsModel.findById(id);
       res.status(200).json(productResult);
     } catch (error) {
       res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));

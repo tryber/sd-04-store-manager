@@ -19,20 +19,17 @@ const validateProductExistsByName = async (req, res, next) => {
   const product = await productsModel.findByName(name);
 
   if (product) {
-    return res
-      .status(422)
-      .json(buildResponse('already_exists', 'Product already exists'));
+    return res.status(422).json(buildResponse('invalid_data', 'Product already exists'));
   }
   next();
 };
 
 const validateProductExistsById = async (req, res, next) => {
-  const product = await productsModel.findById(req.params.id);
+  const { id } = req.params;
 
+  const product = await productsModel.findById(id);
   if (!product) {
-    return res
-      .status(500)
-      .json(buildResponse('not_found', 'User not found!'));
+    return res.status(500).json(buildResponse('invalid_data', 'Wrong id format'));
   }
 
   req.product = product;

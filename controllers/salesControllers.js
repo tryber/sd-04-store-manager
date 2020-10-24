@@ -1,11 +1,11 @@
-const express = require('express');
+// const express = require('express');
 
-const router = express.Router();
+// const router = express.Router();
 
-route.post('/sales', async (req, res) => {
-  try {
-    
-  } catch (error) {
-    
-  }
-});
+// route.post('/sales', async (req, res) => {
+//   try {
+
+//   } catch (error) {
+
+//   }
+// });

@@ -15,6 +15,13 @@ const objectDeleteErro = {
   },
 };
 
+const objectErrOfPermition = {
+  err: {
+    code: 'stock_problem',
+    message: 'Such amount is not permitted to sell',
+  },
+};
+
 const reformatErrorMessage = (errorObject) => {
   if (errorObject) {
     return {
@@ -38,10 +45,16 @@ const addSales = async (salesArray) => {
     return quantityIsInvalid;
   }
 
-  const addSaleResultResponse = await Sales.addSales(salesArray);
   const { quantity: productQuantity } = await productService.showASpecificProductById(productId);
 
-  productService.updateProductQuantity(productId, (productQuantity - quantity));
+  if ((productQuantity - quantity) < 0) {
+    console.log(objectErrOfPermition);
+    return objectErrOfPermition;
+  }
+
+  const addSaleResultResponse = await Sales.addSales(salesArray);
+
+  await productService.updateProductQuantity(productId, (productQuantity - quantity));
 
   return addSaleResultResponse;
 };

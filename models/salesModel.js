@@ -33,8 +33,12 @@ const updateSaleModel = async (id, productId, quantity) => {
 };
 
 const deleteModel = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
-  await connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
+  await connection().then((db) =>
+    db.collection('sales').deleteOne({ _id: ObjectId(id) }, function (err) {
+      if (err) throw err;
+      console.log('1 document deleted');
+    }),
+  );
 };
 
 module.exports = {

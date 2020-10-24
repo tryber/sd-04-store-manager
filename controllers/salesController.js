@@ -19,29 +19,29 @@ route.post('/',
     }
   });
 
-// Listing all sales
-route.get('/',
-  async (_req, res, _next) => {
-    try {
-      const allProductsSold = await salesModel.findAllSales();
-      if (allProductsSold) {
-        res.status(200).json(allProductsSold);
-      }
-    } catch (error) {
-      res.status(404).json(buildResponse('not_found', 'Sale not found'));
-    }
-  });
+// // Listing all sales
+// route.get('/',
+//   async (_req, res, _next) => {
+//     try {
+//       const allProductsSold = await salesModel.findAllSales();
+//       if (allProductsSold) {
+//         res.status(200).json(allProductsSold);
+//       }
+//     } catch (error) {
+//       res.status(404).json(buildResponse('not_found', 'Sale not found'));
+//     }
+//   });
 
-//  Listing a salle by id
-route.get('/:id', async (req, res, _next) => {
-  try {
-    const { id } = req.params;
-    const productSold = await salesModel.findSaleById(id);
-    res.status(200).json(productSold);
-  } catch (error) {
-    res.status(422).json(buildResponse('invalid_data', 'Wrong sale ID format'));
-  }
-});
+// //  Listing a salle by id
+// route.get('/:id', async (req, res, _next) => {
+//   try {
+//     const { id } = req.params;
+//     const productSold = await salesModel.findSaleById(id);
+//     res.status(200).json(productSold);
+//   } catch (error) {
+//     res.status(422).json(buildResponse('invalid_data', 'Wrong sale ID format'));
+//   }
+// });
 
 route.put('/:id',
   salesValidation.validateQuantity,
@@ -53,7 +53,7 @@ route.put('/:id',
       const updatingSaleOnDB = await salesModel.findSaleById(id);
       res.status(200).json(updatingSaleOnDB);
     } catch (error) {
-      res.status(422).json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'))
+      res.status(422).json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
     }
   });
 

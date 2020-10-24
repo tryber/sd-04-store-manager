@@ -26,11 +26,15 @@ const registerSale = async (itensSold) => {
 };
 
 const updateSaleModel = async (id, productId, quantity) => {
-  console.log(productId, quantity);
   const myQuery = { _id: ObjectId(id) };
   const newValues = { $set: { itensSold: [{ productId, quantity }] } };
 
   await connection().then((db) => db.collection('sales').updateOne(myQuery, newValues));
+};
+
+const deleteModel = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  await connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
 };
 
 module.exports = {
@@ -38,4 +42,5 @@ module.exports = {
   listSales,
   listSaleById,
   updateSaleModel,
+  deleteModel,
 };

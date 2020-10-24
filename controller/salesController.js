@@ -23,7 +23,8 @@ const listSalesController = async (_, res) => {
 const listSaleByID = async (req, res) => {
   const { id } = req.params;
   const listedSale = await salesModel.listSaleById(id);
-  if (listedSale === 'erro') {
+  console.log(listedSale);
+  if (listedSale === 'erro' || listedSale.length === 0) {
     res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
   }
 
@@ -44,9 +45,21 @@ const updateSale = async (req, res) => {
   res.status(succesCode).json(saleById[0]);
 };
 
+const deleteSale = async (req, res) => {
+  const { id } = req.params;
+  const saleById = await salesModel.listSaleById(id);
+
+  if (saleById === 'erro' || saleById.length === 0) {
+    productService.wrongSaleId(res);
+  }
+  await salesModel.deleteModel(id);
+  res.status(succesCode).json(saleById[0]);
+};
+
 module.exports = {
   registerSaleController,
   listSalesController,
   listSaleByID,
   updateSale,
+  deleteSale,
 };

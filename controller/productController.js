@@ -62,6 +62,7 @@ const deleteProduct = async (req, res) => {
   const { id } = req.params;
   const productById = await productModel.findById(id);
   await productModel.removeProduct(id);
+
   if (!productById) {
     productService.verifyProductById(res);
   }

@@ -21,6 +21,7 @@ app.post('/sales', salesController.registerSaleController);
 app.get('/sales', salesController.listSalesController);
 app.get('/sales/:id', salesController.listSaleByID);
 app.put('/sales/:id', salesController.updateSale);
+app.delete('/sales/:id', salesController.deleteSale);
 
 const PORT = process.env.PORT || 3000;
 

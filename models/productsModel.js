@@ -26,7 +26,7 @@ const validateNameMod = async (name) => {
 
 const getAllProdMod = async () => {
   const db = await connection();
-  const products = await db.collection('products').find({}).toArray();
+  const products = await db.collection('products').find().toArray();
 
   return products;
 };
@@ -49,7 +49,8 @@ const updateByIdProdMod = async (id, name, quantity) => {
 };
 
 const deleteProdMod = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
+  const pacienciaComCC = ObjectId.isValid(id);
+  if (!pacienciaComCC) return null;
 
   const db = await connection();
   const deleteProd = await db.collection('products').deleteOne({ _id: ObjectId(id) });

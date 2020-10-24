@@ -28,13 +28,13 @@ const listAllProdCont = async (_req, res) => {
 
 const listByIdProdCont = async (req, res) => {
   const { id } = req.params;
-  try {
-    const result = await listByIdProdServ(id);
-    if (result.err) return res.status(422).json(result);
-    return res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: 'Error listByIdProdCont!' });
-  }
+  // try {
+  const result = await listByIdProdServ(id);
+  if (result.err) return res.status(422).json(result);
+  return res.status(200).json(result);
+  // } catch (error) {
+  //   res.status(500).json({ error: 'Error listByIdProdCont!' });
+  // }
 };
 
 const updateByIdProdCont = async (req, res) => {

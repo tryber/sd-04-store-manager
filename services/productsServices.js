@@ -51,9 +51,7 @@ const listAllProdServ = async () => {
 
 const listByIdProdServ = async (id) => {
   const productId = await getByIdProdMod(id);
-  if (!productId) {
-    return invalidData('Wrong id format');
-  }
+  if (!productId) return invalidData('Wrong id format');
   return productId;
 };
 

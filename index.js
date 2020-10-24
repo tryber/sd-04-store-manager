@@ -13,5 +13,6 @@ app.get('/', (request, response) => {
 });
 
 app.use('/products', controllers.productsController);
+app.use('/sales', controllers.salesController);
 
 app.listen(PORT, () => console.log('Aplicação tá ON'));

@@ -40,7 +40,6 @@ route.put('/:id',
 
 // Deleting a product
 route.delete('/:id',
-  // productsValidation.validateProductExistsById,
   async (req, res, _next) => {
     try {
       const { id } = req.params;
@@ -65,7 +64,7 @@ route.get('/',
     }
   });
 
-// Busca um produto pelo id
+// Listing a product by id
 route.get('/:id',
   async (req, res, _next) => {
     try {

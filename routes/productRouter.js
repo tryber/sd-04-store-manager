@@ -23,6 +23,4 @@ productRouter.put(
 
 productRouter.delete('/:id', productController.deleteProductController);
 
-module.exports = {
-  productRouter,
-};
+module.exports = productRouter;

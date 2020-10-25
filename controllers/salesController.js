@@ -57,4 +57,17 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.put('/:id', saleValidation.validateQuantity, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { body } = req;
+    await salesModel.updateSale(id, body);
+    const updatedSale = await salesModel.getSaleById(id);
+    res.status(200).json(updatedSale);
+  } catch (_err) {
+    console.log(_err);
+    res.status(500).json(returnResponse('internal_error', 'Error updating sale'));
+  }
+});
+
 module.exports = router;

@@ -74,9 +74,9 @@ const deleteSale = async (req, res) => {
 
   await salesModel.deleteModel(id);
   const result = await productModel.findById(productId);
-  const newQty = result.quantity + quantity
+  const newQty = result.quantity + quantity;
 
-   await productModel.updateProduct(productId, result.name, newQty) 
+  await productModel.updateProduct(productId, result.name, newQty);
 
   res.status(succesCode).json(saleById[0]);
 };

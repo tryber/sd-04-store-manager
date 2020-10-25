@@ -43,7 +43,7 @@ router.put(
   async (req, res) => {
     const { name, quantity } = req.body;
     const { id } = req.params;
-    await product.updateProduct(id, name, quantity);
+    await product.updateProduct(id, name, quantity, 'products');
     res.status(200).json(await product.findById(id, 'products'));
   },
 );

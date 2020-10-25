@@ -11,6 +11,7 @@ app.use('/products', productsController);
 app.get('/sales', salesController.readSales);
 app.get('/sales/:id', salesController.readById);
 app.post('/sales', salesValidations.isQuantityValid, salesController.create);
+app.put('/sales/:id', salesValidations.isQuantityValid, salesController.update);
 
 app.get('/', (request, response) => {
   response.send();

@@ -25,7 +25,12 @@ const create = async (req, res) => {
   res.status(200).json(add);
 };
 
-// router.put('/:id', async (_, res) => res.status(200).send('oi'));
+const update = async (req, res) => {
+  const [...products] = req.body;
+  await salesModel.update(req.params.id, ...products);
+  const result = await productModel.findById(req.params.id, 'sales');
+  res.status(200).json(result);
+};
 
 // router.delete('/:id', async (_, res) => res.status(200).send('oi'));
 
@@ -33,4 +38,5 @@ module.exports = {
   readSales,
   readById,
   create,
+  update,
 };

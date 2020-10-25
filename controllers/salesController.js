@@ -11,7 +11,7 @@ route.post('/', salesValidation.validateQuantity, async (req, res) => {
     const sales = await salesModel.insertSale(body);
     res.status(200).json(sales);
   } catch (error) {
-    res.status(500).json(buildResponse('invalid_data', 'Error registering sale'));
+    res.status(500).json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
   }
 });
 

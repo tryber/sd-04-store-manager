@@ -3,16 +3,17 @@ const productModel = require('../models/productsModel');
 
 const readSales = async (_, res) => {
   const sales = await productModel.getAll('sales');
-  return res.status(200).json({ sales });
+  const status = 200;
+  return res.status(status).json({ sales });
 };
 
 const readById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const sale = await productModel.findById(id, 'sales');
+    const sale = await productModel.findById(req.params.id, 'sales');
     return res.status(200).json(sale);
-  } catch (err) {
-    res.status(422).json({
+  } catch (_e) {
+    const status = 422;
+    res.status(status).json({
       err: { code: 'invalid_data', message: 'Sale not found' },
     });
   }

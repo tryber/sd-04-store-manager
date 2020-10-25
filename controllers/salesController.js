@@ -1,16 +1,12 @@
-const express = require('express');
 const salesModel = require('../models/salesModel');
 const productModel = require('../models/productsModel');
-const salesValidations = require('../middlewares/salesValidations');
 
-const router = express.Router();
-
-router.get('/', async (_, res) => {
+const readSales = async (_, res) => {
   const sales = await productModel.getAll('sales');
   return res.status(200).json({ sales });
-});
+};
 
-router.get('/:id', async (req, res) => {
+const readById = async (req, res) => {
   try {
     const { id } = req.params;
     const sale = await productModel.findById(id, 'sales');
@@ -20,16 +16,20 @@ router.get('/:id', async (req, res) => {
       err: { code: 'invalid_data', message: 'Sale not found' },
     });
   }
-});
+};
 
-router.post('/', salesValidations.isQuantityValid, async (req, res) => {
+const create = async (req, res) => {
   const [...products] = req.body;
   const add = await salesModel.add(...products);
   res.status(200).json(add);
-});
+};
 
 // router.put('/:id', async (_, res) => res.status(200).send('oi'));
 
 // router.delete('/:id', async (_, res) => res.status(200).send('oi'));
 
-module.exports = router;
+module.exports = {
+  readSales,
+  readById,
+  create,
+};

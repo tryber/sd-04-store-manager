@@ -1,4 +1,6 @@
 const returnResponse = require('../services/returnResponse');
+const connection = require('../models/connection');
+const { ObjectId } = require('mongodb');
 
 const validateQuantity = (req, res, next) => {
   const { body } = req;
@@ -14,6 +16,19 @@ const validateQuantity = (req, res, next) => {
   next();
 };
 
+const checkSaleExistence = async (req, res, next) => {
+  const { id } = req.params;
+  const conn = await connection();
+  const foundId = conn.collection('sales').findOne({ _id: ObjectId(id) });
+
+  if (!foundId) {
+    return res.status(404).json(returnResponse('not_found', 'Sale not found'));
+  }
+
+  next();
+};
+
 module.exports = {
   validateQuantity,
+  checkSaleExistence,
 };

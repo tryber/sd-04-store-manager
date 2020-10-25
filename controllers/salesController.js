@@ -45,11 +45,14 @@ router.get('/', (_req, res) => {
 //   }
 // });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', saleValidation.checkSaleExistence, (req, res) => {
   const { id } = req.params;
   salesModel
     .getSaleById(id)
     .then((sale) => {
+      if (!sale) {
+        return res.status(404).json(returnResponse('not_found', 'Sale not found'));
+      }
       res.status(200).json(sale);
     })
     .catch((_err) => {
@@ -67,6 +70,17 @@ router.put('/:id', saleValidation.validateQuantity, async (req, res) => {
   } catch (_err) {
     console.log(_err);
     res.status(500).json(returnResponse('internal_error', 'Error updating sale'));
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedSale = await salesModel.getSaleById(id);
+    await salesModel.deleteSale(id);
+    res.status(200).json(deletedSale);
+  } catch (_err) {
+    res.status(422).json(returnResponse('invalid_data', 'Wrong sale ID format'));
   }
 });
 

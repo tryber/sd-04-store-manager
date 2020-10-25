@@ -1,6 +1,7 @@
 const connection = require('./connection');
 const { ObjectId } = require('mongodb');
 
+
 const listProducts = async () => {
   const data = await connection().then((db) => db.collection('products').find().toArray());
   return data;

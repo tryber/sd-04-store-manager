@@ -4,21 +4,21 @@ const productService = require('../service/productService');
 
 const succesCode = 200;
 
+const newQty = () => {
+  
+}
+
 const registerSaleController = async (req, res) => {
   const filteredValue = req.body.filter(
     (value) => value.quantity <= 0 || typeof value.quantity === 'string',
   );
-
   if (filteredValue.length !== 0) {
     productService.wrongIdFormat(res);
   }
 
   const obj = await salesModel.registerSale(req.body);
-
   const { productId, quantity } = obj.itensSold[0];
-
   const result = await productModel.findById(productId);
-  console.log(result);
   const qtdOldProduct = result.quantity;
 
   if (result) {
@@ -26,12 +26,9 @@ const registerSaleController = async (req, res) => {
       const newQty = qtdOldProduct - quantity;
       await productModel.updateProduct(productId, result.name, newQty);
     } else {
-      res
-        .status(404)
-        .json({ err: { code: 'stock_problem', message: 'Such amount is not permitted to sell' } });
+      productService.stockProblem(res);
     }
   }
-
   res.status(succesCode).json(obj);
 };
 

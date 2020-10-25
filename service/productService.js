@@ -4,6 +4,12 @@ const statusInvalidData = (res, code, message) => {
   });
 };
 
+const statusInvalidDataStock = (res, code, message) => {
+  res.status(404).json({
+    err: { code, message },
+  });
+};
+
 const countProductSize = (res) => {
   statusInvalidData(res, 'invalid_data', '"name" length must be at least 5 characters long');
 };
@@ -32,6 +38,9 @@ const wrongSaleId = (res) => {
   statusInvalidData(res, 'invalid_data', 'Wrong sale ID format');
 };
 
+const stockProblem = (res) => {
+  statusInvalidDataStock(res, 'stock_problem', 'Such amount is not permitted to sell');
+};
 module.exports = {
   countProductSize,
   countMoreThenZero,
@@ -40,4 +49,5 @@ module.exports = {
   verifyProductById,
   wrongIdFormat,
   wrongSaleId,
+  stockProblem,
 };

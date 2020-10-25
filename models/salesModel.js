@@ -35,10 +35,14 @@ const updateSale = async (id, itensSold) => {
   return product;
 };
 
-const deleteSale = async (id) => {
-  const conn = await connection();
-  await conn.collection('sales').deleteOne({ _id: ObjectId(id) });
-  return true;
+// const deleteSale = async (id) => {
+//   const conn = await connection();
+//   await conn.collection('sales').deleteOne({ _id: ObjectId(id) });
+//   return true;
+// };
+
+const deleteSale = (id) => {
+  connection().then((conn) => conn.collection('sales').deleteOne({ _id: ObjectId(id) }));
 };
 
 module.exports = {

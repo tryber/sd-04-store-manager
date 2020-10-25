@@ -51,7 +51,7 @@ router.put(
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const removeProduct = await product.findById(id);
+    const removeProduct = await product.findById(id, 'products');
     await product.deleteProduct(id);
     res.status(200).json(removeProduct);
   } catch (err) {

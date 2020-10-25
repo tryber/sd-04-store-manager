@@ -1,4 +1,4 @@
-// const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const dbCollection = 'sales';
@@ -24,7 +24,31 @@ const getAllSales = async () => {
   }
 };
 
+const getSaleById = async (id) => {
+  try {
+    if (!ObjectId.isValid(id)) return null;
+
+    const db = await connection();
+    const getSale = await db.collection(dbCollection).findOne(ObjectId(id));
+
+    return getSale;
+  } catch (err) {
+    console.error('getSaleById', err);
+  }
+};
+
+const deleteSales = async (id) => {
+  try {
+    const db = await connection();
+    await db.collection(dbCollection).deleteOne({ _id: ObjectId(id) });
+  } catch (err) {
+    console.error('deleteSale', err);
+  }
+};
+
 module.exports = {
   registerSales,
   getAllSales,
+  getSaleById,
+  deleteSales,
 };

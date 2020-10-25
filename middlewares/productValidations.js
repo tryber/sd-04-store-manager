@@ -1,10 +1,8 @@
 const productModel = require('../model/productModel');
 
-const buildResponse = (code, message) => {
-  return { err: { code, message } };
-};
+const buildResponse = (code, message) => ({ err: { code, message } });
 
-validationPresenceOfName = (req, res, next) => {
+const validationPresenceOfName = (req, res, next) => {
   const { name } = req.body;
   if (!name) {
     return res.status(422).json(buildResponse('data', 'Nome não pode ser vazio!'));
@@ -12,7 +10,7 @@ validationPresenceOfName = (req, res, next) => {
   next();
 };
 
-validationLengthOfName = (req, res, next) => {
+const validationLengthOfName = (req, res, next) => {
   const { name } = req.body;
   if (name.length < 5 || name.length < 1) {
     return res
@@ -22,7 +20,7 @@ validationLengthOfName = (req, res, next) => {
   next();
 };
 
-validationProductExistsByName = async (req, res, next) => {
+const validationProductExistsByName = async (req, res, next) => {
   const { name } = req.body;
   const product = await productModel.findByName(name);
 
@@ -32,7 +30,7 @@ validationProductExistsByName = async (req, res, next) => {
   next();
 };
 
-validationQuantityOfProduct = (req, res, next) => {
+const validationQuantityOfProduct = (req, res, next) => {
   const { quantity } = req.body;
 
   if (quantity < 1) {
@@ -43,7 +41,7 @@ validationQuantityOfProduct = (req, res, next) => {
   next();
 };
 
-validationStringOfProduct = (req, res, next) => {
+const validationStringOfProduct = (req, res, next) => {
   const { quantity } = req.body;
   if (!Number.isInteger(quantity)) {
     return res.status(422).json(buildResponse('invalid_data', '"quantity" must be a number'));

@@ -3,7 +3,7 @@ const DB_NAME = 'StoreManager';
 
 const mongoClient = require('mongodb').MongoClient;
 
-connection = () =>
+const connection = () =>
   mongoClient
     .connect(MONGO_DB_URL, {
       useNewUrlParser: true,

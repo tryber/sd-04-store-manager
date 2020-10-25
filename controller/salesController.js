@@ -4,9 +4,7 @@ const productService = require('../service/productService');
 
 const succesCode = 200;
 
-const newQty = () => {
-  
-}
+const newQty = () => {};
 
 const registerSaleController = async (req, res) => {
   const filteredValue = req.body.filter(

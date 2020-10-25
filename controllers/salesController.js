@@ -73,26 +73,10 @@ const update = async (req, res) => {
   });
 };
 
-const exclude = async (req, res) => {
-  const { id } = req.params;
-  const sale = await salesModel.getById(id);
-  const saleExclude = await salesModel.exclude(id);
-  if (sale && saleExclude) {
-    return res.status(200).json(sale);
-  }
-  return res.status(422).send({
-    err: {
-      code: 'invalid_data',
-      message: 'Wrong sale ID format',
-    },
-  });
-};
-
 module.exports = {
   invalidInput,
   add,
   getAll,
   getById,
   update,
-  exclude,
 };

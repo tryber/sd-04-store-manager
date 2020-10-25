@@ -3,6 +3,12 @@ const bodyParser = require('body-parser');
 
 const controllers = require('./controllers');
 
+const middlewares = require('./middlewares');
+
+const productsModel = require('./models/producstModel');
+
+const salesModel = require('./models/salesModel');
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,7 +31,7 @@ app.put('/products/:id',
   controllers.productsController.update,
 );
 
-app.delete('/products/:id', controllers.productsController.exclude);
+app.delete('/products/:id', middlewares.exclude('Wrong id format', productsModel));
 
 app.post('/products',
   controllers.productsController.nameLength,
@@ -49,6 +55,6 @@ app.put('/sales/:id',
   controllers.salesController.update,
 );
 
-app.delete('/sales/:id', controllers.salesController.exclude);
+app.delete('/sales/:id', middlewares.exclude('Wrong sale ID format', salesModel));
 
 app.listen(3000, () => console.log('Listening on 3000'));

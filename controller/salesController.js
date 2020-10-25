@@ -25,6 +25,10 @@ const registerSaleController = async (req, res) => {
     if (quantity < qtdOldProduct) {
       const newQty = qtdOldProduct - quantity;
       await productModel.updateProduct(productId, result.name, newQty);
+    } else {
+      res
+        .status(404)
+        .json({ err: { code: 'stock_problem', message: 'Such amount is not permitted to sell' } });
     }
   }
 

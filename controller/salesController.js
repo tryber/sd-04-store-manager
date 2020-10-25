@@ -9,7 +9,7 @@ const registerSaleController = async (req, res) => {
     (value) => value.quantity <= 0 || typeof value.quantity === 'string',
   );
 
-  if (filteredValue.length !== 0) productService.wrongIdFormat(res);
+  /* if (filteredValue.length !== 0) productService.wrongIdFormat(res); */
 
   const obj = await salesModel.registerSale(req.body);
   const { productId, quantity } = obj.itensSold[0];

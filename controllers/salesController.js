@@ -13,9 +13,9 @@ const insertSalesCont = async (req, res) => {
 };
 
 const getAllSalesCont = async (_req, res) => {
-  const result = await getAllSalesMod();
+  // const result = await getAllSalesMod(); //CC
   try {
-    return res.status(200).json({ sales: result });
+    return res.status(200).json({ sales: (await getAllSalesMod()) });
   } catch (error) {
     res.status(500).json({ error: 'Error getAllSalesCont!' });
   }

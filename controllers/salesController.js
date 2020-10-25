@@ -19,8 +19,8 @@ route.post('/', salesValidation.validateQuantity, async (req, res) => {
 route.get('/', (_req, res, _next) => {
   salesModel
     .findAllSales()
-    .then((allProductsSold) => {
-      res.status(200).json({ allProductsSold });
+    .then((sales) => {
+      res.status(200).json({ sales });
     })
     .catch((_error) => {
       res.status(404).json(buildResponse('not_found', 'Sale not found'));
@@ -32,11 +32,11 @@ route.get('/:id', (req, res, _next) => {
   const { id } = req.params;
   salesModel
     .findSaleById(id)
-    .then((productSold) => {
-      if (!productSold) {
+    .then((sale) => {
+      if (!sale) {
         return res.status(404).json(buildResponse('not_found', 'Sale not found'));
       }
-      res.status(200).json(productSold);
+      res.status(200).json(sale);
     })
     .catch((_error) => {
       res.status(422).json(buildResponse('not_found', 'Sale not found'));

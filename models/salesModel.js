@@ -8,19 +8,19 @@ const insertSale = async (itens) => {
 };
 
 const findAllSales = () => {
-  const allProductsSold = connection().then((db) => db.collection('sales').find().toArray());
-  return allProductsSold;
+  const sales = connection().then((db) => db.collection('sales').find().toArray());
+  return sales;
 };
 
 const findSaleById = (id) => {
-  const productSold = connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
-  return productSold;
+  const sale = connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
+  return sale;
 };
 
 const updateSale = async (id, itemSold) => {
   const db = await connection();
   const updateItem = await db
-    .collection('products')
+    .collection('sales')
     .updateOne({ _id: ObjectId(id) }, { $set: { itemSold } });
   return updateItem;
 };

@@ -4,12 +4,16 @@ const productService = require('../service/productService');
 
 const succesCode = 200;
 
+const validate = (response, value) => {
+  if (value.length !== 0) return productService.wrongIdFormat(response);
+};
+
 const registerSaleController = async (req, res) => {
   const filteredValue = req.body.filter(
     (value) => value.quantity <= 0 || typeof value.quantity === 'string',
   );
 
-  /* if (filteredValue.length !== 0) productService.wrongIdFormat(res); */
+  validate(res, filteredValue);
 
   const obj = await salesModel.registerSale(req.body);
   const { productId, quantity } = obj.itensSold[0];

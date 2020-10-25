@@ -7,17 +7,15 @@ const insertSale = async (itens) => {
   return addItem.ops[0];
 };
 
-// const findAllSales = async () => {
-//   const db = await connection();
-//   const findAll = await db.collection('sales').find().toArray();
-//   return { sales: findAll };
-// };
+const findAllSales = () => {
+  const allProductsSold = connection().then((db) => db.collection('sales').find().toArray());
+  return allProductsSold;
+};
 
-// const findSaleById = async (id) => {
-//   const db = await connection();
-//   const findById = await db.collection('sales').findOne(ObjectId(id));
-//   return findById;
-// };
+const findSaleById = (id) => {
+  const productSold = connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
+  return productSold;
+};
 
 const updateSale = async (id, itemSold) => {
   const db = await connection();
@@ -27,9 +25,14 @@ const updateSale = async (id, itemSold) => {
   return updateItem;
 };
 
+const deleteSale = (id) => {
+  connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
+};
+
 module.exports = {
   insertSale,
-  // findAllSales,
-  // findSaleById,
+  findAllSales,
+  findSaleById,
   updateSale,
+  deleteSale,
 };

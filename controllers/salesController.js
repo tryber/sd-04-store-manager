@@ -1,18 +1,19 @@
 const express = require('express');
 const salesModel = require('../models/salesModel');
+const productModel = require('../models/productsModel');
 const salesValidations = require('../middlewares/salesValidations');
 
 const router = express.Router();
 
 router.get('/', async (_, res) => {
-  const sales = await salesModel.getAll();
+  const sales = await productModel.getAll('sales');
   return res.status(200).json({ sales });
 });
 
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const sale = await salesModel.findById(id);
+    const sale = await productModel.findById(id, 'sales');
     return res.status(200).json(sale);
   } catch (err) {
     res.status(422).json({

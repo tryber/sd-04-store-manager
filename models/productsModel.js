@@ -1,7 +1,8 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const getAll = async () => connection().then((db) => db.collection('products').find().toArray());
+const getAll = async (collection) =>
+  connection().then((db) => db.collection(collection).find().toArray());
 
 const newProduct = async (name, quantity) => {
   const result = await connection().then((db) =>
@@ -9,8 +10,8 @@ const newProduct = async (name, quantity) => {
   return result.ops[0];
 };
 
-const findById = async (id) =>
-  connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+const findById = async (id, collection) =>
+  connection().then((db) => db.collection(collection).findOne(ObjectId(id)));
 
 const updateProduct = async (id, name, quantity) =>
   connection().then((db) =>

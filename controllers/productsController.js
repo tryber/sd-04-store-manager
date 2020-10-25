@@ -19,14 +19,14 @@ router.post(
 );
 
 router.get('/', async (_, res) => {
-  const products = await product.getAll();
+  const products = await product.getAll('products');
   return res.status(200).json({ products });
 });
 
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const products = await product.findById(id);
+    const products = await product.findById(id, 'products');
     return res.status(200).json(products);
   } catch (_e) {
     res.status(422).json({

@@ -1,10 +1,11 @@
-const { insertSalesServ, getAllSalesServ, getByIdSalesServ } = require('../services/salesServices');
+const { getByIdSalesServ } = require('../services/salesServices');
+const { insertSalesMod, getAllSalesMod } = require('../models/salesModel');
 
 const insertSalesCont = async (req, res) => {
   const [...itensSold] = req.body;
 
   try {
-    const result = await insertSalesServ(itensSold);
+    const result = await insertSalesMod(itensSold);
     return res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Error insertSalesCont!' });
@@ -12,9 +13,9 @@ const insertSalesCont = async (req, res) => {
 };
 
 const getAllSalesCont = async (_req, res) => {
-  const result = await getAllSalesServ();
+  const result = await getAllSalesMod();
   try {
-    return res.status(200).json(result);
+    return res.status(200).json({ sales: result });
   } catch (error) {
     res.status(500).json({ error: 'Error getAllSalesCont!' });
   }

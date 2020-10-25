@@ -19,7 +19,7 @@ const validateSale = async (req, res, next) => {
     }
   });
 
-  next();
+  return next();
 };
 
 module.exports = { validateSale };

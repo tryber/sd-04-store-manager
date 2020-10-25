@@ -1,6 +1,5 @@
+const { insertProdMod, getAllProdMod } = require('../models/productsModel');
 const {
-  registerProdServ,
-  listAllProdServ,
   listByIdProdServ,
   updateByIdProdServ,
   deleteProdServ,
@@ -10,7 +9,7 @@ const insertProdCont = async (req, res) => {
   const { name, quantity } = req.body;
 
   try {
-    const result = await registerProdServ(name, quantity);
+    const result = await insertProdMod(name, quantity);
     return res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Error insertProdCont!' });
@@ -18,7 +17,7 @@ const insertProdCont = async (req, res) => {
 };
 
 const listAllProdCont = async (_req, res) => {
-  const result = await listAllProdServ();
+  const result = await getAllProdMod();
   try {
     return res.status(200).json({ products: result });
   } catch (error) {

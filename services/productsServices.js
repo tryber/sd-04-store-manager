@@ -1,7 +1,5 @@
 /* eslint-disable no-return-await */
 const {
-  insertProdMod,
-  getAllProdMod,
   validateNameMod,
   getByIdProdMod,
   updateByIdProdMod,
@@ -40,16 +38,6 @@ const validateExistProd = async (name) => {
   }
 };
 
-const registerProdServ = async (name, quantity) => {
-  const insertProd = await insertProdMod(name, quantity);
-  return insertProd;
-};
-
-const listAllProdServ = async () => {
-  const products = await getAllProdMod();
-  return products;
-};
-
 const listByIdProdServ = async (id) => {
   const productId = await getByIdProdMod(id);
   if (!productId) return invalidData('Wrong id format');
@@ -66,7 +54,7 @@ const deleteProdServ = async (id) => {
   if (!(await deleteProdMod(id))) {
     return invalidData('Wrong id format');
   }
-  return (await deleteProdMod(id));
+  return await deleteProdMod(id);
 };
 
 module.exports = {
@@ -74,8 +62,6 @@ module.exports = {
   validateQuantity,
   validateIsNumber,
   validateExistProd,
-  registerProdServ,
-  listAllProdServ,
   listByIdProdServ,
   updateByIdProdServ,
   deleteProdServ,

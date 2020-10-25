@@ -14,7 +14,7 @@ const productLengthValidation = (req, res, next) => {
 const productUniqueNameValidation = async (req, res, next) => {
   const { name } = req.body;
   const products = await product
-    .getAll()
+    .getAll('products')
     .then((names) => names.find((productName) => productName.name === name));
   if (products) {
     return res.status(422).json({

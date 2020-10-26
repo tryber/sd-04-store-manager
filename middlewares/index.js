@@ -1,5 +1,5 @@
-const exclude = require('./exclude');
+const controllers = require('./controllers');
 
 module.exports = {
-  exclude,
+  controllers,
 };

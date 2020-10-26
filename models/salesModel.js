@@ -48,7 +48,6 @@ const exclude = async (id) => {
     await db.collection('sales').deleteOne({ _id: ObjectId(id) });
     return true;
   } catch (err) {
-    console.log(err)
     return null;
   }
 };
@@ -58,5 +57,5 @@ module.exports = {
   getAll,
   getById,
   update,
-  exclude
+  exclude,
 };

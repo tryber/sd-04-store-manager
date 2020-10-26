@@ -13,7 +13,6 @@ const create = async (name, quantity) => {
 };
 
 // (async () => console.log(await get('ps555')))();
-// (async () => console.log(await create('xbox', 1)))();
 
 module.exports = {
   get,

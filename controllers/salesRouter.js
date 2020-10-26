@@ -7,6 +7,8 @@ const salesRouter = Router();
 salesRouter
   .post('/', validateSale, controller.insertSalesCont)
   .get('/', controller.getAllSalesCont)
-  .get('/:id', controller.getByIdSalesCont);
+  .get('/:id', controller.getByIdSalesCont)
+  .put('/:id', validateSale, controller.updateByIdSalesCont)
+  .delete('/:id', controller.deleteSalesCont);
 
 module.exports = salesRouter;

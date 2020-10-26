@@ -1,9 +1,5 @@
-const { insertProdMod, getAllProdMod } = require('../models/productsModel');
-const {
-  listByIdProdServ,
-  updateByIdProdServ,
-  deleteProdServ,
-} = require('../services/productsServices');
+const { insertProdMod, getAllProdMod, updateByIdProdMod } = require('../models/productsModel');
+const { listByIdProdServ, deleteProdServ } = require('../services/productsServices');
 
 const insertProdCont = async (req, res) => {
   const { name, quantity } = req.body;
@@ -40,10 +36,10 @@ const updateByIdProdCont = async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
   try {
-    const result = await updateByIdProdServ(id, name, quantity);
+    const result = await updateByIdProdMod(id, name, quantity);
     if (result.err) return res.status(422).json(result);
 
-    return res.status(200).json({ _id: id, name, quantity });
+    return res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Error updateByIdProdCont!' });
   }

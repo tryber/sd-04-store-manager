@@ -32,7 +32,7 @@ const getAllProdMod = async () => {
 };
 
 const getByIdProdMod = async (id) => {
-  const x = ObjectId.isValid(id);
+  const x = ObjectId.isValid(id); // Variavel criada por causa do CC
   if (!x) return null;
 
   const db = await connection();
@@ -56,7 +56,6 @@ const deleteProdMod = async (id) => {
   const db = await connection();
   const deleteProd = await db.collection('products').deleteOne({ _id: ObjectId(id) });
 
-  console.log(deleteProd);
   return deleteProd;
 };
 

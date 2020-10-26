@@ -2,7 +2,6 @@
 const {
   validateNameMod,
   getByIdProdMod,
-  updateByIdProdMod,
   deleteProdMod,
 } = require('../models/productsModel');
 
@@ -44,11 +43,6 @@ const listByIdProdServ = async (id) => {
   return productId;
 };
 
-const updateByIdProdServ = async (id, name, quantity) => {
-  const updateProd = await updateByIdProdMod(id, name, quantity);
-  return updateProd;
-};
-
 const deleteProdServ = async (id) => {
   // const deleteProd = await deleteProdMod(id); //POr causa do CC
   if (!(await deleteProdMod(id))) {
@@ -63,6 +57,5 @@ module.exports = {
   validateIsNumber,
   validateExistProd,
   listByIdProdServ,
-  updateByIdProdServ,
   deleteProdServ,
 };

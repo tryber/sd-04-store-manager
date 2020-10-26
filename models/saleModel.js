@@ -3,33 +3,34 @@ const connection = require('./connection');
 
 const getById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
-  return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+  return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
 };
 
 // const getByName = async (name) => {
 //   return await connection().then((db) => db.collection('products').findOne(name(name)));
 // };
 
-const add = async (name, quantity) => {
+const add = async (itensSold) => {
   const result = await connection().then((db) =>
-    db.collection('products').insertOne({ name, quantity }),
+    db.collection('sales').insertOne({ itensSold }),
   );
   // console.log('result.ops[0]', result.ops[0]);
   const { _id } = result.ops[0];
   const product = {
     id: _id,
-    name,
-    quantity,
+    itensSold,
   };
   return product;
 };
 
 const remove = async (id) => {
-  if (!(await getById(id))) return false;
+  saleGetById = (await getById(id))
+  console.log('remove sale', id, saleGetById);
+  if (!saleGetById) return false;
 
-  await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+  await connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
 
-  return true;
+  return saleGetById;
 };
 
 const update = async (id, name, quantity) => {

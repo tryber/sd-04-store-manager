@@ -1,15 +1,16 @@
 const express = require('express');
 const productModel = require('../models/productModel');
+const sharedModel = require('../models/sharedModel');
 
 const router = express.Router();
 
-router.get('/products', async (req, res) => {
-  const productsArray = await productModel.getAll();
+router.get('/', async (req, res) => {
+  const productsArray = await sharedModel.getAll('products');
   const products = { products: productsArray };
   res.json(products);
 });
 
-router.get('/products/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   // console.log('getById', req.params.id);
   const product = await productModel.getById(req.params.id);
   // console.log('product', product);
@@ -30,6 +31,7 @@ router.get('/products/:id', async (req, res) => {
 
 const validation = (name, quantity, products) => {
   let message = 'ok';
+
   if (name.length < 5) {
     message = '"name" length must be at least 5 characters long';
   }
@@ -45,9 +47,9 @@ const validation = (name, quantity, products) => {
   return message;
 };
 
-router.post('/products', async (req, res) => {
+router.post('/', async (req, res) => {
   const { name, quantity } = req.body;
-  const products = await productModel.getAll();
+  const products = await sharedModel.getAll('products');
   const validationMessage = await validation(name, quantity, products);
   // console.log('validationMessage', validationMessage);
 
@@ -59,34 +61,6 @@ router.post('/products', async (req, res) => {
       },
     });
   }
-
-  // if (quantity < 1) {
-  //   res.status(422).json({
-  //     err: {
-  //       message: '"quantity" must be larger than or equal to 1',
-  //       code: 'invalid_data',
-  //     },
-  //   });
-  // }
-
-  // if (typeof quantity === 'string') {
-  //   res.status(422).json({
-  //     err: {
-  //       code: 'invalid_data',
-  //       message: '"quantity" must be a number',
-  //     },
-  //   });
-  // }
-
-
-  // if (products.some((product) => product.name === name)) {
-  //   return res.status(422).json({
-  //     err: {
-  //       message: 'Product already exists',
-  //       code: 'invalid_data',
-  //     },
-  //   });
-  // }
 
   try {
     const product = await productModel.add(name, quantity);
@@ -100,7 +74,7 @@ router.post('/products', async (req, res) => {
   }
 });
 
-router.delete('/products/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const result = await productModel.remove(req.params.id);
 
@@ -119,7 +93,7 @@ router.delete('/products/:id', async (req, res) => {
   }
 });
 
-router.put('/products/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { name, quantity } = req.body;
   console.log('const update', name, quantity);
   if (name.length < 5) {
@@ -149,7 +123,7 @@ router.put('/products/:id', async (req, res) => {
     });
   }
 
-  const products = await productModel.getAll();
+  const products = await sharedModel.getAll('products');
   if (products.some((product) => product.name === name)) {
     return res.status(422).json({
       err: {

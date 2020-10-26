@@ -15,7 +15,14 @@ router.post('/',
   });
 
 router.get('/', async (_req, res) => {
-  res.status(200);
+  const sales = await crudModel.findAll('sales');
+  res.status(200).json({ sales });
+});
+
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  const sale = await crudModel.findById('sales', id);
+  res.status(200).json(sale);
 });
 
 module.exports = router;

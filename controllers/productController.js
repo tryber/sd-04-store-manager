@@ -43,7 +43,7 @@ router.put('/:id', rescue(async (req, res) => {
   const { name, quantity } = req.body;
   const { id } = req.params;
   const updatedResult = await productService.update(id, name, quantity);
-  if (typeof result === 'string') {
+  if (typeof updatedResult === 'string') {
     throw new ProductsError(updatedResult);
   }
 

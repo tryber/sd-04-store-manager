@@ -17,11 +17,11 @@ const findSaleById = (id) => {
   return sale;
 };
 
-const updateSale = async (id, itemSold) => {
+const updateSale = async (id, itensSold) => {
   const db = await connection();
   const updateItem = await db
     .collection('sales')
-    .updateOne({ _id: ObjectId(id) }, { $set: { itemSold } });
+    .updateOne({ _id: ObjectId(id) }, { $set: { itensSold } });
   return updateItem;
 };
 

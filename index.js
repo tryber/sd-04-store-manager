@@ -1,15 +1,14 @@
-require('dotenv/config');
 const { notFound, internalError } = require('./middlewares');
 const express = require('express');
 const productsController = require('./controllers/productsController');
 
 const app = express();
-const port = process.env.SERVER_PORT;
+const port = 3000;
 
 app.use(express.json());
 
-// Não remova esse endpoint, é para o avaliador funcionar
-app.get('/', (_request, response) => {
+// não remova esse endpoint, e para o avaliador funcionar
+app.get('/', (request, response) => {
   response.send();
 });
 

@@ -4,8 +4,7 @@ const getAll = (table, status, code, message) => async (_req, res) => {
   const item = await models.getAll(table);
   if (item && table === 'products') {
     return res.status(200).json({ products: item });
-  }
-  if (item && table === 'sales') {
+  } else if (item && table === 'sales') {
     return res.status(200).json({ sales: item });
   }
   return res.status(status).send({

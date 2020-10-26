@@ -21,12 +21,12 @@ router.get('/', rescue(async (req, res) => {
 
 router.post('/', rescue(async (req, res) => {
   const { name, quantity } = req.body;
-  const newProduct = await productService.add(name, quantity);
-  if (newProduct.error) {
-    throw new ProductsError(newProduct.message);
+  const result = await productService.add(name, quantity);
+  if (typeof result === 'string') {
+    throw new ProductsError(result);
   }
 
-  res.status(201).json(newProduct);
+  res.status(201).json(result);
 }));
 
 router.use(rescue.from(ProductsError, (err, req, res) => {
@@ -36,7 +36,7 @@ router.use(rescue.from(ProductsError, (err, req, res) => {
 
 router.use((err, req, res) => {
   res.status(500)
-    .json({ err: { code: 'invalid data', message: err.message } });
+    .json({ err: 'Something went terribly wrong' });
 });
 
 module.exports = router;

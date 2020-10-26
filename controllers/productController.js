@@ -19,6 +19,16 @@ router.get('/', rescue(async (req, res) => {
   res.status(200).json(products);
 }));
 
+router.get('/:id', rescue(async (req, res) => {
+  const { id } = req.params;
+  const product = await productService.getById(id);
+  if (!product) {
+    throw new ProductsError('Wrong id format');
+  }
+
+  res.status(200).json(product);
+}));
+
 router.post('/', rescue(async (req, res) => {
   const { name, quantity } = req.body;
   const result = await productService.add(name, quantity);

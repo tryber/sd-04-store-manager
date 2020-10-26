@@ -69,7 +69,7 @@ router.post(
 
 router.delete('/:id', async (req, res) => {
   try {
-    const sale = await saleModel.getSaleById(req.params);
+    const sale = await saleModel.getSaleById(req.params.id);
 
     if (!sale) {
       return res
@@ -77,7 +77,7 @@ router.delete('/:id', async (req, res) => {
         .json(saleValidator.responseMessage('invalid_data', 'Wrong sale ID format'));
     }
 
-    await saleModel.removeSale(req.params);
+    await saleModel.removeSale(req.params.id);
 
     return res.status(200).json(sale);
   } catch (_err) {

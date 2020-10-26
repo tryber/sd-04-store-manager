@@ -5,10 +5,14 @@ const { validateSale } = require('../middlewares/validateSales');
 const salesRouter = Router();
 
 salesRouter
-  .post('/', validateSale, controller.insertSalesCont)
-  .get('/', controller.getAllSalesCont)
-  .get('/:id', controller.getByIdSalesCont)
-  .put('/:id', validateSale, controller.updateByIdSalesCont)
-  .delete('/:id', controller.deleteSalesCont);
+  .route('/')
+  .post(validateSale, controller.insertSalesCont)
+  .get(controller.getAllSalesCont);
+
+salesRouter
+  .route('/:id')
+  .get(controller.getByIdSalesCont)
+  .put(validateSale, controller.updateByIdSalesCont)
+  .delete(controller.deleteSalesCont);
 
 module.exports = salesRouter;

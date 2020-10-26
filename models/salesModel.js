@@ -41,8 +41,7 @@ const updateByIdSalesMod = async (id, itensSold) => {
 };
 
 const deleteSalesMod = async (id) => {
-  const pacienciaComCC = ObjectId.isValid(id);
-  if (!pacienciaComCC) return null;
+  if (!ObjectId.isValid(id)) return null;
 
   const db = await connection();
   const deleteSales = await db.collection('sales').deleteOne({ _id: ObjectId(id) });

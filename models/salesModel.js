@@ -12,9 +12,9 @@ const getAllSales = async () => connection().then((db) => db.collection('sales')
 
 // Lista vendas por ID----------------------------------------------------------------------
 const getSaleById = async (id) => {
-  ObjectId.isValid(id)
-    ? connection().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }))
-    : null;
+  if (!ObjectId.isValid(id)) return null;
+  return connection().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }));
+  // : null;
   // if (!ObjectId.isValid(id)) return null;
   // return connection().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }));
 };

@@ -10,9 +10,10 @@ const createProduct = async (name, quantity) =>
   connection().then((db) => db.collection('products').insertOne({ name, quantity }));
 
 // Lista todos os produtos--------------------------------------------------------------------
-const getAllProducts = async () =>
-  connection().then((db) => db.collection('products').find().toArray());
-
+const getAllProducts = async () => {
+  const allProducts = await connection().then((db) => db.collection('products').find().toArray());
+  return allProducts;
+};
 // Lista produtos por ID----------------------------------------------------------------------
 const getProductById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
@@ -21,9 +22,9 @@ const getProductById = async (id) => {
 
 // Exclui um produto -------------------------------------------------------------------------
 const deleteProduct = async (id) =>
-  (ObjectId.isValid(id)
+  ObjectId.isValid(id)
     ? connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }))
-    : null);
+    : null;
 
 // Atualiza um produto -----------------------------------------------------------------------
 const updateProduct = async (id, name, quantity) =>

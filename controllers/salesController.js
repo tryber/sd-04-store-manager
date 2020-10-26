@@ -21,6 +21,9 @@ router.get('/', async (_req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const sale = await crudModel.findById('sales', id);
+  if (!sale) {
+    return res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
+  }
   res.status(200).json(sale);
 });
 
@@ -34,4 +37,10 @@ router.put('/:id',
     await crudModel.update('sales', id, document);
     crudModel.findById('sales', id).then((sale) => res.status(200).json(sale));
   });
+
+router.delete('/:id', validations.verifyIfSaleExistsById, async (req, res) => {
+  await crudModel.remove('sales', req.params.id);
+  res.status(200).json(req.sale);
+});
+
 module.exports = router;

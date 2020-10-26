@@ -62,10 +62,20 @@ const validateSales = (req, res, next) => {
   next();
 };
 
+const verifyIfSaleExistsById = async (req, res, next) => {
+  const sale = await crudModel.findById('sales', req.params.id);
+  if (!sale) {
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong sale ID format'));
+  }
+  req.sale = sale;
+  next();
+};
+
 module.exports = {
   validateNameLength,
   verifyIfProductExists,
   validateQuantity,
   verifyIfProductExistsById,
   validateSales,
+  verifyIfSaleExistsById,
 };

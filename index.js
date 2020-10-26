@@ -23,9 +23,6 @@ app.get('/', (request, response) => {
 app.get('/products', middlewares.controllers.getAll({
   model: productsModel,
   resJson: 'products',
-  status: 422,
-  code: 'invalid_data',
-  message: 'Wrong id format',
 }));
 
 app.get('/products/:id', middlewares.controllers.getById({
@@ -60,9 +57,6 @@ app.post('/sales',
 app.get('/sales', middlewares.controllers.getAll({
   model: salesModel,
   resJson: 'sales',
-  status: 404,
-  code: 'not_found',
-  message: 'Sale not found',
 }));
 
 app.get('/sales/:id', middlewares.controllers.getById({

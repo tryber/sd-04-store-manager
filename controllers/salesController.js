@@ -1,5 +1,4 @@
 const express = require('express');
-const { updateSale } = require('../models/salesModel');
 const SalesModel = require('../models/salesModel');
 const SalesService = require('../services/salesServices');
 

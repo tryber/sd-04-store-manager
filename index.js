@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const productController = require('./controllers/productController');
-const salesController = require('./controllers/salesController');
 
 const app = express();
 
@@ -12,6 +11,5 @@ app.get('/', (request, response) => {
 });
 
 app.use('/products', productController);
-app.use('/sales', salesController);
 
 app.listen(3000);

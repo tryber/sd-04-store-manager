@@ -1,21 +1,24 @@
 const validator = require('validator');
 const productModel = require('../models/productModel');
 
-const add = async (name, quantity) => {
+const addValidation = async (name, quantity) => {
   let errorCode = '';
-  if (!validator.isLength(name, { min: 5 })) {
-    errorCode = '"name" length must be at least 5 characters long';
-  } else if (!validator.isInt(quantity.toString(), { gt: 0 })) {
-    if (quantity <= 0) {
-      errorCode = '"quantity" must be larger than or equal to 1';
-    }
-    errorCode = '"quantity" must be a number';
-  }
-
   const checkName = await productModel.getByName(name);
   if (checkName) {
     errorCode = 'Product already exists';
+  } else if (!validator.isLength(name, { min: 5 })) {
+    errorCode = '"name" length must be at least 5 characters long';
+  } else if (!validator.isInt(quantity.toString())) {
+    errorCode = '"quantity" must be a number';
+  } else if (quantity <= 0) {
+    errorCode = '"quantity" must be larger than or equal to 1';
   }
+  return errorCode;
+};
+
+const add = async (name, quantity) => {
+  const errorCode = await addValidation(name, quantity);
+
   if (errorCode) {
     return errorCode;
   }

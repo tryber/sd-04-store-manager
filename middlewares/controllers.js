@@ -1,5 +1,7 @@
-const getAll = (model, table, status, code, message) => async (_req, res) => {
-  const item = await model.getAll(table);
+const models = require('./models');
+
+const getAll = (table, status, code, message) => async (_req, res) => {
+  const item = await models.getAll(table);
   if (item && table === 'products') {
     return res.status(200).json({ products: item });
   }
@@ -28,10 +30,10 @@ const getById = (model, status, code, message) => async (req, res) => {
   });
 };
 
-const exclude = (message, model) => async (req, res) => {
+const exclude = (message, model, table) => async (req, res) => {
   const { id } = req.params;
   const item = await model.getById(id);
-  const itemExclude = await model.exclude(id);
+  const itemExclude = await models.exclude(table, id);
   if (item && itemExclude) {
     return res.status(200).json(item);
   }

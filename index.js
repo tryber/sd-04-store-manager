@@ -21,7 +21,6 @@ app.get('/', (request, response) => {
 });
 
 app.get('/products', middlewares.controllers.getAll(
-  middlewares.models,
   'products',
   422,
   'invalid_data',
@@ -42,7 +41,7 @@ app.put('/products/:id',
   controllers.productsController.update,
 );
 
-app.delete('/products/:id', middlewares.controllers.exclude('Wrong id format', productsModel));
+app.delete('/products/:id', middlewares.controllers.exclude('Wrong id format', productsModel, 'products'));
 
 app.post('/products',
   controllers.productsController.nameLength,
@@ -58,7 +57,6 @@ app.post('/sales',
 );
 
 app.get('/sales', middlewares.controllers.getAll(
-  middlewares.models,
   'sales',
   404,
   'not_found',
@@ -77,6 +75,6 @@ app.put('/sales/:id',
   controllers.salesController.update,
 );
 
-app.delete('/sales/:id', middlewares.controllers.exclude('Wrong sale ID format', salesModel));
+app.delete('/sales/:id', middlewares.controllers.exclude('Wrong sale ID format', salesModel, 'sales'));
 
 app.listen(3000, () => console.log('Listening on 3000'));

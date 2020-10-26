@@ -11,16 +11,6 @@ const add = async (itensSold) => {
   }
 };
 
-const getAll = async () => {
-  try {
-    const db = await connection();
-    const sales = await db.collection('sales').find().toArray();
-    return sales;
-  } catch (err) {
-    return null;
-  }
-};
-
 const getById = async (id) => {
   try {
     const db = await connection();
@@ -42,20 +32,8 @@ const update = async (id, itensSold) => {
   }
 };
 
-const exclude = async (id) => {
-  try {
-    const db = await connection();
-    await db.collection('sales').deleteOne({ _id: ObjectId(id) });
-    return true;
-  } catch (err) {
-    return null;
-  }
-};
-
 module.exports = {
   add,
-  getAll,
   getById,
   update,
-  exclude,
 };

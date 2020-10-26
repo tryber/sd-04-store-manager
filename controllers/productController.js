@@ -1,5 +1,5 @@
 const express = require('express');
-const { checkProduct } = require('../helper/productSchema');
+const errorDealer = require('../middlewares/errorDealer');
 const productModel = require('../models/productModel');
 
 const router = express.Router();
@@ -19,40 +19,26 @@ router.get('/:id', async (req, res) => {
   res.status(200).json(product);
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const { name, quantity } = req.body;
-    await checkProduct(req.body);
+router.post('/', errorDealer, async (req, res) => {
+  const { name, quantity } = req.body;
+  const exists = await productModel.getProductByName(name);
+  if (!exists) {
+    const product = await productModel.addProduct(name, quantity);
 
-    const exists = await productModel.getProductByName(name);
-    if (!exists) {
-      const product = await productModel.addProduct(name, quantity);
-
-      res.status(201).json(product);
-    } else {
-      res.status(422).json({ err: { code: 'invalid_data', message: 'Product already exists' } });
-    }
-  } catch (er) {
-    console.log('erros', er);
-    res.status(422).json({ err: { code: 'invalid_data', message: er.details[0].message } });
+    res.status(201).json(product);
+  } else {
+    res.status(422).json({ err: { code: 'invalid_data', message: 'Product already exists' } });
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', errorDealer, async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
-  try {
-    const validate = await checkProduct(req.body);
-    if (validate) {
-      await productModel.updateProduct(id, name, quantity);
-      const product = await productModel.getProductById(id);
 
-      res.status(200).json(product);
-    }
-  } catch (er) {
-    console.log('erros', er);
-    res.status(422).json({ err: { code: 'invalid_data', message: er.details[0].message } });
-  }
+  await productModel.updateProduct(id, name, quantity);
+  const product = await productModel.getProductById(id);
+
+  res.status(200).json(product);
 });
 
 router.delete('/:id', async (req, res) => {

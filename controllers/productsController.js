@@ -35,6 +35,23 @@ router.get('/:id', productValidations.validationReturnProduct, async (req, res) 
   res.status(200).json(req.product);
 });
 
+router.put(
+  '/:id',
+  productValidations.validationPresenceOfName,
+  productValidations.validationLengthOfName,
+  productValidations.validationQuantityOfProduct,
+  productValidations.validationStringOfProduct,
+  async (req, res) => {
+    const { id, name, quantity } = req.body;
+
+    await productModel.updateProduct(req.params.id, name, quantity);
+    const newProduct = await productModel.findProductById(req.params.id);
+    req.product = newProduct;
+
+    res.status(200).json(req.product);
+  },
+);
+
 // const products = await productsModel.findAll();
 // res.status(200).json();
 

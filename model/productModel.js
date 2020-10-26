@@ -8,9 +8,7 @@ const add = async (name, quantity) =>
   connection().then((db) => db.collection('products').insertOne({ name, quantity }));
 
 const listProducts = async () => {
-  console.log('listproducts');
   const data = await connection().then((db) => db.collection('products').find().toArray());
-  console.log(data);
   return data;
 };
 
@@ -20,8 +18,14 @@ const findProductById = async (id) => {
   const returnedProduct = await connection().then((db) =>
     db.collection('products').findOne(ObjectId(id)),
   );
-  console.log(returnedProduct);
   return returnedProduct;
 };
 
-module.exports = { findByName, add, listProducts, findProductById };
+const updateProduct = async (id, name, quantity) => {
+  console.log(id, name, quantity);
+  await connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
+  );
+};
+
+module.exports = { findByName, add, listProducts, findProductById, updateProduct };

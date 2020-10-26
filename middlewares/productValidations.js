@@ -20,16 +20,6 @@ const validationLengthOfName = (req, res, next) => {
   next();
 };
 
-const validationProductExistsByName = async (req, res, next) => {
-  const { name } = req.body;
-  const product = await productModel.findByName(name);
-
-  if (product) {
-    return res.status(422).json(buildResponse('invalid_data', 'Product already exists'));
-  }
-  next();
-};
-
 const validationQuantityOfProduct = (req, res, next) => {
   const { quantity } = req.body;
 
@@ -37,6 +27,16 @@ const validationQuantityOfProduct = (req, res, next) => {
     return res
       .status(422)
       .json(buildResponse('invalid_data', '"quantity" must be larger than or equal to 1'));
+  }
+  next();
+};
+
+const validationProductExistsByName = async (req, res, next) => {
+  const { name } = req.body;
+  const product = await productModel.findByName(name);
+
+  if (product) {
+    return res.status(422).json(buildResponse('invalid_data', 'Product already exists'));
   }
   next();
 };
@@ -55,6 +55,7 @@ const validationReturnProduct = async (req, res, next) => {
     res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
   }
   req.product = productChoice;
+  // produto recebe os dados que vieram do banco de dados, então req.product, utilizado no controller terá o valor de productChoice
   next();
 };
 

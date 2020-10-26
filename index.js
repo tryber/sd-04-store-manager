@@ -20,17 +20,19 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.get('/products', middlewares.controllers.getAll({
-  model: productsModel,
-  resJson: 'products',
-}));
+app.get('/products', middlewares.controllers.getAll(productsModel,
+  'products',
+  422,
+  'invalid_data',
+  'Wrong id format',
+));
 
-app.get('/products/:id', middlewares.controllers.getById({
-  model: productsModel,
-  status: 422,
-  code: 'invalid_data',
-  message: 'Wrong id format',
-}));
+app.get('/products/:id', middlewares.controllers.getById(
+  productsModel,
+  422,
+  'invalid_data',
+  'Wrong id format',
+));
 
 app.put('/products/:id',
   controllers.productsController.nameLength,
@@ -54,17 +56,20 @@ app.post('/sales',
   controllers.salesController.add,
 );
 
-app.get('/sales', middlewares.controllers.getAll({
-  model: salesModel,
-  resJson: 'sales',
-}));
+app.get('/sales', middlewares.controllers.getAll(
+  salesModel,
+  'sales',
+  404,
+  'not_found',
+  'Sale not found',
+));
 
-app.get('/sales/:id', middlewares.controllers.getById({
-  model: salesModel,
-  status: 404,
-  code: 'not_found',
-  message: 'Sale not found',
-}));
+app.get('/sales/:id', middlewares.controllers.getById(
+  salesModel,
+  404,
+  'not_found',
+  'Sale not found',
+));
 
 app.put('/sales/:id',
   controllers.salesController.invalidInput,

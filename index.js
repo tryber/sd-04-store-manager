@@ -20,7 +20,8 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.get('/products', middlewares.controllers.getAll(productsModel,
+app.get('/products', middlewares.controllers.getAll(
+  middlewares.models,
   'products',
   422,
   'invalid_data',
@@ -57,7 +58,7 @@ app.post('/sales',
 );
 
 app.get('/sales', middlewares.controllers.getAll(
-  salesModel,
+  middlewares.models,
   'sales',
   404,
   'not_found',

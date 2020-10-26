@@ -45,4 +45,12 @@ router.put('/:id',
     }
   });
 
+router.delete('/:id',
+  validations.verifyIfProductExistsById,
+  async (req, res) => {
+    const { id } = req.params;
+    await crudModel.remove('products', id);
+    res.status(200).json(req.product);
+  });
+
 module.exports = router;

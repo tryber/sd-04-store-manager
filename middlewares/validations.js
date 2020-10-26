@@ -4,7 +4,7 @@ const errors = {
   1: {
     err: {
       code: 'invalid_data',
-      message: '\"name\" length must be at least 5 characters long',
+      message: '"name" length must be at least 5 characters long',
     },
   },
   2: {
@@ -16,13 +16,13 @@ const errors = {
   3: {
     err: {
       code: 'invalid_data',
-      message: '\"quantity\" must be larger than or equal to 1',
+      message: '"quantity" must be larger than or equal to 1',
     },
   },
   4: {
     err: {
       code: 'invalid_data',
-      message: '\"quantity\" must be a number',
+      message: '"quantity" must be a number',
     },
   },
 };

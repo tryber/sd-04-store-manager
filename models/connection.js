@@ -9,7 +9,7 @@ const connection = () =>
         host, {
           useNewUrlParser: true,
           useUnifiedTopology: true,
-        }
+        },
       )
       .then((conn) => conn.db(database))
       .catch((_err) => process.exit(1))

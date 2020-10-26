@@ -1,7 +1,7 @@
 const validator = require('validator');
 const productModel = require('../models/productModel');
 
-const addValidation = async (name, quantity) => {
+const productValidation = async (name, quantity) => {
   let errorCode = '';
   const checkName = await productModel.getByName(name);
   if (checkName) {
@@ -17,13 +17,23 @@ const addValidation = async (name, quantity) => {
 };
 
 const add = async (name, quantity) => {
-  const errorCode = await addValidation(name, quantity);
+  const errorCode = await productValidation(name, quantity);
 
   if (errorCode) {
     return errorCode;
   }
   const newProduct = await productModel.add(name, quantity);
   return newProduct;
+};
+
+const update = async (id, name, quantity) => {
+  const errorCode = await productValidation(name, quantity);
+
+  if (errorCode) {
+    return errorCode;
+  }
+  const updatedProduct = await productModel.update(id, name, quantity);
+  return updatedProduct;
 };
 
 const getAll = async () => {
@@ -44,4 +54,5 @@ module.exports = {
   add,
   getAll,
   getById,
+  update,
 };

@@ -14,9 +14,24 @@ const add = async (name, quantity) => {
   return product;
 };
 
+const update = async (id, name, quantity) => {
+  const result = await connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
+  if (result.result.ok !== 1) {
+    return 'Could not update';
+  }
+  const product = {
+    _id: ObjectId(id),
+    name,
+    quantity,
+  };
+  return product;
+};
+
 module.exports = {
   add,
   getAll,
   getById,
   getByName,
+  update,
 };

@@ -39,6 +39,17 @@ router.post('/', rescue(async (req, res) => {
   res.status(201).json(result);
 }));
 
+router.put('/:id', rescue(async (req, res) => {
+  const { name, quantity } = req.body;
+  const { id } = req.params;
+  const updatedResult = await productService.update(id, name, quantity);
+  if (typeof result === 'string') {
+    throw new ProductsError(updatedResult);
+  }
+
+  res.status(200).json(updatedResult);
+}));
+
 router.use(rescue.from(ProductsError, (err, req, res) => {
   res.status(422)
     .json({ err: { code: 'invalid_data', message: err.message } });

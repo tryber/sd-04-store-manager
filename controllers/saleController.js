@@ -1,5 +1,5 @@
 const express = require('express');
-const productModel = require('../models/productModel');
+// const productModel = require('../models/productModel');
 const sharedModel = require('../models/sharedModel');
 const saleModel = require('../models/saleModel');
 
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
     });
   }
   res.status(200).json({
-    itenSolde,
+    itenSmessage: 'ok',
   });
 });
 
@@ -46,10 +46,10 @@ const validation = (productId, quantity, sales) => {
 router.post('/', async (req, res) => {
   // const { productId, quantity } = req.body[0];
   const sales = await sharedModel.getAll('sale');
-  let itensSold = [];
+  const itensSold = [];
   req.body.map((sale) => {
     const { productId, quantity } = sale;
-    console.log('inside post Sales map', sale, productId, quantity);
+    // console.log('inside post Sales map', sale, productId, quantity);
     itensSold.push({ productId, quantity });
 
     const validationMessage = validation(productId, quantity, sales);
@@ -63,6 +63,7 @@ router.post('/', async (req, res) => {
         },
       });
     }
+    return validationMessage;
   });
 
   console.log('itensSold', itensSold);
@@ -71,7 +72,7 @@ router.post('/', async (req, res) => {
     const product = await saleModel.add(itensSold);
     res.status(200).json({
       _id: product.id,
-      itensSold: itensSold,
+      itensSold,
     });
   } catch (_e) {
     // res.status(500).json({ message: 'Erro ao cadastrar do product!' });

@@ -22,8 +22,8 @@ const add = async (itensSold) => {
 };
 
 const remove = async (id) => {
-  saleGetById = await getById(id);
-  console.log('remove sale', id, saleGetById);
+  const saleGetById = await getById(id);
+  // console.log('remove sale', id, saleGetById);
   if (!saleGetById) return false;
 
   await connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));

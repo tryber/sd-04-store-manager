@@ -12,8 +12,11 @@ const getAllSales = async () => connection().then((db) => db.collection('sales')
 
 // Lista vendas por ID----------------------------------------------------------------------
 const getSaleById = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
-  return connection().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }));
+  ObjectId.isValid(id)
+    ? connection().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }))
+    : null;
+  // if (!ObjectId.isValid(id)) return null;
+  // return connection().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }));
 };
 
 // Atualiza uma venda -----------------------------------------------------------------------
@@ -23,10 +26,12 @@ const updateSale = async (id, itensSold) =>
   );
 
 // Exclui uma venda -------------------------------------------------------------------------
-const deleteSale = async (id) =>
-  (ObjectId.isValid(id)
-    ? connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }))
-    : null);
+const deleteSale = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  // ObjectId.isValid(id)
+  return connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
+};
+// : null;
 // return result.ops[0];
 
 module.exports = { createSale, getAllSales, getSaleById, updateSale, deleteSale };

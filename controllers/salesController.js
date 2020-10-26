@@ -1,6 +1,6 @@
 const express = require('express');
 const SalesModel = require('../models/salesModel');
-const SalesService = require('../services/salesServices');
+// const SalesService = require('../services/salesServices');
 
 const router = express.Router();
 
@@ -17,8 +17,9 @@ router.post('/', async (req, res) => {
   // console.log(createdSale.itensSold[0].quantity);
 
   const err = { code: 'invalid_data' };
-  if (quantity < 0 || quantity === 0 || typeof quantity === 'string')
+  if (quantity < 0 || quantity === 0 || typeof quantity === 'string') {
     err.message = 'Wrong product ID or invalid quantity';
+  }
 
   if (err.message) return res.status(422).json({ err });
   return res.status(200).json(createdSale);

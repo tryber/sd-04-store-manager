@@ -1,3 +1,3 @@
-const Sales = require('../models/salesModel');
+// const Sales = require('../models/salesModel');
 
-module.exports = {};
+// module.exports = {};

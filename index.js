@@ -1,10 +1,10 @@
 require('dotenv/config');
 const { notFound, internalError } = require('./middlewares');
+const express = require('express');
+const productsController = require('./controllers/productsController');
 
-     const express = require('express'),
-               app = express(),
-productsController = require('./controllers/productsController'),
-              port = process.env.SERVER_PORT;
+const app = express();
+const port = process.env.SERVER_PORT;
 
 app.use(express.json());
 

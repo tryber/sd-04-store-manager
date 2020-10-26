@@ -1,10 +1,10 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const getById = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
-  return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
-};
+// const getById = async (id) => {
+//   if (!ObjectId.isValid(id)) return null;
+//   return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
+// };
 
 // const getByName = async (name) => {
 //   return await connection().then((db) => db.collection('products').findOne(name(name)));
@@ -21,15 +21,15 @@ const add = async (itensSold) => {
   return product;
 };
 
-const remove = async (id) => {
-  const saleGetById = await getById(id);
-  // console.log('remove sale', id, saleGetById);
-  if (!saleGetById) return false;
+// const remove = async (id) => {
+//   const saleGetById = await getById(id);
+//   // console.log('remove sale', id, saleGetById);
+//   if (!saleGetById) return false;
 
-  await connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
+//   await connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
 
-  return saleGetById;
-};
+//   return saleGetById;
+// };
 
 const update = async (id, name, quantity) => {
   console.log('inside update', id, name, quantity, ObjectId(id));
@@ -42,9 +42,9 @@ const update = async (id, name, quantity) => {
 };
 
 module.exports = {
-  getById,
+  // getById,
   // getByName,
   add,
-  remove,
+  // remove,
   update,
 };

@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   // console.log('getById', req.params.id);
-  const sale = await saleModel.getById(req.params.id);
+  const sale = await sharedModel.getById(req.params.id, 'sales');
   // console.log('sale', sale);
 
   if (!sale) {
@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
     return validationMessage;
   });
 
-  console.log('itensSold', itensSold);
+  // console.log('itensSold', itensSold);
   try {
     // const product = await saleModel.add(productId, quantity);
     const product = await saleModel.add(itensSold);
@@ -81,7 +81,7 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const result = await saleModel.remove(req.params.id);
+    const result = await sharedModel.remove(req.params.id, 'sales');
     const deletedSale = [result];
     console.log('delete', result, deletedSale);
     if (result) {

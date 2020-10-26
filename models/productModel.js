@@ -1,10 +1,10 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const getById = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
-  return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
-};
+// const getById = async (id) => {
+//   if (!ObjectId.isValid(id)) return null;
+//   return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+// };
 
 // const getByName = async (name) => {
 //   return await connection().then((db) => db.collection('products').findOne(name(name)));
@@ -24,13 +24,13 @@ const add = async (name, quantity) => {
   return product;
 };
 
-const remove = async (id) => {
-  if (!(await getById(id))) return false;
+// const remove = async (id) => {
+//   if (!(await getById(id))) return false;
 
-  await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+//   await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
 
-  return true;
-};
+//   return true;
+// };
 
 const update = async (id, name, quantity) => {
   console.log('inside update', id, name, quantity, ObjectId(id));
@@ -43,9 +43,9 @@ const update = async (id, name, quantity) => {
 };
 
 module.exports = {
-  getById,
+  // getById,
   // getByName,
   add,
-  remove,
+  // remove,
   update,
 };

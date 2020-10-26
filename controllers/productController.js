@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   // console.log('getById', req.params.id);
-  const product = await productModel.getById(req.params.id);
+  const product = await sharedModel.getById(req.params.id, 'products');
   // console.log('product', product);
 
   if (!product) {
@@ -76,7 +76,7 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const result = await productModel.remove(req.params.id);
+    const result = await sharedModel.remove(req.params.id, 'products');
 
     if (result) {
       res.status(200).json({ message: 'Removido com sucesso' });

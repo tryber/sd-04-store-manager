@@ -44,9 +44,13 @@ const updateByIdProdMod = async (id, name, quantity) => {
   const db = await connection();
   const updateProd = await db
     .collection('products')
-    .updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+    .findOneAndUpdate(
+      { _id: ObjectId(id) },
+      { $set: { name, quantity } },
+      { returnOriginal: false },
+    );
 
-  return updateProd;
+  return updateProd.value;
 };
 
 const deleteProdMod = async (id) => {

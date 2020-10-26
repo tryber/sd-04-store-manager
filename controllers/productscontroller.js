@@ -11,7 +11,7 @@ router.post('/',
   async (req, res) => {
     const { name, quantity } = req.body;
     try {
-      const insertedProduct = await crudModel.createOne('products', name, quantity);
+      const insertedProduct = await crudModel.createOne('products', { name, quantity });
       res.status(201).json(insertedProduct);
     } catch (err) {
       res.status(500).json({ err });
@@ -37,7 +37,7 @@ router.put('/:id',
     const { name, quantity } = req.body;
     const { id } = req.params;
     try {
-      await crudModel.update('products', id, name, quantity);
+      await crudModel.update('products', id, { name, quantity });
       const product = await crudModel.findById('products', id);
       res.status(200).json(product);
     } catch (err) {

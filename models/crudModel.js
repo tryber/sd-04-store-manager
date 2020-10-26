@@ -1,14 +1,6 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connector');
 
-// const findAll = async (collection) => {
-//   const db = await connection();
-// };
-
-// const findById = (collection) => {
-
-// };
-
 const findById = async (collection, id) => {
   if (!ObjectId.isValid(id)) return null;
   const db = await connection();
@@ -28,15 +20,15 @@ const findByName = async (collection, name) => {
   return result;
 };
 
-const createOne = async (collection, name, quantity) => {
+const createOne = async (collection, query) => {
   const db = await connection();
-  const result = await db.collection(collection).insertOne({ name, quantity });
+  const result = await db.collection(collection).insertOne(query);
   return result.ops[0];
 };
 
-const update = async (collection, id, name, quantity) => {
+const update = async (collection, id, query) => {
   const db = await connection();
-  await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+  await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: query });
 };
 
 const remove = async (collection, id) => {

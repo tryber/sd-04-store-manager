@@ -55,7 +55,6 @@ const validationReturnProduct = async (req, res, next) => {
     res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
   }
   req.product = productChoice;
-  // produto recebe os dados que vieram do banco de dados, então req.product, utilizado no controller terá o valor de productChoice
   next();
 };
 

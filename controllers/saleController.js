@@ -72,8 +72,6 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const sale = await saleModel.getSaleById(id);
 
-    // console.log('linha 80 controller, delete...', sale);
-
     if (!sale) {
       return res
         .status(422)
@@ -113,7 +111,9 @@ router.put(
       }
 
       await saleModel.updateSale(id, req.body);
+
       sale = await saleModel.getSaleById(id);
+
       return res.status(200).json(sale);
     } catch (err) {
       console.log(err);

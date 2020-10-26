@@ -24,7 +24,6 @@ router.post(
 
 router.get('/', async (req, res) => {
   try {
-    const { name, quantity } = req.body;
     const list = await productModel.listProducts();
     res.status(200).json({ products: list });
   } catch (_e) {

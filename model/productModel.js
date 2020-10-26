@@ -1,13 +1,11 @@
-const { Db, ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const findByName = async (name) => {
-  return connection().then((db) => db.collection('products').findOne({ name }));
-};
+const findByName = async (name) =>
+  connection().then((db) => db.collection('products').findOne({ name }));
 
-const add = async (name, quantity) => {
-  return connection().then((db) => db.collection('products').insertOne({ name, quantity }));
-};
+const add = async (name, quantity) =>
+  connection().then((db) => db.collection('products').insertOne({ name, quantity }));
 
 const listProducts = async () => {
   console.log('listproducts');

@@ -44,17 +44,17 @@ const validation = (productId, quantity, sales) => {
 };
 
 router.post('/', async (req, res) => {
-  const { productId, quantity } = req.body[0];
+  // const { productId, quantity } = req.body[0];
   const sales = await sharedModel.getAll('sale');
-  let itensSold =[];
+  let itensSold = [];
   req.body.map((sale) => {
     const { productId, quantity } = sale;
     console.log('inside post Sales map', sale, productId, quantity);
-    itensSold.push({ productId,quantity,});
+    itensSold.push({ productId, quantity });
 
     const validationMessage = validation(productId, quantity, sales);
     // console.log('validationMessage', validationMessage);
-    
+
     if (validationMessage !== 'ok') {
       res.status(422).json({
         err: {
@@ -63,7 +63,6 @@ router.post('/', async (req, res) => {
         },
       });
     }
-    
   });
 
   console.log('itensSold', itensSold);
@@ -72,19 +71,18 @@ router.post('/', async (req, res) => {
     const product = await saleModel.add(itensSold);
     res.status(200).json({
       _id: product.id,
-      itensSold: itensSold
+      itensSold: itensSold,
     });
   } catch (_e) {
     // res.status(500).json({ message: 'Erro ao cadastrar do product!' });
   }
-  
 });
 
 router.delete('/:id', async (req, res) => {
   try {
     const result = await saleModel.remove(req.params.id);
-  const deletedSale = [result]
-console.log('delete', result, deletedSale);
+    const deletedSale = [result];
+    console.log('delete', result, deletedSale);
     if (result) {
       console.log('bingo deleted');
       // res.status(200).json({ message: 'Removido com sucesso' });

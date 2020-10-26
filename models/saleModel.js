@@ -11,9 +11,7 @@ const getById = async (id) => {
 // };
 
 const add = async (itensSold) => {
-  const result = await connection().then((db) =>
-    db.collection('sales').insertOne({ itensSold }),
-  );
+  const result = await connection().then((db) => db.collection('sales').insertOne({ itensSold }));
   // console.log('result.ops[0]', result.ops[0]);
   const { _id } = result.ops[0];
   const product = {
@@ -24,7 +22,7 @@ const add = async (itensSold) => {
 };
 
 const remove = async (id) => {
-  saleGetById = (await getById(id))
+  saleGetById = await getById(id);
   console.log('remove sale', id, saleGetById);
   if (!saleGetById) return false;
 

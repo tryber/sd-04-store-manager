@@ -33,9 +33,7 @@ router.get('/:id', async (req, res) => {
     const sale = await saleModel.getSaleById(req.params.id);
 
     if (!sale) {
-      return res
-        .status(404)
-        .json(saleValidator.responseMessage('not_found', 'Sale not found'));
+      return res.status(404).json(saleValidator.responseMessage('not_found', 'Sale not found'));
     }
 
     return res.status(200).json(sale);
@@ -94,28 +92,38 @@ router.delete('/:id', async (req, res) => {
 
 // ATUALIZAR UMA VENDA
 
-router.put('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
+router.put(
+  '/:id',
+  saleValidator.validateSaleQuantity,
+  saleValidator.validateQuantityIsNumber,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
 
-    const sale = await saleModel.getSaleById(id);
+      let sale = await saleModel.getSaleById(id);
 
-    const { newSale } = req.body;
+      console.log('linha 101, update', sale);
 
-    if (!sale) {
+      if (!sale) {
+        return res
+          .status(422)
+          .json(
+            saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'),
+          );
+      }
+
+      await saleModel.updateSale(id, req.body);
+      sale = await saleModel.getSaleById(id);
+      return res.status(200).json(sale);
+    } catch (err) {
+      console.log(err);
       return res
         .status(422)
         .json(
           saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'),
         );
     }
-
-    await saleModel.updateSale(id, newSale);
-  } catch (_err) {
-    return res
-      .status(422)
-      .json(saleValidator.responseMessage('invalid_data', 'Wrong product ID or invalid quantity'));
-  }
-});
+  },
+);
 
 module.exports = router;

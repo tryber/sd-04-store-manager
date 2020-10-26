@@ -32,13 +32,15 @@ const addSale = async (itensSold) => {
   return result.ops[0];
 };
 
-const updateSale = async (id, sale) => {
-  if (!(await getSaleById(id))) return false;
-
-  await connection().then((db) =>
-    db.collection('sales').updateOne({ _id: ObjectId(id) }, { sale }));
-  return true;
-};
+const updateSale = (id, itensSold) =>
+  connection().then((db) =>
+    db
+      .collection('sales')
+      .updateOne({ _id: ObjectId(id) }, { $set: { itensSold } })
+      .catch((err) => {
+        console.log('linha 41, MODEL', err);
+        throw err;
+      }));
 
 const removeSale = async (id) => {
   const sale = await getSaleById(id);

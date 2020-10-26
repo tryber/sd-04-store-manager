@@ -15,8 +15,7 @@ router.post('/',
   });
 
 router.get('/', async (_req, res) => {
-  const sales = await crudModel.findAll('sales');
-  res.status(200).json({ sales });
+  crudModel.findAll('sales').then((sales) => res.status(200).json({ sales }));
 });
 
 router.get('/:id', async (req, res) => {

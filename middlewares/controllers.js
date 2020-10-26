@@ -1,10 +1,7 @@
 const getAll = (model, resJson, status, code, message) => async (_req, res) => {
   const item = await model.getAll();
-  if (item && resJson === 'products') {
+  if (item) {
     return res.status(200).json({ products: item });
-  }
-  if (item && resJson === 'sales') {
-    return res.status(200).json({ sales: item });
   }
   return res.status(status).send({
     err: {

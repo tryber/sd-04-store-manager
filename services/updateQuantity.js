@@ -23,9 +23,9 @@ const postSale = async (itensSold) => {
 
 const removeSale = async (id) => {
   const result = await remove('sales', id, 'Wrong sale ID format');
-  result.itensSold.forEach(async ({ productId, quantity }) => {
-    await updateQuantity(productId, quantity);
-  });
+  const promises = result.itensSold
+    .map(({ productId, quantity }) => updateQuantity(productId, quantity));
+  await Promise.all(promises);
   return result;
 };
 

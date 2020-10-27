@@ -58,10 +58,12 @@ router.delete('/:id', rescue(async (req, res) => {
   res.status(200).json(product);
 }));
 
-router.use(rescue.from(ProductsError, (err, req, res) => {
-  res.status(422)
-    .json({ err: { code: 'invalid_data', message: err.message } });
-}));
+router.use(
+  rescue.from(ProductsError, (err, req, res) => {
+    res.status(422)
+      .json({ err: { code: 'invalid_data', message: err.message } });
+  }),
+);
 
 router.use((err, req, res) => {
   res.status(500)

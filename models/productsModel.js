@@ -25,7 +25,7 @@ const validateProduct = async (info, searchOnDB) => {
 const updateQuantity = async (id, number) => {
   if (!ObjectId.isValid(id)) throw new Error('Wrong id format');
   const product = await getById('products', id);
-  if (product.quantity + number <= 0) throw Boom.notFound('Such amount is not permitted to sell', { code: 'stock_problem' });
+  if (product && product.quantity + number <= 0) throw Boom.notFound('Such amount is not permitted to sell', { code: 'stock_problem' });
   return connection().then(
     (db) => db
       .collection('products').updateOne({ _id: ObjectId(id) }, { $inc: { quantity: number } }),

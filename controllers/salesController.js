@@ -10,9 +10,9 @@ router.post('/', validateSale, rescue(async ({ body }, res) => {
   res.json(newSale);
 }));
 
-router.get('/', rescue(async (_req, { json }) => {
-  const sales = await getAll('sales');
-  json({ sales });
+router.get('/', rescue(async (_req, res) => {
+  const result = await getAll('sales');
+  res.json({ sales: result }); // thanks Code Climate :D
 }));
 
 router.put('/:id', validateSale, rescue(async ({ body, params: { id } }, res) => {

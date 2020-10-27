@@ -19,6 +19,7 @@ app.use((err, _req, res, _next) => {
   const error = Boom.isBoom(err) ? err : Boom.badData(err);
   const { output: { statusCode, payload: { message } }, data } = error;
   const code = data ? data.code : 'invalid_data';
+  console.log(err);
   res.status(statusCode).json({ err: { code, message } });
 });
 

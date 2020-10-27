@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
-  response.send('ok');
+  response.send('');
 });
 
 app.use('/products', productController);

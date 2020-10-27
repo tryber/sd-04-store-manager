@@ -25,9 +25,14 @@ router.post('/', rescue(async (req, res) => {
   res.status(200).json(result);
 }));
 
-router.use(rescue.from(SalesErr, (error, res) => {
+router.use(rescue.from(SalesErr, (error, req, res) => {
   res.status(422)
     .json({ err: { code: 'invalid_data', message: error.message } });
 }));
+
+router.use((err, req, res) => {
+  res.status(500)
+    .json({ err: 'Something went terribly wrong' });
+});
 
 module.exports = router;

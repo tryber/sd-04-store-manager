@@ -57,7 +57,7 @@ const validateIfExistsSale = async (req, res, next) => {
   const { id } = req.params;
   const sale = await SalesModel.getById(id);
 
-  if(!sale){
+  if (!sale) {
     return res.status(422).json(buildErrors('invalid_data', 'Wrong sale ID format'));
   }
 

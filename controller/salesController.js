@@ -13,7 +13,11 @@ router.post('/', validate.validateSale, async (req, res) => {
 // Listar todas as vendas
 router.get('/', async (_req, res) => {
   const sales = await SalesModel.getAll();
-  return res.status(200).json({ sales });
+  try {
+    return res.status(200).json({ sales });
+  } catch (err) {
+    res.status(500).json({ message: 'Erro no servidor' });
+  }
 });
 
 // Listar Sale especifica por ID
@@ -49,7 +53,7 @@ router.delete('/:id', async (req, res) => {
     return res.status(422).json(validate.buildErrors('invalid_data', 'Wrong sale ID format'));
   }
 
-  await SalesModel.remove(id);
+  await SalesModel.remove(req.params.id);
   return res.status(200).json(removedSale);
 });
 

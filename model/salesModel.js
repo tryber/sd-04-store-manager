@@ -7,13 +7,9 @@ const add = async (sale) => {
   return newSale.ops[0];
 };
 
-const getAll = async () => {
-  return await connection().collection('sales').find().toArray();
-};
+const getAll = async () => await connection().collection('sales').find().toArray();
 
-const getByName = async (name) => {
-  return await connection().collection('sales').findOne({ name });
-};
+const getByName = async (name) => await connection().collection('sales').findOne({ name });
 
 const getById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
@@ -29,9 +25,10 @@ const update = async (id, sale) => {
   return stmt;
 };
 
-const remove = async (id) => {
-  return await connection().collection('sales').deleteOne({ _id: ObjectId(id) });
-};
+const remove = async (id) =>
+  await connection()
+    .collection('sales')
+    .deleteOne({ _id: ObjectId(id) });
 
 module.exports = {
   getAll,

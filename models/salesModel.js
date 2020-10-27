@@ -5,8 +5,11 @@ const getAllSales = async () => {
   const db = await connection();
   return db.collection('sales').find().toArray();
 };
-// getByNameasync (name) => connection().then((db) => db.collection('products').findOne({ name }));
-// getByIdasync (id) => connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+
+const getById = async (id) => {
+  const db = await connection();
+  return db.collection('sales').findOne(ObjectId(id));
+};
 
 const add = async (itensSold) => {
   const result = await connection().then((db) =>
@@ -30,17 +33,16 @@ const update = async (id, itensSold) => {
   return sale;
 };
 
-/* const del = async (id) => {
+const del = async (id) => {
   const result = await connection().then((db) =>
-    db.collection('products').deleteOne({ _id: ObjectId(id) }));
+    db.collection('sales').deleteOne({ _id: ObjectId(id) }));
   return result.result;
-}; */
+};
 
 module.exports = {
   add,
   getAllSales,
-  // getById,
-  // getByName,
+  getById,
   update,
-  // del,
+  del,
 };

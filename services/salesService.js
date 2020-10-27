@@ -12,9 +12,27 @@ const add = async (items) => {
   return newSales;
 };
 
+const del = async (id) => {
+  try {
+    const deletedSales = await salesModel.del(id);
+    return deletedSales;
+  } catch (e) {
+    return { n: 0 };
+  }
+};
+
 const getAllSales = async () => {
   const sales = await salesModel.getAllSales();
   return sales;
+};
+
+const getById = async (id) => {
+  try {
+    const sale = await salesModel.getById(id);
+    return sale;
+  } catch (e) {
+    return null;
+  }
 };
 
 const update = async (id, items) => {
@@ -26,6 +44,8 @@ const update = async (id, items) => {
 
 module.exports = {
   add,
+  del,
   getAllSales,
   update,
+  getById,
 };

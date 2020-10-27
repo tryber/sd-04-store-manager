@@ -34,8 +34,8 @@ const update = async (id, itensSold) => {
 };
 
 const del = async (id) => {
-  const result = await connection().then((db) =>
-    db.collection('sales').deleteOne({ _id: ObjectId(id) }));
+  const db = await connection();
+  const result = db.collection('sales').deleteOne({ _id: ObjectId(id) });
   return result.result;
 };
 

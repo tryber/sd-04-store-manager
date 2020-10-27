@@ -13,12 +13,8 @@ const add = async (items) => {
 };
 
 const del = async (id) => {
-  try {
-    const deletedSales = await salesModel.del(id);
-    return deletedSales;
-  } catch (e) {
-    return { n: 0 };
-  }
+  const deletedSales = await salesModel.del(id);
+  return deletedSales;
 };
 
 const getAllSales = async () => {
@@ -27,12 +23,8 @@ const getAllSales = async () => {
 };
 
 const getById = async (id) => {
-  try {
-    const sale = await salesModel.getById(id);
-    return sale;
-  } catch (e) {
-    return null;
-  }
+  const sale = await salesModel.getById(id);
+  return sale;
 };
 
 const update = async (id, items) => {

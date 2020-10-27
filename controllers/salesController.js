@@ -1,4 +1,3 @@
-const salesModel = require('../models/salesModel');
 const model = require('../models/commonModel');
 
 const readSales = async (_, res) => {
@@ -27,7 +26,7 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   const [...products] = req.body;
-  await salesModel.update(req.params.id, ...products, 'sales');
+  await model.update(req.params.id, ...products, 'sales');
   const result = await model.findById(req.params.id, 'sales');
   res.status(200).json(result);
 };

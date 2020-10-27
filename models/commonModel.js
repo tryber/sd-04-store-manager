@@ -15,14 +15,14 @@ const add = async (itensSold, collection) => {
 const findById = async (id, collection) =>
   connection().then((db) => db.collection(collection).findOne(ObjectId(id)));
 
-const updateProduct = async (id, data, collection) => {
+const update = async (id, data, collection) => {
   let value = { itensSold: data };
   if (collection === 'products') value = { name: data.name, quantity: data.quantity };
   connection().then((db) =>
     db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: value }));
 };
 
-const deleteProduct = async (id) =>
+const exclude = async (id) =>
   connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
 
-module.exports = { getAll, add, findById, updateProduct, deleteProduct };
+module.exports = { getAll, add, findById, update, exclude };

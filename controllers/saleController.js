@@ -28,10 +28,10 @@ router.get('/:id', async (req, res) => {
 
   if (!sale) {
     returnStatus('404', 'not_found', 'Sale not found');
-  res.status(200).json({
-    itenSmessage: 'ok',
-  });
-};
+    res.status(200).json({
+      itenSmessage: 'ok',
+    });
+  }
 });
 
 const validation = (quantity) => {
@@ -59,25 +59,23 @@ router.post('/', async (req, res) => {
     const validationMessage = validation(quantity);
     // console.log('validationMessage', validationMessage);
 
-    const returnValidationMessage = (codeNumber, message, code) =>
-    res.status(codeNumber).json({
-      err: {
-        message,
-        code,
-      },
-    });
+    // const returnValidationMessage = (codeNumber, message, code) =>
+    // res.status(codeNumber).json({
+    //   err: {
+    //     message,
+    //     code,
+    //   },
+    // });
 
-    const jsonValidationMessage =
-    {
+    const jsonValidationMessage = {
       err: {
         message: validationMessage,
         code: 'invalid_data',
       },
-    }
+    };
     if (validationMessage !== 'ok') {
       // returnValidationMessage('422', validationMessage, 'invalid_data')
       res.status(422).json(jsonValidationMessage);
-
     }
 
     return validationMessage;

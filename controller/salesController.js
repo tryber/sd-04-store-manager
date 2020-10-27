@@ -11,15 +11,14 @@ router.post('/', validate.validateSale, async (req, res) => {
 });
 
 // Listar todas as vendas
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
   const sales = await SalesModel.getAll();
   return res.status(200).json({ sales });
 });
 
 // Listar Sale especifica por ID
 router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const sale = await SalesModel.getById(id);
+  const sale = await SalesModel.getById(req.params.id);
 
   if (!sale) {
     return res.status(422).json(validate.buildErrors('not_found', 'Sale not found'));
@@ -44,8 +43,7 @@ router.put('/:id', validate.validateSale, async (req, res) => {
 
 // Deletar uma Venda
 router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const removedSale = await SalesModel.getById(id);
+  const removedSale = await SalesModel.getById(req.params.id);
 
   if (!removedSale) {
     return res.status(422).json(validate.buildErrors('invalid_data', 'Wrong sale ID format'));

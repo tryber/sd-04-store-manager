@@ -3,28 +3,22 @@ const { ObjectId } = require('mongodb');
 
 const add = async (sale) => {
   const db = await connection();
-  const newSale = await db.collection('sales').insertOne({ itensSold: sale});
+  const newSale = await db.collection('sales').insertOne({ itensSold: sale });
   return newSale.ops[0];
 };
 
 const getAll = async () => {
-  const db = await connection();
-  const stmt = await db.collection('sales').find().toArray();
-  return stmt;
+  return await connection().collection('sales').find().toArray();
 };
 
 const getByName = async (name) => {
-  const db = await connection();
-  const stmt = await db.collection('sales').findOne({ name });
-  return stmt;
+  return await connection().collection('sales').findOne({ name });
 };
 
 const getById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
 
-  const db = await connection();
-  const stmt = await db.collection('sales').findOne(ObjectId(id));
-  return stmt;
+  return await connection().collection('sales').findOne(ObjectId(id));
 };
 
 const update = async (id, sale) => {
@@ -36,8 +30,7 @@ const update = async (id, sale) => {
 };
 
 const remove = async (id) => {
-  const db = await connection();
-  await db.collection('sales').deleteOne({ _id: ObjectId(id) });
+  return await connection().collection('sales').deleteOne({ _id: ObjectId(id) });
 };
 
 module.exports = {

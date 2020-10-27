@@ -2,6 +2,7 @@ const express = require('express');
 // const productModel = require('../models/productModel');
 const sharedModel = require('../models/sharedModel');
 const saleModel = require('../models/saleModel');
+const sharedController = require('../models/sharedModel');
 
 const router = express.Router();
 
@@ -17,31 +18,23 @@ router.get('/:id', async (req, res) => {
   const sale = await sharedModel.getById(req.params.id, 'sales');
   // console.log('sale', sale);
 
-  const returnStatus = (codeNumber, code, message) => {
-    return res.status(404).json({
+  const returnStatus = (codeNumber, code, message) =>
+    res.status(codeNumber).json({
       err: {
         code,
         message,
       },
     });
-  };
 
   if (!sale) {
-    console.log('if ! sale');
     returnStatus('404', 'not_found', 'Sale not found');
-    // return res.status(404).json({
-    //   err: {
-    //     code: 'not_found',
-    //     message: 'Sale not found',
-    //   },
-    // });
-  }
   res.status(200).json({
     itenSmessage: 'ok',
   });
+};
 });
 
-const validation = (productId, quantity, sales) => {
+const validation = (quantity) => {
   // console.log('inside validation', productId, quantity, sales);
   let message = 'ok';
   if (quantity < 1) {
@@ -63,16 +56,25 @@ router.post('/', async (req, res) => {
     // console.log('inside post Sales map', sale, productId, quantity);
     itensSold.push({ productId, quantity });
 
-    const validationMessage = validation(productId, quantity, sales);
+    const validationMessage = validation(quantity);
     // console.log('validationMessage', validationMessage);
 
+    const returnValidationMessage = (codeNumber, message, code) =>
+    res.status(codeNumber).json({
+      err: {
+        message,
+        code,
+      },
+    });
+
     if (validationMessage !== 'ok') {
-      res.status(422).json({
-        err: {
-          message: validationMessage,
-          code: 'invalid_data',
-        },
-      });
+      returnValidationMessage('422', validationMessage, 'invalid_data')
+      // res.status(422).json({
+      //   err: {
+      //     message: validationMessage,
+      //     code: 'invalid_data',
+      //   },
+      // });
     }
     return validationMessage;
   });

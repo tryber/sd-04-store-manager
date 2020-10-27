@@ -25,7 +25,18 @@ router.post('/', rescue(async (req, res) => {
   res.status(200).json(result);
 }));
 
-router.use(rescue.from(SalesErr, (error, req, res) => {
+router.put('/:id', rescue(async (req, res) => {
+  const items = req.body;
+  const { id } = req.params;
+  const updatedResult = await salesService.update(id, items);
+  if (typeof updatedResult === 'string') {
+    throw new SalesErr(updatedResult);
+  }
+
+  res.status(200).json(updatedResult);
+}));
+
+router.use(rescue.from(SalesErr, (error, _req, res, _next) => {
   res.status(422)
     .json({ err: { code: 'invalid_data', message: error.message } });
 }));

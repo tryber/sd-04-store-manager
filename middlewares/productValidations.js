@@ -1,4 +1,4 @@
-const product = require('../models/productsModel');
+const model = require('../models/commonModel');
 
 const productLengthValidation = (req, res, next) => {
   const { name } = req.body;
@@ -13,7 +13,7 @@ const productLengthValidation = (req, res, next) => {
 
 const productUniqueNameValidation = async (req, res, next) => {
   const { name } = req.body;
-  const products = await product
+  const products = await model
     .getAll('products')
     .then((names) => names.find((productName) => productName.name === name));
   if (products) {

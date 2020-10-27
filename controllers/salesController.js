@@ -1,15 +1,15 @@
 const salesModel = require('../models/salesModel');
-const productModel = require('../models/productsModel');
+const model = require('../models/commonModel');
 
 const readSales = async (_, res) => {
-  const sales = await productModel.getAll('sales');
+  const sales = await model.getAll('sales');
   const status = 200;
   return res.status(status).json({ sales });
 };
 
 const readById = async (req, res) => {
   try {
-    const sale = await productModel.findById(req.params.id, 'sales');
+    const sale = await model.findById(req.params.id, 'sales');
     return res.status(200).json(sale);
   } catch (_e) {
     const status = 422;
@@ -21,14 +21,14 @@ const readById = async (req, res) => {
 
 const create = async (req, res) => {
   const [...products] = req.body;
-  const add = await salesModel.add(...products);
+  const add = await model.add(...products, 'sales');
   res.status(200).json(add);
 };
 
 const update = async (req, res) => {
   const [...products] = req.body;
-  await salesModel.update(req.params.id, ...products);
-  const result = await productModel.findById(req.params.id, 'sales');
+  await salesModel.update(req.params.id, ...products, 'sales');
+  const result = await model.findById(req.params.id, 'sales');
   res.status(200).json(result);
 };
 

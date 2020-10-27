@@ -1,5 +1,5 @@
 const express = require('express');
-const product = require('../models/productsModel');
+const model = require('../models/commonModel');
 
 const router = express.Router();
 
@@ -13,20 +13,20 @@ router.post(
   productValidations.productQuantityTypeOfValidation,
   async (req, res) => {
     const { name, quantity } = req.body;
-    const products = await product.newProduct(name, quantity);
+    const products = await model.add({ name, quantity }, 'products');
     res.status(201).json(products);
   },
 );
 
 router.get('/', async (_, res) => {
-  const products = await product.getAll('products');
+  const products = await model.getAll('products');
   return res.status(200).json({ products });
 });
 
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const products = await product.findById(id, 'products');
+    const products = await model.findById(id, 'products');
     return res.status(200).json(products);
   } catch (_e) {
     res.status(422).json({
@@ -43,16 +43,16 @@ router.put(
   async (req, res) => {
     const { name, quantity } = req.body;
     const { id } = req.params;
-    await product.updateProduct(id, name, quantity, 'products');
-    res.status(200).json(await product.findById(id, 'products'));
+    await model.updateProduct(id, { name, quantity }, 'products');
+    res.status(200).json(await model.findById(id, 'products'));
   },
 );
 
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const removeProduct = await product.findById(id, 'products');
-    await product.deleteProduct(id);
+    const removeProduct = await model.findById(id, 'products');
+    await model.deleteProduct(id);
     res.status(200).json(removeProduct);
   } catch (err) {
     res.status(422).json({

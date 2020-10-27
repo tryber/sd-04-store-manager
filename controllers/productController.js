@@ -10,14 +10,11 @@ class ProductsError extends Error {
 
 const router = express.Router();
 
-router.get('/', rescue(async (req, res) => {
+router.get('/', async (req, res) => {
   const productsArray = await productService.getAll();
-  if (productsArray.length === 0) {
-    throw new ProductsError('No products have been found!');
-  }
   const products = { products: productsArray };
   res.status(200).json(products);
-}));
+});
 
 router.get('/:id', rescue(async (req, res) => {
   const { id } = req.params;
@@ -48,6 +45,17 @@ router.put('/:id', rescue(async (req, res) => {
   }
 
   res.status(200).json(updatedResult);
+}));
+
+router.delete('/:id', rescue(async (req, res) => {
+  const { id } = req.params;
+  const product = await productService.getById(id);
+  const deletedResult = await productService.del(id);
+  if (deletedResult.n === 0) {
+    throw new ProductsError('Wrong id format');
+  }
+
+  res.status(200).json(product);
 }));
 
 router.use(rescue.from(ProductsError, (err, req, res) => {

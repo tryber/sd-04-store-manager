@@ -28,10 +28,17 @@ const update = async (id, name, quantity) => {
   return product;
 };
 
+const del = async (id) => {
+  const result = await connection().then((db) =>
+    db.collection('products').deleteOne({ _id: ObjectId(id) }));
+  return result.result;
+};
+
 module.exports = {
   add,
   getAll,
   getById,
   getByName,
   update,
+  del,
 };

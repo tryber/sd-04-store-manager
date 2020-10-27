@@ -36,6 +36,15 @@ const update = async (id, name, quantity) => {
   return updatedProduct;
 };
 
+const del = async (id) => {
+  try {
+    const deletedProduct = await productModel.del(id);
+    return deletedProduct;
+  } catch (e) {
+    return { n: 0 };
+  }
+};
+
 const getAll = async () => {
   const products = await productModel.getAll();
   return products;
@@ -55,4 +64,5 @@ module.exports = {
   getAll,
   getById,
   update,
+  del,
 };

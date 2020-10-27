@@ -59,7 +59,7 @@ router.delete('/:id', rescue(async (req, res) => {
 }));
 
 router.use(
-  rescue.from(ProductsError, (err, req, res) => {
+  rescue.from(ProductsError, (err, req, res, _next) => {
     res.status(422)
       .json({ err: { code: 'invalid_data', message: err.message } });
   }),

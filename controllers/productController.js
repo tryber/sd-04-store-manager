@@ -1,5 +1,5 @@
 const express = require('express');
-const errorDealer = require('../middlewares/errorDealer');
+const {productErrorDealer} = require('../middlewares/errorDealer');
 const productModel = require('../models/productModel');
 
 const router = express.Router();
@@ -19,7 +19,7 @@ router.get('/:id', async (req, res) => {
   res.status(200).json(product);
 });
 
-router.post('/', errorDealer, async (req, res) => {
+router.post('/', productErrorDealer, async (req, res) => {
   const { name, quantity } = req.body;
   const exists = await productModel.getProductByName(name);
   if (!exists) {
@@ -31,7 +31,7 @@ router.post('/', errorDealer, async (req, res) => {
   }
 });
 
-router.put('/:id', errorDealer, async (req, res) => {
+router.put('/:id', productErrorDealer, async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
 

@@ -1,6 +1,10 @@
-const { checkProduct } = require('../helper/productSchema');
+const { productSchema, saleSchema } = require('../schema/schema');
 
-const errorDealer = async (req, res, next) => {
+const checkProduct = async (item) => productSchema.validate(item);
+
+const checkSale = async (item) => saleSchema.validate(item);
+
+const productErrorDealer = async (req, res, next) => {
   try {
     await checkProduct(req.body);
     next();
@@ -9,4 +13,15 @@ const errorDealer = async (req, res, next) => {
   }
 };
 
-module.exports = errorDealer;
+const saleErrorDealer = async (req, res, next) => {
+  try {
+    await checkSale(req.body);
+    next();
+  } catch (er) {
+    res
+      .status(422)
+      .json({ err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' } });
+  }
+};
+
+module.exports = { productErrorDealer, saleErrorDealer };

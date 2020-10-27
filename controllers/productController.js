@@ -1,5 +1,5 @@
 const express = require('express');
-const {productErrorDealer} = require('../middlewares/errorDealer');
+const { productErrorDealer } = require('../middlewares/errorDealer');
 const productModel = require('../models/productModel');
 
 const router = express.Router();

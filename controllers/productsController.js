@@ -24,8 +24,8 @@ router.delete('/:id', rescue(async ({ params: { id } }, res) => {
   res.json(result);
 }));
 
-router.get('/:id', rescue(async ({ params: { id } }, res) => {
-  const product = await getById('products', id);
+router.get('/:id', rescue(async (req, res) => {
+  const product = await getById('products', req.params.id);
   res.json(product);
 }));
 

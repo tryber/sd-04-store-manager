@@ -25,7 +25,7 @@ router.post('/', rescue(async (req, res) => {
   res.status(200).json(result);
 }));
 
-router.use(rescue.from(SalesErr, (error, req, res, next) => {
+router.use(rescue.from(SalesErr, (error, _req, res, _next) => {
   res.status(422)
     .json({ err: { code: 'invalid_data', message: error.message } });
 }));

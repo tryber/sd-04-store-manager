@@ -2,7 +2,7 @@ const express = require('express');
 // const productModel = require('../models/productModel');
 const sharedModel = require('../models/sharedModel');
 const saleModel = require('../models/saleModel');
-const sharedController = require('../models/sharedModel');
+// const sharedController = require('../models/sharedModel');
 
 const router = express.Router();
 
@@ -49,7 +49,7 @@ const validation = (quantity) => {
 
 router.post('/', async (req, res) => {
   // const { productId, quantity } = req.body[0];
-  const sales = await sharedModel.getAll('sale');
+  // const sales = await sharedModel.getAll('sale');
   const itensSold = [];
   req.body.map((sale) => {
     const { productId, quantity } = sale;

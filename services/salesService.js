@@ -9,12 +9,12 @@ const add = async (items) => {
   return newSales;
 };
 
-const getAll = async () => {
-  const sales = await salesModel.getAll();
+const getAllSales = async () => {
+  const sales = await salesModel.getAllSales();
   return sales;
 };
 
 module.exports = {
   add,
-  getAll,
+  getAllSales,
 };

@@ -11,9 +11,8 @@ class SalesError extends Error {
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const salesArray = await salesService.getAll();
-  const sales = { sales: salesArray };
-  res.status(200).json(sales);
+  const salesArray = await salesService.getAllSales();
+  res.status(200).json({ sales: salesArray });
 });
 
 router.post('/', rescue(async (req, res) => {

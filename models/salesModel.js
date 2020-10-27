@@ -1,7 +1,7 @@
 // const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const getAll = async () => connection().then((db) => db.collection('sales').find().toArray());
+const getAllSales = async () => connection().then((db) => db.collection('sales').find().toArray());
 // getByNameasync (name) => connection().then((db) => db.collection('products').findOne({ name }));
 // getByIdasync (id) => connection().then((db) => db.collection('products').findOne(ObjectId(id)));
 
@@ -36,7 +36,7 @@ const add = async (itensSold) => {
 
 module.exports = {
   add,
-  getAll,
+  getAllSales,
   // getById,
   // getByName,
   // update,

@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   const productsArray = await sharedModel.getAll('sales');
   const sales = { sales: productsArray };
-  console.log('sales get', sales, productsArray);
+  // console.log('sales get', sales, productsArray);
   res.json(sales);
 });
 
@@ -17,13 +17,24 @@ router.get('/:id', async (req, res) => {
   const sale = await sharedModel.getById(req.params.id, 'sales');
   // console.log('sale', sale);
 
-  if (!sale) {
+  const returnStatus = (codeNumber, code, message) => {
     return res.status(404).json({
       err: {
-        code: 'not_found',
-        message: 'Sale not found',
+        code,
+        message,
       },
     });
+  };
+
+  if (!sale) {
+    console.log('if ! sale');
+    returnStatus('404', 'not_found', 'Sale not found');
+    // return res.status(404).json({
+    //   err: {
+    //     code: 'not_found',
+    //     message: 'Sale not found',
+    //   },
+    // });
   }
   res.status(200).json({
     itenSmessage: 'ok',
@@ -31,7 +42,7 @@ router.get('/:id', async (req, res) => {
 });
 
 const validation = (productId, quantity, sales) => {
-  console.log('inside validation', productId, quantity, sales);
+  // console.log('inside validation', productId, quantity, sales);
   let message = 'ok';
   if (quantity < 1) {
     message = 'Wrong product ID or invalid quantity';
@@ -83,9 +94,9 @@ router.delete('/:id', async (req, res) => {
   try {
     const result = await sharedModel.remove(req.params.id, 'sales');
     const deletedSale = [result];
-    console.log('delete', result, deletedSale);
+    // console.log('delete', result, deletedSale);
     if (result) {
-      console.log('bingo deleted');
+      // console.log('bingo deleted');
       // res.status(200).json({ message: 'Removido com sucesso' });
       res.status(200).json(deletedSale);
     } else {

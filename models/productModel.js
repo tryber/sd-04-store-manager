@@ -33,7 +33,7 @@ const add = async (name, quantity) => {
 // };
 
 const update = async (id, name, quantity) => {
-  console.log('inside update', id, name, quantity, ObjectId(id));
+  // console.log('inside update', id, name, quantity, ObjectId(id));
   // if (!ObjectId.isValid(id)) return null;
   const result = await connection().then((db) =>
     db.collection('products').findOneAndUpdate({ _id: ObjectId(id) }, { $set: { name, quantity } }),

@@ -95,7 +95,7 @@ router.delete('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const { name, quantity } = req.body;
-  console.log('const update', name, quantity);
+  // console.log('const update', name, quantity);
   if (name.length < 5) {
     res.status(422).json({
       err: {

@@ -31,20 +31,20 @@ const add = async (itensSold) => {
 //   return saleGetById;
 // };
 
-const update = async (id, name, quantity) => {
-  console.log('inside update', id, name, quantity, ObjectId(id));
-  // if (!ObjectId.isValid(id)) return null;
-  const result = await connection().then((db) =>
-    db.collection('products').findOneAndUpdate({ _id: ObjectId(id) }, { $set: { name, quantity } }),
-  );
-  // if (!product) return add(name, quantity);
-  return result;
-};
+// const update = async (id, name, quantity) => {
+//   console.log('inside update', id, name, quantity, ObjectId(id));
+//   // if (!ObjectId.isValid(id)) return null;
+//   const result = await connection().then((db) =>
+//     db.collection('sale').findOneAndUpdate({ _id: ObjectId(id) }, { $set: { name, quantity } }),
+//   );
+//   // if (!product) return add(name, quantity);
+//   return result;
+// };
 
 module.exports = {
   // getById,
   // getByName,
   add,
   // remove,
-  update,
+  // update,
 };

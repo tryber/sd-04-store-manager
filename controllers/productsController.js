@@ -8,11 +8,6 @@ router.post('/', validateProduct(), rescue(async ({ body: { name, quantity } }, 
   res.status(201).json(newProduct);
 }));
 
-router.get('/', rescue(async (_req, res) => {
-  const products = await getAll('products');
-  res.json({ products });
-}));
-
 router.put('/:id', validateProduct(false),
   rescue(async ({ body: { name, quantity }, params: { id } }, res) => {
     await update('products', id, { name, quantity });
@@ -22,6 +17,11 @@ router.put('/:id', validateProduct(false),
 router.delete('/:id', rescue(async ({ params: { id } }, res) => {
   const result = await remove('products', id);
   res.json(result);
+}));
+
+router.get('/', rescue(async (_req, res) => {
+  const products = await getAll('products');
+  res.json({ products });
 }));
 
 router.get('/:id', rescue(async (req, res) => {

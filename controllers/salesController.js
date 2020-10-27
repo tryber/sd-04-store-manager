@@ -2,7 +2,7 @@ const express = require('express');
 const rescue = require('express-rescue');
 const salesService = require('../services/salesService');
 
-class SalesError extends Error {
+class SalesErr extends Error {
   constructor(message = '') {
     super(message);
   }
@@ -19,15 +19,15 @@ router.post('/', rescue(async (req, res) => {
   const items = req.body;
   const result = await salesService.add(items);
   if (typeof result === 'string') {
-    throw new SalesError(result);
+    throw new SalesErr(result);
   }
 
   res.status(200).json(result);
 }));
 
-router.use(rescue.from(SalesError, (err, req, res) => {
+router.use(rescue.from(SalesErr, (error, res) => {
   res.status(422)
-    .json({ err: { code: 'invalid_data', message: err.message } });
+    .json({ err: { code: 'invalid_data', message: error.message } });
 }));
 
 router.use((err, req, res) => {

@@ -67,15 +67,19 @@ router.post('/', async (req, res) => {
       },
     });
 
-    if (validationMessage !== 'ok') {
-      returnValidationMessage('422', validationMessage, 'invalid_data')
-      // res.status(422).json({
-      //   err: {
-      //     message: validationMessage,
-      //     code: 'invalid_data',
-      //   },
-      // });
+    const jsonValidationMessage =
+    {
+      err: {
+        message: validationMessage,
+        code: 'invalid_data',
+      },
     }
+    if (validationMessage !== 'ok') {
+      // returnValidationMessage('422', validationMessage, 'invalid_data')
+      res.status(422).json(jsonValidationMessage);
+
+    }
+
     return validationMessage;
   });
 

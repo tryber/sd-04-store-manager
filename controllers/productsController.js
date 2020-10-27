@@ -21,11 +21,11 @@ router.get('/', async (_req, res) => {
 
 // RETORNA OS PRODUTOS POR ID------------------------------------------------------------------
 router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const product = await ProductsServices.getProductById(id);
+  // const { id } = req.params;
+  const productForCC = await ProductsServices.getProductById(req.params.id);
 
-  if (product.error) return res.status(422).json({ err: product.err });
-  res.status(200).json(product);
+  if (productForCC.error) return res.status(422).json({ err: productForCC.err });
+  res.status(200).json(productForCC);
 });
 
 // ATUALIZA O PRODUTO -------------------------------------------------------------------------

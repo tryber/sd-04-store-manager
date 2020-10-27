@@ -17,17 +17,17 @@ const getAllProducts = async () => {
 // Lista produtos por ID----------------------------------------------------------------------
 const getProductById = async (id) =>
   // if (!
-  ObjectId.isValid(id)
+  (ObjectId.isValid(id)
     ? connection().then((db) => db.collection('products').findOne({ _id: ObjectId(id) }))
-    : null;
+    : null);
 //  return null;
 // return ;
 
 // Exclui um produto -------------------------------------------------------------------------
 const deleteProduct = async (id) =>
-  ObjectId.isValid(id)
+  (ObjectId.isValid(id)
     ? connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }))
-    : null;
+    : null);
 
 // Atualiza um produto -----------------------------------------------------------------------
 const updateProduct = async (id, name, quantity) =>

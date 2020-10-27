@@ -58,15 +58,6 @@ const validationReturnProduct = async (req, res, next) => {
   next();
 };
 
-const validationDeletedProduct = async (req, res, next) => {
-  const selectedProduct = await productModel.findProductById(req.params.id);
-  if (!selectedProduct) {
-    return res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
-  }
-  req.product = selectedProduct;
-  next();
-};
-
 module.exports = {
   buildResponse,
   validationPresenceOfName,
@@ -75,5 +66,4 @@ module.exports = {
   validationQuantityOfProduct,
   validationStringOfProduct,
   validationReturnProduct,
-  validationDeletedProduct,
 };

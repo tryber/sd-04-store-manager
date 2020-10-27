@@ -22,8 +22,8 @@ describe('9 - Atualize a quantidade de produtos', () => {
     await db.collection('products').deleteMany({});
     await db.collection('sales').deleteMany({});
     const products = [{ name: 'Martelo de Thor', quantity: 10 },
-      { name: 'Traje de encolhimento', quantity: 20 },
-      { name: 'Escudo do Capitão América', quantity: 30 }];
+    { name: 'Traje de encolhimento', quantity: 20 },
+    { name: 'Escudo do Capitão América', quantity: 30 }];
     await db.collection('products').insertMany(products);
   });
 
@@ -97,7 +97,12 @@ describe('9 - Atualize a quantidade de produtos', () => {
         responseSalesId = resultSales._id;
       });
 
-    await frisby.delete(`${url}/sales/${responseSalesId}`).expect('status', 200);
+    await frisby.delete(`${url}/sales/${responseSalesId}`).expect('status', 200)
+      .then((responseSales) => {
+        const { body } = responseSales;
+        const r = JSON.parse(body);
+        console.log(r);
+      })
 
     await frisby.get(`${url}/products/${responseProductId}`)
       .expect('status', 200)
@@ -128,8 +133,8 @@ describe('10 - Valide a quantidade de produtos', () => {
     await db.collection('products').deleteMany({});
     await db.collection('sales').deleteMany({});
     const products = [{ name: 'Martelo de Thor', quantity: 10 },
-      { name: 'Traje de encolhimento', quantity: 20 },
-      { name: 'Escudo do Capitão América', quantity: 30 }];
+    { name: 'Traje de encolhimento', quantity: 20 },
+    { name: 'Escudo do Capitão América', quantity: 30 }];
     await db.collection('products').insertMany(products);
   });
 

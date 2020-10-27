@@ -1,6 +1,4 @@
 const Joi = require('joi');
-// const { ObjectId } = require('mongodb');
-// const connection = require('./connection');
 
 const schema = Joi.array().items(
   Joi.object({

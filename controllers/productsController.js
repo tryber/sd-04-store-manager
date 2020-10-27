@@ -1,13 +1,7 @@
 const router = require('express').Router();
 const rescue = require('express-rescue');
 const validateProduct = require('../middlewares/validateProduct');
-const {
-  addNew,
-  getAll,
-  getById,
-  update,
-  products: { deleteProduct },
-} = require('../models');
+const { addNew, getAll, getById, update, remove } = require('../models');
 
 router.post('/', validateProduct(), rescue(async ({ body: { name, quantity } }, res) => {
   const newProduct = await addNew('products', { name, quantity });
@@ -26,7 +20,7 @@ router.put('/:id', validateProduct(false),
   }));
 
 router.delete('/:id', rescue(async ({ params: { id } }, res) => {
-  const result = await deleteProduct(id);
+  const result = await remove('products', id);
   res.json(result);
 }));
 

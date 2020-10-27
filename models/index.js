@@ -1,7 +1,5 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
-const products = require('./productsModel');
-const sales = require('./salesModel');
 
 const addNew = (collection, info) => connection()
   .then((db) => db.collection(collection).insertOne(info))
@@ -21,4 +19,13 @@ const update = (collection, id, info) => {
     .then((db) => db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: info }));
 };
 
-module.exports = { connection, products, sales, addNew, getAll, getById, update };
+const remove = async (collection, id, message = 'Wrong id format') => {
+  if (!ObjectId.isValid(id)) return Promise.reject(new Error(message));
+  const product = await getById(collection, id);
+  const { deletedCount } = await connection()
+    .then((db) => db.collection(collection).deleteOne({ _id: ObjectId(id) }));
+
+  return deletedCount ? product : Promise.reject(new Error(message));
+};
+
+module.exports = { connection, addNew, getAll, getById, update, remove };

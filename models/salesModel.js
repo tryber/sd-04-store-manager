@@ -24,7 +24,8 @@ const addSale = async (itensSold) => {
 
 // const update = async (id, name, quantity) => {
 //   const db = await connection();
-//   const product = await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+//   const product = await db.collection('products').updateOne({ _id: ObjectId(id) },
+// { $set: { name, quantity } });
 //   return product;
 // };
 

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const rescue = require('express-rescue');
-const validateProduct = require('../middlewares/validateProduct');
 const { addNew, getAll, getById, update, remove } = require('../models');
+const validateProduct = require('../middlewares/validateProduct');
 
 router.post('/', validateProduct(), rescue(async ({ body: { name, quantity } }, res) => {
   const newProduct = await addNew('products', { name, quantity });

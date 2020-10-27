@@ -14,7 +14,7 @@ const getAll = async () => {
   try {
     const stmt = await db.collection(collection).find().toArray();
     return stmt;
-  } catch (err) {
+  } catch (_err) {
     return process.exit(1);
   }
 };
@@ -24,7 +24,7 @@ const getByName = async (name) => {
   try {
     const stmt = await db.collection(collection).findOne({ name });
     return stmt;
-  } catch (err) {
+  } catch (_err) {
     return process.exit(1);
   }
 };
@@ -39,7 +39,7 @@ const getById = async (id) => {
 
 const update = async (id, sale) => {
   const db = await connection();
-  
+
   const stmt = await db
     .collection(collection)
     .updateOne({ _id: ObjectId(id) }, { $set: { itensSold: sale } });

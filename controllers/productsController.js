@@ -1,3 +1,4 @@
+const rescue = require('express-rescue');
 const { insertProdMod, getAllProdMod, updateByIdProdMod } = require('../models/productsModel');
 const { listByIdProdServ, deleteProdServ } = require('../services/productsServices');
 
@@ -21,7 +22,7 @@ const listAllProdCont = async (_req, res) => {
   }
 };
 
-const listByIdProdCont = async (req, res) => {
+const listByIdProdCont = rescue(async (req, res) => {
   const { id } = req.params;
   // try {
   const result = await listByIdProdServ(id);
@@ -30,7 +31,7 @@ const listByIdProdCont = async (req, res) => {
   // } catch (error) {
   //   res.status(500).json({ error: 'Error listByIdProdCont!' });
   // }
-};
+});
 
 const updateByIdProdCont = async (req, res) => {
   const { id } = req.params;

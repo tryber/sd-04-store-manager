@@ -13,25 +13,19 @@ const getByIdSalesServ = async (id) => {
 };
 
 const deleteSalesServ = async (id) => {
-  console.log(ObjectId.isValid(id), id);
   if (!ObjectId.isValid(id)) {
     return invalidData('Wrong sale ID format');
   }
 
-  const deleteSales = await getByIdSalesServ(id); // Por causa do CC
-  // if (deleteSales.err) {
-  //   console.log(deleteSales);
-  //   return notFound('Sale not Found');
-  //   // return invalidData('Wrong sale ID format');
-  // }
+  const saleID = await getByIdSalesServ(id);
+
   const deleteSale = await deleteSalesMod(id);
 
   if (deleteSale.deletedCount === 0) {
-    // return invalidData('Wrong sale ID format');
     return notFound('Sale not Found');
   }
 
-  return deleteSales;
+  return saleID;
 };
 
 module.exports = { getByIdSalesServ, deleteSalesServ };

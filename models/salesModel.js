@@ -2,15 +2,11 @@ const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const insertSalesMod = async (itensSold) => {
-  try {
-    const db = await connection();
-    const insertSales = await db.collection('sales').insertOne({ itensSold });
-    const { insertedId: _id } = insertSales;
-    const result = { _id, itensSold };
-    return result;
-  } catch (_e) {
-    throw new Error('insertSalesMod connection failed');
-  }
+  const db = await connection();
+  const insertSales = await db.collection('sales').insertOne({ itensSold });
+  const { insertedId: _id } = insertSales;
+  const result = { _id, itensSold };
+  return result;
 };
 
 const getAllSalesMod = async () => {

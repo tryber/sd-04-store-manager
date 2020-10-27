@@ -1,66 +1,41 @@
+const rescue = require('express-rescue');
 const { getByIdSalesServ, deleteSalesServ } = require('../services/salesServices');
 const { insertSalesMod, getAllSalesMod, updateByIdSalesMod } = require('../models/salesModel');
 
-const insertSalesCont = async (req, res) => {
+const insertSalesCont = rescue(async (req, res) => {
   const [...itensSold] = req.body;
 
-  try {
-    const result = await insertSalesMod(itensSold);
-    return res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: 'Error insertSalesCont!' });
-  }
-};
+  const result = await insertSalesMod(itensSold);
+  return res.status(200).json(result);
+});
 
-const getAllSalesCont = async (_req, res) => {
-  // const result = await getAllSalesMod(); //CC
-  try {
-    return res.status(200).json({ sales: await getAllSalesMod() });
-  } catch (error) {
-    res.status(500).json({ error: 'Error getAllSalesCont!' });
-  }
-};
+const getAllSalesCont = rescue(async (_req, res) => {
+  const result = await getAllSalesMod();
+  return res.status(200).json({ sales: result });
+});
 
-const getByIdSalesCont = async (req, res) => {
+const getByIdSalesCont = rescue(async (req, res) => {
   const { id } = req.params;
   const result = await getByIdSalesServ(id);
-  try {
-    if (result.err) return res.status(result.err.status).json(result);
-    return res.status(200).json({ result });
-  } catch (error) {
-    res.status(500).json({ error: 'Error getByIdSalesCont!' });
-  }
-};
+  if (result.err) return res.status(result.err.status).json(result);
+  return res.status(200).json({ result });
+});
 
-const updateByIdSalesCont = async (req, res) => {
+const updateByIdSalesCont = rescue(async (req, res) => {
   const { id } = req.params;
   const itensSold = req.body;
-  try {
-    const result = await updateByIdSalesMod(id, itensSold);
-    if (result.err) return res.status(422).json(result);
 
-    return res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: 'Error updateByIdSalesCont!' });
-  }
-};
+  const result = await updateByIdSalesMod(id, itensSold);
+  return res.status(200).json(result);
+});
 
-const deleteSalesCont = async (req, res) => {
+const deleteSalesCont = rescue(async (req, res) => {
   const { id } = req.params;
-  try {
-    const result = await deleteSalesServ(id);
-    console.log('deleteSalesCont', result);
-    if (result.err) return res.status(result.err.status).json(result);
-    // if (result.err && result.err.code === 'Wrong sale ID format')
-    // return res.status(422).json(result);
-    // if (result.err && result.err.code === 'not_found') return res.status(404).json(result);
+  const result = await deleteSalesServ(id);
+  if (result.err) return res.status(result.err.status).json(result);
 
-    return res.status(200).json(result);
-  } catch (error) {
-    console.log('deleteSalesCont', error);
-    res.status(500).json({ error: 'Error deleteSalesCont!' });
-  }
-};
+  return res.status(200).json(result);
+});
 
 module.exports = {
   insertSalesCont,

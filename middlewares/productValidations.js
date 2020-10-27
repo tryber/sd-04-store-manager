@@ -52,9 +52,18 @@ const validationStringOfProduct = (req, res, next) => {
 const validationReturnProduct = async (req, res, next) => {
   const productChoice = await productModel.findProductById(req.params.id);
   if (!productChoice) {
-    res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
   }
   req.product = productChoice;
+  next();
+};
+
+const validationDeletedProduct = async (req, res, next) => {
+  const selectedProduct = await productModel.findProductById(req.params.id);
+  if (!selectedProduct) {
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
+  }
+  req.product = selectedProduct;
   next();
 };
 
@@ -66,4 +75,5 @@ module.exports = {
   validationQuantityOfProduct,
   validationStringOfProduct,
   validationReturnProduct,
+  validationDeletedProduct,
 };

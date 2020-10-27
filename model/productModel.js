@@ -22,10 +22,13 @@ const findProductById = async (id) => {
 };
 
 const updateProduct = async (id, name, quantity) => {
-  console.log(id, name, quantity);
   await connection().then((db) =>
     db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
   );
 };
 
-module.exports = { findByName, add, listProducts, findProductById, updateProduct };
+const deleteProduct = async (id) => {
+  await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+};
+
+module.exports = { findByName, add, listProducts, findProductById, updateProduct, deleteProduct };

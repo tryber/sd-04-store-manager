@@ -51,6 +51,13 @@ router.put(
   },
 );
 
+router.delete('/:id', productValidations.validationDeletedProduct, async (req, res) => {
+  const removedProduct = await productModel.findProductById(req.params.id);
+  await productModel.deleteProduct(req.params.id);
+
+  res.status(200).json(removedProduct);
+});
+
 // const products = await productsModel.findAll();
 // res.status(200).json();
 

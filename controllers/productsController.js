@@ -3,14 +3,14 @@ const model = require('../models/commonModel');
 
 const router = express.Router();
 
-const productValidations = require('../middlewares/productValidations');
+const validations = require('../middlewares/productValidations');
 
 router.post(
   '/',
-  productValidations.productLengthValidation,
-  productValidations.productUniqueNameValidation,
-  productValidations.productQuantityValidation,
-  productValidations.productQuantityTypeOfValidation,
+  validations.lengthValidation,
+  validations.uniqueNameValidation,
+  validations.quantityValidation,
+  validations.quantityTypeOfValidation,
   async (req, res) => {
     const { name, quantity } = req.body;
     const products = await model.add({ name, quantity }, 'products');
@@ -37,9 +37,9 @@ router.get('/:id', async (req, res) => {
 
 router.put(
   '/:id',
-  productValidations.productLengthValidation,
-  productValidations.productQuantityValidation,
-  productValidations.productQuantityTypeOfValidation,
+  validations.lengthValidation,
+  validations.quantityValidation,
+  validations.quantityTypeOfValidation,
   async (req, res) => {
     const { name, quantity } = req.body;
     const { id } = req.params;

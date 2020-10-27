@@ -1,6 +1,6 @@
 const model = require('../models/commonModel');
 
-const productLengthValidation = (req, res, next) => {
+const lengthValidation = (req, res, next) => {
   const { name } = req.body;
 
   if (name.length < 5) {
@@ -11,7 +11,7 @@ const productLengthValidation = (req, res, next) => {
   next();
 };
 
-const productUniqueNameValidation = async (req, res, next) => {
+const uniqueNameValidation = async (req, res, next) => {
   const { name } = req.body;
   const products = await model
     .getAll('products')
@@ -24,7 +24,7 @@ const productUniqueNameValidation = async (req, res, next) => {
   next();
 };
 
-const productQuantityValidation = (req, res, next) => {
+const quantityValidation = (req, res, next) => {
   const { quantity } = req.body;
   if (quantity <= 0) {
     return res.status(422).json({
@@ -34,7 +34,7 @@ const productQuantityValidation = (req, res, next) => {
   next();
 };
 
-const productQuantityTypeOfValidation = (req, res, next) => {
+const quantityTypeOfValidation = (req, res, next) => {
   const { quantity } = req.body;
   if (!Number.isInteger(quantity)) {
     return res.status(422).json({
@@ -45,8 +45,8 @@ const productQuantityTypeOfValidation = (req, res, next) => {
 };
 
 module.exports = {
-  productLengthValidation,
-  productUniqueNameValidation,
-  productQuantityValidation,
-  productQuantityTypeOfValidation,
+  lengthValidation,
+  uniqueNameValidation,
+  quantityValidation,
+  quantityTypeOfValidation,
 };

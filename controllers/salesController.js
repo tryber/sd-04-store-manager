@@ -20,7 +20,7 @@ const readById = async (req, res) => {
 
 const create = async (req, res) => {
   const [...products] = req.body;
-  const add = await model.add(...products, 'sales');
+  const add = await model.add(products, 'sales');
   res.status(200).json(add);
 };
 

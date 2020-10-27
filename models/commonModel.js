@@ -16,7 +16,7 @@ const findById = async (id, collection) =>
   connection().then((db) => db.collection(collection).findOne(ObjectId(id)));
 
 const update = async (id, data, collection) => {
-  let value = { itensSold: data };
+  let value = { itensSold: [data] };
   if (collection === 'products') value = { name: data.name, quantity: data.quantity };
   connection().then((db) =>
     db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: value }));

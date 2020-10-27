@@ -4,10 +4,11 @@ const productModel = require('../models/productModel');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  const allProducts = await productModel.getAllProducts();
-  res.status(200).json({ products: allProducts });
-});
+router.get(
+  '/',
+  async (req, res) =>
+    await productModel.getAllProducts().then((allProducts) => res.status(200).json({ products: allProducts })),
+);
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;

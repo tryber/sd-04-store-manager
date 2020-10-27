@@ -44,7 +44,6 @@ router.put(
   '/:id',
   productValidation.validateNameLength,
   productValidation.validateQuantity,
-  productValidation.validateProductExistence,
   async (req, res) => {
     try {
       const { id } = req.params;

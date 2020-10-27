@@ -1,4 +1,5 @@
 const ProductModel = require('../model/productModel');
+const SalesModel = require('../model/salesModel');
 
 const buildErrors = (code, message) => ({ err: { code, message } });
 
@@ -40,9 +41,35 @@ const validateQuantity = async (req, res, next) => {
   next();
 };
 
+const validateSale = (req, res, next) => {
+  const sale = req.body;
+  for (let i = 0; i < sale.length; i += 1) {
+    if (sale[i].quantity < 1 || !Number.isInteger(sale[i].quantity)) {
+      return res
+        .status(422)
+        .json(buildErrors('invalid_data', 'Wrong product ID or invalid quantity'));
+    }
+  }
+  next();
+};
+
+const validateIfExistsSale = async (req, res, next) => {
+  const { id } = req.params;
+  const sale = await SalesModel.getById(id);
+
+  if(!sale){
+    return res.status(422).json(buildErrors('invalid_data', 'Wrong sale ID format'));
+  }
+
+  req.sale = sale; // envia a sale para o pŕoximo middleware atraves do req.sale.
+  next();
+};
+
 module.exports = {
   buildErrors,
   validateName,
   validateIfExistsProduct,
   validateQuantity,
+  validateSale,
+  validateIfExistsSale,
 };

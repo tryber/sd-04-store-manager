@@ -29,12 +29,7 @@ const insertSale = async (saleItens, insertSaleRecord) => {
     );
   }
 
-  let sales;
-  if (insertSaleRecord) {
-    sales = await salesModel.insertSale(saleItens);
-  }
-
-  return sales;
+  return insertSaleRecord ? salesModel.insertSale(saleItens) : null;
 };
 
 const deleteSale = async (saleId, deleteSaleRecord) => {

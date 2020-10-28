@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const productsModel = require('../models/productsModel');
 
 const errors = {
@@ -25,11 +26,17 @@ const errors = {
       message: '"quantity" must be a number',
     },
   },
+  5: {
+    err: {
+      code: 'invalid_data',
+      message: 'Wrong id format',
+    },
+  },
 };
 
 const createProductVal = async (req, res, next) => {
   const { name, quantity } = req.body;
-  const product = await productsModel.get(name);
+  const product = await productsModel.readByName(name);
 
   if (name.length < 5) return res.status(422).json(errors[1]);
   if (product) return res.status(422).json(errors[2]);
@@ -39,6 +46,20 @@ const createProductVal = async (req, res, next) => {
   next();
 };
 
+const readProductVal = async (req, res, next) => {
+  const id = req.params.id;
+  
+  if (!ObjectId.isValid(id)) return res.status(422).json(errors[5]);
+  
+  const product = await productsModel.readById(id);
+  
+  if (!product) return res.status(422).json(errors[5]);
+
+  req.product = product;
+  next();
+};
+
 module.exports = {
   createProductVal,
+  readProductVal,
 };

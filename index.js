@@ -1,6 +1,6 @@
 const { notFound, internalError } = require('./middlewares');
 const express = require('express');
-const productsController = require('./controllers/productsController');
+const productsRoutes = require('./controllers/productsRoutes');
 
 const app = express();
 const port = 3000;
@@ -12,7 +12,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/products', productsController);
+app.use('/products', productsRoutes);
 
 // Tratamento de erros de rotas inexistentes e internos
 app.use('*', notFound);

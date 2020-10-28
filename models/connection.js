@@ -4,10 +4,10 @@ const mongoClient = require('mongodb').MongoClient;
 const DB_NAME = 'StoreManager';
 
 // Local
-// const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
+const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
 
 // Online
-const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
+// const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
 
 let schema;
 const connection = () =>
@@ -23,7 +23,7 @@ const connection = () =>
         schema = conn.db(DB_NAME);
         return schema;
       })
-      .catch((_err) => process.exit(1))
+      .catch((_e) => process.exit(1))
   );
 
 // const connection = () =>

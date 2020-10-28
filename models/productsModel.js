@@ -1,9 +1,5 @@
+const { ObjectId } = require('mongodb');
 const conn = require('../models/connection');
-
-const get = async (name) => {
-  const db = await conn();
-  return db.collection('products').findOne({ name });
-};
 
 const create = async (name, quantity) => {
   const db = await conn();
@@ -12,9 +8,27 @@ const create = async (name, quantity) => {
   return result.ops[0];
 };
 
-// (async () => console.log(await get('ps555')))();
+const read = async () => {
+  const db = await conn();
+  return db.collection('products').find().toArray();
+};
+
+const readById = async (id) => {
+  const db = await conn();
+
+  return db.collection('products').findOne({ _id: ObjectId(id) });
+};
+
+const readByName = async (name) => {
+  const db = await conn();
+  return db.collection('products').findOne({ name });
+};
+
+// (async () => console.log(await readById('5f974e60e1bdbb36b3baff28')))();
 
 module.exports = {
-  get,
   create,
+  readByName,
+  read,
+  readById,
 };

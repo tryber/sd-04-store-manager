@@ -20,13 +20,24 @@ router.post('/', salesValidations.saleQuantityValidation, async (req, res) => {
 
 router.get('/', salesValidations.returnAllSales, async (req, res) => {
   try {
-    console.log('try returnAllSales');
     const listSales = await salesModel.listSales();
-    console.log(listSales);
     res.status(200).json({ sales: listSales });
   } catch (_e) {
     console.log(_e);
     res.status(404).json({ message: 'Falha ao listar' });
+  }
+});
+
+router.put('/:id', salesValidations.saleQuantityValidation, async (req, res) => {
+  try {
+    const { quantity, productId } = req.body[0];
+
+    await salesModel.updateSale(req.params.id, productId, quantity);
+    const saleChanged = await salesModel.findSaleById(req.params.id);
+    res.status(200).json(saleChanged);
+  } catch (_e) {
+    console.log(_e);
+    res.status(422).json({ message: 'Falha ao encontrar' });
   }
 });
 

@@ -6,7 +6,7 @@ const createProduct = async (name, quantity) => {
     const db = await connection();
     const insertData = await db.collection('products').insertOne({ name, quantity });
     return insertData.ops[0];
-  } catch (err) { 
+  } catch (err) {
     console.error('createProduct', err);
   }
 };

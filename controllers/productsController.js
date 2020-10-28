@@ -18,7 +18,6 @@ const listByIdProdCont = rescue(async (req, res) => {
   const { id } = req.params;
 
   const result = await listByIdProdServ(id);
-
   if (result.err) return res.status(422).json(result);
 
   return res.status(200).json(result);

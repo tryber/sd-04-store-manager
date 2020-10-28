@@ -1,8 +1,6 @@
-/* eslint-disable no-return-await */
 const { validateNameMod, getByIdProdMod, deleteProdMod } = require('../models/productsModel');
 
 const invalidData = (message) => ({ err: { code: 'invalid_data', status: 422, message } });
-
 const isNumber = (quantity) => /^[0-9]+$/.test(quantity);
 
 const validateName = async (name) => {
@@ -41,7 +39,6 @@ const listByIdProdServ = async (id) => {
 
 const deleteProdServ = async (id) => {
   const deleteProd = await deleteProdMod(id);
-
   if (!deleteProd) {
     return invalidData('Wrong id format');
   }

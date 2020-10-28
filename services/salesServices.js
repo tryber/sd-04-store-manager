@@ -18,7 +18,6 @@ const deleteSalesServ = async (id) => {
   }
 
   const saleID = await getByIdSalesServ(id);
-
   const deleteSale = await deleteSalesMod(id);
 
   if (deleteSale.deletedCount === 0) {

@@ -2,26 +2,19 @@ const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const insertProdMod = async (name, quantity) => {
-  try {
-    const db = await connection();
-    const insertProd = await db.collection('products').insertOne({ name, quantity });
-    const { insertedId: _id } = insertProd;
-    const result = { _id, name, quantity };
-    return result;
-  } catch (_e) {
-    throw new Error('insertProdMod connection failed');
-  }
+  const db = await connection();
+  const insertProd = await db.collection('products').insertOne({ name, quantity });
+  const { insertedId: _id } = insertProd;
+  const result = { _id, name, quantity };
+
+  return result;
 };
 
 const validateNameMod = async (name) => {
-  try {
-    const db = await connection();
-    const findNameProd = await db.collection('products').findOne({ name });
+  const db = await connection();
+  const findNameProd = await db.collection('products').findOne({ name });
 
-    return findNameProd;
-  } catch (_e) {
-    throw new Error('validateNameMod connection failed');
-  }
+  return findNameProd;
 };
 
 const getAllProdMod = async () => {
@@ -32,11 +25,11 @@ const getAllProdMod = async () => {
 };
 
 const getByIdProdMod = async (id) => {
-  const x = ObjectId.isValid(id); // Variavel criada por causa do CC
-  if (!x) return null;
+  if (!ObjectId.isValid(id)) return null;
 
   const db = await connection();
   const productId = await db.collection('products').findOne(ObjectId(id));
+
   return productId;
 };
 
@@ -54,26 +47,12 @@ const updateByIdProdMod = async (id, name, quantity) => {
 };
 
 const deleteProdMod = async (id) => {
-  const pacienciaComCC = ObjectId.isValid(id);
-  if (!pacienciaComCC) return null;
+  if (!ObjectId.isValid(id)) return null;
 
   const db = await connection();
   const deleteProd = await db.collection('products').deleteOne({ _id: ObjectId(id) });
 
   return deleteProd;
-};
-
-const updateStockProdMod = async (id, stockQuant, inc) => {
-  const db = await connection();
-  const stock = await db
-    .collection('products')
-    .findOneAndUpdate(
-      { _id: ObjectId(id) },
-      { $inc: { quantity: parseInt(inc + stockQuant, 10) } },
-      { returnOriginal: false },
-    );
-
-  return stock.value;
 };
 
 module.exports = {
@@ -83,5 +62,4 @@ module.exports = {
   getByIdProdMod,
   updateByIdProdMod,
   deleteProdMod,
-  updateStockProdMod,
 };

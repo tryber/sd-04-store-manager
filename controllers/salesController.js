@@ -39,8 +39,7 @@ const update = async (req, res) => {
   const [...products] = req.body;
   await model.update('sales', req.params.id, ...products);
   const result = await model.findById('sales', req.params.id, ...products);
-  const status = 200;
-  res.status(status).json(result);
+  res.status(200).json(result);
 };
 
 const exclude = async (req, res) => {

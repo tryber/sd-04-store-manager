@@ -19,9 +19,9 @@ product.post('/', async (req, res) => {
       const produto = await produtoModel.addProduto(name, quantity);
       res.status(201).json({ ...produto });
     }
-  } catch (error) {
+  } catch (erro) {
     // console.log('errorrr', error.path, error.errors[0]);
-    return res.status(422).json({ err: { code: 'invalid_data', message: `${error.errors[0]}` } });
+    return res.status(422).json({ err: { code: 'invalid_data', message: `${erro.errors[0]}` } });
   }
 });
 

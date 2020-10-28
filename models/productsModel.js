@@ -63,6 +63,19 @@ const deleteProdMod = async (id) => {
   return deleteProd;
 };
 
+const updateStockProdMod = async (id, stockQuant, inc) => {
+  const db = await connection();
+  const stock = await db
+    .collection('products')
+    .findOneAndUpdate(
+      { _id: ObjectId(id) },
+      { $inc: { quantity: parseInt(inc + stockQuant, 10) } },
+      { returnOriginal: false },
+    );
+
+  return stock.value;
+};
+
 module.exports = {
   insertProdMod,
   getAllProdMod,
@@ -70,4 +83,5 @@ module.exports = {
   getByIdProdMod,
   updateByIdProdMod,
   deleteProdMod,
+  updateStockProdMod,
 };

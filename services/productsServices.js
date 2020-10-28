@@ -1,9 +1,5 @@
 /* eslint-disable no-return-await */
-const {
-  validateNameMod,
-  getByIdProdMod,
-  deleteProdMod,
-} = require('../models/productsModel');
+const { validateNameMod, getByIdProdMod, deleteProdMod } = require('../models/productsModel');
 
 const invalidData = (message) => ({ err: { code: 'invalid_data', status: 422, message } });
 
@@ -44,8 +40,8 @@ const listByIdProdServ = async (id) => {
 };
 
 const deleteProdServ = async (id) => {
-  // const deleteProd = await deleteProdMod(id); //POr causa do CC
-  if (!(await deleteProdMod(id))) {
+  const deleteProd = await deleteProdMod(id);
+  if (!deleteProd) {
     return invalidData('Wrong id format');
   }
   return await deleteProdMod(id);

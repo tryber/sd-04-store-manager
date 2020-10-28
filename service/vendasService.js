@@ -26,36 +26,27 @@ const diminuiCom2 = async (results, lista) => {
   // throw new Error();
 };
 
-const diminuiCom3 = async (lista) => {
-  try {
-    const results = await Promise.all(
-      lista.map(async ({ productId, quantity }) => {
-        await validador.schemaVenda.validate({ quantity });
-        if (ObjectId.isValid(productId)) {
-          const prod = await produtoModel.produtoPorId(productId);
-          if (prod) await diminuiComplexidade(prod, quantity);
-        }
-      }),
-    );
-    return diminuiCom2(results, lista);
-  } catch (error) {
-    return false;
+const diminuiCom3 = async (productId, quantity) => {
+  if (ObjectId.isValid(productId)) {
+    const prod = await produtoModel.produtoPorId(productId);
+    if (prod) await diminuiComplexidade(prod, quantity);
   }
 };
 
 const addVendasService = async (lista) => {
   try {
-    return diminuiCom3(lista);
-    // const results = await Promise.all(
-    //   lista.map(async ({ productId, quantity }) => {
-    //     await validador.schemaVenda.validate({ quantity });
-    //     if (ObjectId.isValid(productId)) {
-    //       const prod = await produtoModel.produtoPorId(productId);
-    //       if (prod) await diminuiComplexidade(prod, quantity);
-    //     }
-    //   }),
-    // );
-    // return diminuiCom2(results, lista);
+    // return diminuiCom3(lista);
+    const results = await Promise.all(
+      lista.map(async ({ productId, quantity }) => {
+        await validador.schemaVenda.validate({ quantity });
+        return diminuiCom3(productId, quantity);
+        // if (ObjectId.isValid(productId)) {
+        //   const prod = await produtoModel.produtoPorId(productId);
+        //   if (prod) await diminuiComplexidade(prod, quantity);
+        // }
+      }),
+    );
+    return diminuiCom2(results, lista);
   } catch (error) {
     return false;
   }

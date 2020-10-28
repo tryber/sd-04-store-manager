@@ -8,7 +8,7 @@ const createProduct = async (name, quantity) => {
 
     return insertData.ops[0];
 
-  } catch (err) { console.error('createProduct', err); }
+  }catch(err){console.error('createProduct', err);}
 };
 
 const getProdByName = async (name) => {

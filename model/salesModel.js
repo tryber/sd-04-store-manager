@@ -6,4 +6,10 @@ const addSale = async (itensSold) => {
   return data;
 };
 
-module.exports = { addSale };
+const listSales = async () => {
+  console.log('passou no listSales');
+  const salesList = connection().then((db) => db.collection('sales').find({}).toArray());
+  return salesList;
+};
+
+module.exports = { addSale, listSales };

@@ -18,4 +18,16 @@ router.post('/', salesValidations.saleQuantityValidation, async (req, res) => {
   }
 });
 
+router.get('/', salesValidations.returnAllSales, async (req, res) => {
+  try {
+    console.log('try returnAllSales');
+    const listSales = await salesModel.listSales();
+    console.log(listSales);
+    res.status(200).json({ sales: listSales });
+  } catch (_e) {
+    console.log(_e);
+    res.status(404).json({ message: 'Falha ao listar' });
+  }
+});
+
 module.exports = router;

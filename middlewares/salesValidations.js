@@ -1,4 +1,5 @@
 const productValidations = require('../middlewares/productValidations');
+const salesModel = require('../model/salesModel');
 
 const buildResponse = productValidations.buildResponse;
 
@@ -13,4 +14,12 @@ const saleQuantityValidation = (req, res, next) => {
   next();
 };
 
-module.exports = { saleQuantityValidation };
+const returnAllSales = async (req, res, next) => {
+  const salesList = await salesModel.listSales();
+  if (!salesList) {
+    res.status(422).json(buildResponse('invalid_data', 'A lista não existe'));
+  }
+  next();
+};
+
+module.exports = { saleQuantityValidation, returnAllSales };

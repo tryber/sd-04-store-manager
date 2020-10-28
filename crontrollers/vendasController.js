@@ -49,22 +49,15 @@ Sales.get('/:id', async (req, res) => {
 // rota para atualizar venda
 Sales.put('/:id', async (req, res) => {
   const { productId, quantity } = req.body[0];
-  // console.log('body', req.body[0]);
-  // console.log('produto id controller', productId);
-  // console.log('quantidade controller', quantity);
   const { id } = req.params;
-  // console.log('id', id);
   if (ObjectId.isValid(id)) {
     try {
       const result = await validador.schemaVenda.validate({ quantity });
-      // console.log('results controller', result);
       if (result) {
         const vendaAtualizada = await vendasService.atualizaVendaService(id, productId, quantity);
-        // console.log('venda atualizada????', vendaAtualizada);
         return res.status(200).json({ ...vendaAtualizada });
       }
     } catch (error) {
-      // console.log('error', error);
       return res
         .status(422)
         .json({ err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' } });

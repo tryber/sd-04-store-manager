@@ -17,10 +17,18 @@ const diminuiComplexidade = async (prod, quantity) => {
     return true;
   }
 };
+const diminuiCom2 = async (results, lista) => {
+  if (results) {
+    const vendaAdicionada = await vendasModel.addVendas(lista);
+    return vendaAdicionada;
+  }
+  return false;
+  // throw new Error();
+};
 
 const addVendasService = async (lista) => {
   try {
-    const results = Promise.all(
+    const results = await Promise.all(
       lista.map(async ({ productId, quantity }) => {
         await validador.schemaVenda.validate({ quantity });
         if (ObjectId.isValid(productId)) {
@@ -29,11 +37,12 @@ const addVendasService = async (lista) => {
         }
       }),
     );
-    if (await results) {
-      // if ((await results).every((e) => e === true)) {
-      const vendaAdicionada = await vendasModel.addVendas(lista);
-      return vendaAdicionada;
-    }
+    return diminuiCom2(results, lista);
+    // if (results) {
+    //   // if ((await results).every((e) => e === true)) {
+    //   const vendaAdicionada = await vendasModel.addVendas(lista);
+    //   return vendaAdicionada;
+    // }
   } catch (error) {
     return false;
   }
@@ -44,16 +53,10 @@ const atualizaVendaService = async (id, productId, quantity) => {
     const vendaId = await vendasModel.vendaPorId(id);
     if (vendaId) {
       const listaprod = vendaId.itensSold;
-      // console.log('listaprodutos', listaprod);
       const listaFiltrada = listaprod.filter((item) => item.productId !== productId);
-      // console.log('listaFiltrada lista filtrada', listaFiltrada);
       const novoObj = { productId, quantity };
-      // console.log('novo prod', novoObj);
       listaFiltrada.push(novoObj);
-      // console.log('novoarray', novoArray);
-      // console.log('teste', listaFiltrada);
       const atualizaVenda = await vendasModel.atualizarVenda(id, listaFiltrada);
-      // console.log('venda atualizada', atualizaVenda);
       return atualizaVenda;
     }
   } catch (error) {

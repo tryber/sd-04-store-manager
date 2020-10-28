@@ -56,10 +56,22 @@ const readProductVal = async (req, res, next) => {
   if (!product) return res.status(422).json(errors[5]);
 
   req.product = product;
+
+  next();
+};
+
+const updateProductVal = async (req, res, next) => {
+  const { name, quantity } = req.body;
+
+  if (name.length < 5) return res.status(422).json(errors[1]);
+  if (quantity <= 0) return res.status(422).json(errors[3]);
+  if (!Number.isInteger(quantity)) return res.status(422).json(errors[4]);
+
   next();
 };
 
 module.exports = {
   createProductVal,
   readProductVal,
+  updateProductVal,
 };

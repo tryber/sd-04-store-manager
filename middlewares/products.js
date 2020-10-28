@@ -19,8 +19,17 @@ const readProducts = async (_, res) => {
   return res.status(200).json({ products });
 };
 
+const updateProduct = async (req, res) => {
+  const id = req.params.id;
+  const { name, quantity } = req.body;
+  const product = await productsModel.update(id, name, quantity);
+
+  res.status(200).json(product);
+};
+
 module.exports = {
   createProduct,
   readProduct,
   readProducts,
+  updateProduct,
 };

@@ -10,6 +10,7 @@ const create = async (name, quantity) => {
 
 const read = async () => {
   const db = await conn();
+
   return db.collection('products').find().toArray();
 };
 
@@ -21,14 +22,24 @@ const readById = async (id) => {
 
 const readByName = async (name) => {
   const db = await conn();
+
   return db.collection('products').findOne({ name });
+};
+
+const update = async (id, name, quantity) => {
+  const db = await conn();
+
+  await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+
+  return readById(id);
 };
 
 // (async () => console.log(await readById('5f974e60e1bdbb36b3baff28')))();
 
 module.exports = {
   create,
-  readByName,
   read,
   readById,
+  readByName,
+  update,
 };

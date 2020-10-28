@@ -1,5 +1,5 @@
-const { createProductVal, readProductVal } = require('./validations');
-const { createProduct, readProduct, readProducts } = require('./products');
+const { createProductVal, readProductVal, updateProductVal } = require('./validations');
+const { createProduct, readProduct, readProducts, updateProduct } = require('./products');
 const { notFound, internalError } = require('./errors');
 
 module.exports = {
@@ -8,6 +8,8 @@ module.exports = {
   readProductVal,
   readProduct,
   readProducts,
+  updateProductVal,
+  updateProduct,
   notFound,
   internalError,
 };

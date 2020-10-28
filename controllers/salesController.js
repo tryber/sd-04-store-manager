@@ -21,14 +21,29 @@ const findById = async (req, res) => {
 const add = async (req, res) => {
   const [...products] = req.body;
   const newSale = await model.add('sales', ...products);
-  res.status(200).json(newSale);
+  const status = 200;
+  res.status(status).json(newSale);
 };
 
 const update = async (req, res) => {
   const [...products] = req.body;
   await model.update('sales', req.params.id, ...products);
   const result = await model.findById('sales', req.params.id, ...products);
-  res.status(200).json(result);
+  const status = 200;
+  res.status(status).json(result);
+};
+
+const exclude = async (req, res) => {
+  try {
+    const removed = await model.findById('sales', req.params.id);
+    await model.exclude('sales', req.params.id);
+    const status = 200;
+    res.status(status).json(removed);
+  } catch (err) {
+    res.status(422).json({
+      err: { code: 'invalid_data', message: 'Wrong sale ID format' },
+    });
+  }
 };
 
 module.exports = {
@@ -36,4 +51,5 @@ module.exports = {
   findById,
   add,
   update,
+  exclude,
 };

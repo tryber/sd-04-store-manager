@@ -47,4 +47,17 @@ router.put(
   },
 );
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const removed = await model.findById('products', id);
+    await model.exclude('products', id);
+    res.status(200).json(removed);
+  } catch (err) {
+    res.status(422).json({
+      err: { code: 'invalid_data', message: 'Wrong id format' },
+    });
+  }
+});
+
 module.exports = router;

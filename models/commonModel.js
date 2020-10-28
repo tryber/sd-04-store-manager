@@ -21,9 +21,13 @@ const update = async (collection, id, ...itensSold) => {
     db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: data }));
 };
 
+const exclude = async (collection, id) =>
+  connection().then((db) => db.collection(collection).deleteOne({ _id: ObjectId(id) }));
+
 module.exports = {
   getAll,
   findById,
   add,
   update,
+  exclude,
 };

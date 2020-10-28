@@ -13,20 +13,10 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.get('/products', produtoController.listaProdutos);
-app.post('/products', produtoController.addProduto);
+app.use('/products', produtoController);
 
-app.get('/products/:id', produtoController.produtoById);
-app.put('/products/:id', produtoController.atualizaProduto);
-app.delete('/products/:id', produtoController.deletaProduto);
+app.use('/sales', vendasController);
 
-app.post('/sales', vendasController.addVenda);
-app.get('/sales', vendasController.listaVendas);
-app.get('/sales/:id', vendasController.vendaById);
-
-app.put('/sales/:id', vendasController.atualizaVenda);
-app.delete('sales/:id', vendasController.deletaVenda);
-
-app.listen(3001, () => {
-  console.log('Ouvindo a porta 3001!');
+app.listen(3000, () => {
+  console.log('Ouvindo a porta 3000!');
 });

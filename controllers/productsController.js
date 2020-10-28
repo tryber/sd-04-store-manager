@@ -9,6 +9,18 @@ router.get('/', async (_, res) => {
   res.status(200).json({ products });
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await model.findById('products', id);
+    return res.status(200).json(product);
+  } catch (_e) {
+    res.status(422).json({
+      err: { code: 'invalid_data', message: 'Wrong id format' },
+    });
+  }
+});
+
 router.post(
   '/',
   validations.lengthValidation,

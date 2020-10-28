@@ -6,6 +6,18 @@ const listAll = async (_, res) => {
   return res.status(status).json({ sales });
 };
 
+const findById = async (req, res) => {
+  try {
+    const sale = await model.findById('sales', req.params.id);
+    return res.status(200).json(sale);
+  } catch (_e) {
+    const status = 422;
+    res.status(status).json({
+      err: { code: 'invalid_data', message: 'Sale not found' },
+    });
+  }
+};
+
 const add = async (req, res) => {
   const [...products] = req.body;
   const newSale = await model.add('sales', ...products);
@@ -14,5 +26,6 @@ const add = async (req, res) => {
 
 module.exports = {
   listAll,
+  findById,
   add,
 };

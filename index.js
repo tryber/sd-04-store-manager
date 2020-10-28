@@ -9,6 +9,7 @@ app.use(express.json());
 
 app.use('/products', productsController);
 app.get('/sales', salesController.listAll);
+app.get('/sales/:id', salesController.findById);
 app.post('/sales', validation.isQuantityValid, salesController.add);
 
 // não remova esse endpoint, e para o avaliador funcionar

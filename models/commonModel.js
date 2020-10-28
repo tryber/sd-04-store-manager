@@ -1,7 +1,11 @@
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const getAll = async (collection) =>
   connection().then((db) => db.collection(collection).find().toArray());
+
+const findById = async (collection, id) =>
+  connection().then((db) => db.collection(collection).findOne(ObjectId(id)));
 
 const add = async (collection, ...itensSold) => {
   let data = { itensSold };
@@ -12,5 +16,6 @@ const add = async (collection, ...itensSold) => {
 
 module.exports = {
   getAll,
+  findById,
   add,
 };

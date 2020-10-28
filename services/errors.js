@@ -16,6 +16,14 @@ const clientUnprocessableEntityError = (res, message) =>
     },
   });
 
+const RequestNotFoundError = (res, message) =>
+  res.status(HTTPStatus.NOT_FOUND).json({
+    err: {
+      code: 'invalid_data',
+      message,
+    },
+  });
+
 const TemplateMessage = (message, code) => ({
   err: {
     code,
@@ -27,4 +35,5 @@ module.exports = {
   serverInternalError,
   clientUnprocessableEntityError,
   TemplateMessage,
+  RequestNotFoundError,
 };

@@ -53,10 +53,10 @@ router.put('/:id',
   validations.validateSaleQuantity,
   async (req, res) => {
     try {
-      const [itensSold] = req.body;
+      const sale = req.body;
       const { id } = req.params;
 
-      await salesModel.updateSale(id, itensSold);
+      await salesModel.updateSale(id, sale);
       const updateSale = await salesModel.getSaleById(id);
 
       return res.status(HTTPStatus.OK).json(updateSale);
@@ -71,14 +71,13 @@ router.delete('/:id', async (req, res) => {
     const deleteSales = await salesModel.getSaleById(id);
 
     if (!deleteSales) {
-      return errors.TemplateMessage(res, 'Wrong sale ID format', 'invalid_data');
+      return errors.clientUnprocessableEntityError(res, 'Wrong sale ID format', 'invalid_data');
     }
 
     await salesModel.removeSale(id);
     return res.status(HTTPStatus.OK).json(deleteSales);
-  } catch (err) {
-    console.error('deleteSalesController', err);
-    return errors.errorsMessages(res);
+  } catch (_e) {
+    return errors.RequestNotFoundError(res);
   }
 });
 

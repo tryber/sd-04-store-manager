@@ -34,4 +34,17 @@ router.post(
   },
 );
 
+router.put(
+  '/:id',
+  validations.lengthValidation,
+  validations.quantityValidation,
+  validations.quantityTypeOfValidation,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    const { id } = req.params;
+    await model.update('products', id, { name, quantity });
+    res.status(200).json(await model.findById('products', id));
+  },
+);
+
 module.exports = router;

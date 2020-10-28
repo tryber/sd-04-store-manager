@@ -14,8 +14,16 @@ const add = async (collection, ...itensSold) => {
   return result.ops[0];
 };
 
+const update = async (collection, id, ...itensSold) => {
+  let data = { itensSold };
+  if (collection === 'products') data = { name: itensSold[0].name, quantity: itensSold[0].quantity };
+  connection().then((db) =>
+    db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: data }));
+};
+
 module.exports = {
   getAll,
   findById,
   add,
+  update,
 };

@@ -1,4 +1,3 @@
-/* eslint-disable function-paren-newline */
 const rescue = require('express-rescue');
 const { getByIdSalesServ, deleteSalesServ } = require('../services/salesServices');
 const { insertSalesMod, getAllSalesMod, updateByIdSalesMod } = require('../models/salesModel');
@@ -10,11 +9,10 @@ const insertSalesCont = rescue(async (req, res) => {
   return res.status(200).json(result);
 });
 
-const getAllSalesCont = rescue(async (_req, res) =>
-  res.status(200).json({ sales: await getAllSalesMod() }),
-);
-// const result = await getAllSalesMod();
-// Não coloquei em uma variável por causa do CC - Similar blocks
+const getAllSalesCont = rescue(async (_req, res) => {
+  const result = await getAllSalesMod();
+  res.status(200).json({ sales: result });
+});
 
 const getByIdSalesCont = rescue(async (req, res) => {
   const { id } = req.params;

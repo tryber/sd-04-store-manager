@@ -5,10 +5,14 @@ const { validateProd, validateUpdateProd } = require('../middlewares/validatePro
 const productsRouter = Router();
 
 productsRouter
-  .post('/', validateProd, controller.insertProdCont)
-  .get('/', controller.listAllProdCont)
-  .get('/:id', controller.listByIdProdCont)
-  .put('/:id', validateUpdateProd, controller.updateByIdProdCont)
-  .delete('/:id', controller.deleteProdCont);
+  .route('/')
+  .post(validateProd, controller.insertProdCont)
+  .get(controller.listAllProdCont);
+
+productsRouter
+  .route('/:id')
+  .get(controller.listByIdProdCont)
+  .put(validateUpdateProd, controller.updateByIdProdCont)
+  .delete(controller.deleteProdCont);
 
 module.exports = productsRouter;

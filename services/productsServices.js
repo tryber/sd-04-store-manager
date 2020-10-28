@@ -40,13 +40,12 @@ const listByIdProdServ = async (id) => {
 };
 
 const deleteProdServ = async (id) => {
-  // const deleteProd = await deleteProdMod(id);
-  // Não coloquei em uma variável por causa do CC - Similar blocks
+  const deleteProd = await deleteProdMod(id);
 
-  if (!(await deleteProdMod(id))) {
+  if (!deleteProd) {
     return invalidData('Wrong id format');
   }
-  return await deleteProdMod(id);
+  return deleteProd;
 };
 
 module.exports = {

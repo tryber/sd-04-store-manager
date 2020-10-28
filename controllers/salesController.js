@@ -18,8 +18,7 @@ const findById = async (req, res) => {
         err: { code: 'not_found', message: 'Sale not found' },
       });
     }
-    const sale = await model.findById('sales', req.params.id);
-    return res.status(200).json(sale);
+    return res.status(200).json(await model.findById('sales', req.params.id));
   } catch (_e) {
     const status = 422;
     res.status(status).json({

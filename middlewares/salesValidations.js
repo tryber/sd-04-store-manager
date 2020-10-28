@@ -10,26 +10,28 @@ const errors = {
   },
 };
 
-const resp = (type, nErr) => type.status(422).json(errors[nErr]); // CC
+const createSalesVal2 = async (pendencies, resp) => {
+  const products = await Promise.all(pendencies);
+
+  for (let i = 0, len = products.length; i < len; i += 1) {
+    if (!products[i]) return resp(1);
+  }
+};
 
 const createSalesVal = async (req, res, next) => {
   const pendencies = [];
+  const resp = (nErr) => res.status(422).json(errors[nErr]);
 
   for (let i = 0, len = req.body.length; i < len; i += 1) {
     const id = req.body[i].productId;
     const qtt = req.body[i].quantity;
 
-    if (!ObjectId.isValid(id) || qtt <= 0 || !Number.isInteger(qtt)) return resp(res, 1);
+    if (!ObjectId.isValid(id) || qtt <= 0 || !Number.isInteger(qtt)) return resp(1);
 
     pendencies.push(productsModel.readById(id));
   }
 
-  const products = await Promise.all(pendencies);
-
-  for (let i = 0, len = products.length; i < len; i += 1) {
-    if (!products[i]) return resp(res, 1);
-  }
-
+  createSalesVal2(pendencies, resp);
   next();
 };
 

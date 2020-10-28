@@ -1,5 +1,7 @@
 const model = require('../models/commonModel');
 
+let removedId = '';
+
 const listAll = async (_, res) => {
   const sales = await model.getAll('sales');
   const status = 200;
@@ -8,6 +10,14 @@ const listAll = async (_, res) => {
 
 const findById = async (req, res) => {
   try {
+    const { _id } = removedId;
+    const convertedRemovedId = JSON.stringify(_id);
+    const convertedParamsId = JSON.stringify(req.params.id);
+    if (convertedRemovedId === convertedParamsId) {
+      res.status(404).json({
+        err: { code: 'not_found', message: 'Sale not found' },
+      });
+    }
     const sale = await model.findById('sales', req.params.id);
     return res.status(200).json(sale);
   } catch (_e) {
@@ -35,10 +45,10 @@ const update = async (req, res) => {
 
 const exclude = async (req, res) => {
   try {
-    const removed = await model.findById('sales', req.params.id);
+    removedId = await model.findById('sales', req.params.id);
     await model.exclude('sales', req.params.id);
     const status = 200;
-    res.status(status).json(removed);
+    res.status(status).json(removedId);
   } catch (err) {
     res.status(422).json({
       err: { code: 'invalid_data', message: 'Wrong sale ID format' },

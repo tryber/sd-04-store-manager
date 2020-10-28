@@ -13,6 +13,15 @@ const insertSale = async (saleItens, insertSaleRecord) => {
   const productsToSell = await Promise.all(productsResult);
 
   for (let i = 0; i < productsToSell.length; i += 1) {
+    if (productsToSell[i].quantity - saleItens[i].quantity < 0) {
+      return {
+        error: {
+          code: 'stock_problem',
+          message: 'Such amount is not permitted to sell',
+        },
+      };
+    }
+
     productsModel.updateProduct(
       saleItens[i].productId,
       productsToSell[i].name,
@@ -30,7 +39,6 @@ const insertSale = async (saleItens, insertSaleRecord) => {
 
 const deleteSale = async (saleId, deleteSaleRecord) => {
   const saleToDelete = await salesModel.getSaleById(saleId);
-
   const productsResult = [];
   for (let i = 0; i < saleToDelete.itensSold.length; i += 1) {
     const productSold = productsModel.getProductById(saleToDelete.itensSold[i].productId);
@@ -59,7 +67,6 @@ const updateSale = async (id, saleItens) => {
   await insertSale(saleItens, false);
   await salesModel.updateSale(id, saleItens);
   const updatedSale = await salesModel.getSaleById(id);
-
   return updatedSale;
 };
 

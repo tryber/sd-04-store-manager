@@ -10,10 +10,12 @@ router.post('/', saleValidation.validateQuantity, async (req, res) => {
   try {
     const { body } = req;
     const sales = await salesService.insertSale(body, true);
+    if (sales.error) {
+      return res.status(404).json(returnResponse(sales.error.code, sales.error.message));
+    }
     // const sales = await salesModel.insertSale(body);
     res.status(200).json(sales);
   } catch (_err) {
-    console.log(_err);
     res.status(500).json(returnResponse('internal_error', 'Error registering sale'));
   }
 });
@@ -75,7 +77,6 @@ router.put('/:id', saleValidation.validateQuantity, async (req, res) => {
     const updatedSale = await salesService.updateSale(id, body);
     res.status(200).json(updatedSale);
   } catch (_err) {
-    console.log(_err);
     res.status(500).json(returnResponse('internal_error', 'Error updating sale'));
   }
 });
@@ -102,7 +103,6 @@ router.delete('/:id', async (req, res) => {
     const sale = await salesService.deleteSale(id, true);
     res.status(200).json(sale);
   } catch (_err) {
-    console.log(_err);
     res.status(422).json(returnResponse('invalid_data', 'Wrong sale ID format'));
   }
 });

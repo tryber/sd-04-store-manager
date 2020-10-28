@@ -13,15 +13,15 @@ const addVendasService = async (lista) => {
         if (ObjectId.isValid(productId)) {
           const prod = await produtoModel.produtoPorId(productId);
           if (prod) {
-            const { _id, name } = prod;
+            // const { _id, name } = prod;
             if (prod.quantity >= quantity) {
               const novaQ = prod.quantity - quantity;
               // atualizar lista de produto
               if (novaQ === 0) {
-                await produtoModel.deletaProduto(_id);
+                await produtoModel.deletaProduto(prod._id);
                 return true;
               }
-              await produtoModel.atualizarProduto(_id, name, novaQ);
+              await produtoModel.atualizarProduto(prod._id, prod.name, novaQ);
               return true;
             }
           }
@@ -36,6 +36,7 @@ const addVendasService = async (lista) => {
     return false;
   }
 };
+
 // recebe id da venda, prodId do produto vendido e quanti vendida do produto
 const atualizaVendaService = async (id, productId, quantity) => {
   try {

@@ -26,7 +26,7 @@ const diminuiCom2 = async (results, lista) => {
   // throw new Error();
 };
 
-const addVendasService = async (lista) => {
+const diminuiCom3 = async (lista) => {
   try {
     const results = await Promise.all(
       lista.map(async ({ productId, quantity }) => {
@@ -38,11 +38,24 @@ const addVendasService = async (lista) => {
       }),
     );
     return diminuiCom2(results, lista);
-    // if (results) {
-    //   // if ((await results).every((e) => e === true)) {
-    //   const vendaAdicionada = await vendasModel.addVendas(lista);
-    //   return vendaAdicionada;
-    // }
+  } catch (error) {
+    return false;
+  }
+};
+
+const addVendasService = async (lista) => {
+  try {
+    return diminuiCom3(lista);
+    // const results = await Promise.all(
+    //   lista.map(async ({ productId, quantity }) => {
+    //     await validador.schemaVenda.validate({ quantity });
+    //     if (ObjectId.isValid(productId)) {
+    //       const prod = await produtoModel.produtoPorId(productId);
+    //       if (prod) await diminuiComplexidade(prod, quantity);
+    //     }
+    //   }),
+    // );
+    // return diminuiCom2(results, lista);
   } catch (error) {
     return false;
   }

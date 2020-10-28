@@ -1,6 +1,6 @@
 const model = require('../models/commonModel');
 
-let removedId = '';
+const removedId = '';
 
 const listAll = async (_, res) => {
   const sales = await model.getAll('sales');

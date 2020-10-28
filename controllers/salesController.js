@@ -18,7 +18,8 @@ const findById = async (req, res) => {
         err: { code: 'not_found', message: 'Sale not found' },
       });
     }
-    return res.status(200).json(await model.findById('sales', req.params.id));
+    const sale = await model.findById('sales', req.params.id);
+    return res.status(200).json(sale);
   } catch (_e) {
     const status = 422;
     res.status(status).json({
@@ -36,9 +37,9 @@ const add = async (req, res) => {
 
 const update = async (req, res) => {
   const [...products] = req.body;
-  const { id } = req.params;
-  await model.update('sales', id, ...products);
-  res.status(200).json(await model.findById('sales', id));
+  await model.update('sales', req.params.id, ...products);
+  const result = await model.findById('sales', req.params.id);
+  res.status(200).json(result);
 };
 
 const exclude = async (req, res) => {

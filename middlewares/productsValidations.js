@@ -37,23 +37,25 @@ const errors = {
 const createProductVal = async (req, res, next) => {
   const { name, quantity } = req.body;
   const product = await productsModel.readByName(name);
+  const resp = (nErr) => res.status(422).json(errors[nErr]);
 
-  if (name.length < 5) return res.status(422).json(errors[1]);
-  if (product) return res.status(422).json(errors[2]);
-  if (quantity <= 0) return res.status(422).json(errors[3]);
-  if (!Number.isInteger(quantity)) return res.status(422).json(errors[4]);
+  if (name.length < 5) return resp(1);
+  if (product) return resp(2);
+  if (quantity <= 0) return resp(3);
+  if (!Number.isInteger(quantity)) return resp(4);
 
   next();
 };
 
 const readProductVal = async (req, res, next) => {
   const id = req.params.id;
+  const resp = (nErr) => res.status(422).json(errors[nErr]);
 
-  if (!ObjectId.isValid(id)) return res.status(422).json(errors[5]);
+  if (!ObjectId.isValid(id)) return resp(5);
 
   const product = await productsModel.readById(id);
 
-  if (!product) return res.status(422).json(errors[5]);
+  if (!product) return resp(5);
 
   req.product = product;
 
@@ -62,25 +64,27 @@ const readProductVal = async (req, res, next) => {
 
 const updateProductVal = async (req, res, next) => {
   const { name, quantity } = req.body;
+  const resp = (nErr) => res.status(422).json(errors[nErr]);
 
-  if (name.length < 5) return res.status(422).json(errors[1]);
-  if (quantity <= 0) return res.status(422).json(errors[3]);
-  if (!Number.isInteger(quantity)) return res.status(422).json(errors[4]);
+  if (name.length < 5) return resp(1);
+  if (quantity <= 0) return resp(3);
+  if (!Number.isInteger(quantity)) return resp(4);
 
   next();
 };
 
 const deleteProductVal = async (req, res, next) => {
   const id = req.params.id;
+  const resp = (nErr) => res.status(422).json(errors[nErr]);
   let product;
 
   if (ObjectId.isValid(id)) {
     product = await productsModel.readById(id);
   } else {
-    return res.status(422).json(errors[5]);
+    return resp(5);
   }
 
-  if (!product) return res.status(422).json(errors[5]);
+  if (!product) return resp(5);
 
   next();
 };

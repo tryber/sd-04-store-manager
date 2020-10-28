@@ -14,7 +14,6 @@ router.post('/', salesValidations.saleQuantityValidation, async (req, res) => {
     const { _id, itensSold } = sale.ops[0];
     res.status(200).json(buildResult(_id, itensSold));
   } catch (_e) {
-    console.log(_e);
     res.status(501).json({ message: 'Falha ao cadastrar a Venda' });
   }
 });

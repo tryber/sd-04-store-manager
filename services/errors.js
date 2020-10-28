@@ -16,7 +16,15 @@ const clientUnprocessableEntityError = (res, message) =>
     },
   });
 
+const TemplateMessage = (message, code) => ({
+  err: {
+    code,
+    message,
+  },
+});
+
 module.exports = {
   serverInternalError,
   clientUnprocessableEntityError,
+  TemplateMessage,
 };

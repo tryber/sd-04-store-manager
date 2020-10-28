@@ -22,26 +22,26 @@ const addSale = async (itensSold) => {
   return result.ops[0];
 };
 
-// const update = async (id, name, quantity) => {
-//   const db = await connection();
-//   const product = await db.collection('products').updateOne({ _id: ObjectId(id) },
-// { $set: { name, quantity } });
-//   return product;
-// };
+const updateSale = async (id, itensSold) => {
+  const db = await connection();
+  const sale = await db.collection('sales').updateOne(
+    { _id: ObjectId(id) }, { $set: { itensSold } },
+  );
+  return sale;
+};
 
-// const remove = async (id) => {
-//   const db = await connection();
-//   const product = await db.collection('products').deleteOne({ _id: ObjectId(id) });
-//   return product;
-// };
-
-// // removeById: deleteOne(_id: ObjectId));
+const removeSale = async (id) => {
+  const sale = await getSaleById(id);
+  if (!sale) return false;
+  const db = await connection();
+  await db.collection('sales').deleteOne({ _id: ObjectId(id) });
+  return sale;
+};
 
 module.exports = {
   getAllSales,
   getSaleById,
-  //   getByName,
   addSale,
-  //   update,
-  //   remove,
+  updateSale,
+  removeSale,
 };

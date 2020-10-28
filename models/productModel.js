@@ -5,10 +5,10 @@ const createProduct = async (name, quantity) => {
   try {
     const db = await connection();
     const insertData = await db.collection('products').insertOne({ name, quantity });
-
     return insertData.ops[0];
-
-  }catch(err){console.error('createProduct', err);}
+  } catch (err) { 
+    console.error('createProduct', err);
+  }
 };
 
 const getProdByName = async (name) => {
@@ -26,7 +26,6 @@ const getProdById = async (id) => {
     if (!ObjectId.isValid(id)) return null;
     const db = await connection();
     const getProd = await db.collection('products').findOne(ObjectId(id));
-
     return getProd;
   } catch (err) {
     console.error('getProdById', err);

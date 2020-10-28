@@ -3,7 +3,8 @@ const { ObjectId } = require('mongodb');
 
 const addProduto = async (name, quantity) => {
   const produto = await connection().then((db) =>
-    db.collection('products').insertOne({ name, quantity }));
+    db.collection('products').insertOne({ name, quantity }),
+  );
   return produto.ops[0];
 };
 
@@ -18,15 +19,19 @@ const produtoPorId = async (id) =>
 
 const atualizarProduto = async (id, name, quantity) => {
   await connection().then((db) =>
-    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
+  );
   return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
 };
 
-const deletaProduto = async (id) =>
-  connection().then((db) =>
-    db
-      .collection('products')
-      .deleteOne({ _id: ObjectId(id) }));
+const deletaProduto = async (id) => {
+  try {
+    const db = await connection();
+    await db.collection('products').deleteOne({ _id: ObjectId(id) });
+  } catch (err) {
+    console.error('deleteProduct', err);
+  }
+};
 
 module.exports = {
   addProduto,
@@ -36,3 +41,9 @@ module.exports = {
   atualizarProduto,
   deletaProduto,
 };
+
+// const deletaProduto = async (id) =>
+//   connection().then((db) =>
+//     db
+//       .collection('products')
+//       .deleteOne({ _id: ObjectId(id) }));

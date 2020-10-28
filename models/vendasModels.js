@@ -3,23 +3,38 @@ const { ObjectId } = require('mongodb');
 
 const addVendas = async (itensSold) => {
   const vendaAdicionada = await connection().then((db) =>
-    db.collection('sales').insertOne({ itensSold }));
+    db.collection('sales').insertOne({ itensSold }),
+  );
   // console.log('venda adiconada', vendaAdicionada.ops);
   return vendaAdicionada.ops;
 };
 
-const listaVendas = async () =>
-  connection().then((db) => db.collection('sales').find({}).toArray());
+const listaVendas = async () => {
+  try {
+    const db = await connection();
+    const getSales = await db.collection('sales').find({}).toArray();
+    return getSales;
+  } catch (err) {
+    console.error('getAllSales', err);
+  }
+};
 
-const vendaPorId = async (id) =>
-  connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
+const vendaPorId = async (id) => {
+  try {
+    const db = await connection();
+    const getSale = await db.collection('sales').findOne(ObjectId(id));
+
+    return getSale;
+  } catch (err) {
+    console.error('getSaleById', err);
+  }
+};
 
 const atualizarVenda = async (id, novoArray) => {
   await connection().then((db) =>
     // ponto de atencao
-    db
-      .collection('sales')
-      .updateOne({ _id: ObjectId(id) }, { $set: { itensSold: novoArray } }));
+    db.collection('sales').updateOne({ _id: ObjectId(id) }, { $set: { itensSold: novoArray } }),
+  );
   return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
 };
 
@@ -43,3 +58,9 @@ module.exports = {
 //   );
 //   return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
 // };
+
+// const listaVendas = async () =>
+//   connection().then((db) => db.collection('sales').find({}).toArray());
+
+// const vendaPorId = async (id) =>
+//   connection().then((db) => db.collection('sales').findOne(ObjectId(id)));

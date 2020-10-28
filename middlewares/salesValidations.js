@@ -14,7 +14,7 @@ const createSalesVal = async (req, res, next) => {
   const pendencies = [];
   const resp = (nErr) => res.status(422).json(errors[nErr]);
 
-  for (let i = 0, len = req.body.length; i < len; i += 1) {
+  for (let i = 0; i < req.body.length; i += 1) {
     const id = req.body[i].productId;
     const qtt = req.body[i].quantity;
 
@@ -25,7 +25,7 @@ const createSalesVal = async (req, res, next) => {
 
   const products = await Promise.all(pendencies);
 
-  for (let i = 0, len = products.length; i < len; i += 1) {
+  for (let i = 0; i < products.length; i += 1) {
     if (!products[i]) return resp(1);
   }
 

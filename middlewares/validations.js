@@ -48,11 +48,11 @@ const createProductVal = async (req, res, next) => {
 
 const readProductVal = async (req, res, next) => {
   const id = req.params.id;
-  
+
   if (!ObjectId.isValid(id)) return res.status(422).json(errors[5]);
-  
+
   const product = await productsModel.readById(id);
-  
+
   if (!product) return res.status(422).json(errors[5]);
 
   req.product = product;

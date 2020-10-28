@@ -1,5 +1,17 @@
 const express = require('express');
-const productsRouter = require('./controllers/productsRouter');
+const bodyParser = require('body-parser');
+const routes = require('./routes');
+
+const app = express();
 
 const PORT = 3000;
-const app = express();
+app.use(bodyParser.json());
+
+app.use('/products', routes.productRouter);
+app.use('/sales', routes.salesRouter);
+
+app.get('/', (request, response) => {
+  response.send();
+});
+
+app.listen(PORT, () => console.log(`Listen on ${PORT}`));

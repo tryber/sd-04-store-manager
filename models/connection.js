@@ -1,8 +1,17 @@
+/* eslint-disable prefer-destructuring */
+require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
 // const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager'; // local
-const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager'; // evaluator
-const DB_NAME = 'StoreManager';
+// const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager'; // evaluator
+
+const {
+  MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://mongodb:27017/StoreManager',
+} = process.env;
+const { DB_NAME } = process.env;
+
+// const MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://mongodb:27017/StoreManager';
+// const DB_NAME = process.env.DB_NAME;
 
 let schema;
 

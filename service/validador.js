@@ -2,7 +2,8 @@ const yup = require('yup');
 
 const schemaAdd = yup.object().shape({
   name: yup
-    .string('must be a string')
+    .string()
+    .typeError('must be a string')
     .required('must be completed')
     .min(5, '"name" length must be at least 5 characters long'),
   quantity: yup

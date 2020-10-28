@@ -4,6 +4,21 @@ const vendasModel = require('../models/vendasModels');
 const produtoModel = require('../models/produtosModels');
 const validador = require('./validador');
 
+const diminuiComplexidade = async (prod, quantity) => {
+  const { _id, name } = prod;
+  if (prod.quantity >= quantity) {
+    const novaQ = prod.quantity - quantity;
+    // atualizar lista de produto
+    if (novaQ === 0) {
+      await produtoModel.deletaProduto(_id);
+      return true;
+    }
+    await produtoModel.atualizarProduto(_id, name, novaQ);
+    return true;
+  }
+  return false;
+};
+
 const addVendasService = async (lista) => {
   // console.log('listaService', lista);
   try {
@@ -154,3 +169,17 @@ module.exports = {
 //     return 'nao deu';
 //   }
 // };
+
+// if (prod) {
+//   const { _id, name } = prod;
+//   if (prod.quantity >= quantity) {
+//     const novaQ = prod.quantity - quantity;
+//     // atualizar lista de produto
+//     if (novaQ === 0) {
+//       await produtoModel.deletaProduto(_id);
+//       return true;
+//     }
+//     await produtoModel.atualizarProduto(_id, name, novaQ);
+//     return true;
+//   }
+// }

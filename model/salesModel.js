@@ -1,5 +1,4 @@
 // const { ObjectId } = require('mongodb');
-const { system } = require('faker');
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 

@@ -12,23 +12,21 @@ const errors = {
 
 const createSalesVal = async (req, res, next) => {
   const pendencies = [];
-  // const resp = (nErr) => res.status(422).json(errors[nErr]);
 
-  for (let i = 0; i < req.body.length; i += 1) {
+  for (let i = 0, len = req.body.length; i < len; i += 1) {
+    const resp = (nErr) => res.status(422).json(errors[nErr]);
     const id = req.body[i].productId;
     const qtt = req.body[i].quantity;
 
-    if (!ObjectId.isValid(id) || qtt <= 0 || !Number.isInteger(qtt)) {
-      return res.status(422).json(errors[1]);
-    }
+    if (!ObjectId.isValid(id) || qtt <= 0 || !Number.isInteger(qtt)) return resp(1);
 
     pendencies.push(productsModel.readById(id));
   }
 
   const products = await Promise.all(pendencies);
 
-  for (let i = 0; i < products.length; i += 1) {
-    if (!products[i]) return res.status(422).json(errors[1]);
+  for (let i = 0, len = products.length; i < len; i += 1) {
+    if (!products[i]) return resp(1);
   }
 
   next();

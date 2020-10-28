@@ -16,35 +16,21 @@ const diminuiComplexidade = async (prod, quantity) => {
     await produtoModel.atualizarProduto(_id, name, novaQ);
     return true;
   }
-  return false;
 };
 
 const addVendasService = async (lista) => {
-  // console.log('listaService', lista);
   try {
     const results = Promise.all(
-      lista.map(async (item) => {
-        const { productId, quantity } = item;
+      lista.map(async ({ productId, quantity }) => {
         await validador.schemaVenda.validate({ quantity });
         if (ObjectId.isValid(productId)) {
           const prod = await produtoModel.produtoPorId(productId);
-          if (prod) {
-            const { _id, name } = prod;
-            if (prod.quantity >= quantity) {
-              const novaQ = prod.quantity - quantity;
-              // atualizar lista de produto
-              if (novaQ === 0) {
-                await produtoModel.deletaProduto(_id);
-                return true;
-              }
-              await produtoModel.atualizarProduto(_id, name, novaQ);
-              return true;
-            }
-          }
+          if (prod) await diminuiComplexidade(prod, quantity);
         }
       }),
     );
-    if ((await results).every((e) => e === true)) {
+    if (await results) {
+      // if ((await results).every((e) => e === true)) {
       const vendaAdicionada = await vendasModel.addVendas(lista);
       return vendaAdicionada;
     }

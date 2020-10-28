@@ -45,14 +45,14 @@ router.put(
     const { name, quantity } = req.body;
 
     await productModel.updateProduct(req.params.id, name, quantity);
-    const newProduct = await productModel.findProductById(req.params.id);
+    const newProduct = await productModel.findProductById(req.params.id, 'products');
 
     res.status(200).json(newProduct);
   },
 );
 
 router.delete('/:id', productValidations.validationReturnProduct, async (req, res) => {
-  const removedProduct = await productModel.findProductById(req.params.id);
+  const removedProduct = await productModel.findProductById(req.params.id, 'products');
   await productModel.deleteProduct(req.params.id);
 
   res.status(200).json(removedProduct);

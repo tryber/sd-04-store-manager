@@ -12,12 +12,10 @@ const listProducts = async () => {
   return data;
 };
 
-const findProductById = async (id) => {
+const findProductById = async (id, col) => {
   if (!ObjectId.isValid(id)) return null;
 
-  const returnedProduct = await connection().then((db) =>
-    db.collection('products').findOne(ObjectId(id)),
-  );
+  const returnedProduct = await connection().then((db) => db.collection(col).findOne(ObjectId(id)));
   return returnedProduct;
 };
 

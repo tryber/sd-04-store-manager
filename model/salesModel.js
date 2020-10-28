@@ -1,5 +1,4 @@
 // const { ObjectId } = require('mongodb');
-const { system } = require('faker');
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
@@ -21,13 +20,4 @@ const updateSale = async (id, productId, quantity) => {
   );
 };
 
-const findSaleById = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
-
-  const saleReturned = await connection().then((db) =>
-    db.collection('sales').findOne(ObjectId(id)),
-  );
-  return saleReturned;
-};
-
-module.exports = { addSale, listSales, updateSale, findSaleById };
+module.exports = { addSale, listSales, updateSale };

@@ -1,5 +1,6 @@
 const express = require('express');
 const salesValidations = require('../middlewares/salesValidations');
+const productModel = require('../model/productModel');
 const salesModel = require('../model/salesModel');
 
 const router = express.Router();
@@ -19,13 +20,11 @@ router.post('/', salesValidations.saleQuantityValidation, async (req, res) => {
 });
 
 router.get('/', salesValidations.returnAllSales, async (req, res) => {
-  try {
-    const listSales = await salesModel.listSales();
+  const listSales = await salesModel.listSales();
+  if (listSales) {
     res.status(200).json({ sales: listSales });
-  } catch (_e) {
-    console.log(_e);
-    res.status(404).json({ message: 'Falha ao listar' });
   }
+  return null;
 });
 
 router.put('/:id', salesValidations.saleQuantityValidation, async (req, res) => {
@@ -33,7 +32,7 @@ router.put('/:id', salesValidations.saleQuantityValidation, async (req, res) => 
     const { quantity, productId } = req.body[0];
 
     await salesModel.updateSale(req.params.id, productId, quantity);
-    const saleChanged = await salesModel.findSaleById(req.params.id);
+    const saleChanged = await productModel.findProductById(req.params.id, 'sales');
     res.status(200).json(saleChanged);
   } catch (_e) {
     console.log(_e);

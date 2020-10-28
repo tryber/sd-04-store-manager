@@ -17,7 +17,7 @@ const read = async () => {
 const readById = async (id) => {
   const db = await conn();
 
-  return db.collection('products').findOne({ _id: ObjectId(id) });
+  return db.collection('products').findOne(ObjectId(id));
 };
 
 const readByName = async (name) => {
@@ -34,6 +34,15 @@ const update = async (id, name, quantity) => {
   return readById(id);
 };
 
+const del = async (id) => {
+  const product = await readById(id);
+  const db = await conn();
+
+  await db.collection('products').deleteOne({ _id: ObjectId(id) });
+
+  return product;
+};
+
 // (async () => console.log(await readById('5f974e60e1bdbb36b3baff28')))();
 
 module.exports = {
@@ -42,4 +51,5 @@ module.exports = {
   readById,
   readByName,
   update,
+  del,
 };

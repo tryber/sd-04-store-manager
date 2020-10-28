@@ -70,8 +70,24 @@ const updateProductVal = async (req, res, next) => {
   next();
 };
 
+const deleteProductVal = async (req, res, next) => {
+  const id = req.params.id;
+  let product;
+
+  if (ObjectId.isValid(id)) {
+    product = await productsModel.readById(id);
+  } else {
+    return res.status(422).json(errors[5]);
+  }
+
+  if (!product) return res.status(422).json(errors[5]);
+
+  next();
+};
+
 module.exports = {
   createProductVal,
   readProductVal,
   updateProductVal,
+  deleteProductVal,
 };

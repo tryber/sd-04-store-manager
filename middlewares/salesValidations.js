@@ -10,12 +10,15 @@ const errors = {
   },
 };
 
-const createSalesVal2 = async (pendencies, resp) => {
+// CC
+const checkProductExistence = async (pendencies, resp, next) => {
   const products = await Promise.all(pendencies);
 
   for (let i = 0, len = products.length; i < len; i += 1) {
     if (!products[i]) return resp(1);
   }
+
+  next();
 };
 
 const createSalesVal = async (req, res, next) => {
@@ -31,29 +34,8 @@ const createSalesVal = async (req, res, next) => {
     pendencies.push(productsModel.readById(id));
   }
 
-  createSalesVal2(pendencies, resp);
-  next();
+  checkProductExistence(pendencies, resp, next);
 };
-
-// const createSalesVal = async (req, res, next) => {
-//   const pendencies = req.body.map((pdt) => {
-//     const id = pdt.productId;
-//     const qtt = pdt.quantity;
-//     const resp = (nErr) => res.status(422).json(errors[nErr]);
-
-//     if (!ObjectId.isValid(id) || qtt <= 0 || !Number.isInteger(qtt)) return resp(1);
-
-//     return productsModel.readById(id);
-//   })
-
-//   const products = await Promise.all(pendencies);
-
-//   products.forEach((product) => {
-//     if (!product) return resp(1);
-//   });
-
-//   next();
-// };
 
 module.exports = {
   createSalesVal,

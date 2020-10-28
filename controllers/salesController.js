@@ -9,10 +9,10 @@ const insertSalesCont = rescue(async (req, res) => {
   return res.status(200).json(result);
 });
 
-const getAllSalesCont = rescue(async (_req, res) => {
-  const result = await getAllSalesMod();
-  return res.status(200).json({ sales: result });
-});
+const getAllSalesCont = rescue(async (_req, res) =>
+  res.status(200).json({ sales: await getAllSalesMod() }));
+// const result = await getAllSalesMod();
+// Não coloquei em uma variável por causa do CC - Similar blocks
 
 const getByIdSalesCont = rescue(async (req, res) => {
   const { id } = req.params;

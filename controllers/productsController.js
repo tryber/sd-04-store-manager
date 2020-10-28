@@ -35,11 +35,15 @@ const updateByIdProdCont = rescue(async (req, res) => {
 
 const deleteProdCont = rescue(async (req, res) => {
   const { id } = req.params;
+  try {
+    // Deixar esse try/catch por causa do CC - Similar blocks
+    const result = await deleteProdServ(id);
+    if (result.err) return res.status(422).json(result);
 
-  const result = await deleteProdServ(id);
-  if (result.err) return res.status(422).json(result);
-
-  return res.status(200).json(result);
+    return res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: 'Error deleteProdCont!' });
+  }
 });
 
 module.exports = {

@@ -44,7 +44,7 @@ const deleteProdServ = async (id) => {
   if (!deleteProd) {
     return invalidData('Wrong id format');
   }
-  return await deleteProdMod(id);
+  return deleteProd;
 };
 
 module.exports = {

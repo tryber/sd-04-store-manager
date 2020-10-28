@@ -25,7 +25,7 @@ product.post('/', async (req, res) => {
   }
 });
 
-// rota para listar todos os produtos
+// rota para listar todos os produtos d
 product.get('/', async (_req, res) => {
   try {
     const products = await produtoModel.listaProdutos();

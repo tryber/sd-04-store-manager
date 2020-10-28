@@ -5,7 +5,6 @@ const produtoModel = require('../models/produtosModels');
 const validador = require('./validador');
 
 const addVendasService = async (lista) => {
-  // console.log('listaService', lista);
   try {
     const results = Promise.all(
       lista.map(async (item) => {
@@ -31,7 +30,6 @@ const addVendasService = async (lista) => {
     );
     if ((await results).every((e) => e === true)) {
       const vendaAdicionada = await vendasModel.addVendas(lista);
-      // console.log('teste venda add', vendaAdicionada);
       return vendaAdicionada;
     }
   } catch (error) {

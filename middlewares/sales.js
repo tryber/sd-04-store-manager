@@ -9,7 +9,7 @@ const createSales = async (req, res) => {
 const readSale = async (req, res) => {
   const sale = req.sale;
 
-  return res.status(200).json(sale);
+  res.status(200).json(sale);
 };
 
 const readSales = async (_, res) => {
@@ -26,9 +26,17 @@ const updateSale = async (req, res) => {
   res.status(200).json(sale);
 };
 
+const deleteSale = async (req, res) => {
+  const id = req.params.id;
+  const sale = await salesModel.del(id);
+
+  res.status(200).json(sale);
+};
+
 module.exports = {
   createSales,
   readSale,
   readSales,
   updateSale,
+  deleteSale,
 };

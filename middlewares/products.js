@@ -10,13 +10,13 @@ const createProduct = async (req, res) => {
 const readProduct = async (req, res) => {
   const product = req.product;
 
-  return res.status(200).json(product);
+  res.status(200).json(product);
 };
 
 const readProducts = async (_, res) => {
   const products = await productsModel.read();
 
-  return res.status(200).json({ products });
+  res.status(200).json({ products });
 };
 
 const updateProduct = async (req, res) => {

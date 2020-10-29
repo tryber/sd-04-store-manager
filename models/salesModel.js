@@ -28,6 +28,15 @@ const update = async (id, itensSold) => {
   return readById(id);
 };
 
+const del = async (id) => {
+  const sale = await readById(id);
+  const db = await conn();
+
+  await db.collection('sales').deleteOne({ _id: ObjectId(id) });
+
+  return sale;
+};
+
 // (async () => console.log(await create()))();
 
 module.exports = {
@@ -35,4 +44,5 @@ module.exports = {
   read,
   readById,
   update,
+  del,
 };

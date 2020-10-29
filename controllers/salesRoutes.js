@@ -1,5 +1,5 @@
 const { createSalesVal, createSales, readSaleVal, readSale, readSales,
-  updateSaleVal, updateSale } = require('../middlewares');
+  updateSaleVal, updateSale, deleteSaleVal, deleteSale } = require('../middlewares');
 const express = require('express');
 const rescue = require('express-rescue');
 
@@ -10,5 +10,6 @@ router.post('/', rescue(createSalesVal), rescue(createSales));
 
 router.get('/:id', rescue(readSaleVal), rescue(readSale));
 router.put('/:id', rescue(updateSaleVal), rescue(updateSale));
+router.delete('/:id', rescue(deleteSaleVal), rescue(deleteSale));
 
 module.exports = router;

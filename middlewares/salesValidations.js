@@ -15,6 +15,12 @@ const errors = {
       message: 'Sale not found',
     },
   },
+  3: {
+    err: {
+      code: 'invalid_data',
+      message: 'Wrong sale ID format',
+    },
+  },
 };
 
 // CC :(
@@ -70,8 +76,25 @@ const updateSaleVal = async (req, res, next) => {
   next();
 };
 
+const deleteSaleVal = async (req, res, next) => {
+  const id = req.params.id;
+  const resp = (nErr) => res.status(422).json(errors[nErr]);
+  let sale;
+
+  if (ObjectId.isValid(id)) {
+    sale = await salesModel.readById(id);
+  } else {
+    return resp(3);
+  }
+
+  if (!sale) return res.status(404).json(errors[2]);
+
+  next();
+};
+
 module.exports = {
   createSalesVal,
   readSaleVal,
   updateSaleVal,
+  deleteSaleVal,
 };

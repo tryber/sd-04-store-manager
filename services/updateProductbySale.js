@@ -27,12 +27,15 @@ const quantityUpdate = async (req, res, next) => {
     const sale = await model.findById('sales', id);
     const oldquantity = sale.itensSold[0].quantity;
     let quantityResult = 0;
+    let result = 0;
     const { productId } = sale.itensSold[0];
     const product = await model.findById('products', productId);
     if (newQuantity > oldquantity) {
-      quantityResult = product.quantity - newQuantity + oldquantity;
+      result = product.quantity - newQuantity;
+      quantityResult = result + oldquantity;
     } else {
-      quantityResult = product.quantity + oldquantity - newQuantity;
+      result = product.quantity + oldquantity;
+      quantityResult = result - newQuantity;
     }
     await model.update('products', productId, { name: product.name, quantity: quantityResult });
   }

@@ -1,4 +1,4 @@
-const { findAll, findById } = require('../models/productModel');
+const { findById } = require('../models/productModel');
 
 const HTTPSTATUS = {
   OK: 200,

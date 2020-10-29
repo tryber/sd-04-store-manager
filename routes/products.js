@@ -12,4 +12,3 @@ routers
   .delete('/:id', controller.deleteProduct);
 
 module.exports = routers;
-

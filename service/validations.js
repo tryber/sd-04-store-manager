@@ -1,11 +1,9 @@
 const Model = require('../model/product');
 
-const buildError = (code, message, status) => {
-  return {
-    error: { err: { code, message } },
-    status,
-  }
-}
+const buildError = (code, message, status) => ({
+  error: { err: { code, message } },
+  status,
+});
 
 const errorMessage = [
   '"name" length must be at least 5 characters long',
@@ -47,4 +45,4 @@ const isProductValid = async (name, quantity) => {
 
 module.exports = {
   isProductValid,
-}
+};

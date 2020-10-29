@@ -19,8 +19,7 @@ router.post('/', validator.validateProduct, async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const productsList = await findAll('products');
-
-    res.status(200).json(productsList);
+    res.status(200).json({ productsList });
   } catch (_e) {
     console.log(_e);
     res.status(501).json({ message: 'Falha ao carregar os produtos!' });

@@ -2,8 +2,8 @@ const { createProductVal, readProductVal, updateProductVal,
   deleteProductVal } = require('./productsValidations');
 const { createProduct, readProduct, readProducts, updateProduct,
   deleteProduct } = require('./products');
-const { createSalesVal } = require('./salesValidations');
-const { createSales } = require('./sales');
+const { createSalesVal, readSaleVal } = require('./salesValidations');
+const { createSales, readSale, readSales } = require('./sales');
 const { notFound, internalError } = require('./errors');
 
 module.exports = {
@@ -18,6 +18,9 @@ module.exports = {
   deleteProduct,
   createSalesVal,
   createSales,
+  readSaleVal,
+  readSale,
+  readSales,
   notFound,
   internalError,
 };

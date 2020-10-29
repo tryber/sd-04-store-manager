@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const productsModel = require('../models/productsModel');
+const salesModel = require('../models/salesModel');
 
 const errors = {
   1: {
@@ -8,10 +9,16 @@ const errors = {
       message: 'Wrong product ID or invalid quantity',
     },
   },
+  2: {
+    err: {
+      code: 'not_found',
+      message: 'Sale not found',
+    },
+  },
 };
 
-// CC
-const checkProductExistence = async (pendencies, resp, next) => {
+// CC :(
+const checkProductsExistence = async (pendencies, resp, next) => {
   const products = await Promise.all(pendencies);
 
   for (let i = 0, len = products.length; i < len; i += 1) {
@@ -20,6 +27,7 @@ const checkProductExistence = async (pendencies, resp, next) => {
 
   next();
 };
+// ===
 
 const createSalesVal = async (req, res, next) => {
   const pendencies = [];
@@ -34,9 +42,25 @@ const createSalesVal = async (req, res, next) => {
     pendencies.push(productsModel.readById(id));
   }
 
-  checkProductExistence(pendencies, resp, next);
+  checkProductsExistence(pendencies, resp, next);
+};
+
+const readSaleVal = async (req, res, next) => {
+  const id = req.params.id;
+  const resp = (nErr) => res.status(404).json(errors[nErr]);
+
+  if (!ObjectId.isValid(id)) return resp(1);
+
+  const sale = await salesModel.readById(id);
+
+  if (!sale) return resp(2);
+
+  req.sale = sale;
+
+  next();
 };
 
 module.exports = {
   createSalesVal,
+  readSaleVal,
 };

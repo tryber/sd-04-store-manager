@@ -15,23 +15,23 @@ const isValidSale = (itensSold) => {
 
 const getAllSales = async () => ({ sales: await salesModel.getAllSales() });
 
-const getSalesById = async (id) => salesModel.getSalesById(id);
+const getSale = async (id) => salesModel.getSalesById(id);
 
 const verifyId = (id) => getSalesById(id);
 
-const updateSales = async (id, itensSold) => {
+const saleUpd = async (id, itensSold) => {
   await salesModel.updateSales(id, itensSold);
   return { _id: id, itensSold };
 };
 
-const deleteSales = (id) => salesModel.deleteSales(id);
+const del = (id) => salesModel.deleteSales(id);
 
 module.exports = {
   newSale,
   isValidSale,
   getAllSales,
-  getSalesById,
+  getSale,
   verifyId,
-  updateSales,
-  deleteSales,
+  saleUpd,
+  del,
 };

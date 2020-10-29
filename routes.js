@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const productsController = require('./controllers/productsController');
 const salesController = require('./controllers/salesController');
-const salesModel = require('./models/salesModel');
 const { errorHandler, verifyId, verifySaleId } = require('./services/errorHandler');
 
 const routes = Router();

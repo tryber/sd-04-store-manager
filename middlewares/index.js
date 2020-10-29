@@ -1,0 +1,73 @@
+const crud = require('../models/crud');
+const errorResponse = require('./errorResponse');
+
+const verifyIfProductExistsByName = async (req, res, next) => {
+  const { name } = req.body;
+
+  const product = await crud.readByName('products', name);
+
+  if (product) {
+    return res.status(400).json(errorResponse('invalid_data', 'Product already exists'));
+  }
+
+  next();
+};
+
+const validateQuantity = (req, res, next) => {
+  const { quantity } = req.body;
+
+  if (quantity < 1) {
+    return res
+      .status(400)
+      .json(errorResponse('invalid_data', '"quantity" must be larger than or equal to 1'));
+  }
+
+  if (!Number.isInteger(quantity)) {
+    return res.status(400).json(errorResponse('invalid_data', '"quantity" must be a number'));
+  }
+
+  next();
+};
+
+const verifyIfProductExistsById = async (req, res, next) => {
+  const { id } = req.params;
+
+  const product = await crud.readById('products', id);
+
+  if (!product) {
+    return res.status(400).json(errorResponse('invalid_data', 'Wrong id format'));
+  }
+
+  req.product = product;
+
+  next();
+};
+
+const validateSales = (req, res, next) => {
+  const { body } = req;
+  for (let i = 0; i < body.length; i += 1) {
+    if (body[i].quantity < 1 || !Number.isInteger(body[i].quantity)) {
+      return res
+        .status(422)
+        .json(errorResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+    }
+  }
+  next();
+};
+
+const verifyIfSaleExistsById = async (req, res, next) => {
+  const sale = await crud.readById('sales', req.params.id);
+  if (!sale) {
+    return res.status(422).json(errorResponse('invalid_data', 'Wrong sale ID format'));
+  }
+  req.sale = sale;
+  next();
+};
+
+module.export = {
+  verifyIfProductExistsById,
+  validateQuantity,
+  verifyIfProductExistsByName,
+  verifyIfSaleExistsById,
+  validateSales,
+};

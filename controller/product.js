@@ -34,10 +34,10 @@ const putProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
-  // console.log('Post Delete Body', req.body);
-  await Service.deleteProduct(id);
+  const product = await Service.deleteProduct(id);
+  console.log('product', product);
 
-  return res.status(200).end();
+  return res.status(200).json(product);
 };
 
 module.exports = {

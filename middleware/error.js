@@ -39,8 +39,23 @@ const authPut = async (req, res, next) => {
   next();
 };
 
+const authDelete = async (req, res, next) => {
+  const { id } = req.params;
+
+  const response = await Validation.isValidDelete(id);
+
+  console.log('response vindo do validation', response);
+  if (response) {
+    return res.status(response.status).json(response.error);
+  }
+
+  console.log('Middleware Delete OK NEXT');
+  next();
+};
+
 module.exports = {
   authPost,
   authGet,
   authPut,
+  authDelete,
 };

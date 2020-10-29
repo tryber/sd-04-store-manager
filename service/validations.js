@@ -66,8 +66,21 @@ const isValidPut = async (name, quantity) => {
   }
 };
 
+const isValidDelete = async (id) => {
+  if (!ObjectId.isValid(id)) { return buildError('invalid_data', errorMessage[4], 422); }
+
+  const deleted = await Model.getProductById(id);
+
+  if (!deleted) { return buildError('invalid_data', errorMessage[4], 422); }
+
+  await Model.deleteProduct(id);
+
+  return { error: deleted, status: 200 };
+};
+
 module.exports = {
   isValidPost,
   isValidGet,
   isValidPut,
+  isValidDelete,
 };

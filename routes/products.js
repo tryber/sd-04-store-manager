@@ -9,6 +9,6 @@ routers
   .get('/', middleware.authGet, controller.getAllProducts)
   .get('/:id', middleware.authGet, controller.getProductById)
   .put('/:id', middleware.authPut, controller.putProduct)
-  .delete('/:id', controller.deleteProduct);
+  .delete('/:id', middleware.authDelete, controller.deleteProduct);
 
 module.exports = routers;

@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', validator.validateProductById, async (req, res) => {
-  const product = await productModel.findAll('products');
+  const product = await findAll('products');
   res.status(200).json({ product });
 });
 

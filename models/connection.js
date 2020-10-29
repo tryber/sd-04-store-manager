@@ -3,10 +3,10 @@ const mongoClient = require('mongodb').MongoClient;
 const DB_NAME = 'StoreManager';
 
 // usar essa linha para testar local
-const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
+// const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
 
 // user essa linha para o evaluator do GitHub
-// const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
+const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
 
 const connection = () => (
   mongoClient

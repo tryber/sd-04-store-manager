@@ -1,4 +1,3 @@
-
 const Service = require('../service/product');
 
 const postNewProduct = async (req, res) => {
@@ -20,7 +19,6 @@ const getAllProducts = async (_req, res) => {
 const getProductById = async (req, res) => {
   const { id } = req.params;
   const product = await Service.getProductById(id);
-  // console.log('Get Product By Id: ', product);
   res.status(200).json(product);
 };
 

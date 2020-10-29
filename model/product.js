@@ -9,7 +9,13 @@ const postNewProduct = async (name, quantity) => connection()
   .then(({ insertedId }) => ({ _id: insertedId, name, quantity }));
 
 const getProductById = async (id) => connection()
-  .then((db) => db.collection('products').find({ _id: ObjectId(id) }).toArray());
+  .then((db) => db.collection('products').findOne({ _id: ObjectId(id) }));
+
+// const getProductById = async (id) => {
+//   if (!ObjectId.isValid(id)) return null;
+
+//   return connectiton().then((db) => db.collection('products').findOne(ObjectId(id)));
+// };
 
 const getProductByName = async (name) => connection()
   .then((db) => db.collection('products').findOne({ name }));

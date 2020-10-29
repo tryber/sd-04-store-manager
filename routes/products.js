@@ -5,9 +5,9 @@ const middleware = require('../middleware/error');
 const routers = express.Router();
 
 routers
-  .post('/', middleware.authProduct, controller.postNewProduct)
-  .get('/', controller.getAllProducts)
-  .get('/:id', controller.getProductById)
+  .post('/', middleware.authPost, controller.postNewProduct)
+  .get('/', middleware.authGet, controller.getAllProducts)
+  .get('/:id', middleware.authGet, controller.getProductById)
   .put('/:id', controller.putProduct)
   .delete('/:id', controller.deleteProduct);
 

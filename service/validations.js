@@ -27,8 +27,7 @@ const isAlreadyName = async (name) => {
   return null;
 };
 
-const isProductValid = async (name, quantity) => {
-  // console.log('VALIDANDO');
+const isValidPost = async (name, quantity) => {
   switch (true) {
     case (isInvalidName(name)):
       return buildError('invalid_data', errorMessage[0], 422);
@@ -43,6 +42,17 @@ const isProductValid = async (name, quantity) => {
   }
 };
 
+const isValidGet = async (id) => {
+  const response = await Model.getProductById(id);
+
+  if (!response) {
+    return buildError('invalid_data', errorMessage[4], 422);
+  }
+
+  return null;
+};
+
 module.exports = {
-  isProductValid,
+  isValidPost,
+  isValidGet,
 };

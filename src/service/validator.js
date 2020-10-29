@@ -69,7 +69,7 @@ const validateProductById = async (req, res, next) => {
   const product = await findById(id);
 
   if (!product) {
-    return res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
+    return errorsMessagesGenerator(res,'Wrong id format', 'invalid_data'));
   }
 
   req.product = product;

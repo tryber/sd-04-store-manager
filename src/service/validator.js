@@ -51,7 +51,7 @@ const validateProduct = async (req, res, next) => {
     return errorsMessagesGenerator(res, MSG.nameUnique, MSG.INVALID_DATA);
   }
   if (quantity <= 0) {
-    return errorsMessagesGenerator(res, MSG.namecheck, MSG.INVALID_DATA);
+    return errorsMessagesGenerator(res, MSG.quantityTaille, MSG.INVALID_DATA);
   }
   if (!Number.isInteger(quantity)) {
     return errorsMessagesGenerator(res, MSG.quantityNumber, MSG.INVALID_DATA);

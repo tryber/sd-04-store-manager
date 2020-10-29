@@ -60,7 +60,18 @@ const readSaleVal = async (req, res, next) => {
   next();
 };
 
+const updateSaleVal = async (req, res, next) => {
+  const [{ quantity }] = req.body;
+  const resp = (nErr) => res.status(422).json(errors[nErr]);
+
+  if (quantity <= 0) return resp(1);
+  if (!Number.isInteger(quantity)) return resp(1);
+
+  next();
+};
+
 module.exports = {
   createSalesVal,
   readSaleVal,
+  updateSaleVal,
 };

@@ -20,10 +20,19 @@ const readById = async (id) => {
   return db.collection('sales').findOne(ObjectId(id));
 };
 
+const update = async (id, itensSold) => {
+  const db = await conn();
+
+  await db.collection('sales').updateOne({ _id: ObjectId(id) }, { $set: { itensSold } });
+
+  return readById(id);
+};
+
 // (async () => console.log(await create()))();
 
 module.exports = {
   create,
   read,
   readById,
+  update,
 };

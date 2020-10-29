@@ -13,8 +13,8 @@ const MSG = {
   nameUnique: 'Product already exists',
   quantityTaille: '"quantity" must be larger than or equal to 1',
   quantityNumber: '"quantity" must be a number',
-  invalid_data: 'invalid_data',
-  not_found: 'not_found',
+  INVALID_DATA: 'invalid_data',
+  NOT_FOUND: 'not_found',
   unexpected_error: 'Erro inesperado',
   id_format: 'Wrong id format',
 };
@@ -28,10 +28,10 @@ const buildResponse = (message, code) => ({
 
 const errorsMessagesGenerator = (res, message, code) => {
   switch (code) {
-    case invalid_data:
+    case MSG.INVALID_DATA:
       console.log(message);
       return res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json(buildResponse(message, code));
-    case not_found:
+    case MSG.NOT_FOUND:
       return res.status(HTTPSTATUS.NOT_FOUND).json(buildResponse(message, code));
     default:
       return res
@@ -45,16 +45,16 @@ const validateProduct = async (req, res, next) => {
   const list = await findAll();
   const productsNames = new Set(list.map((product) => product.name));
   if (!/\w{5,}/.test(name)) {
-    return errorsMessagesGenerator(res, MSG.name, MSG.invalid_data);
+    return errorsMessagesGenerator(res, MSG.name, MSG.INVALID_DATA);
   }
   if (productsNames.has(name)) {
-    return errorsMessagesGenerator(res, MSG.nameUnique, MSG.invalid_data);
+    return errorsMessagesGenerator(res, MSG.nameUnique, MSG.INVALID_DATA);
   }
   if (quantity <= 0) {
-    return errorsMessagesGenerator(res, MSG.namecheck, MSG.invalid_data);
+    return errorsMessagesGenerator(res, MSG.namecheck, MSG.INVALID_DATA);
   }
   if (!Number.isInteger(quantity)) {
-    return errorsMessagesGenerator(res, MSG.quantityNumber, MSG.invalid_data);
+    return errorsMessagesGenerator(res, MSG.quantityNumber, MSG.INVALID_DATA);
   }
   next();
 };
@@ -65,7 +65,7 @@ const validateProductById = async (req, res, next) => {
   const product = await findById(id);
 
   if (!product) {
-    return errorsMessagesGenerator(res, MSG.id_format, MSG.invalid_data);
+    return errorsMessagesGenerator(res, MSG.id_format, MSG.INVALID_DATA);
   }
 
   req.product = product;

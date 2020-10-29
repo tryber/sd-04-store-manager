@@ -68,7 +68,7 @@ router.put(
  */
 router.delete('/:id', validations.validateExistId, async (req, res) => {
   // Remove o produto
-  await productModel.remove(req.params.id);
+  await productModel.removeProduct(req.params.id);
   // Retonar os dados do produto removido
   res.status(200).json(req.products);
 });

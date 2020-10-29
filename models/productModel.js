@@ -62,11 +62,11 @@ const update = async (id, name, quantity) => {
  *
  * @param id
  */
-const remove = async (id) => {
+const removeProduct = async (id) => {
   if (!ObjectId.isValid(id)) return null; // Verifica se o Id é válido
   await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
 };
 
-module.exports = { addProduct, findByName, findAll, findById, update, remove };
+module.exports = { addProduct, findByName, findAll, findById, update, removeProduct };
 
 // !SECTION

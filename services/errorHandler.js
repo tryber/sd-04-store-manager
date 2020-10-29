@@ -21,11 +21,20 @@ const errorHandler = (error, _req, res, next) => {
 const verifyId = (req, _res, next) => {
   const { id } = req.params;
   const isValid = productsService.validateId(id);
+  console.log('oioi');
   if (!isValid) return next(Boom.badData('Wrong id format', 'invalid_data'));
+  return next();
+};
+
+const verifySaleId = (req, _res, next) => {
+  const { id } = req.params;
+  const isValid = productsService.validateId(id);
+  if (!isValid) return next(Boom.badData('Wrong sale ID format', 'invalid_data'));
   return next();
 };
 
 module.exports = {
   errorHandler,
   verifyId,
+  verifySaleId,
 };

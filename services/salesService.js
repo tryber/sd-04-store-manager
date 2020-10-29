@@ -24,6 +24,8 @@ const updateSales = async (id, itensSold) => {
   return { _id: id, itensSold };
 };
 
+const deleteSales = (id) => salesModel.deleteSales(id);
+
 module.exports = {
   newSale,
   isValidSale,
@@ -31,4 +33,5 @@ module.exports = {
   getSalesById,
   verifyId,
   updateSales,
+  deleteSales,
 };

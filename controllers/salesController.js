@@ -49,9 +49,21 @@ const updateSale = async (req, res, next) => {
   }
 };
 
+const deleteSales = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const sale = await salesService.deleteSales(id);
+    if (!sale) return next(Boom.notFound('ID not found', 'not_found'));
+    res.status(200).json(sale);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   addNewSale,
   listSales,
   getSalesById,
   updateSale,
+  deleteSales,
 };

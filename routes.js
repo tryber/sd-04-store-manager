@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const productsController = require('./controllers/productsController');
 const salesController = require('./controllers/salesController');
-const { errorHandler, verifyId } = require('./services/errorHandler');
+const salesModel = require('./models/salesModel');
+const { errorHandler, verifyId, verifySaleId } = require('./services/errorHandler');
 
 const routes = Router();
 
@@ -48,6 +49,13 @@ routes.put(
   '/sales/:id',
   verifyId,
   salesController.updateSale,
+  errorHandler,
+);
+
+routes.delete(
+  '/sales/:id',
+  verifySaleId,
+  salesController.deleteSales,
   errorHandler,
 );
 

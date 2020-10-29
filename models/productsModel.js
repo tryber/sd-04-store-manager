@@ -31,4 +31,15 @@ const update = async (id, name, quantity) => {
   );
 };
 
-module.exports = { add, findByName, getAll, findById, update };
+const remove = async (id) => {
+  await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+};
+
+module.exports = {
+  add,
+  findByName,
+  getAll,
+  findById,
+  update,
+  remove,
+};

@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 1 - Cadastro de produtos
+// Req. 1 - Cadastro de produtos
 router.post(
   '/',
   productsValidations.validateLengthOfName,
@@ -45,7 +45,7 @@ router.get('/:id', productsValidations.validateProductExistsById, async (req, re
   }
 });
 
-// 3 - Crie um endpoint para atualizar um produto
+// Req. 3 - Atualiza um produto
 router.put(
   '/:id',
   productsValidations.validateLengthOfName,
@@ -68,5 +68,16 @@ router.put(
     }
   },
 );
+
+// Req. 4 - Deleta um produto
+router.delete('/:id', productsValidations.validateProductExistsById, async (req, res) => {
+  try {
+    await productsModel.remove(req.params.id);
+    res.status(200).json(req.product);
+  } catch (_error) {
+    console.log(_error.message);
+    res.status(500).json({ message: 'Falha ao deletar produto' });
+  }
+});
 
 module.exports = router;

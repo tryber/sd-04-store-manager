@@ -11,12 +11,6 @@ const postNewProduct = async (name, quantity) => connection()
 const getProductById = async (id) => connection()
   .then((db) => db.collection('products').findOne({ _id: ObjectId(id) }));
 
-// const getProductById = async (id) => {
-//   if (!ObjectId.isValid(id)) return null;
-
-//   return connectiton().then((db) => db.collection('products').findOne(ObjectId(id)));
-// };
-
 const getProductByName = async (name) => connection()
   .then((db) => db.collection('products').findOne({ name }));
 

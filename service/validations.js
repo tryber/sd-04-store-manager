@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const Model = require('../model/product');
 
 const buildError = (code, message, status) => ({
@@ -43,16 +44,30 @@ const isValidPost = async (name, quantity) => {
 };
 
 const isValidGet = async (id) => {
+  if (!ObjectId.isValid(id)) { return buildError('invalid_data', errorMessage[4], 422); }
+
   const response = await Model.getProductById(id);
 
-  if (!response) {
-    return buildError('invalid_data', errorMessage[4], 422);
-  }
+  if (!response) { return buildError('invalid_data', errorMessage[4], 422); }
 
   return null;
+};
+
+const isValidPut = async (name, quantity) => {
+  switch (true) {
+    case (isInvalidName(name)):
+      return buildError('invalid_data', errorMessage[0], 422);
+    case (quantity < 1):
+      return buildError('invalid_data', errorMessage[2], 422);
+    case (!Number.isInteger(quantity)):
+      return buildError('invalid_data', errorMessage[3], 422);
+    default:
+      return null;
+  }
 };
 
 module.exports = {
   isValidPost,
   isValidGet,
+  isValidPut,
 };

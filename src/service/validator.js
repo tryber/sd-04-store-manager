@@ -1,4 +1,4 @@
-const { productModel } = require('../models');
+const { findAll, findById } = require('../models/productModel');
 
 const HTTPSTATUS = {
   OK: 200,
@@ -38,7 +38,7 @@ const errorsMessagesGenerator = (res, message, code) => {
 
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
-  const list = await productModel.listProducts();
+  const list = await findAll();
   const productsNames = await new Set(list.map((product) => product.name));
   if (!/\w{5,}/.test(name)) {
     return errorsMessagesGenerator(
@@ -66,7 +66,7 @@ const validateProduct = async (req, res, next) => {
 const validateProductById = async (req, res, next) => {
   const { id } = req.params;
 
-  const product = await productModel.findById('products', id);
+  const product = await findById('products', id);
 
   if (!product) {
     return res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));

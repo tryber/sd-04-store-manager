@@ -1,5 +1,5 @@
 const express = require('express');
-const { productModel } = require('../models');
+const { findById, findAll, update, createOne } = require('../models/productModel');
 const validator = require('../service/validator');
 
 const router = express.Router();
@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', validator.validateProduct, async (req, res) => {
   try {
     const { name, quantity } = req.body;
-    const product = await productModel.createOne(name, quantity);
+    const product = await createOne(name, quantity);
 
     res.status(201).json(product);
   } catch (_e) {
@@ -18,7 +18,7 @@ router.post('/', validator.validateProduct, async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const productsList = await productModel.findAll();
+    const productsList = await findAll();
 
     res.status(200).json(productsList);
   } catch (_e) {
@@ -29,6 +29,18 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', validator.validateProductById, async (req, res) => {
   res.status(200).json(req.product);
+});
+
+router.put('/:id', validator.validateProduct, async (req, res) => {
+  const { name, quantity } = req.body;
+  const { id } = req.params;
+  try {
+    await update(id, name, quantity);
+    const product = await findById(id);
+    res.status(200).json(product);
+  } catch (err) {
+    res.status(500).json({ err });
+  }
 });
 
 module.exports = router;

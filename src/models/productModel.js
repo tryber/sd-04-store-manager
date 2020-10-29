@@ -43,3 +43,12 @@ module.createOne = async (name, quantity) => {
     console.log(e);
   }
 };
+
+module.update = async (id, name, quantity) => {
+  try {
+    const db = await connection();
+    await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+  } catch (e) {
+    console.log(e);
+  }
+};

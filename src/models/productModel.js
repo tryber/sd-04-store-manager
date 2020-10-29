@@ -33,20 +33,20 @@ const findByName = async (collection, name) => {
   }
 };
 
-const createOne = async (collection, name, quantity) => {
+const createOne = async (collection, query) => {
   try {
     const db = await connection();
-    const result = await db.collection(collection).insertOne({ name, quantity });
+    const result = await db.collection(collection).insertOne(query);
     return result.ops[0];
   } catch (e) {
     console.log(e);
   }
 };
 
-const update = async (collection, id, name, quantity) => {
+const update = async (collection, id, query) => {
   try {
     const db = await connection();
-    await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+    await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: query });
   } catch (e) {
     console.log(e);
   }

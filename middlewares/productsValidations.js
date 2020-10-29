@@ -1,8 +1,8 @@
 const productsModel = require('../models/productsModel');
 
-const buildResponse = (code, message) => {
-  return { err: { code, message } };
-};
+const buildResponse = (code, message) => (
+  { err: { code, message } }
+);
 
 // name
 const validateLengthOfName = (req, res, next) => {

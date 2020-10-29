@@ -8,8 +8,8 @@ const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
 // user essa linha para o evaluator do GitHub
 // const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
 
-const connection = () => {
-  return mongoClient
+const connection = () => (
+  mongoClient
     .connect(MONGO_DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -18,7 +18,7 @@ const connection = () => {
     .catch((err) => {
       console.log(err);
       process.exit(1);
-    });
-};
+    })
+);
 
 module.exports = connection;

@@ -11,9 +11,15 @@ app.use(express.json());
 app.use('/products', productsController);
 app.get('/sales', salesController.listAll);
 app.get('/sales/:id', salesController.findById);
-app.post('/sales', service.quantityCheck, validation.isQuantityValid, salesController.add);
-app.put('/sales/:id', validation.isQuantityValid, salesController.update);
-app.delete('/sales/:id', salesController.exclude);
+app.post(
+  '/sales',
+  service.quantityCheck,
+  service.quantityUpdate,
+  validation.isQuantityValid,
+  salesController.add,
+);
+app.put('/sales/:id', validation.isQuantityValid, service.quantityUpdate, salesController.update);
+app.delete('/sales/:id', service.quantityUpdateD, salesController.exclude);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {

@@ -29,5 +29,5 @@ router.put('/:id', validator.validateSales, async (req, res) => {
     itensSold: req.body,
   };
   await productModel.update('sales', id, document);
-  crudModel.findById('sales', id).then((sale) => res.status(200).json(sale));
+  productModel.findById('sales', id).then((sale) => res.status(200).json(sale));
 });

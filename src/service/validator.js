@@ -43,7 +43,7 @@ const errorsMessagesGenerator = (res, message, code) => {
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
   const list = await findAll('products');
-  const productsNames = new Set(list.map((product) => product.name));
+  // const productsNames = new Set(list.map((product) => product.name));
   if (!/\w{5,}/.test(name)) {
     return errorsMessagesGenerator(res, MSG.name, MSG.INVALID_DATA);
   }

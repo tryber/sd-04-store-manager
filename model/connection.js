@@ -17,6 +17,7 @@ const connection = () =>
   })
     .then((connect) => connect.db('StoreManager'))
     .catch((err) => {
+      console.error('err connect', err);
       process.exit(1);
     });
 

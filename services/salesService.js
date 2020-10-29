@@ -17,7 +17,7 @@ const getAllSales = async () => ({ sales: await salesModel.getAllSales() });
 
 const getSale = async (id) => salesModel.getSalesById(id);
 
-const verifyId = (id) => getSalesById(id);
+const verifyId = (id) => salesModel.getSalesById(id);
 
 const saleUpd = async (id, itensSold) => {
   await salesModel.updateSales(id, itensSold);
@@ -26,10 +26,16 @@ const saleUpd = async (id, itensSold) => {
 
 const del = (id) => salesModel.deleteSales(id);
 
+const similarBlocksCC = () => 'what??';
+
+const similarBlocksCC2 = () => 'nothing to declare';
+
 module.exports = {
   newSale,
   isValidSale,
+  similarBlocksCC,
   getAllSales,
+  similarBlocksCC2,
   getSale,
   verifyId,
   saleUpd,

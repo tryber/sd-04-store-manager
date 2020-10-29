@@ -1,4 +1,4 @@
-const { ObjectID, ObjectId } = require('mongodb');
+const { ObjectID } = require('mongodb');
 const connection = require('./connection');
 
 const newSale = async (itensSold) => {

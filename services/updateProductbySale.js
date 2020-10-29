@@ -11,20 +11,17 @@ const quantityCheck = async (req, res, next) => {
   next();
 };
 
-const quantityUpdate = async (req, res, next) => {
+const quantityUpdate = async (req, _, next) => {
   if (!req.params.id) {
     const [data] = req.body;
     const product = await model.findById('products', data.productId);
     const quantityResult = product.quantity - data.quantity;
-    await model.update('products', data.productId, {
-      name: product.name,
-      quantity: quantityResult,
+    await model.update('products', data.productId, { name: product.name, quantity: quantityResult,
     });
   } else {
-    const { id } = req.params;
     const items = req.body;
     const newQuantity = items[0].quantity;
-    const sale = await model.findById('sales', id);
+    const sale = await model.findById('sales', req.params.id);
     const oldquantity = sale.itensSold[0].quantity;
     let quantityResult = 0;
     let result = 0;

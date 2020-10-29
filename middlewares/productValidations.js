@@ -8,7 +8,7 @@ const lengthValidation = (req, res, next) => {
   const { name } = req.body;
 
   if (name.length < 5) {
-    return result;
+    return result(res);
   }
   next();
 };

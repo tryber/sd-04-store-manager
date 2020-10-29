@@ -1,7 +1,7 @@
 const mongo = require('mongodb').MongoClient;
 
-const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager'; // Local
-// const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager'; // GitHub evaluator
+// const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager'; // Local
+const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager'; // GitHub evaluator
 
 const DB_NAME = 'StoreManager';
 

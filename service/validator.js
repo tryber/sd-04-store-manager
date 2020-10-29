@@ -63,4 +63,18 @@ const validateProduct = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateProduct };
+const validateProductById = async (req, res, next) => {
+  const { id } = req.params;
+
+  const product = await productModel.findById('products', id);
+
+  if (!product) {
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
+  }
+
+  req.product = product;
+
+  next();
+};
+
+module.exports = { validateProduct, validateProductById };

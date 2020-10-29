@@ -1,21 +1,42 @@
 const connection = require('./connection');
 
-module.addProduct = async (name, quantity) => {
+module.findById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
   try {
     const db = await connection();
-    const newProduct = await db.collection('products').insertOne({ name, quantity });
-    return newProduct.ops[0];
-  } catch (err) {
-    console.error(err);
+    const result = await db.collection(collection).findOne(ObjectId(id));
+    return result;
+  } catch (e) {
+    console.log(e);
   }
 };
 
-module.listProducts = async () => {
+module.findAll = async (collection) => {
   try {
     const db = await connection();
-    return await db.collection('products').find({}).toArray();
-  } catch (err) {
-    console.error(err);
-    return [];
+    const results = await db.collection(collection).find({}).toArray();
+    return results;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+module.findByName = async (collection, name) => {
+  try {
+    const db = await connection();
+    const result = await db.collection(collection).findOne({ name });
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+module.createOne = async (collection, name, quantity) => {
+  try {
+    const db = await connection();
+    const result = await db.collection(collection).insertOne({ name, quantity });
+    return result.ops[0];
+  } catch (e) {
+    console.log(e);
   }
 };

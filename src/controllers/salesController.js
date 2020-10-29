@@ -22,3 +22,12 @@ router.get('/:id', async (req, res) => {
   const sale = await productModel.findById('sales', id);
   res.status(200).json(sale);
 });
+
+router.put('/:id', validator.validateSales, async (req, res) => {
+  const { id } = req.params;
+  const document = {
+    itensSold: req.body,
+  };
+  await productModel.update('sales', id, document);
+  crudModel.findById('sales', id).then((sale) => res.status(200).json(sale));
+});

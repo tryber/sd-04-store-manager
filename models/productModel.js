@@ -1,6 +1,6 @@
 const connection = require('./connection');
 
-const addProduct = async (name, quantity) => {
+module.addProduct = async (name, quantity) => {
   try {
     const db = await connection();
     const newProduct = await db.collection('products').insertOne({ name, quantity });
@@ -10,7 +10,7 @@ const addProduct = async (name, quantity) => {
   }
 };
 
-const listProducts = async () => {
+module.listProducts = async () => {
   try {
     const db = await connection();
     return await db.collection('products').find({}).toArray();
@@ -19,5 +19,3 @@ const listProducts = async () => {
     return [];
   }
 };
-
-module.exports = { addProduct, listProducts };

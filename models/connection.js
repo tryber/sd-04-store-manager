@@ -4,7 +4,9 @@ const mongoClient = require('mongodb').MongoClient;
 const DB_NAME = 'StoreManager';
 
 // Local
-const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
+const MONGO_DB_URL =
+  'mongodb://localhost:27017/StoreManager' ||
+  'mongodb://mongodb:27017/StoreManager';
 
 // Online
 // const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';

@@ -1,9 +1,7 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const collection = 'products';
-
-const findById = async (id) => {
+const findById = async (collection, id) => {
   if (!ObjectId.isValid(id)) return null;
   try {
     const db = await connection();
@@ -14,7 +12,7 @@ const findById = async (id) => {
   }
 };
 
-const findAll = async () => {
+const findAll = async (collection) => {
   try {
     const db = await connection();
     const results = await db.collection(collection).find({}).toArray();
@@ -24,7 +22,7 @@ const findAll = async () => {
   }
 };
 
-const findByName = async (name) => {
+const findByName = async (collection, name) => {
   try {
     const db = await connection();
     const result = await db.collection(collection).findOne({ name });
@@ -34,7 +32,7 @@ const findByName = async (name) => {
   }
 };
 
-const createOne = async (name, quantity) => {
+const createOne = async (collection, name, quantity) => {
   try {
     const db = await connection();
     const result = await db.collection(collection).insertOne({ name, quantity });
@@ -44,7 +42,7 @@ const createOne = async (name, quantity) => {
   }
 };
 
-const update = async (id, name, quantity) => {
+const update = async (collection, id, name, quantity) => {
   try {
     const db = await connection();
     await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });

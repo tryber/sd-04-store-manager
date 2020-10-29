@@ -42,7 +42,7 @@ const errorsMessagesGenerator = (res, message, code) => {
 
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
-  const list = await findAll();
+  const list = await findAll('products');
   const productsNames = new Set(list.map((product) => product.name));
   if (!/\w{5,}/.test(name)) {
     return errorsMessagesGenerator(res, MSG.name, MSG.INVALID_DATA);
@@ -62,7 +62,7 @@ const validateProduct = async (req, res, next) => {
 const validateProductById = async (req, res, next) => {
   const { id } = req.params;
 
-  const product = await findById(id);
+  const product = await findById('products', id);
 
   if (!product) {
     return errorsMessagesGenerator(res, MSG.id_format, MSG.INVALID_DATA);

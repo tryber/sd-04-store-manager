@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', validator.validateProduct, async (req, res) => {
   try {
     const { name, quantity } = req.body;
-    const product = await createOne(name, quantity);
+    const product = await createOne('products', name, quantity);
 
     res.status(201).json(product);
   } catch (_e) {
@@ -18,7 +18,7 @@ router.post('/', validator.validateProduct, async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const productsList = await findAll();
+    const productsList = await findAll('products');
 
     res.status(200).json(productsList);
   } catch (_e) {
@@ -28,7 +28,8 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', validator.validateProductById, async (req, res) => {
-  res.status(200).json(req.product);
+  const products = await crudModel.findAll('products');
+  res.status(200).json({ product });
 });
 
 router.put('/:id', validator.validateProduct, async (req, res) => {
@@ -36,7 +37,7 @@ router.put('/:id', validator.validateProduct, async (req, res) => {
   const { id } = req.params;
   try {
     await update(id, name, quantity);
-    const product = await findById(id);
+    const product = await findById('products', id);
     res.status(200).json(product);
   } catch (err) {
     res.status(500).json({ err });

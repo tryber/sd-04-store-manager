@@ -15,7 +15,7 @@ const HTTPSTATUS = {
 //   quantityNumber: '"quantity" must be a number',
 // };
 
-const messageError = (message, code) => ({
+const buildResponse = (message, code) => ({
   err: {
     code,
     message,
@@ -26,9 +26,9 @@ const errorsMessagesGenerator = (res, message, code) => {
   switch (code) {
     case 'invalid_data':
       console.log(message);
-      return res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json(messageError(message, code));
+      return res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json(buildResponse(message, code));
     case 'not_found':
-      return res.status(HTTPSTATUS.NOT_FOUND).json(messageError(message, code));
+      return res.status(HTTPSTATUS.NOT_FOUND).json(buildResponse(message, code));
     default:
       return res
         .status(HTTPSTATUS.INTERN_ERROR)

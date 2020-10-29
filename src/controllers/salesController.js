@@ -13,5 +13,12 @@ router.post('/', validator.validateSales, async (req, res) => {
 });
 
 router.get('/', async (_req, res) => {
-  res.status(200);
+  const sales = await productModel.findAll('sales');
+  res.status(200).json({ sales });
+});
+
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  const sale = await productModel.findById('sales', id);
+  res.status(200).json(sale);
 });

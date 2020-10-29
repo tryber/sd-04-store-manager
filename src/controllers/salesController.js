@@ -31,3 +31,5 @@ router.put('/:id', validator.validateSales, async (req, res) => {
   await productModel.update('sales', id, document);
   productModel.findById('sales', id).then((sale) => res.status(200).json(sale));
 });
+
+module.exports = router;

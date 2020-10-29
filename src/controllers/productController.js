@@ -1,13 +1,14 @@
 const express = require('express');
-const router = express.Router();
 const { productModel } = require('../models');
 const { validateProduct } = require('../service/validation');
 
-router.post('/', validateProduct , async (req, res) => {
+const router = express.Router();
+
+router.post('/', validateProduct, async (req, res) => {
   try {
     const { name, quantity } = req.body;
     const product = await productModel.addProduct(name, quantity);
-    
+
     res.status(200).json(product);
   } catch (_e) {
     console.log(_e);

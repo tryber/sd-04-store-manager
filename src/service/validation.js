@@ -40,22 +40,26 @@ const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
   const list = await productModel.listProducts();
   const productsNames = await new Set(list.map((product) => product.name));
-  if (!/\w{5,}/.test(name))
+  if (!/\w{5,}/.test(name)) {
     return errorsMessagesGenerator(
       res,
       '"name" length must be at least 5 characters long',
       'invalid_data',
     );
-  if (productsNames.has(name))
+  }
+  if (productsNames.has(name)) {
     return errorsMessagesGenerator(res, 'Product already exists', 'invalid_data');
-  if (quantity <= 0)
+  }
+  if (quantity <= 0) {
     return errorsMessagesGenerator(
       res,
       '"quantity" must be larger than or equal to 1',
       'invalid_data',
     );
-  if (!Number.isInteger(quantity))
+  }
+  if (!Number.isInteger(quantity)) {
     return errorsMessagesGenerator(res, '"quantity" must be a number', 'invalid_data');
+  }
   next();
 };
 

@@ -10,7 +10,7 @@ const nameTest = (req, res, next) => {
 
 const quantityTest = (req, res, next) => {
   const { quantity } = req.body;
-  console.log( Number.isInteger(quantity));
+  console.log(Number.isInteger(quantity));
   if (!quantity || !Number.isInteger(quantity)) {
     return res.status(422).json('O numero nao é um inteiro');
   }

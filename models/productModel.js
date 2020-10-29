@@ -9,7 +9,7 @@ const findByName = async (collection, name) => {
 };
 
 const addProduct = async (name, quantity) => {
-  return connection().then((db) => db.collection('products').insertOne({name, quantity}));
+  return connection().then((db) => db.collection('products').insertOne({ name, quantity }));
 };
 
 module.exports = { findByName, addProduct };

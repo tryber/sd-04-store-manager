@@ -22,6 +22,7 @@ router.post(
   productsValidations.validateProductExistsByName,
   productsValidations.validateQuantityIsMoreThanZero,
   productsValidations.validateQuantityIsNumber,
+
   async (req, res) => {
     try {
       const { name, quantity } = req.body;
@@ -45,7 +46,27 @@ router.get('/:id', productsValidations.validateProductExistsById, async (req, re
 });
 
 // 3 - Crie um endpoint para atualizar um produto
-router.post('/:id', );
+router.put(
+  '/:id',
+  productsValidations.validateLengthOfName,
+  //  productsValidations.validateProductExistsByName,
+  productsValidations.validateQuantityIsMoreThanZero,
+  productsValidations.validateQuantityIsNumber,
+  //  productsValidations.validateProductExistsById,
+  async (req, res) => {
+    try {
+      const { name, quantity } = req.body;
+      const { id } = req.params;
 
+      await productsModel.update(id, name, quantity);
+      const product = await productsModel.findById(id);
+
+      res.status(200).json(product);
+    } catch (_error) {
+      console.log(_error.message);
+      res.status(500).json({ message: 'Falha ao atualizar produto' });
+    }
+  },
+);
 
 module.exports = router;

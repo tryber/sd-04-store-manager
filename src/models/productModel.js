@@ -52,4 +52,9 @@ const update = async (collection, id, name, quantity) => {
   }
 };
 
-module.exports = { findAll, findById, update, findByName, createOne };
+const remove = async (collection, id) => {
+  const db = await connection();
+  await db.collection(collection).deleteOne({ _id: ObjectId(id) });
+};
+
+module.exports = { findAll, findById, update, findByName, createOne, remove };

@@ -1,5 +1,5 @@
 const express = require('express');
-const { findById, findAll, update, createOne } = require('../models/productModel');
+const { findById, findAll, update, createOne, remove } = require('../models/productModel');
 const validator = require('../service/validator');
 
 const router = express.Router();
@@ -40,6 +40,12 @@ router.put('/:id', validator.validateProduct, async (req, res) => {
   } catch (err) {
     res.status(500).json({ err });
   }
+});
+
+router.delete('/:id', validator.validateProductById, async (req, res) => {
+  const { id } = req.params;
+  await remove('products', id);
+  res.status(200).json(req.product);
 });
 
 module.exports = router;

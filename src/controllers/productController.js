@@ -5,9 +5,9 @@ const validator = require('../service/validator');
 const router = express.Router();
 
 router.post('/', validator.validateProduct, async (req, res) => {
+  const { name, quantity } = req.body;
   try {
-    const { name, quantity } = req.body;
-    const product = await createOne('products', name, quantity);
+    const product = await createOne('products', { name, quantity });
 
     res.status(201).json(product);
   } catch (_e) {
@@ -34,7 +34,7 @@ router.put('/:id', validator.validateProduct, async (req, res) => {
   const { name, quantity } = req.body;
   const { id } = req.params;
   try {
-    await update('products', id, name, quantity);
+    await update('products', id, { name, quantity });
     const product = await findById('products', id);
     res.status(200).json(product);
   } catch (err) {

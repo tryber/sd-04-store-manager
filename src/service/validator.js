@@ -17,6 +17,7 @@ const MSG = {
   NOT_FOUND: 'not_found',
   unexpected_error: 'Erro inesperado',
   id_format: 'Wrong id format',
+  wrong_product: 'Wrong product ID or invalid quantity',
 };
 
 const buildResponse = (message, code) => ({
@@ -73,4 +74,14 @@ const validateProductById = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateProduct, validateProductById };
+const validateSales = (req, res, next) => {
+  const { body } = req;
+  for (let i = 0; i < body.length; i += 1) {
+    if (body[i].quantity < 1 || !Number.isInteger(body[i].quantity)) {
+      return errorsMessagesGenerator(res, MSG.wrong_product, MSG.invalid_data);
+    }
+  }
+  next();
+};
+
+module.exports = { validateSales, validateProduct, validateProductById };

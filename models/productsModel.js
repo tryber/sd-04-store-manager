@@ -9,7 +9,20 @@ const add = async (name, quantity) => {
 };
 
 const findByName = async (name) => {
-  return await connection().then((db) => db.collection('products').findOne({ name }));
+  const result = await connection().then((db) => db.collection('products').findOne({ name }));
+  return result;
 };
 
-module.exports = { add, findByName };
+const getAll = async () => {
+  const result = await connection().then((db) => db.collection('products').find().toArray());
+  return result;
+};
+
+const findById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const result = await connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+  return result;
+};
+
+module.exports = { add, findByName, getAll, findById };

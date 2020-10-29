@@ -28,6 +28,19 @@ const validateProductExistsByName = async (req, res, next) => {
   next();
 };
 
+// Id - valida se o produto exite por Id
+const validateProductExistsById = async (req, res, next) => {
+  const { id } = req.params;
+  const product = await productsModel.findById(id);
+
+  if (!product) {
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
+  }
+
+  req.product = product;
+  next();
+};
+
 // quantity
 const validateQuantityIsMoreThanZero = (req, res, next) => {
   const { quantity } = req.body;
@@ -54,6 +67,7 @@ const validateQuantityIsNumber = (req, res, next) => {
 module.exports = {
   validateLengthOfName,
   validateProductExistsByName,
+  validateProductExistsById,
   validateQuantityIsMoreThanZero,
   validateQuantityIsNumber,
 };

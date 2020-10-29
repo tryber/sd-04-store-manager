@@ -1,7 +1,5 @@
 const model = require('../models/commonModel');
 
-let removedId = '';
-
 const listAll = async (_, res) => {
   const sales = await model.getAll('sales');
   const status = 200;
@@ -10,16 +8,11 @@ const listAll = async (_, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { _id } = removedId;
-    const convertedRemovedId = JSON.stringify(_id);
-    const convertedParamsId = JSON.stringify(req.params.id);
-    if (convertedRemovedId === convertedParamsId) {
-      res.status(404).json({
-        err: { code: 'not_found', message: 'Sale not found' },
-      });
-    }
     const sale = await model.findById('sales', req.params.id);
-    return res.status(200).json(sale);
+    if (sale) return res.status(200).json(sale);
+    res.status(404).json({
+      err: { code: 'not_found', message: 'Sale not found' },
+    });
   } catch (_e) {
     const status = 422;
     res.status(status).json({
@@ -44,7 +37,7 @@ const update = async (req, res) => {
 
 const exclude = async (req, res) => {
   try {
-    removedId = await model.findById('sales', req.params.id);
+    const removedId = await model.findById('sales', req.params.id);
     await model.exclude('sales', req.params.id);
     const status = 200;
     res.status(status).json(removedId);

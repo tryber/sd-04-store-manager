@@ -1,5 +1,6 @@
 const salesModel = require('../models/salesModel');
 const indexModel = require('../models/indexModel');
+const messageFunction = require('../service/index');
 
 const postSalesController = async (req, res) => {
   try {
@@ -49,7 +50,7 @@ const deleteSalesController = async (req, res) => {
   try {
     const { id } = req.params;
     const itemToDelete = await indexModel.getById(id, 'sales');
-    const errMessage = { err: { code: 'invalid_data', message: 'Wrong sale ID format' } };
+    const errMessage = messageFunction('Wrong sale ID format');
     if (!itemToDelete) return res.status(422).json(errMessage);
     await indexModel.deleteProduct(id, 'sales');
     return res.status(200).json(itemToDelete);

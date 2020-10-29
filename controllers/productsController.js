@@ -1,5 +1,6 @@
 const productsModel = require('../models/productsModel');
 const indexModel = require('../models/indexModel');
+const messageFunction = require('../service/index');
 
 const postProductsController = async (req, res) => {
   try {
@@ -27,13 +28,7 @@ const putProductsDetailsController = async (req, res) => {
 const deleteProductsController = async (req, res) => {
   const { id } = req.params;
   const productToDelete = await indexModel.getById(id, 'products');
-  const errorMessage = {
-    err: {
-      code: 'invalid_data',
-      message: 'Wrong id format',
-    },
-  };
-  if (!productToDelete) return res.status(422).json(errorMessage);
+  if (!productToDelete) return res.status(422).json(messageFunction('Wrong id format'));
   await indexModel.deleteProduct(id, 'products');
   res.status(200).json(productToDelete);
 };
@@ -46,13 +41,7 @@ const getProductsController = async (req, res) => {
 const getProductsDetailsController = async (req, res) => {
   const { id } = req.params;
   const product = await indexModel.getById(id, 'products');
-  const errorMessage = {
-    err: {
-      code: 'invalid_data',
-      message: 'Wrong id format',
-    },
-  };
-  if (!product) return res.status(422).json(errorMessage);
+  if (!product) return res.status(422).json(messageFunction('Wrong id format'));
 
   return res.status(200).json(product);
 };

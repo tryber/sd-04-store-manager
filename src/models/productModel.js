@@ -16,6 +16,7 @@ const findAll = async (collection) => {
   try {
     const db = await connection();
     const results = await db.collection(collection).find({}).toArray();
+    console.log(results);
     return results;
   } catch (e) {
     console.log(e);

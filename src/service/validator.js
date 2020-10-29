@@ -42,14 +42,9 @@ const errorsMessagesGenerator = (res, message, code) => {
 
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
-  const list = await findAll('products');
-  // const productsNames = new Set(list.map((product) => product.name));
   if (!/\w{5,}/.test(name)) {
     return errorsMessagesGenerator(res, MSG.name, MSG.INVALID_DATA);
   }
-  // if (productsNames.has(name)) {
-  //   return errorsMessagesGenerator(res, MSG.nameUnique, MSG.INVALID_DATA);
-  // }
   if (quantity <= 0) {
     return errorsMessagesGenerator(res, MSG.quantityTaille, MSG.INVALID_DATA);
   }

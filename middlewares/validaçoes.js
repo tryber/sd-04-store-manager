@@ -1,9 +1,9 @@
 const nameTest = (req, res, next) => {
   const { name } = req.body;
   if (!name || typeof name !== 'string') {
-    return res.status(422).json("'name' nao é uma string");
+    return res.status(422).json('"name" nao é uma string');
   } else if (name.length <= 5) {
-    return res.status(422).json("'name' tem que ter mais de 5 caracteres");
+    return res.status(422).json('"name" tem que ter mais de 5 caracteres');
   }
   next();
 };

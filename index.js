@@ -1,7 +1,7 @@
 const productController = require('./controllers/productController');
 const validaçao = require('./middlewares/validaçoes');
-
 const express = require('express');
+
 const app = express();
 const port = 3000;
 
@@ -13,4 +13,4 @@ app.get('/', (request, response) => {
 
 app.post('/products', validaçao.nameTest, validaçao.quantityTest, productController.addProduct);
 
-app.listen(port, () => console.log(`Example app listening on port port!`));
+app.listen(port, () => console.log('Example app listening on port port!'));

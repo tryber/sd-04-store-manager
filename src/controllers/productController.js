@@ -36,7 +36,7 @@ router.put('/:id', validator.validateProduct, async (req, res) => {
   const { name, quantity } = req.body;
   const { id } = req.params;
   try {
-    await update(id, name, quantity);
+    await update('products', id, name, quantity);
     const product = await findById('products', id);
     res.status(200).json(product);
   } catch (err) {

@@ -1,4 +1,4 @@
-const { findById } = require('../models/productModel');
+const { findAll, findById } = require('../models/productModel');
 
 const HTTPSTATUS = {
   OK: 200,
@@ -42,6 +42,8 @@ const errorsMessagesGenerator = (res, message, code) => {
 
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
+  const list = await findAll('products');
+  const productsNames = new Set(list.map((product) => product.name));
   if (!/\w{5,}/.test(name)) {
     return errorsMessagesGenerator(res, MSG.name, MSG.INVALID_DATA);
   }
@@ -50,6 +52,9 @@ const validateProduct = async (req, res, next) => {
   }
   if (!Number.isInteger(quantity)) {
     return errorsMessagesGenerator(res, MSG.quantityNumber, MSG.INVALID_DATA);
+  }
+  if (productsNames.has(name)) {
+    return errorsMessagesGenerator(res, MSG.nameUnique, MSG.INVALID_DATA);
   }
   next();
 };

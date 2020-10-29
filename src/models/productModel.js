@@ -3,7 +3,7 @@ const connection = require('./connection');
 
 const collection = 'products';
 
-module.findById = async (id) => {
+const findById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   try {
     const db = await connection();
@@ -14,7 +14,7 @@ module.findById = async (id) => {
   }
 };
 
-module.findAll = async () => {
+const findAll = async () => {
   try {
     const db = await connection();
     const results = await db.collection(collection).find({}).toArray();
@@ -24,7 +24,7 @@ module.findAll = async () => {
   }
 };
 
-module.findByName = async (name) => {
+const findByName = async (name) => {
   try {
     const db = await connection();
     const result = await db.collection(collection).findOne({ name });
@@ -34,7 +34,7 @@ module.findByName = async (name) => {
   }
 };
 
-module.createOne = async (name, quantity) => {
+const createOne = async (name, quantity) => {
   try {
     const db = await connection();
     const result = await db.collection(collection).insertOne({ name, quantity });
@@ -44,7 +44,7 @@ module.createOne = async (name, quantity) => {
   }
 };
 
-module.update = async (id, name, quantity) => {
+const update = async (id, name, quantity) => {
   try {
     const db = await connection();
     await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
@@ -52,3 +52,5 @@ module.update = async (id, name, quantity) => {
     console.log(e);
   }
 };
+
+module.exports = { findAll, findById, update, findByName, createOne };

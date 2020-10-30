@@ -95,6 +95,7 @@ router.delete('/:id', validations.validateExistId, async (req, res) => {
   // Remove o produto
   await utilsModel.remove(req.params.id, 'sales');
   // Retonar os dados do produto removido
+  
   res.status(200).json(req.sales);
 });
 

@@ -6,7 +6,6 @@ const schemaProduct = Joi.object().keys({
   name: Joi.string()
     .trim()
     .min(5)
-    .max(20)
     .required()
     .messages({
       'string.base': '"name" length must be at least 5 characters long',
@@ -14,13 +13,9 @@ const schemaProduct = Joi.object().keys({
       'string.empty': '"name" length must be at least 5 characters long',
       'any.required': '"name" length must be at least 5 characters long',
     }),
-  quantity: Joi.number()
-    .integer()
-    .min(1)
-    .required()
-    .messages({
-      'number.base': '"quantity" must be larger than or equal to 1',
-    }),
+  quantity: Joi.number().integer().min(1).required().messages({
+    'number.base': '"quantity" must be larger than or equal to 1',
+  }),
 });
 
 // Válida o tamanho (length) dos campos name e quantity utilizando o hapi
@@ -53,11 +48,9 @@ const validateQuantityType = async (req, res, next) => {
 // Válida se o produto (name) já existe no bancoo
 const validateProductExisteByName = async (req, res, next) => {
   const { name } = req.body;
-
+  
   const productName = await producModel.findByName(name);
-  // console.log(productName);
-  if (productName) {
-    console.log('teste3');
+  if (productName) {    
     return res
       .status(422)
       .json({ err: { code: 'invalid_data', message: 'Product already exists' } });

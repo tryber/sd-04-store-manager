@@ -24,9 +24,9 @@ router.post(
 
       const product = await productModel.addProduct(name, quantity);
 
-      res.status(201).json({ product });
+      res.status(201).json(product);
     } catch (_e) {
-      res.status(501).json({ message: 'Falha ao cadastrar produto' });
+      res.status(422).json({ message: 'Falha ao cadastrar produto' });
     }
   },
 );

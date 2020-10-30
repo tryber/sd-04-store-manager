@@ -12,6 +12,7 @@ const addProduct = async (name, quantity) => {
   const result = await connection().then((db) =>
     db.collection('products').insertOne({ name, quantity }),
   );
+  console.log(result);
   return result.ops[0]; // Retornar o objeto adicionado
 };
 

@@ -1,5 +1,4 @@
 const Joi = require('@hapi/joi');
-const salesModel = require('../models/salesModel');
 const utilsModel = require('../utils/model');
 
 const schemaSales = Joi.object().keys({
@@ -44,18 +43,18 @@ const validateQuantityType = async (req, res, next) => {
   next();
 };
 
-// Válida se o produto (name) já existe no bancoo
-const validateProductExisteByName = async (req, res, next) => {
-  const { productId } = req.body;
+// // Válida se o produto (id) já existe no bancoo
+// const validateProductExisteById = async (req, res, next) => {
+//   const { productId } = req.body;
 
-  const productSales = await salesModel.findByName(productId);
+//   const productSales = await utilsModel.findById(productId, 'sales');
 
-  if (productSales) {
-    return res.status(404).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
-  }
+//   if (productSales) {
+//     return res.status(404).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
+//   }
 
-  next();
-};
+//   next();
+// };
 
 // Válida o Id
 const validateExistId = async (req, res, next) => {
@@ -64,7 +63,11 @@ const validateExistId = async (req, res, next) => {
 
   // Retonar mensagem de erro caso o id do produto não é válido
   if (!salesId) {
-    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
+    if (req.method !== 'GET')
+      return res
+        .status(422)
+        .json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
+    return res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
   }
   // Passa o produto para a próxima middleware
   req.sales = salesId;
@@ -75,6 +78,5 @@ const validateExistId = async (req, res, next) => {
 module.exports = {
   validateQuantityLength,
   validateQuantityType,
-  validateProductExisteByName,
   validateExistId,
 };

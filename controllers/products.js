@@ -7,7 +7,7 @@ const getProduct = async (req, res) =>
   productModel
     .product(req.params.id)
     .then((products) => res.status(200).json(products))
-    .catch((err) =>
+    .catch(() =>
       res.status(422).send({ err: { message: 'Wrong id format', code: 'invalid_data' } }));
 
 const createProduct = async (req, res) => {
@@ -16,7 +16,7 @@ const createProduct = async (req, res) => {
   productModel
     .createProduct(product)
     .then((result) => res.status(201).send(result))
-    .catch((err) =>
+    .catch(() =>
       res.status(422).send({ err: { message: 'Product already exists', code: 'invalid_data' } }));
 };
 

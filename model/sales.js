@@ -21,7 +21,8 @@ const create = () =>
 //   if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
 
 //   return connection().then((db) =>
-//     db.collection('products').updateOne({ _id: ObjectId(productId) }, { $set: { name, quantity } }));
+//     db.collection('products')
+// .updateOne({ _id: ObjectId(productId) }, { $set: { name, quantity } }));
 // };
 
 // const deleteProduct = (productId) => {

@@ -64,4 +64,15 @@ router.put(
   },
 );
 
+// Req. 9 - deleta uma venda
+router.delete('/:id', salesValidations.validateSaleExistsById, async (req, res) => {
+  try {
+    await salesModel.remove(req.params.id);
+    res.status(200).json(req.sale);
+  } catch (_error) {
+    console.log(_error.message);
+    res.status(501).json({ message: 'Falha ao deletar a venda' });
+  }
+});
+
 module.exports = router;

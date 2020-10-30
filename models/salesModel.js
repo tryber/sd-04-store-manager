@@ -12,7 +12,7 @@ const getAll = async () => {
 };
 
 const findById = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
+  if (!ObjectId.isValid(id)) return false;
 
   const result = await connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
   return result;
@@ -29,9 +29,14 @@ const update = async (id, productId, quantity) => {
   );
 };
 
+const remove = async (id) => {
+  await connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
+};
+
 module.exports = {
   add,
   getAll,
   findById,
   update,
+  remove,
 };

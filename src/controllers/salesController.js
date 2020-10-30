@@ -1,6 +1,6 @@
 const express = require('express');
 const validator = require('../service/validator');
-const productModel = require('../models/productModel');
+const { createOne, findAll, update, findById, remove } = require('../models/productModel');
 
 const router = express.Router();
 
@@ -8,18 +8,21 @@ router.post('/', validator.validateSales, async (req, res) => {
   const document = {
     itensSold: req.body,
   };
-  const insertedSales = await productModel.createOne('sales', document);
+  const insertedSales = await createOne('sales', document);
   res.status(200).json(insertedSales);
 });
 
 router.get('/', async (_req, res) => {
-  const sales = await productModel.findAll('sales');
+  const sales = await findAll('sales');
   res.status(200).json({ sales });
 });
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const sale = await productModel.findById('sales', id);
+  const sale = await findById('sales', id);
+  if (!sale) {
+    return res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
+  }
   res.status(200).json(sale);
 });
 
@@ -28,8 +31,13 @@ router.put('/:id', validator.validateSales, async (req, res) => {
   const document = {
     itensSold: req.body,
   };
-  await productModel.update('sales', id, document);
-  productModel.findById('sales', id).then((sale) => res.status(200).json(sale));
+  await update('sales', id, document);
+  findById('sales', id).then((sale) => res.status(200).json(sale));
+});
+
+router.delete('/:id', validator.validateSaleById, async (req, res) => {
+  await remove('sales', req.params.id);
+  res.status(200).json(req.sale);
 });
 
 module.exports = router;

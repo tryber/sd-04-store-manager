@@ -84,4 +84,13 @@ const validateSales = (req, res, next) => {
   next();
 };
 
-module.exports = { validateSales, validateProduct, validateProductById };
+const validateSaleById = async (req, res, next) => {
+  const sale = await crudModel.findById('sales', req.params.id);
+  if (!sale) {
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong sale ID format'));
+  }
+  req.sale = sale;
+  next();
+};
+
+module.exports = { validateSaleById, validateSales, validateProduct, validateProductById };

@@ -2,7 +2,9 @@ const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const create = (collection, document) =>
-  connection().then((db) => db.collection(collection).insertOne(document));
+  connection()
+    .then((db) => db.collection(collection).insertOne(document))
+    .then((insertedDocument) => insertedDocument.ops[0]);
 
 const readAll = (collection) =>
   connection().then((db) => db.collection(collection).find().toArray());

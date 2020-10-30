@@ -88,7 +88,7 @@ const validateSales = (req, res, next) => {
 const validateSaleById = async (req, res, next) => {
   const sale = await findById('sales', req.params.id);
   if (!sale) {
-    return errorsMessagesGenerator(MSG.wrong_sale, MSG.INVALID_DATA);
+    return errorsMessagesGenerator(MSG.INVALID_DATA, MSG.INVALID_DATA);
   }
   req.sale = sale;
   next();

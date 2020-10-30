@@ -1,3 +1,5 @@
+const salesModel = require('../models/salesModel');
+
 const buildResponse = (code, message) => ({ err: { code, message } });
 
 // quantity
@@ -24,7 +26,9 @@ const validateQuantityIsNumber = (req, res, next) => {
     // console.log('element: ', element);
     // console.log('element.quantity: ', element.quantity);
     if (!Number.isInteger(element.quantity)) {
-      return res.status(422).json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+      return res
+        .status(422)
+        .json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
     }
   });
   // console.log('MSG: ', msg);
@@ -32,7 +36,21 @@ const validateQuantityIsNumber = (req, res, next) => {
   next();
 };
 
+// Id - valida se o produto exite por Id
+const validateSaleExistsById = async (req, res, next) => {
+  const { id } = req.params;
+  const sale = await salesModel.findById(id);
+
+  if (!sale) {
+    return res.status(404).json(buildResponse('not_found', 'Sale not found'));
+  }
+
+  // req.sale = sale;
+  next();
+};
+
 module.exports = {
   validateQuantityIsMoreThanZero,
   validateQuantityIsNumber,
+  validateSaleExistsById,
 };

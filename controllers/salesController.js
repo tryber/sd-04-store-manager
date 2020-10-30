@@ -2,6 +2,7 @@
 const express = require('express');
 const validations = require('../middlewares/salesValidation');
 const salesModel = require('../models/salesModel');
+const utilsModel = require('../utils/model');
 
 const router = express.Router();
 
@@ -12,8 +13,8 @@ const router = express.Router();
  */
 router.post(
   '/',
-  validations.validate_Quantity_Length,
-  validations.validate_Quantity_Type,
+  validations.validateQuantityLength,
+  validations.validateQuantityType,
   async (req, res) => {
     try {
       const { body } = req;
@@ -36,7 +37,7 @@ router.post(
  */
 router.get('/', async (req, res) => {
   // Retornar todos os produtos
-  const sales = await salesModel.findAll();
+  const sales = await utilsModel.findAll('sales');
   res.status(200).json({ sales });
 });
 
@@ -50,8 +51,8 @@ router.put(
   '/:id',
   // Executa validações antes de atualizar o produto no banco
   validations.validateExistId,
-  validations.validate_Quantity_Type,
-  validations.validate_Quantity_Length,
+  validations.validateQuantityType,
+  validations.validateQuantityLength,
   // Realiza o update no banco
   async (req, res) => {
     try {
@@ -61,7 +62,7 @@ router.put(
       // Atualiza o produto
       await salesModel.update(req.params.id, body);
       // Obtên o produto atualizado
-      const salesUpdate = await salesModel.findById(req.params.id);
+      const salesUpdate = await utilsModel.findById(req.params.id, 'sales');
       res.status(200).json(salesUpdate);
     } catch (_e) {
       res.status(501).json({ message: 'Falha ao atualizar produto' });
@@ -92,7 +93,7 @@ router.get('/:id', validations.validateExistId, async (req, res) => {
  */
 router.delete('/:id', validations.validateExistId, async (req, res) => {
   // Remove o produto
-  await salesModel.removeSales(req.params.id);
+  await utilsModel.remove(req.params.id, 'sales');
   // Retonar os dados do produto removido
   res.status(200).json(req.sales);
 });

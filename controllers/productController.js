@@ -2,6 +2,7 @@
 const express = require('express');
 const validations = require('../middlewares/productValidation');
 const productModel = require('../models/productModel');
+const utilsModel = require('../utils/model');
 
 const router = express.Router();
 
@@ -13,8 +14,8 @@ const router = express.Router();
 router.post(
   '/',
   // Executa validações antes de cadastrar o produto no banco
-  validations.validate_Quantity_Type,
-  validations.validate_Name_Quantity_Length,
+  validations.validateQuantityType,
+  validations.validateNameQuantityLength,
   validations.validateProductExisteByName,
   // Realiza o cadastro no banco
   async (req, res) => {
@@ -38,8 +39,8 @@ router.post(
 router.put(
   '/:id',
   // Executa validações antes de atualizar o produto no banco
-  validations.validate_Quantity_Type,
-  validations.validate_Name_Quantity_Length,
+  validations.validateQuantityType,
+  validations.validateNameQuantityLength,
   validations.validateProductExisteByName,
   validations.validateExistId,
   // Realiza o update no banco
@@ -50,7 +51,7 @@ router.put(
       // Atualiza o produto
       await productModel.update(req.params.id, name, quantity);
       // Obtên o produto atualizado
-      const productUpdate = await productModel.findById(req.params.id);
+      const productUpdate = await utilsModel.findById(req.params.id, 'products');
       res.status(200).json(productUpdate);
     } catch (_e) {
       res.status(501).json({ message: 'Falha ao atualizar produto' });
@@ -68,7 +69,7 @@ router.put(
  */
 router.delete('/:id', validations.validateExistId, async (req, res) => {
   // Remove o produto
-  await productModel.removeProduct(req.params.id);
+  await utilsModel.remove(req.params.id, 'products');
   // Retonar os dados do produto removido
   res.status(200).json(req.products);
 });
@@ -80,7 +81,7 @@ router.delete('/:id', validations.validateExistId, async (req, res) => {
  */
 router.get('/', async (req, res) => {
   // Retornar todos os produtos
-  const products = await productModel.findAll();
+  const products = await utilsModel.findAll('products');
   res.status(200).json({ products });
 });
 

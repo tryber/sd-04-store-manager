@@ -14,24 +14,6 @@ const addSales = async (itensSold) => {
 };
 
 /**
- * ANCHOR Find All products
- */
-const findAll = async () => {
-  return await connection().then((db) => db.collection('sales').find().toArray());
-};
-
-/**
- * ANCHOR Find product by id
- *
- * @param id
- */
-const findById = async (id) => {
-  if (!ObjectId.isValid(id)) return null; // Verifica se o Id é válido
-
-  return await connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
-};
-
-/**
  * ANCHOR Put
  *
  * produto que vai ser atualizado (ObjectId)
@@ -47,16 +29,6 @@ const update = async (id, itensSold) => {
   );
 };
 
-/**
- * ANCHOR Delete
- *
- * @param id
- */
-const removeSales = async (id) => {
-  if (!ObjectId.isValid(id)) return null; // Verifica se o Id é válido
-  await connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
-};
-
-module.exports = { addSales, findAll, findById, update, removeSales };
+module.exports = { addSales, update };
 
 // !SECTION

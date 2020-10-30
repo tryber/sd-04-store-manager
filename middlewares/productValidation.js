@@ -1,5 +1,6 @@
 const Joi = require('@hapi/joi');
 const producModel = require('../models/productModel');
+const utilsModel = require('../utils/model');
 
 const schemaProduct = Joi.object().keys({
   name: Joi.string().trim().min(5).max(20).required().messages({
@@ -14,7 +15,7 @@ const schemaProduct = Joi.object().keys({
 });
 
 // Válida o tamanho (length) dos campos name e quantity utilizando o hapi
-const validate_Name_Quantity_Length = async (req, res, next) => {
+const validateNameQuantityLength = async (req, res, next) => {
   const { name, quantity } = req.body;
   // console.log(name, quantity);
   const isErro = schemaProduct.validate({ name, quantity });
@@ -27,7 +28,7 @@ const validate_Name_Quantity_Length = async (req, res, next) => {
 };
 
 // Válida se o campo quantity é número
-const validate_Quantity_Type = async (req, res, next) => {
+const validateQuantityType = async (req, res, next) => {
   const { quantity } = req.body;
 
   if (!Number.isInteger(quantity)) {
@@ -59,7 +60,7 @@ const validateProductExisteByName = async (req, res, next) => {
 // Válida o Id
 const validateExistId = async (req, res, next) => {
   // Obtên o id do produto
-  const productId = await producModel.findById(req.params.id);
+  const productId = await utilsModel.findById(req.params.id, 'products');
 
   // Retonar mensagem de erro caso o id do produto não é válido
   if (!productId) {
@@ -73,8 +74,8 @@ const validateExistId = async (req, res, next) => {
 };
 
 module.exports = {
-  validate_Name_Quantity_Length,
-  validate_Quantity_Type,
+  validateNameQuantityLength,
+  validateQuantityType,
   validateProductExisteByName,
   validateExistId,
 };

@@ -21,25 +21,7 @@ const addProduct = async (name, quantity) => {
  * @param name
  */
 const findByName = async (name) => {
-  return await connection().then((db) => db.collection('products').findOne({ name }));
-};
-
-/**
- * ANCHOR Find product by id
- *
- * @param id
- */
-const findById = async (id) => {
-  if (!ObjectId.isValid(id)) return null; // Verifica se o Id é válido
-
-  return await connection().then((db) => db.collection('products').findOne(ObjectId(id)));
-};
-
-/**
- * ANCHOR Find All products
- */
-const findAll = async () => {
-  return await connection().then((db) => db.collection('products').find().toArray());
+  return connection().then((db) => db.collection('products').findOne({ name }));
 };
 
 /**
@@ -57,16 +39,6 @@ const update = async (id, name, quantity) => {
   );
 };
 
-/**
- * ANCHOR Delete
- *
- * @param id
- */
-const removeProduct = async (id) => {
-  if (!ObjectId.isValid(id)) return null; // Verifica se o Id é válido
-  await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
-};
-
-module.exports = { addProduct, findByName, findAll, findById, update, removeProduct };
+module.exports = { addProduct, findByName, update };
 
 // !SECTION

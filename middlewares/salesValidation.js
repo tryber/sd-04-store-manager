@@ -43,19 +43,6 @@ const validateQuantityType = async (req, res, next) => {
   next();
 };
 
-// // Válida se o produto (id) já existe no bancoo
-// const validateProductExisteById = async (req, res, next) => {
-//   const { productId } = req.body;
-
-//   const productSales = await utilsModel.findById(productId, 'sales');
-
-//   if (productSales) {
-//     return res.status(404).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
-//   }
-
-//   next();
-// };
-
 // Válida o Id
 const validateExistId = async (req, res, next) => {
   // Obtên o id do produto
@@ -67,7 +54,7 @@ const validateExistId = async (req, res, next) => {
       return res
         .status(422)
         .json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
-      }
+    }
     return res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
   }
   // Passa o produto para a próxima middleware

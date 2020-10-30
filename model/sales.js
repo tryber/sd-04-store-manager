@@ -1,32 +1,35 @@
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const connection = require('../helpers/connection');
 
-const create = async (sale) => {
-  try {
-    const saleId = await connection().then((schema) =>
-      schema.collection('sales').insertOne(sale),
-    );
+const create = () =>
+  connection()
+    .then((schema) => schema.collection('sales').insertOne({ itensSold: 'a' }))
+    .then((result) => result);
 
-    return saleId.insertedId;
-  } catch (error) {
-    return error;
-  }
-};
+// const products = () =>
+//   connection().then(async (schema) => schema.collection('products').find().toArray());
 
-const sales = async () =>
-  connection().then((schema) => schema.collection('sales').find({}).toArray());
+// const product = (productId) => {
+//   if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
 
-const sale = async () =>
-  connection(id).then((schema) => schema.collection('sales').find({}).toArray());
+//   return connection(productId).then((schema) =>
+//     schema.collection('products').findOne(ObjectId(productId)));
+// };
 
-const deleteSale = async (saleId) => {
-  try {
-    return connection().then((schema) =>
-      schema.collection('sales').deleteOne({ _id: ObjectId(saleId) }),
-    );
-  } catch (error) {
-    return error;
-  }
-};
+// const updateProduct = (productId, productUpdate) => {
+//   const { name, quantity } = productUpdate;
+//   if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
 
-module.exports = { create, sales, sale, deleteSale };
+//   return connection().then((db) =>
+//     db.collection('products').updateOne({ _id: ObjectId(productId) }, { $set: { name, quantity } }));
+// };
+
+// const deleteProduct = (productId) => {
+//   if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
+
+//   return connection()
+//     .then((schema) => schema.collection('products').deleteOne({ _id: ObjectId(productId) }))
+//     .then((result) => result);
+// };
+
+module.exports = { create };

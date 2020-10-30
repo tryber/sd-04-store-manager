@@ -1,17 +1,19 @@
-const { ObjectId } = require('mongodb');
-const connection = require('./connection');
 
-const getAll = async () => connection().then((db) => db.collection('artists').find({}).toArray());
+const mongoClient = require('mongodb').MongoClient;
 
-const getById = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
+const MONGO_DB_URL = 'mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb';
+const DB_NAME = 'StoreManager';
 
-  return connection().then((db) => db.collection('artists').findOne(ObjectId(id)));
-};
+const connection = () =>
+  mongoClient
+    .connect(MONGO_DB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then((conn) => conn.db(DB_NAME))
+    .catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
 
-const add = async (data) => {
-  const artist = await connection().then((db) => db.collection('artists').insertOne(data));
-  return artist.insertedId;
-};
-
-module.exports = { getAll, getById, add };
+module.exports = connection;

@@ -154,9 +154,11 @@ describe('2 - Crie um endpoint para listar os produtos', () => {
   beforeEach(async () => {
     await db.collection('products').deleteMany({});
     await db.collection('sales').deleteMany({});
-    const products = [{ name: 'Martelo de Thor', quantity: 10 },
+    const products = [
+      { name: 'Martelo de Thor', quantity: 10 },
       { name: 'Traje de encolhimento', quantity: 20 },
-      { name: 'Escudo do Capitão América', quantity: 30 }];
+      { name: 'Escudo do Capitão América', quantity: 30 },
+    ];
     await db.collection('products').insertMany(products);
   });
 
@@ -192,7 +194,8 @@ describe('2 - Crie um endpoint para listar os produtos', () => {
   });
 
   it('Será validado que não é possível listar um produto que não existe', async () => {
-    await frisby.get(`${url}/products/${invalidId}`)
+    await frisby
+      .get(`${url}/products/${invalidId}`)
       .expect('status', 422)
       .then((secondResponse) => {
         const { json } = secondResponse;
@@ -215,10 +218,12 @@ describe('2 - Crie um endpoint para listar os produtos', () => {
       .then((response) => {
         const { body } = response;
         result = JSON.parse(body);
+        console.log(result);
         responseProductId = result._id;
       });
 
-    await frisby.get(`${url}/products/${responseProductId}`)
+    await frisby
+      .get(`${url}/products/${responseProductId}`)
       .expect('status', 200)
       .then((secondResponse) => {
         const { json } = secondResponse;

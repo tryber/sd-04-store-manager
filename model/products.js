@@ -1,48 +1,40 @@
 const { ObjectId } = require('mongodb');
 const connection = require('../helpers/connection');
 
-const createProduct = async (product) => {
-  try {
-    const productId = await connection().then((schema) =>
-      schema.collection('products').insertOne(product),
-    );
+const createProduct = (product) =>
+  connection()
+    .then(async (schema) => {
+      const productInfo = await schema.collection('products').findOne({ name: product.name });
+      if (productInfo) throw new Error('Product already exists');
 
-    return productId.insertedId;
-  } catch (error) {
-    return error;
-  }
+      return schema.collection('products').insertOne(product);
+    })
+    .then((result) => result.ops[0]);
+
+const products = () =>
+  connection().then(async (schema) => schema.collection('products').find().toArray());
+
+const product = (productId) => {
+  if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
+
+  return connection(productId).then((schema) =>
+    schema.collection('products').findOne(ObjectId(productId)));
 };
 
-const products = async () =>
-  connection().then((schema) => schema.collection('products').find({}).toArray());
+const updateProduct = (productId, productUpdate) => {
+  const { name, quantity } = productUpdate;
+  if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
 
-const product = async () =>
-  connection(id).then((schema) => schema.collection('products').find({}).toArray());
-
-const updateProduct = async (productId, name, quantity) => {
-  try {
-    const product = await product(productId);
-
-    if (!product) return null;
-
-    const result = await connection().then((db) =>
-      db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
-    );
-
-    return result;
-  } catch (error) {
-    return error;
-  }
+  return connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(productId) }, { $set: { name, quantity } }));
 };
 
-const deleteProduct = async (productId) => {
-  try {
-    return connection().then((schema) =>
-      schema.collection('products').deleteOne({ _id: ObjectId(productId) }),
-    );
-  } catch (error) {
-    return error;
-  }
+const deleteProduct = (productId) => {
+  if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
+
+  return connection()
+    .then((schema) => schema.collection('products').deleteOne({ _id: ObjectId(productId) }))
+    .then((result) => result);
 };
 
 module.exports = { createProduct, products, product, updateProduct, deleteProduct };

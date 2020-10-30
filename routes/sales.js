@@ -4,12 +4,12 @@ const express = require('express');
 
 const router = express.Router();
 
-// const middlewares = require('../middlewares');
+const middlewares = require('../middlewares');
 const controllers = require('../controllers');
 
 router.post(
   '/',
-  // middlewares.validateMiddleware.validateSale,
+  middlewares.validateMiddleware.validateSale,
   controllers.salesController.createSale,
 );
 

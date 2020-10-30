@@ -1,9 +1,9 @@
 // const { ObjectId } = require('mongodb');
 const connection = require('../helpers/connection');
 
-const create = () =>
+const create = (sales) =>
   connection()
-    .then((schema) => schema.collection('sales').insertOne({ itensSold: 'a' }))
+    .then((schema) => schema.collection('sales').insertOne({ itensSold: sales }))
     .then((result) => result);
 
 // const products = () =>

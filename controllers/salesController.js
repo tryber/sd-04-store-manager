@@ -64,7 +64,7 @@ router.put(
   },
 );
 
-// Req. 9 - deleta uma venda
+// Req. 8 - deleta uma venda
 router.delete('/:id', salesValidations.validateSaleExistsById, async (req, res) => {
   try {
     await salesModel.remove(req.params.id);

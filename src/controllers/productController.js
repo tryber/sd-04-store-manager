@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
   try {
     const products = await productModel.listProducts();
 
-    res.status(200).json({products});
+    res.status(200).json({ products });
   } catch (_e) {
     console.log(_e);
     res.status(501).json({ message: 'Falha ao carregar os produtos!' });

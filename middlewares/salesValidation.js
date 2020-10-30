@@ -3,16 +3,12 @@ const salesModel = require('../models/salesModel');
 const utilsModel = require('../utils/model');
 
 const schemaSales = Joi.object().keys({
-  quantity: Joi.number()
-    .integer()
-    .min(1)
-    .required()
-    .messages({
-      'number.base': 'Wrong product ID or invalid quantity',
-      'number.min': 'Wrong product ID or invalid quantity',
-      'number.empty': 'Wrong product ID or invalid quantity',
-      'any.required': 'Wrong product ID or invalid quantity',
-    }),
+  quantity: Joi.number().integer().min(1).required().messages({
+    'number.base': 'Wrong product ID or invalid quantity',
+    'number.min': 'Wrong product ID or invalid quantity',
+    'number.empty': 'Wrong product ID or invalid quantity',
+    'any.required': 'Wrong product ID or invalid quantity',
+  }),
 });
 
 // Válida o tamanho (length) dos campos name e quantity utilizando o hapi
@@ -32,14 +28,14 @@ const validateQuantityLength = async (req, res, next) => {
 
 // Válida se o campo quantity é número
 const validateQuantityType = async (req, res, next) => {
-    req.body.forEach((items) => {
+  req.body.forEach((items) => {
     // console.log(items.quantity);
-     if (!Number.isInteger(items.quantity)) {
+    if (!Number.isInteger(items.quantity)) {
       return res
         .status(422)
         .json({ err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' } });
     }
-   });
+  });
 
   next();
 };

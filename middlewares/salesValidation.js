@@ -63,10 +63,11 @@ const validateExistId = async (req, res, next) => {
 
   // Retonar mensagem de erro caso o id do produto não é válido
   if (!salesId) {
-    if (req.method !== 'GET')
+    if (req.method !== 'GET') {
       return res
         .status(422)
         .json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
+      }
     return res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
   }
   // Passa o produto para a próxima middleware

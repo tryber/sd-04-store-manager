@@ -1,6 +1,18 @@
 const crud = require('../models/crud');
 const errorResponse = require('./errorResponse');
 
+const validateNameLength = (req, res, next) => {
+  const { name } = req.body;
+
+  if (name.length < 5) {
+    return res
+      .status(422)
+      .json(errorResponse('invalid_data', '"name" length must be at least 5 characters long'));
+  }
+
+  next();
+};
+
 const verifyIfProductExistsByName = async (req, res, next) => {
   const { name } = req.body;
 
@@ -64,7 +76,8 @@ const verifyIfSaleExistsById = async (req, res, next) => {
   next();
 };
 
-module.export = {
+module.exports = {
+  validateNameLength,
   verifyIfProductExistsById,
   validateQuantity,
   verifyIfProductExistsByName,

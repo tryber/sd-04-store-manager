@@ -1,1 +1,1 @@
-export default (code, message) => ({ err: { code, message } });
+module.exports = (code, message) => ({ err: { code, message } });

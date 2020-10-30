@@ -45,4 +45,23 @@ router.get('/:id', salesValidations.validateSaleExistsById, async (req, res) => 
   }
 });
 
+// Req. 7 - Atualiza uma venda
+router.put(
+  '/:id',
+  salesValidations.validateQuantityIsNumber,
+  salesValidations.validateQuantityIsMoreThanZero,
+  async (req, res) => {
+    try {
+      const [{ productId, quantity }] = req.body;
+      const { id } = req.params;
+      await salesModel.update(id, productId, quantity);
+      const sale = await salesModel.findById(id);
+      res.status(200).json(sale);
+    } catch (_error) {
+      console.log(_error.message);
+      res.status(501).json({ message: 'Falha ao modificar a venda' });
+    }
+  },
+);
+
 module.exports = router;

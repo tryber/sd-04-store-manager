@@ -10,7 +10,7 @@ const validateNameLength = (req, res, next) => {
       .json(errorResponse('invalid_data', '"name" length must be at least 5 characters long'));
   }
 
-  next();
+  return next();
 };
 
 const verifyIfProductExistsByName = async (req, res, next) => {
@@ -19,10 +19,10 @@ const verifyIfProductExistsByName = async (req, res, next) => {
   const product = await crud.readByName('products', name);
 
   if (product) {
-    return res.status(400).json(errorResponse('invalid_data', 'Product already exists'));
+    return res.status(422).json(errorResponse('invalid_data', 'Product already exists'));
   }
 
-  next();
+  return next();
 };
 
 const validateQuantity = (req, res, next) => {
@@ -30,15 +30,15 @@ const validateQuantity = (req, res, next) => {
 
   if (quantity < 1) {
     return res
-      .status(400)
+      .status(422)
       .json(errorResponse('invalid_data', '"quantity" must be larger than or equal to 1'));
   }
 
   if (!Number.isInteger(quantity)) {
-    return res.status(400).json(errorResponse('invalid_data', '"quantity" must be a number'));
+    return res.status(422).json(errorResponse('invalid_data', '"quantity" must be a number'));
   }
 
-  next();
+  return next();
 };
 
 const verifyIfProductExistsById = async (req, res, next) => {
@@ -47,12 +47,12 @@ const verifyIfProductExistsById = async (req, res, next) => {
   const product = await crud.readById('products', id);
 
   if (!product) {
-    return res.status(400).json(errorResponse('invalid_data', 'Wrong id format'));
+    return res.status(422).json(errorResponse('invalid_data', 'Wrong id'));
   }
 
   req.product = product;
 
-  next();
+  return next();
 };
 
 const validateSales = (req, res, next) => {
@@ -64,7 +64,7 @@ const validateSales = (req, res, next) => {
         .json(errorResponse('invalid_data', 'Wrong product ID or invalid quantity'));
     }
   }
-  next();
+  return next();
 };
 
 const verifyIfSaleExistsById = async (req, res, next) => {
@@ -73,7 +73,7 @@ const verifyIfSaleExistsById = async (req, res, next) => {
     return res.status(422).json(errorResponse('invalid_data', 'Wrong sale ID format'));
   }
   req.sale = sale;
-  next();
+  return next();
 };
 
 module.exports = {

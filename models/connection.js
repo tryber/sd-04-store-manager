@@ -1,9 +1,13 @@
 const mongo = require('mongodb').MongoClient;
 
-// const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager'; // Local
-const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager'; // GitHub evaluator
-
 const DB_NAME = 'StoreManager';
+
+const GIT_HUB_EVALUATOR = `mongodb://mongodb:27017/${DB_NAME}`;
+const LOCALHOST = `mongodb://localhost:27017/${DB_NAME}`;
+
+const EVALUATOR = true;
+
+const MONGO_DB_URL = EVALUATOR ? GIT_HUB_EVALUATOR : LOCALHOST;
 
 const connection = () =>
   mongo

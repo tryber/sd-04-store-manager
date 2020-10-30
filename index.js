@@ -1,5 +1,5 @@
 const express = require('express');
-const { products/* , sales */ } = require('./controllers');
+const { products, sales } = require('./controllers');
 
 const app = express();
 
@@ -10,5 +10,7 @@ app.use(express.json());
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => response.send());
 
-app.use('/products', products);
+app.use('/product/* , sales */ s', products);
+app.use('/sales', sales);
+
 app.listen(PORT, console.log(`listening at http://localhost:${PORT}`));

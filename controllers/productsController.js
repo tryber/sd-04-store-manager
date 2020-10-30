@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post(
   '/',
-  middlewares.verifyIfProductExistsById,
+  middlewares.verifyIfProductExistsByName,
   middlewares.validateQuantity,
   middlewares.validateNameLength,
   async ({ body: { name, quantity } }, res) =>

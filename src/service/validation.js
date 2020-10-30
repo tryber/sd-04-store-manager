@@ -36,7 +36,7 @@ const errorsMessagesGenerator = (res, message, code) => {
   }
 };
 
-const quantity = async (req, res, next) => {
+const quantities = async (req, res, next) => {
   const { name, quantity } = req.body;
   if (!/\w{5,}/.test(name)) {
     return errorsMessagesGenerator(
@@ -68,4 +68,4 @@ const equality = async (req, res, next) => {
   next();
 };
 
-module.exports = { quantity, equality };
+module.exports = { quantities, equality };

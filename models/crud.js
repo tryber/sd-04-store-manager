@@ -29,5 +29,4 @@ const deleteById = (collection, id) => {
   return connection().then((db) => db.collection(collection).deleteOne({ _id: ObjectId(id) }));
 };
 
-
 module.exports = { create, readAll, readById, readByName, updateById, deleteById };

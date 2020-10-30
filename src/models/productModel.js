@@ -46,4 +46,18 @@ const updateProduct = async (id, name, quantity) => {
   }
 };
 
-module.exports = { addProduct, listProducts, findProductById, updateProduct };
+const deleteProduct = async (id) => {
+  try {
+    if (!(await findProductById(id))) return false;
+
+    const db = await connection();
+    await db.collection('products').deleteOne({ _id: ObjectId(id) });
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+module.exports = { addProduct, listProducts, findProductById, updateProduct, deleteProduct };

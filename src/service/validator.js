@@ -78,7 +78,7 @@ const validateSales = (req, res, next) => {
   const { body } = req;
   for (let i = 0; i < body.length; i += 1) {
     if (body[i].quantity < 1 || !Number.isInteger(body[i].quantity)) {
-      return errorsMessagesGenerator(res, MSG.wrong_product, MSG.INVALID_DATA);
+      return res.status(422).json(buildResponse(MSG.INVALID_DATA, MSG.wrong_product));
     }
   }
   next();

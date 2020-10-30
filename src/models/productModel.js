@@ -24,7 +24,7 @@ const listProducts = async () => {
 const findProductById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   const db = await connection();
-  return await db.collection('products').findOne(ObjectId(id));
+  return db.collection('products').findOne(ObjectId(id));
 };
 
 module.exports = { addProduct, listProducts, findProductById };

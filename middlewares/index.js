@@ -47,7 +47,7 @@ const verifyIfProductExistsById = async (req, res, next) => {
   const product = await crud.readById('products', id);
 
   if (!product) {
-    return res.status(422).json(errorResponse('invalid_data', 'Wrong id'));
+    return res.status(422).json(errorResponse('invalid_data', 'Wrong id format'));
   }
 
   req.product = product;

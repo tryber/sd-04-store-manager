@@ -21,7 +21,7 @@ const remove = async (id, collection) => {
 /**
  * ANCHOR Find All products
  */
-const findAll = async (collection) => 
+const findAll = async (collection) =>
   connection().then((db) => db.collection(collection).find().toArray());
 
 /**

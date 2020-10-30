@@ -18,6 +18,7 @@ const MSG = {
   unexpected_error: 'Erro inesperado',
   id_format: 'Wrong id format',
   wrong_product: 'Wrong product ID or invalid quantity',
+  wrong_sale: 'Wrong sale ID format',
 };
 
 const buildResponse = (message, code) => ({
@@ -87,7 +88,7 @@ const validateSales = (req, res, next) => {
 const validateSaleById = async (req, res, next) => {
   const sale = await findById('sales', req.params.id);
   if (!sale) {
-    return res.status(422).json(buildResponse('invalid_data', 'Wrong sale ID format'));
+    return errorsMessagesGenerator(MSG.wrong_sale, MSG.INVALID_DATA);
   }
   req.sale = sale;
   next();

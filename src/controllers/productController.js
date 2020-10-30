@@ -33,7 +33,12 @@ router.get('/:id', async (req, res) => {
     const product = await productModel.findProductById(id);
 
     if (!product) {
-      return res.status(422).json({ message: 'Produto não encontrado' });
+      return res.status(422).json({
+        err: {
+          code: 'invalid_data',
+          message: 'Wrong id format',
+        },
+      });
     }
 
     res.status(200).json(product);

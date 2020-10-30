@@ -59,7 +59,7 @@ const quantities = async (req, res, next) => {
 };
 
 const equality = async (req, res, next) => {
-  const { name, quantity } = req.body;
+  const { name } = req.body;
   const list = await productModel.listProducts();
   const productsNames = await new Set(list.map((product) => product.name));
   if (productsNames.has(name)) {

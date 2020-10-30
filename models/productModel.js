@@ -21,8 +21,7 @@ const addProduct = async (name, quantity) => {
  * @param name
  */
 const findByName = async (name) => {
-  return connection().then((db) => db.collection('products').findOne({ name }));
-};
+  return connection().then((db) => db.collection('products').findOne({ name }))};
 
 /**
  * ANCHOR Put

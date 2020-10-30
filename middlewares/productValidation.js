@@ -3,14 +3,23 @@ const producModel = require('../models/productModel');
 const utilsModel = require('../utils/model');
 
 const schemaProduct = Joi.object().keys({
-  name: Joi.string().trim().min(5).max(20).required().messages({
-    'string.base': '"name" length must be at least 5 characters long',
-    'string.min': '"name" length must be at least 5 characters long',
-    'string.empty': '"name" length must be at least 5 characters long',
-    'any.required': '"name" length must be at least 5 characters long',
+  name: Joi.string()
+    .trim()
+    .min(5)
+    .max(20)
+    .required()
+    .messages({
+      'string.base': '"name" length must be at least 5 characters long',
+      'string.min': '"name" length must be at least 5 characters long',
+      'string.empty': '"name" length must be at least 5 characters long',
+      'any.required': '"name" length must be at least 5 characters long',
   }),
-  quantity: Joi.number().integer().min(1).required().messages({
-    'number.base': '"quantity" must be larger than or equal to 1',
+  quantity: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+    .messages({
+      'number.base': '"quantity" must be larger than or equal to 1',
   }),
 });
 

@@ -1,4 +1,5 @@
 // const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const connection = require('../helpers/connection');
 
 const create = (sales) =>
@@ -6,31 +7,33 @@ const create = (sales) =>
     .then((schema) => schema.collection('sales').insertOne({ itensSold: sales }))
     .then((result) => result);
 
-// const products = () =>
-//   connection().then(async (schema) => schema.collection('products').find().toArray());
+const sales = async () => {
+  const response = connection().then(async (schema) => schema.collection('sales').find().toArray());
 
-// const product = (productId) => {
-//   if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
+  return response;
+};
 
-//   return connection(productId).then((schema) =>
-//     schema.collection('products').findOne(ObjectId(productId)));
-// };
+const sale = (saleId) => {
+  if (!ObjectId.isValid(saleId)) return Promise.reject(new Error('Wrong sale ID format'));
+  return connection(saleId).then((schema) =>
+    schema.collection('sales').findOne(ObjectId(saleId)));
+};
 
-// const updateProduct = (productId, productUpdate) => {
-//   const { name, quantity } = productUpdate;
-//   if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
+const updateSale = (saleId, saleUpdate) => {
+  if (!ObjectId.isValid(saleId)) return Promise.reject(new Error('Wrong sale ID format'));
 
-//   return connection().then((db) =>
-//     db.collection('products')
-// .updateOne({ _id: ObjectId(productId) }, { $set: { name, quantity } }));
-// };
+  return connection().then((db) =>
+    db
+      .collection('sales')
+      .updateOne({ _id: ObjectId(saleId) }, { $set: { itensSold: saleUpdate } }));
+};
 
-// const deleteProduct = (productId) => {
-//   if (!ObjectId.isValid(productId)) return Promise.reject(new Error('Wrong id format'));
+const deleteSale = (saleID) => {
+  if (!ObjectId.isValid(saleID)) return Promise.reject(new Error('Wrong sale ID format'));
 
-//   return connection()
-//     .then((schema) => schema.collection('products').deleteOne({ _id: ObjectId(productId) }))
-//     .then((result) => result);
-// };
+  return connection()
+    .then((schema) => schema.collection('sales').deleteOne({ _id: ObjectId(saleID) }))
+    .then((result) => result);
+};
 
-module.exports = { create };
+module.exports = { create, sales, updateSale, deleteSale, sale };

@@ -18,9 +18,9 @@ router.post('/', validateProduct, async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const productsList = await productModel.listProducts();
+    const products = await productModel.listProducts();
 
-    res.status(200).json(productsList);
+    res.status(200).json({products});
   } catch (_e) {
     console.log(_e);
     res.status(501).json({ message: 'Falha ao carregar os produtos!' });
@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
     const product = await productModel.findProductById(id);
 
     if (!product) {
-      return res.status(404).json({ message: 'Produto não encontrado' });
+      return res.status(422).json({ message: 'Produto não encontrado' });
     }
 
     res.status(200).json(product);

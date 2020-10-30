@@ -5,7 +5,7 @@ const DB_NAME = 'StoreManager';
 const GIT_HUB_EVALUATOR = `mongodb://mongodb:27017/${DB_NAME}`;
 const LOCALHOST = `mongodb://localhost:27017/${DB_NAME}`;
 
-const EVALUATOR = false;
+const EVALUATOR = true;
 
 const MONGO_DB_URL = EVALUATOR ? GIT_HUB_EVALUATOR : LOCALHOST;
 

@@ -22,9 +22,28 @@ const listProducts = async () => {
 };
 
 const findProductById = async (id) => {
-  if (!ObjectId.isValid(id)) return null;
-  const db = await connection();
-  return db.collection('products').findOne(ObjectId(id));
+  try {
+    if (!ObjectId.isValid(id)) return null;
+    const db = await connection();
+    return db.collection('products').findOne(ObjectId(id));
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
 };
 
-module.exports = { addProduct, listProducts, findProductById };
+const updateProduct = async (id, name, quantity) => {
+  try {
+    if (!(await findProductById(id))) return false;
+
+    const db = await connection();
+    await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+module.exports = { addProduct, listProducts, findProductById, updateProduct };

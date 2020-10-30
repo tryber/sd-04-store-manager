@@ -48,4 +48,27 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.put('/:id', validateProduct, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+    const update = await productModel.updateProduct(id, name, quantity);
+
+    if (!update) {
+      return res.status(422).json({
+        err: {
+          code: 'invalid_data',
+          message: 'Wrong id format',
+        },
+      });
+    }
+    const updatedProduct = await productModel.findProductById(id);
+
+    res.status(200).json(updatedProduct);
+  } catch (_e) {
+    console.log(_e);
+    res.status(501).json({ message: 'Falha ao carregar o produto!' });
+  }
+});
+
 module.exports = router;

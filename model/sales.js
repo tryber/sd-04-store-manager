@@ -15,8 +15,11 @@ const sales = async () => {
 };
 
 const sale = (saleId) => {
-  if (!ObjectId.isValid(saleId)) return Promise.reject(new Error('Wrong sale ID format'));
-  return connection(saleId).then((schema) => schema.collection('sales').findOne(ObjectId(saleId)));
+  const id = !ObjectId.isValid(saleId);
+  if (id) return Promise.reject(new Error('Wrong sale ID format'));
+
+  const result = connection().then((schema) => schema.collection('sales').findOne(ObjectId(saleId)));
+  return result;
 };
 
 const updateSale = (saleId, saleUpdate) => {

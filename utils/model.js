@@ -21,8 +21,8 @@ const remove = async (id, collection) => {
 /**
  * ANCHOR Find All products
  */
-const findAll = async (collection) => {
-  return connection().then((db) => db.collection(collection).find().toArray())};
+const findAll = async (collection) => 
+  await connection().then((db) => db.collection(collection).find().toArray());
 
 /**
  * ANCHOR Find product by id

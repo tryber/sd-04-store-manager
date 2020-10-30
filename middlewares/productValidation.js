@@ -13,14 +13,14 @@ const schemaProduct = Joi.object().keys({
       'string.min': '"name" length must be at least 5 characters long',
       'string.empty': '"name" length must be at least 5 characters long',
       'any.required': '"name" length must be at least 5 characters long',
-  }),
+    }),
   quantity: Joi.number()
     .integer()
     .min(1)
     .required()
     .messages({
       'number.base': '"quantity" must be larger than or equal to 1',
-  }),
+    }),
 });
 
 // Válida o tamanho (length) dos campos name e quantity utilizando o hapi

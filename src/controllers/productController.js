@@ -27,4 +27,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await productModel.findProductById(id);
+
+    res.status(200).json(product);
+  } catch (_e) {
+    console.log(_e);
+    res.status(501).json({ message: 'Falha ao carregar o produto!' });
+  }
+});
+
 module.exports = router;

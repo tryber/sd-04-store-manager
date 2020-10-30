@@ -1,5 +1,3 @@
-const productsModel = require('../models/productsModel');
-
 const buildResponse = (code, message) => ({ err: { code, message } });
 
 // quantity

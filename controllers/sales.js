@@ -28,12 +28,16 @@ const updateSales = async (req, res) => {
     .then(() => res.status(200).json(res.json({ _id: id, itensSold: sales })));
 };
 
-const deleteSales = async (req, res) =>
-  salesModel
-    .deleteSale(req.params.id)
-    .then(({ result }) =>
-      (result.n > 0 ? res.status(200).send('Sale deleted') : res.status(404).json(result)))
-    .catch(() =>
-      res.status(422).send({ err: { message: 'Wrong sale ID format', code: 'invalid_data' } }));
+const deleteSales = async (req, res) => {
+  try {
+    const result = await salesModel.deleteSale(req.params.id);
+
+    if (result.n > 0) return res.status(200).send('Sale deleted');
+
+    return res.status(200).json(result);
+  } catch (error) {
+    res.status(422).send({ err: { message: 'Wrong sale ID format', code: 'invalid_data' } });
+  }
+};
 
 module.exports = { createSale, listSales, updateSales, deleteSales, getSale };

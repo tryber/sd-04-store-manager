@@ -8,15 +8,15 @@ const create = (sales) =>
     .then((result) => result);
 
 const sales = async () => {
-  const response = connection().then(async (schema) => schema.collection('sales').find().toArray());
+  const dbConnection = connection();
+  const result = await dbConnection.then(async (db) => db.collection('sales').find());
 
-  return response;
+  return result.toArray();
 };
 
 const sale = (saleId) => {
   if (!ObjectId.isValid(saleId)) return Promise.reject(new Error('Wrong sale ID format'));
-  return connection(saleId).then((schema) =>
-    schema.collection('sales').findOne(ObjectId(saleId)));
+  return connection(saleId).then((schema) => schema.collection('sales').findOne(ObjectId(saleId)));
 };
 
 const updateSale = (saleId, saleUpdate) => {
@@ -28,12 +28,13 @@ const updateSale = (saleId, saleUpdate) => {
       .updateOne({ _id: ObjectId(saleId) }, { $set: { itensSold: saleUpdate } }));
 };
 
-const deleteSale = (saleID) => {
+const deleteSale = async (saleID) => {
   if (!ObjectId.isValid(saleID)) return Promise.reject(new Error('Wrong sale ID format'));
 
-  return connection()
-    .then((schema) => schema.collection('sales').deleteOne({ _id: ObjectId(saleID) }))
-    .then((result) => result);
+  const result = await connection().then((schema) =>
+    schema.collection('sales').deleteOne({ _id: ObjectId(saleID) }));
+
+  return result;
 };
 
 module.exports = { create, sales, updateSale, deleteSale, sale };

@@ -85,7 +85,7 @@ const validateSales = (req, res, next) => {
 };
 
 const validateSaleById = async (req, res, next) => {
-  const sale = await crudModel.findById('sales', req.params.id);
+  const sale = await findById('sales', req.params.id);
   if (!sale) {
     return res.status(422).json(buildResponse('invalid_data', 'Wrong sale ID format'));
   }

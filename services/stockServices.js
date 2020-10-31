@@ -60,18 +60,6 @@ const update = async (items) => {
   };
 };
 
-// const addItemInStock = (pdtsInStock, itemsSold) =>
-//   itemsSold.forEach((item) =>
-//     pdtsInStock.forEach((pdt) => {
-//       const pdtId = pdt._id.toHexString();
-
-//       if (item.productId === pdtId) {
-//         const newQtt = pdt.quantity + item.quantity;
-//         productsModel.update(pdtId, pdt.name, newQtt);
-//       }
-//     })
-//   );
-
 const del = async (id) => {
   const sale = await salesModel.readById(id);
   const pdtsInStock = await Promise.all(sale.itensSold.map((item) =>
@@ -84,11 +72,3 @@ module.exports = {
   update,
   del,
 };
-
-// [
-//   { _id: 5f9ad973968f1f03c5faafe6, name: 'xbox1', quantity: 10 },
-//   { _id: 5f9ad979968f1f03c5faafe7, name: 'xbox2', quantity: 10 }
-// ] [
-//   { productId: '5f9ad973968f1f03c5faafe6', quantity: 1 },
-//   { productId: '5f9ad979968f1f03c5faafe7', quantity: 1 }
-// ]

@@ -1,4 +1,4 @@
-const productsModel = require('../models/productsModel');
+const productsModel = require('../models/productsModels');
 
 const createProduct = async (req, res) => {
   const { name, quantity } = req.body;
@@ -7,7 +7,7 @@ const createProduct = async (req, res) => {
   res.status(201).json(newProduct);
 };
 
-const readProduct = async (req, res) => {
+const readProduct = async (req, res) => { // Testar retirada do async
   const product = req.product;
 
   res.status(200).json(product);

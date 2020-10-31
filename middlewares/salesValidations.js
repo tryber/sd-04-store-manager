@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
-const productsModel = require('../models/productsModel');
-const salesModel = require('../models/salesModel');
+const productsModel = require('../models/productsModels');
+const salesModel = require('../models/salesModels');
 
 const errors = {
   1: {

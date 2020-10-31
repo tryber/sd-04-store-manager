@@ -10,6 +10,5 @@ app.get('/', (request, response) => {
   response.send();
 });
 app.use('/products', ProductsController);
-app.use('/sales', SalesController);
 
 app.listen(port, () => console.log(`Aplicativo rodando na porta ${port}`));

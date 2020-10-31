@@ -16,8 +16,8 @@ const verifyQttInStock = (pdtsInStock, items) => {
       let { _id: pdtId } = pdtsInStock[j];
       pdtId = pdtId.toHexString();
 
-      if (items[i].productId === pdtId) {
-        if ((pdtsInStock[j].quantity - items[i].quantity) < 0) return false;
+      if (items[i].productId === pdtId && (pdtsInStock[j].quantity - items[i].quantity) < 0) {
+        return false;
       }
     }
   }

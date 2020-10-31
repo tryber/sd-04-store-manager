@@ -5,7 +5,7 @@ const errors = {
   1: {
     err: {
       code: 'stock_problem',
-      message: 'Such amount is not permitted to sell'
+      message: 'Such amount is not permitted to sell',
     },
   },
 };
@@ -13,7 +13,7 @@ const errors = {
 const verifyQttInStock = (pdtsInStock, items) => {
   for (let i = 0, lenItems = items.length; i < lenItems; i += 1) {
     for (let j = 0, lenPdts = pdtsInStock.length; j < lenPdts; j += 1) {
-      if (items[i].productId === pdtsInStock[j]._id.toHexString()) {
+      if (items[i].productId === pdtsInStock[j]['_id'].toHexString()) {
         if ((pdtsInStock[j].quantity - items[i].quantity) < 0) return false;
       }
     }
@@ -25,7 +25,7 @@ const verifyQttInStock = (pdtsInStock, items) => {
 const updateQttInStock = (pdtsInStock, itemsSold, op) =>
   itemsSold.forEach((item) =>
     pdtsInStock.forEach((pdt) => {
-      const pdtId = pdt._id.toHexString();
+      const pdtId = pdt['_id'].toHexString();
       let newQtt;
 
       if (item.productId === pdtId) {
@@ -34,7 +34,7 @@ const updateQttInStock = (pdtsInStock, itemsSold, op) =>
 
         productsModel.update(pdtId, pdt.name, newQtt);
       }
-    })
+    }),
   );
 
 const update = async (items) => {

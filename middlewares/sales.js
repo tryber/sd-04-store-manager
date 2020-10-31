@@ -3,7 +3,7 @@ const stockServices = require('../services/stockServices');
 
 const createSales = async (req, res) => {
   const stockStatus = await stockServices.update(req.body);
-  
+
   if (!stockStatus.done) return res.status(404).json(stockStatus.msg);
 
   const newSales = await salesModel.create(req.body);

@@ -7,7 +7,7 @@ const createProduct = async (req, res) => {
   res.status(201).json(newProduct);
 };
 
-const readProduct = async (req, res) => { // Testar retirada do async
+const readProduct = (req, res) => {
   const product = req.product;
 
   res.status(200).json(product);

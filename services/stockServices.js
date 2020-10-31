@@ -13,6 +13,7 @@ const errors = {
 const verifyQttInStock = (pdtsInStock, items) => {
   for (let i = 0, lenItems = items.length; i < lenItems; i += 1) {
     for (let j = 0, lenPdts = pdtsInStock.length; j < lenPdts; j += 1) {
+      // CC não aceita _id vindo do mongo
       let { _id: pdtId } = pdtsInStock[j];
       pdtId = pdtId.toHexString();
 
@@ -28,6 +29,7 @@ const verifyQttInStock = (pdtsInStock, items) => {
 const updateQttInStock = (pdtsInStock, itemsSold, op) =>
   itemsSold.forEach((item) =>
     pdtsInStock.forEach((pdt) => {
+      // CC não aceita _id vindo do mongo
       let { _id: pdtId } = pdt;
       pdtId = pdtId.toHexString();
       let newQtt;

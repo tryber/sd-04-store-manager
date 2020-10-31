@@ -23,7 +23,7 @@ const errors = {
   },
 };
 
-// CC :(
+// Separação devido ao CC :(
 const checkProductsExistence = async (pendencies, resp, next) => {
   const products = await Promise.all(pendencies);
 

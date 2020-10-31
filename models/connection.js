@@ -1,5 +1,4 @@
 const mongoClient = require('mongodb').MongoClient;
-// const { host, database } = require('./config');
 
 const DB_NAME = 'StoreManager';
 

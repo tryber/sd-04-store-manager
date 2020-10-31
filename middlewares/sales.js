@@ -11,7 +11,7 @@ const createSales = async (req, res) => {
   res.status(200).json(newSales);
 };
 
-const readSale = async (req, res) => { // Testar retirada do async
+const readSale = (req, res) => {
   const sale = req.sale;
 
   res.status(200).json(sale);

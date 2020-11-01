@@ -64,4 +64,26 @@ router.put('/:id', validation.saleQuantity, async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedSale = await salesModel.findSaleById(id);
+    const sale = await salesModel.deleteSale(id);
+
+    if (!sale) {
+      return res.status(422).json({
+        err: {
+          code: 'invalid_data',
+          message: 'Wrong sale ID format',
+        },
+      });
+    }
+
+    res.status(200).json(deletedSale);
+  } catch (_e) {
+    console.log(_e);
+    res.status(501).json({ message: 'Falha ao carregar o produto!' });
+  }
+});
+
 module.exports = router;

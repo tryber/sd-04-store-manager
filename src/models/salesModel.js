@@ -48,4 +48,18 @@ const updateSale = async (id, saleUpdate) => {
   }
 };
 
-module.exports = { addSales, listSales, findSaleById, updateSale };
+const deleteSale = async (id) => {
+  try {
+    if (!(await findSaleById(id))) return false;
+
+    const db = await connection();
+    await db.collection('sales').deleteOne({ _id: ObjectId(id) });
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+module.exports = { addSales, listSales, findSaleById, updateSale, deleteSale };

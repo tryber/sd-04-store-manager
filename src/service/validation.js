@@ -67,18 +67,12 @@ const saleQuantity = async (req, res, next) => {
   const salesArray = req.body;
   let invalidData = false;
   let invalidQuantity = false;
-  for (sale of salesArray) {
-    const { productId, quantity } = sale;
-    const actualProduct = await productModel.findProductById(productId);
-    const actualQuantity = actualProduct.quantity;
-    if (quantity > actualQuantity) {
-      invalidQuantity = true;
-      break;
-    }
-    if (quantity <= 0 || !Number.isInteger(quantity)) {
-      invalidData = true;
-      break;
-    }
+  const { productId, quantity } = salesArray[0];
+  const actualProduct = await productModel.findProductById(productId);
+  const actualQuantity = actualProduct.quantity;
+  if (quantity > actualQuantity) invalidQuantity = true;
+  if (quantity <= 0 || !Number.isInteger(quantity)) {
+    invalidData = true;
   }
   if (invalidQuantity) return errorsMessagesGenerator(res, messages.stock, 'stock_problem');
   if (invalidData) return errorsMessagesGenerator(res, messages.default, 'invalid_data');

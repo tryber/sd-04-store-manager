@@ -14,6 +14,7 @@ const messages = {
   quantityTaille: '"quantity" must be larger than or equal to 1',
   quantityNumber: '"quantity" must be a number',
   default: 'Wrong product ID or invalid quantity',
+  stock: 'Such amount is not permitted to sell',
 };
 
 const messageError = (message, code) => ({
@@ -27,6 +28,8 @@ const errorsMessagesGenerator = (res, message, code) => {
   switch (code) {
     case 'invalid_data':
       return res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json(messageError(message, code));
+    case 'stock_problem':
+      return res.status(HTTPSTATUS.NOT_FOUND).json(messageError(message, code));
     case 'not_found':
       return res.status(HTTPSTATUS.NOT_FOUND).json(messageError(message, code));
     default:
@@ -63,12 +66,21 @@ const equality = async (req, res, next) => {
 const saleQuantity = async (req, res, next) => {
   const salesArray = req.body;
   let invalidData = false;
-  salesArray.forEach((sale) => {
-    const { quantity } = sale;
-    if (quantity <= 0 || !Number.isInteger(quantity)) {
-      return (invalidData = true);
+  let invalidQuantity = false;
+  for (sale of salesArray) {
+    const { productId, quantity } = sale;
+    const actualProduct = await productModel.findProductById(productId);
+    const actualQuantity = actualProduct.quantity;
+    if (quantity > actualQuantity) {
+      invalidQuantity = true;
+      break;
     }
-  });
+    if (quantity <= 0 || !Number.isInteger(quantity)) {
+      invalidData = true;
+      break;
+    }
+  }
+  if (invalidQuantity) return errorsMessagesGenerator(res, messages.stock, 'stock_problem');
   if (invalidData) return errorsMessagesGenerator(res, messages.default, 'invalid_data');
   return next();
 };

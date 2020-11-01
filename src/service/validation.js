@@ -8,12 +8,13 @@ const HTTPSTATUS = {
   CREATED: 201,
 };
 
-// const messages = {
-//   namecheck: '"name" length must be at least 5 characters long',
-//   nameUnique: 'Product already exists',
-//   quantityTaille: '"quantity" must be larger than or equal to 1',
-//   quantityNumber: '"quantity" must be a number',
-// };
+const messages = {
+  namecheck: '"name" length must be at least 5 characters long',
+  nameUnique: 'Product already exists',
+  quantityTaille: '"quantity" must be larger than or equal to 1',
+  quantityNumber: '"quantity" must be a number',
+  default: 'Wrong product ID or invalid quantity',
+};
 
 const messageError = (message, code) => ({
   err: {
@@ -25,7 +26,6 @@ const messageError = (message, code) => ({
 const errorsMessagesGenerator = (res, message, code) => {
   switch (code) {
     case 'invalid_data':
-      console.log(message);
       return res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json(messageError(message, code));
     case 'not_found':
       return res.status(HTTPSTATUS.NOT_FOUND).json(messageError(message, code));
@@ -39,21 +39,13 @@ const errorsMessagesGenerator = (res, message, code) => {
 const quantities = async (req, res, next) => {
   const { name, quantity } = req.body;
   if (!/\w{5,}/.test(name)) {
-    return errorsMessagesGenerator(
-      res,
-      '"name" length must be at least 5 characters long',
-      'invalid_data',
-    );
+    return errorsMessagesGenerator(res, messages.namecheck, 'invalid_data');
   }
   if (quantity <= 0) {
-    return errorsMessagesGenerator(
-      res,
-      '"quantity" must be larger than or equal to 1',
-      'invalid_data',
-    );
+    return errorsMessagesGenerator(res, messages.quantityTaille, 'invalid_data');
   }
   if (!Number.isInteger(quantity)) {
-    return errorsMessagesGenerator(res, '"quantity" must be a number', 'invalid_data');
+    return errorsMessagesGenerator(res, messages.quantityNumber, 'invalid_data');
   }
   next();
 };
@@ -63,9 +55,22 @@ const equality = async (req, res, next) => {
   const list = await productModel.listProducts();
   const productsNames = await new Set(list.map((product) => product.name));
   if (productsNames.has(name)) {
-    return errorsMessagesGenerator(res, 'Product already exists', 'invalid_data');
+    return errorsMessagesGenerator(res, messages.nameUnique, 'invalid_data');
   }
   next();
 };
 
-module.exports = { quantities, equality };
+const saleQuantity = async (req, res, next) => {
+  const salesArray = req.body;
+  let invalidData = false;
+  salesArray.forEach((sale) => {
+    const { productID, quantity } = sale;
+    if (quantity <= 0 || !Number.isInteger(quantity)) {
+      return (invalidData = true);
+    }
+  });
+  if (invalidData) errorsMessagesGenerator(res, messages.default, 'invalid_data');
+  return next();
+};
+
+module.exports = { quantities, equality, saleQuantity };

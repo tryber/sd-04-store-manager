@@ -33,4 +33,19 @@ const findSaleById = async (id) => {
   }
 };
 
-module.exports = { addSales, listSales, findSaleById };
+const updateSale = async (id, saleUpdate) => {
+  try {
+    if (!(await findSaleById(id))) return false;
+    const db = await connection();
+    await db
+      .collection('sales')
+      .updateOne({ _id: ObjectId(id) }, { $set: { itensSold: saleUpdate } });
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+module.exports = { addSales, listSales, findSaleById, updateSale };

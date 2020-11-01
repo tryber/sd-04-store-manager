@@ -69,7 +69,7 @@ const saleQuantity = async (req, res, next) => {
       return (invalidData = true);
     }
   });
-  if (invalidData) errorsMessagesGenerator(res, messages.default, 'invalid_data');
+  if (invalidData) return errorsMessagesGenerator(res, messages.default, 'invalid_data');
   return next();
 };
 

@@ -64,7 +64,7 @@ const saleQuantity = async (req, res, next) => {
   const salesArray = req.body;
   let invalidData = false;
   salesArray.forEach((sale) => {
-    const { productID, quantity } = sale;
+    const { quantity } = sale;
     if (quantity <= 0 || !Number.isInteger(quantity)) {
       return (invalidData = true);
     }

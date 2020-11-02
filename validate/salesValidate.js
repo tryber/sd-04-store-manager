@@ -5,7 +5,7 @@ const PRODUCT_QUANTITY = /^[1-9]\d*$/;
 const VALIDA_SALES = {
   code: 'invalid_data',
   message: '',
-}
+};
 
 const validaRegex = (string, regex) => string.match(regex);
 
@@ -21,7 +21,7 @@ const validaQuantidade = (quantity) => {
 const validaExist = async (id) => {
   const produto = await productModel.getById(id);
 
-  if (!produto) throw new Error ('Wrong product ID or invalid quantity');
+  if (!produto) throw new Error('Wrong product ID or invalid quantity');
   else VALIDA_SALES.message = '';
 
   return VALIDA_SALES;

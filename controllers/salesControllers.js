@@ -1,11 +1,16 @@
-// const express = require('express');
+const express = require('express');
 
-// const router = express.Router();
+const salesService = require('../services/salesService');
 
-// route.post('/sales', async (req, res) => {
-//   try {
+const router = express.Router();
 
-//   } catch (error) {
+router.post('/', async (req, res) => {
+  const itensSold = req.body;
 
-//   }
-// });
+  const result = await salesService.adicionar(itensSold);
+
+  if (result.code === 'invalid_data') return res.status(422).json({ err: result });
+  res.status(200).json(result);
+});
+
+module.exports = router;

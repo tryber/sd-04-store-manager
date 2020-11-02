@@ -1,4 +1,3 @@
-const productModel = require('../model/productModel');
 const ProductModel = require('../model/productModel');
 const validaProduct = require('../validate/productValidate');
 
@@ -20,7 +19,7 @@ const update = async (id, name, quantidade) => {
 
   if (validaNome.message === '' && validaQuantidade.message === '') {
     await ProductModel.update(id, name, quantidade);
-    const result = productModel.getById(id);
+    const result = ProductModel.getById(id);
 
     return result;
   } else if (validaNome.message !== '') return validaNome;

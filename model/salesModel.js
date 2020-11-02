@@ -10,7 +10,6 @@ const adicionar = async (itensSold) => {
 };
 
 const getById = async (id) => {
-  console.log("model==>>",id)
   if (!ObjectId.isValid(id)) throw new Error();
   return connection().then((db) => db.collection(SALES).findOne(ObjectId(id)));
 };

@@ -8,7 +8,7 @@ const VALIDA_SALES = {
 };
 
 const validaRegex = (string, regex) => string.match(regex);
-
+// teste novo pull
 const validaQuantidade = (quantity) => {
   if (!validaRegex(quantity.toString(), PRODUCT_QUANTITY) && typeof quantity === 'number') {
     VALIDA_SALES.message = 'Wrong product ID or invalid quantity';

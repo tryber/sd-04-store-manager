@@ -16,7 +16,29 @@ const getById = async (id) => {
 
 const getAll = async () => connection().then((db) => db.collection(SALES).find().toArray());
 
+const update = async (id, itensSold) => {
+  if (!(await getById(id))) return false;
+
+  connection().then((db) =>
+    db.collection(SALES).updateMany({ _id: ObjectId(id) }, { $set: { itensSold } }),
+  );
+
+  return true;
+};
+
+const remove = async (id) => {
+  if (!(await getById(id))) throw new Error();
+
+  const { value } = await connection().then((db) =>
+    db.collection(SALES).findOneAndDelete({ _id: ObjectId(id) }),
+  );
+
+  return value;
+};
+
 module.exports = {
+  remove,
+  update,
   getAll,
   getById,
   adicionar,

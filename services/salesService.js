@@ -25,6 +25,18 @@ const adicionar = async (itensSold) => {
   return validaSale;
 };
 
+const update = async (id, itensSold) => {
+  itensSold.forEach(({ quantity }) => {
+    const validaQuantidade = validaSales.validaQuantidade(quantity);
+
+    if (validaQuantidade.message !== '') throw new Error();
+  });
+
+  await salesModel.update(id, itensSold);
+  return salesModel.getById(id);
+};
+
 module.exports = {
+  update,
   adicionar,
 };

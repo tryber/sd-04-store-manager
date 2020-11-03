@@ -19,7 +19,7 @@ const getAll = async () => connection().then((db) => db.collection(SALES).find()
 const update = async (id, itensSold) => {
   if (!(await getById(id))) return false;
 
-  connection().then((db) =>
+  await connection().then((db) =>
     db.collection(SALES).updateMany({ _id: ObjectId(id) }, { $set: { itensSold } }),
   );
 

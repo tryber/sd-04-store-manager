@@ -24,7 +24,7 @@ const getById = async (id) => {
 const update = async (id, name, quantity) => {
   if (!(await getById(id))) return false;
 
-  connection().then((db) =>
+  await connection().then((db) =>
     db.collection(PRODUCT).updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
   );
 

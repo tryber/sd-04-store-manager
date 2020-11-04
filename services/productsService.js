@@ -14,7 +14,7 @@ const validation = async (name, quantity) => {
 const createProduct = async (name, quantity) => {
   const err = await validation(name, quantity);
 
-  if(err.message) return { err, error: true };
+  if (err.message) return { err, error: true };
 
   const product = await addProduct(name, quantity);
   return { _id: product.insertedId, name, quantity };

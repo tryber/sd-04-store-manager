@@ -36,10 +36,11 @@ const updateProdSales = async (id, quantidade, isSales = false) => {
     await connection().then((db) =>
       db.collection(PRODUCT).updateOne({ _id: ObjectId(id) }, { $inc: { quantity: -quantidade } }),
     );
-  } else
+  } else {
     await connection().then((db) =>
       db.collection(PRODUCT).updateOne({ _id: ObjectId(id) }, { $inc: { quantity: +quantidade } }),
     );
+  }
 };
 
 const remove = async (id) => {

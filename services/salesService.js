@@ -16,12 +16,10 @@ const adicionar = async (itensSold) => {
     if (validaQuantidade.message !== '') {
       return Promise.reject(new Error('Wrong product ID or invalid quantity'));
     }
-
     if (produto.quantity < quantity) {
       validaSale.code = 'stock_problem';
       validaSale.message = 'Such amount is not permitted to sell';
     }
-
     producTModel.updateProdSales(productId, quantity, true);
 
     return validaId;
@@ -34,7 +32,6 @@ const adicionar = async (itensSold) => {
   if (validaSale.message === '') {
     return salesModel.adicionar(itensSold);
   }
-  console.log(validaSale);
   return validaSale;
 };
 

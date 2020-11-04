@@ -18,7 +18,15 @@ app.post(
   validaçao.quantityTest,
   productController.addProduct,
 );
+
 app.get('/products', productController.showProducts);
 app.get('/products/:id', validaçao.idTest, productController.findByIdParams);
+
+app.put(
+  '/products/:id',
+  validaçao.nameTest,
+  validaçao.quantityTest,
+  productController.updateByIdParams,
+);
 
 app.listen(3000, () => console.log('Listening on 3000'));

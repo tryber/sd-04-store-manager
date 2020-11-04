@@ -15,4 +15,10 @@ const findById = async (collection, id) => {
   return connection().then((db) => db.collection(collection).findOne(ObjectId(id)));
 };
 
-module.exports = { findByName, addProduct, findById, getAll };
+const update = async (collection, id, elements) => {
+  connection().then((db) =>
+    db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: elements }),
+  );
+};
+
+module.exports = { findByName, addProduct, findById, getAll, update };

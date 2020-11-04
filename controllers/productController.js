@@ -18,4 +18,12 @@ const findByIdParams = async (req, res) => {
   res.status(200).json(product);
 };
 
-module.exports = { showProducts, addProduct, findByIdParams };
+const updateByIdParams = async (req, res) => {
+  const { id } = req.params;
+  const { name, quantity } = req.body;
+  await productModel.update('products', id, { name, quantity });
+  const product = await productModel.findByName('products', name);
+  res.status(200).json(product);
+};
+
+module.exports = { showProducts, addProduct, findByIdParams, updateByIdParams };

@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
+const productModel = require('./productModel');
 
 const SALES = 'sales';
 
@@ -32,6 +33,8 @@ const remove = async (id) => {
   const { value } = await connection().then((db) =>
     db.collection(SALES).findOneAndDelete({ _id: ObjectId(id) }),
   );
+  const { itensSold } = value;
+  await productModel.updateProdSales(itensSold[0].productId, itensSold[0].quantity);
 
   return value;
 };

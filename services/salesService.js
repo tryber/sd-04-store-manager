@@ -1,5 +1,6 @@
 const salesModel = require('../model/salesModel');
 const validaSales = require('../validate/salesValidate');
+const producTModel = require('../model/productModel');
 
 const adicionar = async (itensSold) => {
   const validaSale = {
@@ -7,21 +8,33 @@ const adicionar = async (itensSold) => {
     message: '',
   };
 
-  const result = itensSold.map(({ productId, quantity }) => {
+  const result = itensSold.map(async ({ productId, quantity }) => {
     const validaId = validaSales.validaExist(productId);
     const validaQuantidade = validaSales.validaQuantidade(quantity);
+    const produto = await producTModel.getById(productId);
 
     if (validaQuantidade.message !== '') {
       return Promise.reject(new Error('Wrong product ID or invalid quantity'));
     }
+
+    if (produto.quantity < quantity) {
+      validaSale.code = 'stock_problem';
+      validaSale.message = 'Such amount is not permitted to sell';
+    }
+
+    producTModel.updateProdSales(productId, quantity, true);
+
     return validaId;
   });
 
-  await Promise.all(result).catch((err) => (validaSale.message = err.message));
+  await Promise.all(result).catch((err) => {
+    validaSale.message = err.message;
+  });
 
   if (validaSale.message === '') {
     return salesModel.adicionar(itensSold);
   }
+  console.log(validaSale);
   return validaSale;
 };
 

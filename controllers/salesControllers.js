@@ -11,6 +11,7 @@ router.post('/', async (req, res) => {
   const result = await salesService.adicionar(itensSold);
 
   if (result.code === 'invalid_data') return res.status(422).json({ err: result });
+  if (result.code === 'stock_problem') return res.status(404).json({ err: result });
   res.status(200).json(result);
 });
 

@@ -31,6 +31,17 @@ const update = async (id, name, quantity) => {
   return true;
 };
 
+const updateProdSales = async (id, quantidade, isSales = false) => {
+  if (isSales) {
+    await connection().then((db) =>
+      db.collection(PRODUCT).updateOne({ _id: ObjectId(id) }, { $inc: { quantity: -quantidade } }),
+    );
+  } else
+    await connection().then((db) =>
+      db.collection(PRODUCT).updateOne({ _id: ObjectId(id) }, { $inc: { quantity: +quantidade } }),
+    );
+};
+
 const remove = async (id) => {
   if (!(await getById(id))) return false;
 
@@ -48,4 +59,5 @@ module.exports = {
   add,
   update,
   remove,
+  updateProdSales,
 };

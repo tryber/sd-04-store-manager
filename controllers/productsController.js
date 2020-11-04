@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const rescue = require('express-rescue');
 
+const { getAllProducts, getProductById } = require('../models/productsModel');
 const { createProduct } = require('../services/productsService');
 
 router.post('/', async (req, res) => {
@@ -12,6 +12,23 @@ router.post('/', async (req, res) => {
   if (error) return res.status(422).json({ err });
 
   return res.status(201).json(product);
+});
+
+router.get('/', async(req, res) => {
+  const products = await getAllProducts();
+
+  res.status(200).json({ products });
+});
+
+router.get('/:id', async(req, res) => {
+  const { id } = req.params;
+  const err = { code: 'invalid_data', message: 'Wrong id format' };
+
+  const product = await getProductById(id);
+
+  if(!product) return res.status(422).json({ err });
+
+  return res.status(200).json(product);
 });
 
 module.exports = router;

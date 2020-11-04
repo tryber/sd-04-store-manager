@@ -18,7 +18,7 @@ const createProduct = async (name, quantity) => {
 
   const product = await addProduct(name, quantity);
   return { _id: product.insertedId, name, quantity };
-}
+};
 
 module.exports = {
   createProduct,

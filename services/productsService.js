@@ -1,4 +1,4 @@
-const { getProductByName, addProduct } = require('../models/productsModel');
+const { getProductByName, addProduct, updateProductById } = require('../models/productsModel');
 
 const validation = async (name, quantity) => {
   const err = { code: 'invalid_data' };
@@ -20,6 +20,16 @@ const createProduct = async (name, quantity) => {
   return { _id: product.insertedId, name, quantity };
 };
 
+const updateProduct = async (id, name, quantity) => {
+  const err = await validation(name, quantity);
+
+  if (err.message) return { err, error: true };
+
+  const product = await updateProductById(id, name, quantity);
+  return { _id: product.insertedId, name, quantity };
+};
+
 module.exports = {
   createProduct,
+  updateProduct,
 };

@@ -12,7 +12,7 @@ router.post('/products', async (req, res) => {
     if (productAdded.err) {
       return res.status(422).json(productAdded);
     }
-    return res.status(201).json({ productAdded });
+    return res.status(201).json(productAdded);
   } catch (_e) {
     throw res.status(500);
   }

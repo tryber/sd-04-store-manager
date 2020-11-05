@@ -9,8 +9,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', productController);
 
 // não remova esse endpoint, e para o avaliador funcionar
-app.get('/', (request, response) => {
+app.get('/', (_request, response) => {
   response.send();
 });
 
-app.listen(3000);
+app.listen(3000, () => console.log('Servidor rodando'));

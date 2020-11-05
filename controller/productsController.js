@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post('/products', async (req, res) => {
   const { name, quantity } = req.body;
-  console.log(name, quantity);
   try {
     const productAdded = await productsService.create(name, quantity);
     if (productAdded.err) {

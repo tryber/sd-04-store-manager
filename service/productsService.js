@@ -1,7 +1,8 @@
 const productsModel = require('../model/productsModel');
 
 const nameValidation = async (name) => {
-  const product = await productsModel.findByName(name)[0];
+  const product = await productsModel.findByName(name);
+  console.log(product);
   if (name.length < 5) {
     return {
       err: {

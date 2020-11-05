@@ -4,15 +4,22 @@ const getAllProducts = async () =>
   connection()
     .then((db) => db.collection('products').find().toArray())
     .then((products) => products.map(({ _id, name, quantity }) => ({ _id, name, quantity })))
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err);
+      return process.exit(1);
+    });
 
-const findByName = async (nameParam) => {
+const findByName = async (name) => {
+  console.log(name);
+
   try {
     const db = await connection();
-    const products = await db.collection('products').find({ name: nameParam });
+    const products = await db.collection('products').findOne({ name });
+    console.log(products);
     return products;
   } catch (err) {
     console.error(err);
+    return process.exit(1);
   }
 };
 

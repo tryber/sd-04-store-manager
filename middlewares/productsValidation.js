@@ -53,9 +53,24 @@ const validateQuantityIsNumber = (req, res, next) => {
   next();
 };
 
+// não é possível listar um produto que não existe
+const validateIdExistence = async (req, res, next) => {
+  const { id } = req.params;
+  const product = await productsModel.findById(id);
+
+  if (!product) {
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
+  }
+
+  req.product = product;
+
+  next();
+};
+
 module.exports = {
   validateNameLength,
   validateNameExistence,
   validateQuantity,
   validateQuantityIsNumber,
+  validateIdExistence,
 };

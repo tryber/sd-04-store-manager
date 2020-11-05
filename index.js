@@ -1,4 +1,5 @@
 const productController = require('./controllers/productController');
+const salesController = require('./controllers/salesController');
 const validaçao = require('./middlewares/validaçoes');
 const express = require('express');
 // const bodyParser = require('body-parser');
@@ -28,5 +29,9 @@ app.put(
   validaçao.quantityTest,
   productController.updateByIdParams,
 );
+
+app.delete('/products/:id', validaçao.idTest, productController.deleteByIdParams);
+
+app.post('/sales', validaçao.quantitySales, salesController.create);
 
 app.listen(3000, () => console.log('Listening on 3000'));

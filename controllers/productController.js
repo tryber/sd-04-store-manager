@@ -26,4 +26,13 @@ const updateByIdParams = async (req, res) => {
   res.status(200).json(product);
 };
 
-module.exports = { showProducts, addProduct, findByIdParams, updateByIdParams };
+const deleteByIdParams = async (req, res) => {
+  const { id } = req.params;
+  const product = await productModel.findById('products', id);
+  if (product) {
+    await productModel.deleteProduct('products', id);
+    return res.status(200).json(product);
+  }
+};
+
+module.exports = { showProducts, addProduct, findByIdParams, updateByIdParams, deleteByIdParams };

@@ -11,6 +11,16 @@ const exist = async (req, res, next) => {
   next();
 };
 
+const quantitySales = async (req, res, next) => {
+  const array = req.body;
+  for (let i = 0; i < array.length; i += 1) {
+    if (array[i].quantity < 1 || !Number.isInteger(array[i].quantity)) {
+      return res.status(422).json(responseBuild('Wrong product ID or invalid quantity'));
+    }
+  }
+  next();
+};
+
 const nameTest = (req, res, next) => {
   const { name } = req.body;
   if (!name || typeof name !== 'string') {
@@ -31,6 +41,7 @@ const quantityTest = (req, res, next) => {
   next();
 };
 
+
 const idTest = async (req, res, next) => {
   const { id } = req.params;
   const product = await productModel.findById('products', id);
@@ -40,4 +51,4 @@ const idTest = async (req, res, next) => {
   next();
 };
 
-module.exports = { nameTest, quantityTest, exist, idTest };
+module.exports = { nameTest, quantityTest, exist, idTest, quantitySales };

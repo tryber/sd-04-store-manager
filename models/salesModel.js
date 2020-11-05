@@ -6,8 +6,10 @@ const getAll = async () => connection().then((db) => db.collection('products').f
 const findByName = async (collection, name) =>
   connection().then((db) => db.collection(collection).findOne({ name }));
 
-const addProduct = async (name, quantity) =>
-  connection().then((db) => db.collection('products').insertOne({ name, quantity }));
+const addSales = async (collections, sales) => {
+  const result = connection().then((db) => db.collection(collections).insertOne(sales));
+  return (await result).ops[0];
+};
 
 // Aprender sobre ObjectId
 const findById = async (collection, id) => {
@@ -25,4 +27,4 @@ const deleteProduct = async (collection, id) => {
   connection().then((db) => db.collection(collection).deleteOne({ _id: ObjectId(id) }));
 };
 
-module.exports = { findByName, addProduct, findById, getAll, update, deleteProduct };
+module.exports = { findByName, addSales, findById, getAll, update, deleteProduct };

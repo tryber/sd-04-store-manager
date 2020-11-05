@@ -57,7 +57,6 @@ const authDelete = async (req, res, next) => {
 
 module.exports = {
   authPost,
-  authGet,
   authPut,
   authDelete,
   authQuantity,

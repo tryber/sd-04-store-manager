@@ -5,7 +5,7 @@ const middleware = require('../middleware/sale');
 const routers = express.Router();
 
 routers
-  .post('/', middleware.authPost, middleware.authQuantity, controller.postNewSale)
+  .post('/', middleware.authPost, controller.postNewSale)
   .get('/', middleware.authSaleGet, controller.getAllSale)
   .get('/:id', middleware.authSaleGet, controller.getSaleById)
   .put('/:id', middleware.authPost, controller.putSale)

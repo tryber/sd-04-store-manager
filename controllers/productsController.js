@@ -35,4 +35,21 @@ router.get('/:id', productsValidations.validateIdExistence, async (req, res) =>
   res.status(200).json(req.product),
 );
 
+// update product
+router.put(
+  '/:id',
+  productsValidations.validateNameLength,
+  productsValidations.validateQuantity,
+  productsValidations.validateQuantityIsNumber,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    const { id } = req.params;
+    await productsModel.updateProduct(id, name, quantity);
+
+    const product = await productsModel.findById(id);
+
+    res.status(200).json(product);
+  },
+);
+
 module.exports = router;

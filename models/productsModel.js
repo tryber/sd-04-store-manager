@@ -11,8 +11,9 @@ const getAllProducts = async () =>
   connection().then((db) => db.collection('products').find().toArray());
 
 const getProductById = async (id) => {
-  if (ObjectId.isValid(id))
+  if (ObjectId.isValid(id)) {
     return connection().then((db) => db.collection('products').findOne({ _id: ObjectId(id) }));
+  }
 
   return null;
 };

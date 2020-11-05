@@ -1,9 +1,8 @@
 const productsModel = require('../models/productsModel');
 
 const buildResponse = (code, message) => {
-  err: {
-    code, message;
-  }
+  const resp = { err: { code: code, message: message } };
+  return resp;
 };
 
 // Caso o recurso não seja encontrado, sua API retorne o status HTTP

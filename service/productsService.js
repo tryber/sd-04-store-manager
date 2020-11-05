@@ -30,7 +30,7 @@ const quantityValidation = async (quantity) => {
       },
     };
   }
-  if (typeof quantity === 'string') {
+  if (isNaN(quantity)) {
     return {
       err: {
         code: 'invalid_data',

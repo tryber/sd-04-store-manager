@@ -8,12 +8,13 @@ router.post('/products', async (req, res) => {
   const { name, quantity } = req.body;
   try {
     const productAdded = await productsService.create(name, quantity);
+    console.log(productAdded);
     if (productAdded.err) {
       return res.status(422).json(productAdded);
     }
     return res.status(201).json({ productAdded });
   } catch (_e) {
-    res.status(500);
+    throw res.status(500);
   }
 });
 

@@ -1,4 +1,3 @@
-const { resourceGone } = require('@hapi/boom');
 const express = require('express');
 const productsValidations = require('../middlewares/productsValidation');
 const productsModel = require('../models/productsModel');

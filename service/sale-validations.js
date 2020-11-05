@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 const saleModel = require('../model/sale');
-const productModel = require('../model/product');
+// const productModel = require('../model/product');
 
 const buildError = (code, message, status) => ({
   error: { err: { code, message } },

@@ -17,9 +17,6 @@ const authPost = async (req, res, next) => {
 
 const authQuantity = async (req, res, next) => {
   const itensSold = req.body;
-
-  console.log('itensSold', itensSold);
-  console.log('itensSold', itensSold[0].productId);
   const sale = await productModel.getProductById(itensSold[0].productId);
   console.log('sale mid', sale);
   console.log('sale mid quantity', sale.quantity);

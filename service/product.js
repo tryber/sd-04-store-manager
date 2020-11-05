@@ -11,7 +11,6 @@ const getAllProducts = async () => {
 };
 
 const getProductById = async (id) => {
-  console.log('Id no service', id);
   const product = await Model.getProductById(id);
   return product;
 };

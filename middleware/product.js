@@ -1,4 +1,4 @@
-const Validation = require('../service/validations');
+const Validation = require('../service/product-validations');
 
 const authPost = async (req, res, next) => {
   const { name, quantity } = req.body;

@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const Model = require('../model/product');
+const productModel = require('../model/product');
 
 const buildError = (code, message, status) => ({
   error: { err: { code, message } },
@@ -22,7 +22,7 @@ const isInvalidName = (name) => {
 };
 
 const isAlreadyName = async (name) => {
-  if (await Model.getProductByName(name)) {
+  if (await productModel.getProductByName(name)) {
     return true;
   }
   return null;
@@ -46,7 +46,7 @@ const isValidPost = async (name, quantity) => {
 const isValidGet = async (id) => {
   if (!ObjectId.isValid(id)) { return buildError('invalid_data', errorMessage[4], 422); }
 
-  const response = await Model.getProductById(id);
+  const response = await productModel.getProductById(id);
 
   if (!response) { return buildError('invalid_data', errorMessage[4], 422); }
 
@@ -69,11 +69,11 @@ const isValidPut = async (name, quantity) => {
 const isValidDelete = async (id) => {
   if (!ObjectId.isValid(id)) { return buildError('invalid_data', errorMessage[4], 422); }
 
-  const deleted = await Model.getProductById(id);
+  const deleted = await productModel.getProductById(id);
 
   if (!deleted) { return buildError('invalid_data', errorMessage[4], 422); }
 
-  await Model.deleteProduct(id);
+  await productModel.deleteProduct(id);
 
   return { error: deleted, status: 200 };
 };

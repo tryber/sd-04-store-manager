@@ -24,8 +24,8 @@ const updateProductById = async (id, name, quantity) =>
 
 const deleteProductById = async (id) => {
   if (ObjectId.isValid(id)) {
-    connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }))
-  };
+    connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+  }
   return null;
 };
 

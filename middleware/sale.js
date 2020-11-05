@@ -30,6 +30,18 @@ const authQuantity = async (req, res, next) => {
   next();
 };
 
+const authSaleGet = async (req, res, next) => {
+  const { id } = req.params;
+
+  if (!id) { return next(); }
+
+  const isvalid = await Validation.isValidGet(id);
+
+  if (isvalid) { return res.status(isvalid.status).json(isvalid.error); }
+
+  next();
+};
+
 const authPut = async (req, res, next) => {
   const { name, quantity } = req.body;
 
@@ -57,6 +69,7 @@ const authDelete = async (req, res, next) => {
 
 module.exports = {
   authPost,
+  authSaleGet,
   authPut,
   authDelete,
   authQuantity,

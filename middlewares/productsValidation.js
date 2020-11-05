@@ -1,7 +1,7 @@
 const productsModel = require('../models/productsModel');
 
 const buildResponse = (code, message) => {
-  const resp = { err: { code: code, message: message } };
+  const resp = { err: { code, message } };
   return resp;
 };
 

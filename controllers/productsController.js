@@ -52,4 +52,12 @@ router.put(
   },
 );
 
+// delete product
+router.delete('/:id', productsValidations.validateIdExistence, async (req, res) => {
+  const { id } = req.params;
+  await productsModel.deleteProduct(id);
+
+  res.status(200).json(req.product);
+});
+
 module.exports = router;

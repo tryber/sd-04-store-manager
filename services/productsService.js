@@ -22,6 +22,7 @@ const createProduct = async (name, quantity) => {
 
 const updateProduct = async (id, name, quantity) => {
   const err = await validation(name, quantity);
+  console.log(err);
 
   if (err.message) return { err, error: true };
 

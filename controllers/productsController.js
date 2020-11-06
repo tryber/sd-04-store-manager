@@ -34,12 +34,12 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
-  const err = { code: 'invalid_data', message: 'Wrong id format' };
 
 
   const product = await updateProduct(id, name, quantity);
+  const { err, error } = product;
 
-  if (!product) return res.status(422).json({ err });
+  if (error) return res.status(422).json({ err });
 
   return res.status(200).json(product);
 });

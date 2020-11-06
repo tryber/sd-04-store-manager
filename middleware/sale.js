@@ -1,10 +1,10 @@
 const Validation = require('../service/sale-validations');
 const productModel = require('../model/product');
 
-const authPost = async (req, res, next) => {
+const authPost = (req, res, next) => {
   const itensSold = req.body;
 
-  const response = await Validation.isValidPost(itensSold);
+  const response = Validation.isValidPost(itensSold);
 
   console.log('Response from service', response);
 
@@ -52,10 +52,10 @@ const authPut = async (req, res, next) => {
   next();
 };
 
-const authDelete = async (req, res, next) => {
+const authDelete = (req, res, next) => {
   const { id } = req.params;
 
-  const response = await Validation.isValidDelete(id);
+  const response = Validation.isValidDelete(id);
 
   if (response) {
     return res.status(response.status).json(response.error);

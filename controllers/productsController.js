@@ -31,4 +31,22 @@ router.get('/:id', async (req, res) => {
   return res.status(200).json(product);
 });
 
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, quantity } = req.body;
+
+  const product = await productsService.updateProduct(id, name, quantity);
+
+  if (product.error) return res.status(422).json({ err: product.err });
+  return res.status(200).json(product);
+});
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const product = await productsService.deleteProduct(id);
+
+  if (product.error) return res.status(422).json({ err: product.err });
+  res.status(200).json(product);
+});
+
 module.exports = router;

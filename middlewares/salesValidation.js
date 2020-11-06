@@ -41,7 +41,7 @@ const validateIdExistence = async (req, res, next) => {
   const sale = await salesModel.findById(id);
 
   if (!sale) {
-    return res.status(422).json(buildResponse('invalid_data', 'Wrong sale ID format'));
+    return res.status(404).json(buildResponse('not_found', 'Sale not found'));
   }
 
   req.sale = sale;

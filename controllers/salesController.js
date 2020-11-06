@@ -33,6 +33,7 @@ router.put(
   '/:id',
   salesValidations.validateQuantity,
   salesValidations.validateQuantityIsNumber,
+  salesValidations.validateIdExistence,
   async (req, res) => {
     const { id } = req.params;
     const itensSold = req.body;

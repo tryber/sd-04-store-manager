@@ -11,6 +11,7 @@ app.use('/products', productRoute);
 
 app.use('/sales', saleRoute);
 
+// Test
 // não remova esse endpoint, e para o avaliador funcionar, Ok. Lerigou!
 app.get('/', (_req, res) => {
   res.send();

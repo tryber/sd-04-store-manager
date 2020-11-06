@@ -62,7 +62,7 @@ const existSales = async (req, res, next) => {
   if (req.params.id) sales = await salesModel.findByIdSales('sales', req.params.id);
   else sales = await salesModel.getAllSales('sales');
   if (!sales || sales.length === 0) {
-    res.status(404).json(responseBuild('not_found', 'Sales not found'));
+    res.status(404).json(responseBuild('not_found', 'Sale not found'));
   }
   next();
 };

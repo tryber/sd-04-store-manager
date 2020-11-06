@@ -5,9 +5,6 @@ const buildResponse = (code, message) => {
   return resp;
 };
 
-// Caso o recurso não seja encontrado, sua API retorne o status HTTP
-// adequado com o body { message: '<recurso> não encontrado' }
-
 // não é possível criar um produto com o nome menor que 5 caracteres
 const validateNameLength = (req, res, next) => {
   const { name } = req.body;

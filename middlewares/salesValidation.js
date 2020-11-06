@@ -1,5 +1,7 @@
 // const salesModel = require('../models/salesModel');
 
+const salesModel = require('../models/salesModel');
+
 const buildResponse = (code, message) => {
   const resp = { err: { code, message } };
   return resp;
@@ -33,7 +35,22 @@ const validateQuantityIsNumber = (req, res, next) => {
   next();
 };
 
+// não é possível listar uma venda que não existe
+const validateIdExistence = async (req, res, next) => {
+  const { id } = req.params;
+  const sale = await salesModel.findById(id);
+
+  if (!sale) {
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong sale ID format'));
+  }
+
+  req.sale = sale;
+
+  next();
+};
+
 module.exports = {
   validateQuantity,
   validateQuantityIsNumber,
+  validateIdExistence,
 };

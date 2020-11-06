@@ -1,7 +1,6 @@
 const productsModel = require('../models/productsModel');
 
 const updateQuantity = async (action, productId, quantity) => {
-
   const product = await productsModel.findById(productId);
   if (!product) return;
   let newQuantity;
@@ -12,7 +11,7 @@ const updateQuantity = async (action, productId, quantity) => {
     newQuantity = product.quantity + quantity;
   }
 
-  return await productsModel.updateProduct(productId, product.name, newQuantity);
+  await productsModel.updateProduct(productId, product.name, newQuantity);
 };
 
 const updateProductQuantity = async (action, itensSold) => {
@@ -21,7 +20,7 @@ const updateProductQuantity = async (action, itensSold) => {
     updateQuantity(action, productId, quantity),
   );
 
-  return await Promise.all(promisses);
+  await Promise.all(promisses);
 };
 
 module.exports = {

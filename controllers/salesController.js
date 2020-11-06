@@ -13,9 +13,8 @@ router.post(
   async (req, res) => {
     const [...itensSold] = req.body;
     const sales = await salesModel.addSale(itensSold);
-    res.status(200).json(sales);
-
     await quantityService.updateProductQuantity(req.method, itensSold);
+    res.status(200).json(sales);
   },
 );
 
@@ -56,8 +55,8 @@ router.delete('/:id', async (req, res) => {
     return null;
   }
   await salesModel.deleteSale(id);
-  res.status(200).json(sale);
   await quantityService.updateProductQuantity(req.method, sale.itensSold);
+  res.status(200).json(sale);
 });
 
 module.exports = router;

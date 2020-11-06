@@ -216,6 +216,7 @@ describe('2 - Crie um endpoint para listar os produtos', () => {
         const { body } = response;
         result = JSON.parse(body);
         responseProductId = result._id;
+        // console.log('responseProductId', responseProductId);
       });
 
     await frisby.get(`${url}/products/${responseProductId}`)

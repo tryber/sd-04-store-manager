@@ -6,15 +6,14 @@ const buildResponse = (code, message) => {
 };
 
 // não é possível cadastrar vendas com quantidade menor ou igual a zero
-const validateQuantity = (req, res, next) => {
-  const list = req.body;
-  let isValid = true;
-  list.map(({ quantity }) => {
-    if (quantity <= 0) {
-      isValid = false;
-    }
+const validateQuantity = async (req, res, next) => {
+  const [...itensSold] = req.body;
+  let isValid;
+  itensSold.map(({ quantity }) => {
+    isValid = quantity <= 0 ? false : true;
     return null;
   });
+
   if (!isValid) {
     return res
       .status(422)
@@ -25,13 +24,11 @@ const validateQuantity = (req, res, next) => {
 };
 
 // não é possível cadastrar vendas com uma string no campo quantidade
-const validateQuantityIsNumber = (req, res, next) => {
-  const list = req.body;
-  let isValid = true;
-  list.map(({ quantity }) => {
-    if (isNaN(quantity)) {
-      isValid = false;
-    }
+const validateQuantityIsNumber = async (req, res, next) => {
+  const [...itensSold] = req.body;
+  let isValid;
+  itensSold.map(({ quantity }) => {
+    isValid = isNaN(quantity) ? false : true;
     return null;
   });
   if (!isValid) {

@@ -10,10 +10,8 @@ router.post(
   salesValidations.validateQuantity,
   salesValidations.validateQuantityIsNumber,
   async (req, res) => {
-    const result = {
-      itensSold: req.body,
-    };
-    const sales = await salesModel.addSale(result);
+    const [...itensSold] = req.body;
+    const sales = await salesModel.addSale(itensSold);
     res.status(200).json(sales);
   },
 );

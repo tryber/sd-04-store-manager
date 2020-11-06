@@ -24,7 +24,7 @@ const isValidPost = async (itensSold) => {
 };
 
 const isValidGet = async (id) => {
-  if (!ObjectId.isValid(id)) { return buildError('invalid_data', errorMessage[1], 422); }
+  if (!ObjectId.isValid(id)) { return buildError('not_found', errorMessage[1], 404); }
 
   const deleted = await saleModel.getSaleById(id);
 

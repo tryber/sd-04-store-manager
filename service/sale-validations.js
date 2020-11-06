@@ -13,7 +13,7 @@ const errorMessage = [
   'Such amount is not permitted to sell',
 ];
 
-const isValidPost = async (itensSold) => {
+const isValidPost = (itensSold) => {
   const isValidItensSold = itensSold.every((e) => typeof (e.quantity) === 'number' && e.quantity > 0);
 
   if (isValidItensSold === false) {
@@ -33,9 +33,8 @@ const isValidGet = async (id) => {
   return null;
 };
 
-const isValidDelete = async (id) => {
+const isValidDelete = (id) => {
   if (!ObjectId.isValid(id)) { return buildError('invalid_data', errorMessage[2], 422); }
-
   return null;
 };
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const salesValidations = require('../middlewares/salesValidation');
 const salesModel = require('../models/salesModel');
+const quantityService = require('../services/quantityService');
 
 const router = express.Router();
 
@@ -13,6 +14,8 @@ router.post(
     const [...itensSold] = req.body;
     const sales = await salesModel.addSale(itensSold);
     res.status(200).json(sales);
+
+    await quantityService.updateProductQuantity(req.method, itensSold);
   },
 );
 
@@ -54,6 +57,7 @@ router.delete('/:id', async (req, res) => {
   }
   await salesModel.deleteSale(id);
   res.status(200).json(sale);
+  await quantityService.updateProductQuantity(req.method, sale.itensSold);
 });
 
 module.exports = router;

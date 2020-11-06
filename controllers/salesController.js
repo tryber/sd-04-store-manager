@@ -44,11 +44,16 @@ router.put(
 );
 
 // delete sale
-router.delete('/:id', salesValidations.validateIdExistence, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  await salesModel.deleteSale(id);
+  const sale = await salesModel.findById(id);
 
-  res.status(200).json(req.sale);
+  if (!sale) {
+    res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
+    return null;
+  }
+  await salesModel.deleteSale(id);
+  res.status(200).json(sale);
 });
 
 module.exports = router;

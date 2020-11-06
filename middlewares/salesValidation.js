@@ -13,11 +13,13 @@ const validateQuantity = (req, res, next) => {
     if (quantity <= 0) {
       isValid = false;
     }
+    return null;
   });
-  if (!isValid)
+  if (!isValid) {
     return res
       .status(422)
       .json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+  }
 
   next();
 };
@@ -30,11 +32,13 @@ const validateQuantityIsNumber = (req, res, next) => {
     if (isNaN(quantity)) {
       isValid = false;
     }
+    return null;
   });
-  if (!isValid)
+  if (!isValid) {
     return res
       .status(422)
       .json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+  }
 
   next();
 };

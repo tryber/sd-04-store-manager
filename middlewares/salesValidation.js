@@ -8,15 +8,9 @@ const buildResponse = (code, message) => {
 // não é possível cadastrar vendas com quantidade menor ou igual a zero
 const validateQuantity = async (req, res, next) => {
   const [...itensSold] = req.body;
-  let isValid = true;
-  itensSold.map(({ quantity }) => {
-    if (quantity <= 0) {
-      isValid = false;
-    }
-    return null;
-  });
+  const quantities = itensSold.map(({ quantity }) => quantity);
 
-  if (!isValid) {
+  if (quantities.some((item) => item <= 0)) {
     return res
       .status(422)
       .json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
@@ -28,14 +22,9 @@ const validateQuantity = async (req, res, next) => {
 // não é possível cadastrar vendas com uma string no campo quantidade
 const validateQuantityIsNumber = async (req, res, next) => {
   const [...itensSold] = req.body;
-  let isValid = true;
-  itensSold.map(({ quantity }) => {
-    if (isNaN(quantity)) {
-      isValid = false;
-    }
-    return null;
-  });
-  if (!isValid) {
+  const quantities = itensSold.map(({ quantity }) => quantity);
+
+  if (quantities.some((item) => isNaN(item))) {
     return res
       .status(422)
       .json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));

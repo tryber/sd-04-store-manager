@@ -34,4 +34,8 @@ app.delete('/products/:id', validaçao.idTest, productController.deleteByIdParam
 
 app.post('/sales', validaçao.quantitySales, salesController.create);
 
+app.get('/sales', validaçao.existSales, salesController.getAll);
+
+app.get('/sales/:id', validaçao.existSales, salesController.getByIdSales);
+
 app.listen(3000, () => console.log('Listening on 3000'));

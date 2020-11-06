@@ -5,8 +5,17 @@ const create = async (req, res) => {
     itensSold: req.body,
   };
   const sales = await salesModel.addSales('sales', itens);
-  console.log(sales);
   res.status(200).json(sales);
 };
 
-module.exports = { create };
+const getAll = async (req, res) => {
+  const allGet = await salesModel.getAllSales('sales');
+  res.status(200).json({ sales: allGet });
+};
+
+const getByIdSales = async (req, res) => {
+  const sale = await salesModel.findByIdSales('sales', req.params.id);
+  res.status(200).json(sale);
+};
+
+module.exports = { create, getAll, getByIdSales };

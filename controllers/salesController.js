@@ -17,16 +17,18 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', async (_req, res) => {
-  const sales = await salesModel.getAllSales();
-  res.status(200).json({ sales });
-});
+    const sales = await salesModel.getAllSales();
+    res.status(200).json({ sales });
+  });
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const sale = await salesModel.getSaleById(id);
   const err = { err: { code: 'not_found', message: 'Sale not found' } };
 
+  const sale = await salesModel.getSaleById(id);
+
   if (!sale) return res.status(404).json({ err });
+
   res.status(200).json(sale);
 });
 

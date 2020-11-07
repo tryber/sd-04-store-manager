@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (_req, res) => {
   const products = await productsModel.getAllProducts();
-
   res.status(200).json({ products });
 });
 

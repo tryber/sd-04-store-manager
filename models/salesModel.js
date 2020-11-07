@@ -9,11 +9,8 @@ const addSale = async (itensSold) => {
 const getAllSales = async () => connection().then((db) => db.collection('sales').find().toArray());
 
 const getSaleById = async (id) => {
-  if (ObjectId.isValid(id)) {
-    return connection().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }));
-  }
-
-  return null;
+  if (!ObjectId.isValid(id)) return null;
+  return connection().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }));
 };
 
 const updateSale = async (id, itensSold) =>

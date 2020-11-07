@@ -6,10 +6,10 @@ const productsService = require('../services/productsService');
 router.post('/', async (req, res) => {
   const { name, quantity } = req.body;
 
-  const product = await productsService.createProduct(name, quantity);
+  const product = await productsService.addProduct(name, quantity);
   const { err, error } = product;
 
-  if (error) return res.status(422).json({ err });
+  if (err) return res.status(422).json({ err });
 
   return res.status(201).json(product);
 });
@@ -37,7 +37,7 @@ router.put('/:id', async (req, res) => {
 
   const product = await productsService.updateProduct(id, name, quantity);
 
-  if (product.error) return res.status(422).json({ err: product.err });
+  if (product.err) return res.status(422).json({ err: product.err });
   return res.status(200).json(product);
 });
 
@@ -45,7 +45,7 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const product = await productsService.deleteProduct(id);
 
-  if (product.error) return res.status(422).json({ err: product.err });
+  if (product.err) return res.status(422).json({ err: product.err });
   res.status(200).json(product);
 });
 

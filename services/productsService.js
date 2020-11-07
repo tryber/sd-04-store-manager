@@ -11,10 +11,10 @@ const validator = async (name, quantity) => {
   return err;
 };
 
-const createProduct = async (name, quantity) => {
+const addProduct = async (name, quantity) => {
   const err = await validator(name, quantity);
 
-  if (err.message) return { err, error: true };
+  if (err.message) return { err };
 
   const product = await productsModel.addProduct(name, quantity);
   return { _id: product.insertedId, name, quantity };
@@ -23,7 +23,7 @@ const createProduct = async (name, quantity) => {
 const updateProduct = async (id, name, quantity) => {
   const err = await validator(name, quantity);
 
-  if (err.message) return { err, error: true };
+  if (err.message) return { err };
 
   const product = await productsModel.updateProduct(id, name, quantity);
   return { _id: product.insertedId, name, quantity };
@@ -31,7 +31,7 @@ const updateProduct = async (id, name, quantity) => {
 
 const deleteProduct = async (id) => {
   const product = await productsModel.getProductById(id);
-  const err = { err: { code: 'invalid_data', message: 'Wrong id format' }, error: true };
+  const err = { err: { code: 'invalid_data', message: 'Wrong id format' } };
 
   await productsModel.deleteProduct(id);
   if (!product) return err;
@@ -39,7 +39,7 @@ const deleteProduct = async (id) => {
 };
 
 module.exports = {
-  createProduct,
+  addProduct,
   updateProduct,
   deleteProduct,
 };

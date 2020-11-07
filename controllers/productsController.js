@@ -1,50 +1,50 @@
-const router = require('express').Router();
+const express = require('express');
 
-const productsModel = require('../models/productsModel');
-const productsService = require('../services/productsService');
+const router = express.Router();
 
+const ProductsServices = require('../services/productsServices');
+
+// CRIA NOVO PRODUTO---------------------------------------------------------------------
 router.post('/', async (req, res) => {
   const { name, quantity } = req.body;
+  const product = await ProductsServices.createProduct(name, quantity);
 
-  const product = await productsService.addProduct(name, quantity);
-  const { err } = product;
-
-  if (err) return res.status(422).json({ err });
-
+  if (product.error) return res.status(422).json({ err: product.err });
   return res.status(201).json(product);
 });
 
+// RETORNA TODOS OS PRODUTOS-------------------------------------------------------------------
 router.get('/', async (_req, res) => {
-  const products = await productsModel.getAllProducts();
-  res.status(200).json({ products });
+  const products = await ProductsServices.getAllProducts();
+  res.status(200).json(products);
 });
 
+// RETORNA OS PRODUTOS POR ID------------------------------------------------------------------
 router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const err = { code: 'invalid_data', message: 'Wrong id format' };
+  // const { id } = req.params;
+  const productForCC = await ProductsServices.getProductById(req.params.id);
 
-  const product = await productsModel.getProductById(id);
-
-  if (!product) return res.status(422).json({ err });
-
-  return res.status(200).json(product);
+  if (productForCC.error) return res.status(422).json({ err: productForCC.err });
+  res.status(200).json(productForCC);
 });
 
+// ATUALIZA O PRODUTO -------------------------------------------------------------------------
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
 
-  const product = await productsService.updateProduct(id, name, quantity);
+  const product = await ProductsServices.updateProduct(id, name, quantity);
 
-  if (product.err) return res.status(422).json({ err: product.err });
+  if (product.error) return res.status(422).json({ err: product.err });
   return res.status(200).json(product);
 });
 
+// DELETA O PRODUTO -------------------------------------------------------------------------
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  const product = await productsService.deleteProduct(id);
+  const product = await ProductsServices.deleteProduct(id);
 
-  if (product.err) return res.status(422).json({ err: product.err });
+  if (product.error) return res.status(422).json({ err: product.err });
   res.status(200).json(product);
 });
 

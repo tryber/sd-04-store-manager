@@ -1,11 +1,14 @@
-const router = require('express').Router();
-const salesModel = require('../models/salesModel');
-const salesService = require('../services/salesService');
+const express = require('express');
 
+const SalesModel = require('../models/salesModel');
+
+const router = express.Router();
+
+// CRIA NOVA VENDA---------------------------------------------------------------------
 router.post('/', async (req, res) => {
-  const item = req.body;
-  const sale = await salesModel.addSale(item);
-  const quantity = sale.itensSold[0].quantity;
+  const sale = req.body;
+  const createdSale = await SalesModel.createSale(sale);
+  const quantity = createdSale.itensSold[0].quantity;
 
   const err = { code: 'invalid_data' };
   if (quantity <= 0 || typeof quantity === 'string') {
@@ -13,48 +16,42 @@ router.post('/', async (req, res) => {
   }
 
   if (err.message) return res.status(422).json({ err });
-  return res.status(200).json(sale);
+  return res.status(200).json(createdSale);
 });
 
+// RETORNA TODAS AS VENDAS-------------------------------------------------------------------
 router.get('/', async (_req, res) => {
-  const sales = await salesModel.getAllSales();
+  const sales = await SalesModel.getAllSales();
   res.status(200).json({ sales });
 });
 
+// RETORNA OS VENDAS POR ID------------------------------------------------------------------
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
+  const sale = await SalesModel.getSaleById(id);
   const err = { err: { code: 'not_found', message: 'Sale not found' } };
 
-  const sale = await salesModel.getSaleById(id);
-
   if (!sale) return res.status(404).json({ err });
-
   res.status(200).json(sale);
 });
 
+// // ATUALIZA UMA VENDA -------------------------------------------------------------------------
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
 
   const [itensSold] = req.body;
   const err = { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' };
-
   if (itensSold.quantity <= 0 || typeof itensSold.quantity === 'string') {
     return res.status(422).json({ err });
   }
 
   const [...saleUpdate] = req.body;
 
-  await salesModel.updateSale(id, saleUpdate);
-  const updatedSale = await salesModel.getSaleById(id);
+  await SalesModel.updateSale(id, saleUpdate);
+  const updatedSale = await SalesModel.getSaleById(id);
   res.status(200).json(updatedSale);
 });
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const sale = await salesService.deleteSale(id);
-
-  if (sale.err) return res.status(422).json({ err: sale.err });
-  res.status(200).json(sale);
-});
+// // DELETA UMA VENDA -------------------------------------------------------------------------
 
 module.exports = router;

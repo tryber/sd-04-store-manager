@@ -1,29 +1,29 @@
-const connection = require('./connection');
 const { ObjectId } = require('mongodb');
+const connection = require('./connection');
 
-const addSale = async (itensSold) => {
+// Cria uma nova venda------------------------------------------------------------------------
+const createSale = async (itensSold) => {
   const result = await connection().then((db) => db.collection('sales').insertOne({ itensSold }));
   return result.ops[0];
 };
 
+// Lista todas as vendas--------------------------------------------------------------------
 const getAllSales = async () => connection().then((db) => db.collection('sales').find().toArray());
 
+// Lista vendas por ID----------------------------------------------------------------------
 const getSaleById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   return connection().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }));
 };
 
+// Atualiza uma venda -----------------------------------------------------------------------
 const updateSale = async (id, itensSold) =>
   connection().then((db) =>
     db.collection('sales').updateOne({ _id: ObjectId(id) }, { $set: { itensSold } }),
   );
 
-const deleteSale = async (id) => {
-  if (ObjectId.isValid(id)) {
-    return connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
-  }
+// Exclui uma venda -------------------------------------------------------------------------
+const deleteSale = async (id) =>
+  connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
 
-  return null;
-};
-
-module.exports = { addSale, getAllSales, getSaleById, updateSale, deleteSale };
+module.exports = { createSale, getAllSales, getSaleById, updateSale, deleteSale };

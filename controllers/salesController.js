@@ -1,4 +1,4 @@
-const { cadastro, findAll, findById, deletar } = require('../models/productsModels');
+const { cadastro, findAll, findById, deletar } = require('../models/Models');
 
 const cadastroVenda = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-const { findByName } = require('../models/productsModels');
+const { findByName } = require('../models/Models');
 
 const isValidProduct = async (req, res, next) => {
   const { name, quantity } = req.body;

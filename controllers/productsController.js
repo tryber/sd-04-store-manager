@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
   const { name, quantity } = req.body;
 
   const product = await productsService.addProduct(name, quantity);
-  const { err, error } = product;
+  const { err } = product;
 
   if (err) return res.status(422).json({ err });
 

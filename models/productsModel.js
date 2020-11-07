@@ -2,13 +2,13 @@ const connection = require('./connection');
 const { ObjectId } = require('mongodb');
 
 const getProductByName = async (name) =>
-  await connection().then((db) => db.collection('products').findOne({ name }));
+  connection().then((db) => db.collection('products').findOne({ name }));
 
 const addProduct = async (name, quantity) =>
-  await connection().then((db) => db.collection('products').insertOne({ name, quantity }));
+  connection().then((db) => db.collection('products').insertOne({ name, quantity }));
 
 const getAllProducts = async () =>
-  await connection().then((db) => db.collection('products').find().toArray());
+  connection().then((db) => db.collection('products').find().toArray());
 
 const getProductById = async (id) => {
   if (ObjectId.isValid(id)) {

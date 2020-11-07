@@ -18,4 +18,18 @@ const getByIdSales = async (req, res) => {
   res.status(200).json(sale);
 };
 
-module.exports = { create, getAll, getByIdSales };
+const updateSales = async (req, res) => {
+  const { productId, quantity } = req.body[0];
+  await salesModel.update('sales', req.params.id, { productId, quantity });
+  const sale = await salesModel.findByIdSales('sales', req.params.id);
+  res.status(200).json(sale);
+};
+
+const deleteSales = async (req, res) => {
+  const { id } = req.params;
+  const sale = await salesModel.findByIdSales('sales', id);
+    await salesModel.deleteSale('sales', id);
+    return res.status(200).json(sale);
+};
+
+module.exports = { create, getAll, getByIdSales, updateSales, deleteSales };

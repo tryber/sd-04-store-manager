@@ -12,7 +12,7 @@ const exist = async (req, res, next) => {
   next();
 };
 
-const quantitySales = async (req, res, next) => {
+const quantitySales = (req, res, next) => {
   const array = req.body;
   for (let i = 0; i < array.length; i += 1) {
     if (array[i].quantity < 1 || !Number.isInteger(array[i].quantity)) {
@@ -67,4 +67,20 @@ const existSales = async (req, res, next) => {
   next();
 };
 
-module.exports = { nameTest, quantityTest, exist, idTest, quantitySales, existSales };
+const existSalesDelete = async (req, res, next) => {
+  const sales = await salesModel.findByIdSales('sales', req.params.id);
+  if (!sales || sales.length === 0) {
+    res.status(422).json(responseBuild('invalid_data', 'Wrong sale ID format'));
+  }
+  next();
+};
+
+module.exports = {
+  nameTest,
+  quantityTest,
+  exist,
+  idTest,
+  quantitySales,
+  existSales,
+  existSalesDelete,
+};

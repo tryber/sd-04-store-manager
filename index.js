@@ -38,4 +38,8 @@ app.get('/sales', validaçao.existSales, salesController.getAll);
 
 app.get('/sales/:id', validaçao.existSales, salesController.getByIdSales);
 
+app.put('/sales/:id', validaçao.quantitySales, salesController.updateSales);
+
+app.delete('/sales/:id', validaçao.existSalesDelete, salesController.deleteSales);
+
 app.listen(3000, () => console.log('Listening on 3000'));

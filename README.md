@@ -261,7 +261,7 @@ Se o produto for cadastrado com sucesso o resultado retornado deverá ser confor
 
 ![Criar produtos](./public/criarProdutos.png)
 
-### 2 - Crie um endpoint para listar os produtos
+## 2 - Crie um endpoint para listar os produtos
 
 - O endpoint deve ser acessível através do caminho (`/products`) ou (`/products/:id`);
 
@@ -289,7 +289,7 @@ Se a lista retornar com falha, o resultado retornado deverá ser conforme exibid
 
 ![Produto não existe](./public/produtonaoexiste.png)
 
-### 3 - Crie um endpoint para atualizar um produto
+## 3 - Crie um endpoint para atualizar um produto
 
 - O endpoint deve ser acessível através do caminho (`/products/:id`);
 
@@ -333,7 +333,7 @@ Se o produto atualizado com sucesso, o resultado mostrretornadoado deverá ser c
 
 ![Atualizado com sucesso](./public/atualizarcomsucesso.png)
 
-### 4 - Crie um endpoint para deletar um produto
+## 4 - Crie um endpoint para deletar um produto
 
 - O endpoint deve ser acessível através do caminho (`/products/:id`);
 
@@ -353,7 +353,7 @@ Se o produto não for deletado com sucesso, o resultado retornado deverá ser es
 
 ![Deletar um produto que não existe](./public/deletarumprodutoquenaoexiste.png)
 
-### 5 - Crie um endpoint para cadastrar vendas
+## 5 - Crie um endpoint para cadastrar vendas
 
 - O endpoint deve ser acessível através do caminho (`/sales`);
 
@@ -427,7 +427,7 @@ Se as vendas foi feita com sucesso, o resultado retornado deverá ser conforme e
 
 ![Cadastrar varias compras](./public/variascompras.png)
 
-### 6 - Crie um endpoint para listar as vendas
+## 6 - Crie um endpoint para listar as vendas
 
 - O endpoint deve ser acessível através do caminho (`/sales`) ou (`/sales/:id`);
 
@@ -455,7 +455,7 @@ Se a venda não esta sendo listada, o resultado retornado deverá ser conforme e
 
 ![Listar uma venda que não existe](./public/vendanaoexiste.png)
 
-### 7 - Crie um endpoint para atualizar uma venda
+## 7 - Crie um endpoint para atualizar uma venda
 
 - O endpoint deve ser acessível através do caminho (`/sales/:id`);
 
@@ -500,7 +500,7 @@ Se a venda for atualizada com sucesso, o resultado retornado deverá ser conform
 
 ![Atualizar uma venda com sucesso](./public/atualizarvendacomsucesso.png)
 
-### 8 - Crie um endpoint para deletar uma venda
+## 8 - Crie um endpoint para deletar uma venda
 
 - O endpoint deve ser acessível através do caminho (`/sales/:id`);
 
@@ -522,7 +522,7 @@ Se a venda não foi deletada sucesso, o resultado retornado deverá ser conforme
 
 ## Bônus
 
-### 9 - Atualize a quantidade de produtos
+## 9 - Atualize a quantidade de produtos
 
 - Ao realizar uma venda, atualizá-la ou deletá-la, você deve também atualizar a quantidade do produto em questão presente na `collection` responsável pelos produtos;
 

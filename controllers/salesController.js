@@ -28,8 +28,8 @@ const updateSales = async (req, res) => {
 const deleteSales = async (req, res) => {
   const { id } = req.params;
   const sale = await salesModel.findByIdSales('sales', id);
-    await salesModel.deleteSale('sales', id);
-    return res.status(200).json(sale);
+  await salesModel.deleteSale('sales', id);
+  return res.status(200).json(sale);
 };
 
 module.exports = { create, getAll, getByIdSales, updateSales, deleteSales };

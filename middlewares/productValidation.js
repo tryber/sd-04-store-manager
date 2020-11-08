@@ -1,6 +1,6 @@
 const Joi = require('@hapi/joi');
 const producModel = require('../models/productModel');
-const utilsModel = require('../utils/model');
+const utilsModel = require('../service/model');
 
 const schemaProduct = Joi.object().keys({
   name: Joi.string()

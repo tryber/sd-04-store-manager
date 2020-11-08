@@ -2,7 +2,7 @@
 const express = require('express');
 const validations = require('../middlewares/productValidation');
 const productModel = require('../models/productModel');
-const utilsModel = require('../utils/model');
+const utilsModel = require('../service/model');
 
 const router = express.Router();
 

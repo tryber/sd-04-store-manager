@@ -2,12 +2,16 @@ const Joi = require('@hapi/joi');
 const utilsModel = require('../service/model');
 
 const schemaSales = Joi.object().keys({
-  quantity: Joi.number().integer().min(1).required().messages({
-    'number.base': 'Wrong product ID or invalid quantity',
-    'number.min': 'Wrong product ID or invalid quantity',
-    'number.empty': 'Wrong product ID or invalid quantity',
-    'any.required': 'Wrong product ID or invalid quantity',
-  }),
+  quantity: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+    .messages({
+      'number.base': 'Wrong product ID or invalid quantity',
+      'number.min': 'Wrong product ID or invalid quantity',
+      'number.empty': 'Wrong product ID or invalid quantity',
+      'any.required': 'Wrong product ID or invalid quantity',
+    }),
 });
 
 // Válida o tamanho (length) dos campos name e quantity utilizando o hapi

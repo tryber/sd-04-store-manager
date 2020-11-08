@@ -1,7 +1,6 @@
 // SECTION SalesController
 const express = require('express');
 const validations = require('../middlewares/salesValidation');
-const salesModel = require('../models/salesModel');
 const utilsModel = require('../service/model');
 const salesSerice = require('../service/salesService');
 

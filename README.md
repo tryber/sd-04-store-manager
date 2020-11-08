@@ -133,7 +133,8 @@ Isso está configurado para o avaliador funcionar.
 A conexão do banco local devera conter os seguintes parâmetros:
 
 ```javascript
-const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
+const MONGO_DB_URL = 'mongodb://
+:27017/StoreManager';
 const DB_NAME = 'StoreManager';
 ```
 

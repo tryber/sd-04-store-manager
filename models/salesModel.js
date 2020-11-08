@@ -24,7 +24,7 @@ const addSales = async (itensSold) => {
  */
 const update = async (id, itensSold) => {
   // console.log(itensSold);
-  const result = connection().then((db) =>
+  const result = await connection().then((db) =>
     db
       .collection('sales')
       .findOneAndUpdate({ _id: ObjectId(id) }, { $set: { itensSold } }, { returnOriginal: false }),

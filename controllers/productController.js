@@ -21,9 +21,7 @@ router.post(
   async (req, res) => {
     try {
       const { name, quantity } = req.body;
-
       const product = await productModel.addProduct(name, quantity);
-
       res.status(201).json(product);
     } catch (_e) {
       res.status(422).json({ message: 'Falha ao cadastrar produto' });

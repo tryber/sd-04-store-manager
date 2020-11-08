@@ -2,7 +2,7 @@
 const express = require('express');
 const validations = require('../middlewares/salesValidation');
 const utilsModel = require('../service/model');
-const salesSerice = require('../service/salesService');
+const salesService = require('../service/salesService');
 
 const router = express.Router();
 
@@ -21,12 +21,13 @@ router.post(
       console.log(body);
 
       // const sales = await salesModel.addSales(body);
-      const sales = await salesSerice.add(body);
+      const sales = await salesService.add(body);
       if (!sales) {
         return res.status(404).json({
           err: { code: 'stock_problem', message: 'Such amount is not permitted to sell' },
         });
       }
+      console.log('venda', sales);
       res.status(200).json(sales);
     } catch (_e) {
       res.status(501).json({ message: 'Falha ao cadastrar produto' });
@@ -65,7 +66,7 @@ router.put(
       // console.log(body);
 
       // Atualiza o produto
-      const saleUpdate = await salesSerice.update(req.params.id, body);
+      const saleUpdate = await salesService.update(req.params.id, body);
       // Obtên o produto atualizado
       // const salesUpdate = await utilsModel.findById(req.params.id, 'sales');
       // console.log('resulta update', saleUpdate);
@@ -75,9 +76,9 @@ router.put(
         });
       }
       // console.log('status 200');
-      res.status(200).json(saleUpdate.value);
+      const { name, ...newSale } = saleUpdate.value;
+      res.status(200).json(newSale);
     } catch (_e) {
-      console.log('erro');
       res.status(501).json({ message: 'Error.' });
       // console.log(_e);
     }

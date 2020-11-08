@@ -12,7 +12,7 @@ router.post('/', async ({ body }, res) => {
   }
 
   if (err.message) return res.status(422).json({ err });
-  
+
   res.status(200).json(sale);
 });
 

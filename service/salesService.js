@@ -26,7 +26,10 @@ const update = async (id, obj) => {
   if (!newQtd) return false;
 
   // Atualiza a qtd da tabela sales
-  obj.quantity = newQtd;
+  function updateObj(obj) {
+    obj.quantity = newQtd;
+  }
+
   const result = await salesModel.update(id, obj);
 
   // const result = await salesModel.update(id, obj);
@@ -48,7 +51,9 @@ const add = async (obj) => {
   if (!newQtd) return false;
 
   // Caso a venda seja validada, atauliza a qtd do produto
-  obj.quantity = newQtd;
+  function updateObj(obj) {
+    obj.quantity = newQtd;
+  }
 
   // Adiciona a venda na tabela sales
   const sales = await salesModel.addSales(obj);

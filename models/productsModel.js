@@ -29,6 +29,12 @@ const deleteProductById = async (id) => {
   return null;
 };
 
+const updateProductQuantity = (id, quantity) =>
+  connection().then((db) =>
+    db
+      .collection('products')
+      .updateOne({ _id: ObjectId(id) }, { $inc: { quantity: -quantity  } }));
+
 module.exports = {
   getProductByName,
   addProduct,
@@ -36,4 +42,5 @@ module.exports = {
   getProductById,
   updateProductById,
   deleteProductById,
+  updateProductQuantity,
 };

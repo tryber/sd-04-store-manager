@@ -2,12 +2,16 @@ const router = require('express').Router();
 
 const { addSale, getAllSales, getSaleById, updateSaleById, deleteSaleById } = require('../models/salesModel');
 
+const { updateProductQuantity } = require('../models/productsModel');
+
 router.post('/', async ({ body }, res) => {
   const sale = await addSale(body);
-  const qty = sale.itensSold[0].quantity;
+  const { quantity, productId } = sale.itensSold[0];
+
+  await updateProductQuantity(productId, quantity);
 
   const err = { code: 'invalid_data' };
-  if (qty <= 0 || typeof qty !== 'number') {
+  if (quantity <= 0 || typeof quantity !== 'number') {
     err.message = 'Wrong product ID or invalid quantity';
   }
 
@@ -53,6 +57,10 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
   const sale = await getSaleById(id);
+
+  const { quantity, productId } = sale.itensSold[0];
+
+  await updateProductQuantity(productId, -quantity);
 
   if (!sale) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
 

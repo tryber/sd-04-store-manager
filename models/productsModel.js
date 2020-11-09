@@ -33,7 +33,7 @@ const updateProductQuantity = (id, quantity) =>
   connection().then((db) =>
     db
       .collection('products')
-      .updateOne({ _id: ObjectId(id) }, { $inc: { quantity: -quantity  } }));
+      .updateOne({ _id: ObjectId(id) }, { $inc: { quantity: -quantity } }));
 
 module.exports = {
   getProductByName,

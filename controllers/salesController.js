@@ -58,15 +58,15 @@ router.delete('/:id', async (req, res) => {
 
   const sale = await getSaleById(id);
 
-  const { quantity, productId } = sale.itensSold[0];
-
-  await updateProductQuantity(productId, -quantity);
-
   if (!sale) return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
 
   if (sale === {}) return res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
 
   await deleteSaleById(id);
+
+  const { quantity, productId } = sale.itensSold[0];
+
+  await updateProductQuantity(productId, -quantity);
 
   return res.status(200).json(sale);
 });

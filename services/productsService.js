@@ -1,4 +1,3 @@
-const { findById } = require('../models/productsModel');
 const productsModel = require('../models/productsModel');
 
 let error;

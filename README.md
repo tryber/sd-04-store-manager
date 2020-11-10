@@ -176,7 +176,7 @@ A resposta do insert deve retornar após a criação é essa:
 ```
 (O _id será gerado automaticamente)
 
-### 1 - Crie um endpoint para o cadastro de produtos
+## 1 - Crie um endpoint para o cadastro de produtos
 
 - O endpoint deve ser acessível através do caminho (`/products`);
 
@@ -207,7 +207,7 @@ O projeto deve rodar na porta `http://localhost/3000`
 
 ![Criar produtos](./public/criarProdutos.png)
 
-## Validações importantes:
+### Validações importantes:
 
 - `name` deve ser uma _string_ com mais de 5 caracteres e deve ser único;
 
@@ -341,7 +341,7 @@ Se o produto atualizado com sucesso, o resultado mostrretornadoado deverá ser c
 
 ### Além disso,as seguintes verificações serão feitas:
 
-**[Será validado que não é possível deletar um produto com sucesso]**
+**[Será validado que é possível deletar um produto com sucesso]**
 
 Se o produto deletado com sucesso, o resultado retornado deverá ser conforme exibido abaixo, com status http `200`:
 

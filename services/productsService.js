@@ -1,29 +1,44 @@
+const { findById } = require('../models/productsModel');
 const productsModel = require('../models/productsModel');
 
-const nameValidation = async (name) => {
-  const product = await productsModel.findByName(name);
-  console.log(product);
+let error;
+const nameValidationMiddleware = (req, res, next) => {
+  const { name } = req.body;
+  console.log(req.body.name);
+
   if (name.length < 5) {
-    return {
+    error = {
       err: {
         code: 'invalid_data',
         message: '"name" length must be at least 5 characters long',
       },
     };
-  } else if (product) {
-    return {
+  }
+  if (error) {
+    return res.status(422).json(error);
+  }
+  return next();
+};
+const productValidationMiddleware = async (req, res, next) => {
+  const { name } = req.body;
+  const product = await productsModel.findByName(name);
+  if (product) {
+    error = {
       err: {
         code: 'invalid_data',
         message: 'Product already exists',
       },
     };
   }
-  return null;
+  if (error) {
+    return res.status(422).json(error);
+  }
+  return next();
 };
-
-const quantityValidation = async (quantity) => {
+const quantityValidationMiddleware = (req, res, next) => {
+  const { quantity } = req.body;
   if (quantity <= 0) {
-    return {
+    error = {
       err: {
         code: 'invalid_data',
         message: '"quantity" must be larger than or equal to 1',
@@ -31,28 +46,38 @@ const quantityValidation = async (quantity) => {
     };
   }
   if (isNaN(quantity)) {
-    return {
+    error = {
       err: {
         code: 'invalid_data',
         message: '"quantity" must be a number',
       },
     };
   }
-  return null;
+  if (error) {
+    return res.status(422).json(error);
+  }
+  return next();
 };
 
-const create = async (name, quantity) => {
-  const nameError = await nameValidation(name);
-  const quantityError = await quantityValidation(quantity);
-  if (nameError) {
-    return nameError;
+const validateExistProductMiddleware = async (req, res, next) => {
+  const { id } = req.params;
+  const product = findById(id, 'products');
+  if (!product) {
+    res.status(422);
+    return res.json({
+      err: {
+        code: 'invalid_data',
+        message: 'Wrong id format',
+      },
+    });
   }
-  if (quantityError) {
-    return quantityError;
-  }
-  // const allProducts = await productsModel.getAllProducts();
-  const product = await productsModel.insertProduct(name, quantity);
-  return product;
+
+  return next();
 };
 
-module.exports = { create };
+module.exports = {
+  nameValidationMiddleware,
+  productValidationMiddleware,
+  quantityValidationMiddleware,
+  validateExistProductMiddleware,
+};

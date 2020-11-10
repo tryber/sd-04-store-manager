@@ -1,7 +1,13 @@
 const productsService = require('../services/productsService');
 
 const express = require('express');
-const { getAllProducts, findById } = require('../models/productsModel');
+const {
+  getAllProducts,
+  findById,
+  insertProduct,
+  updateProduct,
+  deleteProduct,
+} = require('../models/productsModel');
 
 const router = express.Router();
 router.get('/', async (req, res) => {
@@ -15,24 +21,26 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
-  const { name, quantity } = req.body;
-  try {
-    const productAdded = await productsService.create(name, quantity);
-    console.log(productAdded);
-    if (productAdded.err) {
-      return res.status(422).json(productAdded);
+router.post(
+  '/',
+  productsService.nameValidationMiddleware,
+  productsService.productValidationMiddleware,
+  productsService.quantityValidationMiddleware,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    try {
+      const productAdded = await insertProduct(name, quantity);
+      return res.status(201).json(productAdded);
+    } catch (err) {
+      console.error(err);
+      throw res.status(500);
     }
-    return res.status(201).json(productAdded);
-  } catch (err) {
-    console.error(err);
-    throw res.status(500);
-  }
-});
+  },
+);
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const product = await findById(id);
+  const product = await findById(id, 'products');
   try {
     if (!product) {
       res.status(422);
@@ -45,6 +53,45 @@ router.get('/:id', async (req, res) => {
     }
     res.status(200);
     return res.json(product);
+  } catch (err) {
+    console.error(err);
+    throw res.status(500);
+  }
+});
+
+router.put(
+  '/:id',
+  productsService.nameValidationMiddleware,
+  productsService.quantityValidationMiddleware,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    const { id } = req.params;
+    try {
+      const productUpdated = await updateProduct(id, name, quantity);
+      return res.status(201).json(productUpdated);
+    } catch (err) {
+      console.error(err);
+      throw res.status(500);
+    }
+  },
+);
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const product = findById(id, 'products');
+  try {
+    const productDeleted = await deleteProduct(id);
+    if (!product.id || !productDeleted) {
+      res.status(422);
+      return res.json({
+        err: {
+          code: 'invalid_data',
+          message: 'Wrong id format',
+        },
+      });
+    }
+
+    return res.status(200).json(product);
   } catch (err) {
     console.error(err);
     throw res.status(500);

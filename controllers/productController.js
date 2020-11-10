@@ -1,38 +1,56 @@
-const productModel = require('../models/productModel');
+const express = require('express');
+const models = require('../models/models');
+const validations = require('../middlewares/validaçoes');
 
-const showProducts = async (req, res) => {
-  const products = await productModel.getAll();
+const router = express.Router();
+
+router.post(
+  '/',
+  validations.validateNameLength,
+  validations.verifyIfProductExists,
+  validations.validateQuantity,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    try {
+      const insertedProduct = await models.createOne('products', { name, quantity });
+      res.status(201).json(insertedProduct);
+    } catch (err) {
+      res.status(500).json({ err });
+    }
+  },
+);
+
+router.get('/', async (_req, res) => {
+  const products = await models.findAll('products');
   res.status(200).json({ products });
-};
+});
 
-const addProduct = async (req, res) => {
-  const { name, quantity } = req.body;
-  await productModel.addProduct(name, quantity);
-  const product = await productModel.findByName('products', name);
-  res.status(201).json(product);
-};
+router.get('/:id', validations.verifyIfProductExistsById, async (req, res) => {
+  res.status(200).json(req.product);
+});
 
-const findByIdParams = async (req, res) => {
+router.put(
+  '/:id',
+  validations.validateNameLength,
+  validations.validateQuantity,
+  validations.verifyIfProductExistsById,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    const { id } = req.params;
+    try {
+      await models.update('products', id, { name, quantity });
+      const product = await models.findById('products', id);
+      res.status(200).json(product);
+    } catch (err) {
+      res.status(500).json({ err });
+    }
+  },
+);
+
+router.delete('/:id', validations.verifyIfProductExistsById, async (req, res) => {
   const { id } = req.params;
-  const product = await productModel.findById('products', id);
-  res.status(200).json(product);
-};
+  await models.remove('products', id);
+  res.status(200).json(req.product);
+});
 
-const updateByIdParams = async (req, res) => {
-  const { id } = req.params;
-  const { name, quantity } = req.body;
-  await productModel.update('products', id, { name, quantity });
-  const product = await productModel.findByName('products', name);
-  res.status(200).json(product);
-};
-
-const deleteByIdParams = async (req, res) => {
-  const { id } = req.params;
-  const product = await productModel.findById('products', id);
-  if (product) {
-    await productModel.deleteProduct('products', id);
-    return res.status(200).json(product);
-  }
-};
-
-module.exports = { showProducts, addProduct, findByIdParams, updateByIdParams, deleteByIdParams };
+module.exports = router;

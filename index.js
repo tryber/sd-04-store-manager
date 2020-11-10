@@ -1,45 +1,16 @@
-const productController = require('./controllers/productController');
-const salesController = require('./controllers/salesController');
-const validaçao = require('./middlewares/validaçoes');
 const express = require('express');
-// const bodyParser = require('body-parser');
+const productscontroller = require('./controllers/productController');
+const salescontroller = require('./controllers/salesController');
 
 const app = express();
 
 app.use(express.json());
-
+app.use('/products', productscontroller);
+app.use('/sales', salescontroller);
+// não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });
 
-app.post(
-  '/products',
-  validaçao.exist,
-  validaçao.nameTest,
-  validaçao.quantityTest,
-  productController.addProduct,
-);
-
-app.get('/products', productController.showProducts);
-app.get('/products/:id', validaçao.idTest, productController.findByIdParams);
-
-app.put(
-  '/products/:id',
-  validaçao.nameTest,
-  validaçao.quantityTest,
-  productController.updateByIdParams,
-);
-
-app.delete('/products/:id', validaçao.idTest, productController.deleteByIdParams);
-
-app.post('/sales', validaçao.quantitySales, salesController.create);
-
-app.get('/sales', validaçao.existSales, salesController.getAll);
-
-app.get('/sales/:id', validaçao.existSales, salesController.getByIdSales);
-
-app.put('/sales/:id', validaçao.quantitySales, salesController.updateSales);
-
-app.delete('/sales/:id', validaçao.existSalesDelete, salesController.deleteSales);
-
-app.listen(3000, () => console.log('Listening on 3000'));
+const port = 3000;
+app.listen(port, () => console.log(`listening on port ${port}`));

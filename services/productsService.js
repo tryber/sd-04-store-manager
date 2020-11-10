@@ -59,25 +59,8 @@ const quantityValidationMiddleware = (req, res, next) => {
   return next();
 };
 
-const validateExistProductMiddleware = async (req, res, next) => {
-  const { id } = req.params;
-  const product = findById(id, 'products');
-  if (!product) {
-    res.status(422);
-    return res.json({
-      err: {
-        code: 'invalid_data',
-        message: 'Wrong id format',
-      },
-    });
-  }
-
-  return next();
-};
-
 module.exports = {
   nameValidationMiddleware,
   productValidationMiddleware,
   quantityValidationMiddleware,
-  validateExistProductMiddleware,
 };

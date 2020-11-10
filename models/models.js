@@ -38,9 +38,7 @@ const remove = async (collection, id) => {
 
 const updateProduct = async (collection, id, quantity) => {
   const db = await connection();
-  await db
-    .collection(collection)
-    .updateOne({ _id: ObjectId(id) }, { $inc: { quantity: quantity } });
+  await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $inc: { quantity } });
 };
 
 module.exports = {

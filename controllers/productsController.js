@@ -1,9 +1,12 @@
-const ProductsModel = require('../models/productsModel');
+const express = require('express');
+const ProductsServices = require('../services/productsService');
 
-const listProducts = async (req, res) => {
-  const products = await ProductsModel.getAll();
+const router = express.Router();
 
-  res.status(200).jsaon(products);
-};
+router.post('/', async (req, res) => {
+  const { name, quantity } = req.body;
+  const product = await ProductsServices.createProduct(name, quantity);
 
-module.exports = listProducts;
+  if (product.error) return res.status(422).json({ err: product.err });
+  return res.status(201).json(product);
+});

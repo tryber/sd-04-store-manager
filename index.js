@@ -1,10 +1,13 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
-app.use(express.json);
+const port = 3000;
+
+app.use(bodyParser.json);
 
 app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(3000, () => console.log('Listening on 3000'));
+app.listen(port, () => console.log(`Listening on ${port}`));

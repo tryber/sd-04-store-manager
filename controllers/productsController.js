@@ -11,7 +11,7 @@ const {
 
 const router = express.Router();
 router.get('/', async (req, res) => {
-  const products = await getAllProducts();
+  const products = await getAllProducts('products');
   try {
     res.status(200);
     res.json({ products });
@@ -81,7 +81,7 @@ router.delete('/:id', async (req, res) => {
   const product = findById(id, 'products');
   try {
     const productDeleted = await deleteProduct(id);
-    if (!product.id || !productDeleted) {
+    if (!product || !productDeleted) {
       res.status(422);
       return res.json({
         err: {

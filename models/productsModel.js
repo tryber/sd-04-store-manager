@@ -1,17 +1,17 @@
 const { ObjectID } = require('mongodb');
 const connection = require('./connection');
 
-const getAllProducts = async () =>
+const getAllProducts = async (collection) =>
   connection()
-    .then((db) => db.collection('products').find().toArray())
+    .then((db) => db.collection(collection).find().toArray())
     .catch((err) => {
       console.error(err);
       return process.exit(1);
     });
 
-const findByName = (name) =>
+const findByName = (name, collection) =>
   connection()
-    .then((db) => db.collection('products').findOne({ name }))
+    .then((db) => db.collection(collection).findOne({ name }))
     .catch((err) => {
       console.error(err);
       return process.exit(1);
@@ -45,7 +45,7 @@ const updateProduct = async (id, name, quantity) =>
     .then(() => ({ _id: id, name, quantity }))
     .catch((err) => console.error(err));
 
-const deleteProduct = async (id) => {
+const deleteProduct = async (id, collection) => {
   try {
     if (!ObjectID.isValid(id)) {
       return null;

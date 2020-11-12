@@ -18,7 +18,7 @@ const nameValidationMiddleware = (req, res, next) => {
 };
 const productValidationMiddleware = async (req, res, next) => {
   const { name } = req.body;
-  const product = await productsModel.findByName(name);
+  const product = await productsModel.findByName(name, 'products');
   let error;
   if (product) {
     error = {

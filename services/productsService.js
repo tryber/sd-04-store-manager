@@ -1,10 +1,8 @@
 const productsModel = require('../models/productsModel');
 
-let error;
 const nameValidationMiddleware = (req, res, next) => {
   const { name } = req.body;
-  console.log(req.body.name);
-
+  let error;
   if (name.length < 5) {
     error = {
       err: {
@@ -21,6 +19,7 @@ const nameValidationMiddleware = (req, res, next) => {
 const productValidationMiddleware = async (req, res, next) => {
   const { name } = req.body;
   const product = await productsModel.findByName(name);
+  let error;
   if (product) {
     error = {
       err: {
@@ -36,6 +35,7 @@ const productValidationMiddleware = async (req, res, next) => {
 };
 const quantityValidationMiddleware = (req, res, next) => {
   const { quantity } = req.body;
+  let error;
   if (quantity <= 0) {
     error = {
       err: {

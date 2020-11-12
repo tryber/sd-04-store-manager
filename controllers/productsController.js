@@ -23,8 +23,8 @@ router.get('/', async (req, res) => {
 
 router.post(
   '/',
-  productsService.nameValidationMiddleware,
   productsService.productValidationMiddleware,
+  productsService.nameValidationMiddleware,
   productsService.quantityValidationMiddleware,
   async (req, res) => {
     const { name, quantity } = req.body;

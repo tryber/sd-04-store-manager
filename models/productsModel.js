@@ -9,16 +9,14 @@ const getAllProducts = async () =>
       return process.exit(1);
     });
 
-const findByName = async (name) => {
-  try {
-    const db = await connection();
-    const product = await db.collection('products').findOne({ name });
-    return product;
-  } catch (err) {
-    console.error(err);
-    return process.exit(1);
-  }
-};
+const findByName = (name) =>
+  connection()
+    .then((db) => db.collection('products').findOne({ name }))
+    .catch((err) => {
+      console.error(err);
+      return process.exit(1);
+    });
+
 const findById = async (id, collection) => {
   try {
     if (!ObjectID.isValid(id)) {

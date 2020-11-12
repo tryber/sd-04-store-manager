@@ -68,7 +68,7 @@ router.put(
     const { id } = req.params;
     try {
       const productUpdated = await updateProduct(id, name, quantity);
-      return res.status(201).json(productUpdated);
+      return res.status(200).json(productUpdated);
     } catch (err) {
       console.error(err);
       throw res.status(500);

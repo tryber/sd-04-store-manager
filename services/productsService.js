@@ -13,10 +13,23 @@ const isValid = async (name, quantity) => {
 
 const createProduct = async (name, quantity) => {
   const err = await isValid(name, quantity);
-  if (err.message) return { err, erro: true };
+  if (err.message) return { err, error: true };
 
   const product = await productsModel.addProduct(name, quantity);
   return { _id: product.insertedId, name, quantity };
 };
 
-module.exports = { createProduct };
+const getAll = async () => {
+  const product = await productsModel.findAll();
+  return { product };
+};
+
+const getById = async (id) => {
+  const product = await productsModel.findById(id);
+  const err = { err: { code: 'invalid_data', message: 'Wrong id format' }, error: true };
+
+  if (!product) return err;
+  return product;
+};
+
+module.exports = { createProduct, getAll, getById };

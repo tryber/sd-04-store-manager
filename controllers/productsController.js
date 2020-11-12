@@ -80,7 +80,7 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const product = findById(id, 'products');
   try {
-    const productDeleted = await deleteProduct(id);
+    const productDeleted = await deleteProduct(id, 'products');
     if (!product || !productDeleted) {
       res.status(422);
       return res.json({

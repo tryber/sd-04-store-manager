@@ -20,8 +20,8 @@ const createProduct = async (name, quantity) => {
 };
 
 const getAll = async () => {
-  const product = await productsModel.findAll();
-  return { product };
+  const products = await productsModel.findAll();
+  return { products };
 };
 
 const getById = async (id) => {

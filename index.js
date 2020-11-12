@@ -1,19 +1,18 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-
-const ProductsController = require('./controllers/productsController');
-const SalesController = require('./controllers/salesController');
+const productsController = require('./controllers/productsController');
+const salesController = require('./controllers/salesController');
 
 const app = express();
-const port = 3000;
+app.use(express.json());
 
-app.use(bodyParser.json());
+const PORT = 3000;
 
-app.get('/', (_request, response) => {
+app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/products', ProductsController);
-app.use('/sales', SalesController);
+app.use('/products', productsController);
+app.use('/sales', salesController);
 
-app.listen(port, () => console.log(`Aplicativo rodando na porta ${port}`));
+
+app.listen(PORT, () => console.log(`Iniciado na porta ${PORT}`));

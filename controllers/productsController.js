@@ -10,3 +10,5 @@ router.post('/', async (req, res) => {
   if (product.error) return res.status(422).json({ err: product.err });
   return res.status(201).json(product);
 });
+
+module.exports = router;

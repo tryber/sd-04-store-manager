@@ -4,7 +4,7 @@ const isValid = async (name, quantity) => {
   const err = { code: 'invalid_data' };
 
   if (name.length < 5) err.message = '"name" length must be at least 5 characters long';
-  if (await productsModel.findByName(name)) err.message = 'Product already exist';
+  if (await productsModel.findByName(name)) err.message = 'Product already exists';
   if (quantity < 1 || quantity < 0) err.message = '"quantity" must be larger than or equal to 1';
   if (typeof quantity !== 'number') err.message = '"quantity" must be a number';
 

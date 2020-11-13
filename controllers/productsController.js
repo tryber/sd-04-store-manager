@@ -33,4 +33,12 @@ router.put('/:id', async (req, res) => {
   return res.status(200).json(product);
 });
 
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const product = await ProductsServices.deleteProduct(id);
+
+  if (product.error) return res.status(422).json({ err: product.err });
+  res.status(200).json(product);
+});
+
 module.exports = router;

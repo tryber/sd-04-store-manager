@@ -1,6 +1,8 @@
 const express = require('express');
-const { findById, getAll } = require('../models/dbModel');
+
 const router = express.Router();
+const { findById, getAll } = require('../models/dbModel');
+
 
 // router.post('/', (req, res) => {
 //   const { productId, quantity } = req.body;

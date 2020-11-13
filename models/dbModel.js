@@ -60,7 +60,7 @@ const deleteProduct = async (id, collection) => {
 };
 const insertSale = async (itensSold) =>
   connection()
-    .then((db) => db.collection('sales').insertOne({ name, quantity }))
+    .then((db) => db.collection('sales').insertOne(itensSold))
     .then((result) => ({ _id: result.insertedId, itensSold }))
     .catch((err) => console.error(err));
 

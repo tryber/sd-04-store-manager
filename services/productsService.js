@@ -1,4 +1,4 @@
-const productsModel = require('../models/productsModel');
+const dbModel = require('../models/dbModel');
 
 const nameValidationMiddleware = (req, res, next) => {
   const { name } = req.body;
@@ -18,7 +18,7 @@ const nameValidationMiddleware = (req, res, next) => {
 };
 const productValidationMiddleware = async (req, res, next) => {
   const { name } = req.body;
-  const product = await productsModel.findByName(name, 'products');
+  const product = await dbModel.findByName(name, 'products');
   let error;
   if (product) {
     error = {

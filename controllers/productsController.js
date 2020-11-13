@@ -1,17 +1,17 @@
+const express = require('express');
+const router = express.Router();
 const productsService = require('../services/productsService');
 
-const express = require('express');
 const {
-  getAllProducts,
+  getAll,
   findById,
   insertProduct,
   updateProduct,
   deleteProduct,
-} = require('../models/productsModel');
+} = require('../models/dbModel');
 
-const router = express.Router();
 router.get('/', async (req, res) => {
-  const products = await getAllProducts('products');
+  const products = await getAll('products');
   try {
     res.status(200);
     res.json({ products });
@@ -97,9 +97,5 @@ router.delete('/:id', async (req, res) => {
     throw res.status(500);
   }
 });
-// const products = async (req, res) => {
-//   // const allProducts = await productsModel.getAllProducts();
-//   res.status(201).send({});
-// };
 
 module.exports = router;

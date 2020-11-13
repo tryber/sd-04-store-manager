@@ -19,6 +19,14 @@ const createProduct = async (name, quantity) => {
   return { _id: product.insertedId, name, quantity };
 };
 
+const updateProduct = async (id, name, quantity) => {
+  const err = await isValid(name, quantity);
+  if (err.message) return { err, error: true };
+
+  const product = await productsModel.updateProduct(id, name, quantity);
+  return { _id: product.insertedId, name, quantity };
+};
+
 const getAll = async () => {
   const products = await productsModel.findAll();
   return { products };
@@ -32,4 +40,4 @@ const getById = async (id) => {
   return product;
 };
 
-module.exports = { createProduct, getAll, getById };
+module.exports = { createProduct, getAll, getById, updateProduct };

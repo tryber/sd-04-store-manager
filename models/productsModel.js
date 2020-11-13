@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
@@ -8,26 +9,30 @@ const addProduct = async (name, quantity) => {
   return result.ops[0];
 };
 
+const updateProduct = async (id, name, quantity) => {
+  const result = await connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: name, quantity }),
+  );
+  return result;
+};
+
 const findByName = async (name) => {
   const result = await connection().then((db) => db.collection('products').findOne({ name }));
   return result;
 };
 
-const findById = async (id) =>
-  (ObjectId.isValid(id)
-    ? connection().then((db) => db.collection('products').findOne({ _id: ObjectId(id) }))
-    : null);
-// {
-//   if (!ObjectId.isValid(id)) return null;
+const findById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
 
-//   const result = await connection().then((db) =>
-//     db.collection('products').findOne({ _id: ObjectId(id) }));
-//   return result;
-// };
+  const result = await connection().then((db) =>
+    db.collection('products').findOne({ _id: ObjectId(id) }),
+  );
+  return result;
+};
 
 const findAll = async () => {
   const allProducts = await connection().then((db) => db.collection('products').find().toArray());
   return allProducts;
 };
 
-module.exports = { addProduct, findByName, findAll, findById };
+module.exports = { addProduct, findByName, findAll, findById, updateProduct };

@@ -1,12 +1,19 @@
 const express = require('express');
 
 const router = express.Router();
-const { findById, getAll } = require('../models/dbModel');
+const { findById, getAll, insertSale } = require('../models/dbModel');
+const { insertSaleValidationMiddleware } = require('../services/salesService');
 
+router.post('/', insertSaleValidationMiddleware, async (req, res) => {
+  const insertedSales = await insertSale(req.body);
 
-// router.post('/', (req, res) => {
-//   const { productId, quantity } = req.body;
-// });
+  try {
+    return res.status(200).json(insertedSales);
+  } catch (err) {
+    console.error(err);
+    throw res.status(500);
+  }
+});
 
 router.get('/', async (req, res) => {
   const sales = await getAll('sales');

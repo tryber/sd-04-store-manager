@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
 
   const sale = await salesModel.getSaleById(id);
 
-  if (!sale) return res.status(404).json({ err });
+  if (!sale) return res.status(404).json(err);
 
   res.status(200).json(sale);
 });

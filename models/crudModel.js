@@ -26,9 +26,15 @@ const createOne = async (collection, name, quantity) => {
   return result.ops[0];
 };
 
+const update = async (collection, id, name, quantity) => {
+  const db = await connection();
+  await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+};
+
 module.exports = {
   findAll,
   findByName,
   createOne,
   findById,
+  update,
 };

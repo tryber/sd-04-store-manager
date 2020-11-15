@@ -2,6 +2,7 @@ const { ObjectId } = require('mongodb');
 const connection = require('./connector');
 
 const findById = async (collection, id) => {
+  if (!ObjectId.isValid(id)) return null;
   const db = await connection();
   const result = await db.collection(collection).findOne(ObjectId(id));
   return result;

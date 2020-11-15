@@ -6,12 +6,14 @@ const addSale = async (itensSold) => {
   return result.ops[0];
 };
 
-const getAllSales = async () => connection().then((db) => db.collection('sales').find().toArray());
+const getAllSales = async () => {
+  return connection().then((db) => db.collection('sales').find().toArray());
+};
 
 const getSaleById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
-
   const result = await connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
+
   return result;
 };
 

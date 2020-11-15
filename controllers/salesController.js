@@ -18,6 +18,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (_req, res) => {
   const sales = await salesModel.getAllSales();
+
   res.status(200).json({ sales });
 });
 
@@ -51,8 +52,8 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
+  
   const sale = await salesService.deleteSale(id);
-
   if (sale.err) return res.status(422).json({ err: sale.err });
   res.status(200).json(sale);
 });

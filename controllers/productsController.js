@@ -29,7 +29,8 @@ router.get('/:id', validations.verifyProductById, async (req, res) => {
   res.status(200).json(req.product);
 });
 
-router.put('/:id',
+router.put(
+  '/:id',
   validations.validateNameForLength,
   validations.validateQuantity,
   validations.verifyProductById,
@@ -43,6 +44,7 @@ router.put('/:id',
     } catch (err) {
       res.status(500).json({ err });
     }
-  });
+  },
+);
 
 module.exports = router;

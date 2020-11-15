@@ -32,7 +32,7 @@ router.get('/:id', validations.verifyProductById, async (req, res) => {
 router.put('/:id',
   validations.validateNameForLength,
   validations.validateQuantity,
-  validations.validations.verifyProductById,
+  validations.verifyProductById,
   async (req, res) => {
     const { name, quantity } = req.body;
     const { id } = req.params;

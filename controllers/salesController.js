@@ -1,11 +1,14 @@
 const router = require('express').Router();
 const salesModel = require('../models/salesModel');
 const salesService = require('../services/salesService');
+const productsModel = require('../models/productsModel');
 
 router.post('/', async (req, res) => {
   const item = req.body;
   const sale = await salesModel.addSale(item);
-  const quantity = sale.itensSold[0].quantity;
+  const { productId, quantity } = sale.itensSold[0];
+
+  await productsModel.updateQuantity(productId, quantity);
 
   const err = { code: 'invalid_data' };
   if (quantity <= 0 || typeof quantity === 'string') {

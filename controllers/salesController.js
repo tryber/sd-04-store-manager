@@ -17,9 +17,9 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', async (_req, res) => {
-  const sales = await salesService.getAll();
-
-  res.status(200).json({ sales });
+  const sales = await salesModel.getAllSales();
+  if (!sales) return null;
+  return res.status(200).json({ sales });
 });
 
 router.get('/:id', async (req, res) => {

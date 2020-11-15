@@ -11,8 +11,9 @@ function getAllSales() {
 }
 
 const getSaleById = async (id) => {
-  if (ObjectId.isValid(id))
+  if (ObjectId.isValid(id)) {
     return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
+  }
 
   return null;
 };

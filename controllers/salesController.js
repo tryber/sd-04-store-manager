@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
   return res.status(200).json(sale);
 });
 
-router.get('/', async (_req, res) => {
+router.get('/', async (req, res) => {
   const sales = await salesModel.getAllSales();
 
   res.status(200).json({ sales });
@@ -52,9 +52,10 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  
   const sale = await salesService.deleteSale(id);
-  if (sale.err) return res.status(422).json({ err: sale.err });
+  const err = { err: { code: 'invalid_data', message: 'Wrong sale ID format' } };
+
+  if (!sale) return res.status(422).json(err);
   res.status(200).json(sale);
 });
 

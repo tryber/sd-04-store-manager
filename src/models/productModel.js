@@ -1,0 +1,60 @@
+const { ObjectId } = require('mongodb');
+const connection = require('./connection');
+
+const findById = async (collection, id) => {
+  if (!ObjectId.isValid(id)) return null;
+  try {
+    const db = await connection();
+    const result = await db.collection(collection).findOne(ObjectId(id));
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const findAll = async (collection) => {
+  try {
+    const db = await connection();
+    const results = await db.collection(collection).find({}).toArray();
+    console.log(results);
+    return results;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const findByName = async (collection, name) => {
+  try {
+    const db = await connection();
+    const result = await db.collection(collection).findOne({ name });
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const createOne = async (collection, query) => {
+  try {
+    const db = await connection();
+    const result = await db.collection(collection).insertOne(query);
+    return result.ops[0];
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const update = async (collection, id, query) => {
+  try {
+    const db = await connection();
+    await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: query });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const remove = async (collection, id) => {
+  const db = await connection();
+  await db.collection(collection).deleteOne({ _id: ObjectId(id) });
+};
+
+module.exports = { findAll, findById, update, findByName, createOne, remove };

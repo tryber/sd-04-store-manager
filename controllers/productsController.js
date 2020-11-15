@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post(
   '/',
-  validations.validateNameLength,
-  validations.verifyIfProductExists,
+  validations.validateNameForLength,
+  validations.verifyProducts,
   validations.validateQuantity,
   async (req, res) => {
     const { name, quantity } = req.body;

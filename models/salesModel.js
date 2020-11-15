@@ -10,12 +10,12 @@ function getAllSales() {
   return connection().then((db) => db.collection('sales').find().toArray());
 }
 
-async function getSaleById(id) {
-  if (!ObjectId.isValid(id)) return null;
-  const result = await connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
+const getSaleById = async (id) => {
+  if (ObjectId.isValid(id))
+    return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
 
-  return result;
-}
+  return null;
+};
 
 const updateSale = async (id, itensSold) =>
   connection().then((db) =>

@@ -1,5 +1,10 @@
 const salesModel = require('../models/salesModel');
 
+const getAll = async () => {
+  const sales = await salesModel.getAllSales();
+  return sales;
+};
+
 const deleteSale = async (id) => {
   const sale = await salesModel.getSaleById(id);
 
@@ -8,4 +13,4 @@ const deleteSale = async (id) => {
   return sale;
 };
 
-module.exports = { deleteSale };
+module.exports = { getAll, deleteSale };

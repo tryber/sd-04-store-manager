@@ -42,8 +42,23 @@ const validateQuantity = (req, res, next) => {
   next();
 };
 
+const verifyProductById = async (req, res, next) => {
+  const { id } = req.params;
+
+  const product = await crudModel.findById('products', id);
+
+  if (!product) {
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong id format'));
+  }
+
+  req.product = product;
+
+  next();
+};
+
 module.exports = {
   validateNameForLength,
   verifyProducts,
   validateQuantity,
+  verifyProductById,
 };

@@ -1,8 +1,6 @@
 const express = require('express');
 const productscontroller = require('./controllers/productsController');
-// /controllers/productscontroller'
 const salescontroller = require('./controllers/salesController');
-// ./controllers/salesController
 
 const app = express();
 

@@ -30,4 +30,29 @@ router.get('/:id', async (req, res) => {
   return res.status(200).json(product);
 });
 
+// Atualizar produtos
+router.put('/:id',
+  validation.nameValidation,
+  validation.quantityValidation,
+  validation.existingNameValidation,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    const { id } = req.params;
+    await productsModel.updateProduct(id, name, quantity);
+    const product = await productsModel.findById(id);
+    return res.status(200).json(product);
+  });
+
+// Deletar produtos
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const deleteProduct = await productsModel.findById(id);
+
+  if (!deleteProduct) {
+    return res.status(422).json(validation.buildError('invalid_data', 'Wrong id format'));
+  }
+  await productsModel.deleteProduct(id);
+  return res.status(200).json(deleteProduct);
+});
+
 module.exports = router;

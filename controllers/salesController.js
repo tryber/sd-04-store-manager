@@ -34,4 +34,9 @@ router.put('/:id', validations.validateSales, async (req, res) => {
   crudModel.findById('sales', id).then((sale) => res.status(200).json(sale));
 });
 
+router.delete('/:id', validations.verifySaleById, async (req, res) => {
+  await crudModel.remove('sales', req.params.id);
+  res.status(200).json(req.sale);
+});
+
 module.exports = router;

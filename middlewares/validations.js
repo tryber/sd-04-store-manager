@@ -16,21 +16,19 @@ const nameValidation = (req, res, next) => {
 const quantityValidation = async (req, res, next) => {
   const { quantity } = req.body;
 
-  if (!Number.isInteger(quantity) && quantity > 0) {
-    return res
-      .status(422)
-      .json(buildError('invalid_data', '"quantity" must be a number'));
+  if (!Number.isInteger(quantity)) {
+    return res.status(422).json(buildError('invalid_data', '"quantity" must be a number'));
   }
-  if (quantity < 1) return res.status(422).json(buildError('invalid_data', '"quantity" must be larger or equal to 1'));
+  if (quantity < 1) return res.status(422).json(buildError('invalid_data', '"quantity" must be larger than or equal to 1'));
   next();
 };
 
 const existingNameValidation = async (req, res, next) => {
   const { name } = req.body;
   const product = await productsModel.findByName(name);
-  if (product) {
-    return res.status(422).json(buildError('invalid_data', 'Product already exists'));
-  }
+  console.log(product);
+  if (product) res.status(422).json(buildError('invalid_data', 'Product already exists'));
+
   next();
 };
 

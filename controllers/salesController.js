@@ -47,10 +47,11 @@ router.put(
 );
 
 router.delete('/:id', validations.verifySaleById, async (req, res) => {
-  await crudModel.remove('sales', req.params.id);
   const { id } = req.params;
   const sale = await crudModel.findById('sales', id);
+  console.log('sale', sale);
   await quantityService.updateProductQuantity(req.method, sale.itensSold);
+  await crudModel.remove('sales', id);
   res.status(200).json(req.sale);
 });
 

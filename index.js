@@ -13,6 +13,6 @@ app.get('/', (request, response) => {
 });
 
 app.use('/products', controllers.productsController);
-// app.use('/sales', controllers.salesController);
+app.use('/sales', controllers.salesController);
 
 app.listen(port, () => console.log(`Listening on ${port}`));

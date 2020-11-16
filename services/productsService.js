@@ -49,4 +49,10 @@ const getById = async (id) => {
   return product;
 };
 
-module.exports = { createProduct, getAll, getById, updateProduct, deleteProduct };
+module.exports = {
+  createProduct,
+  getAll,
+  getById,
+  updateProduct,
+  deleteProduct,
+};

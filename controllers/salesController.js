@@ -19,6 +19,9 @@ router.get('/', async (_req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const sale = await crudModel.findById('sales', id);
+  if (!sale) {
+    return res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
+  }
   res.status(200).json(sale);
 });
 

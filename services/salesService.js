@@ -1,38 +1,18 @@
 const salesModel = require('../models/salesModel');
-const validadeSale = require('./salesValid');
+// const validadeSale = require('./salesValid');
 const productsModel = require('../models/productsModel');
 
-const getAll = async () => ({ sales: await salesModel.findAll() });
+const createSale = async (item) => {
+  const sale = await salesModel.addSale(item);
+  const err = { err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' }, error: true };
 
-// const getAll = async () => {
-//   const sales = await productsModel.findAll();
-//   return { products };
-// };
+  const { productId, quantity } = sale.itensSold[0];
+  await productsModel.updateProduct(productId, quantity);
 
-const createSale = async (data) => {
-  try {
-    const validation = await validadeSale(data);
-    if (validation.status) return validation;
-    await Promise.all(
-      data.map(async ({ productId, quantity }) => {
-        const stock = await productsModel.findById(productId);
-        const newStock = stock.quantity - quantity;
-        await productsModel.update(productId, stock.name, newStock);
-      }),
-    );
-    const sales = await salesModel.add(data);
-    return { _id: sales.insertedId, itensSold: data };
-  } catch (e) {
-    process.exit(1);
-  }
+  if (quantity <= 0 || typeof quantity === 'string') return err;
+  return sale;
 };
 
-// const createSale = async (data) => {
-//   const validation = await validadeSale(data);
-//   if (validation.status) return validation;
-
-//   const sale = await salesModel.addSale(quantity);
-//   return { _id: sale.insertedId };
-// };
+const getAll = async () => ({ sales: await salesModel.findAll() });
 
 module.exports = { getAll, createSale };

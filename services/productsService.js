@@ -51,8 +51,8 @@ const getById = async (id) => {
 
 module.exports = {
   createProduct,
-  getAll,
-  getById,
   updateProduct,
   deleteProduct,
+  getAll,
+  getById,
 };

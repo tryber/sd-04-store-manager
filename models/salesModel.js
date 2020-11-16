@@ -3,8 +3,10 @@ const connection = require('./connection');
 
 const findAll = async () => connection().then((db) => db.collection('sales').find().toArray());
 
-const addSale = async (itensSold) =>
-  connection().then((db) => db.collection('sales').insertOne({ itensSold }));
+const addSale = async (itensSold) => {
+  const result = await connection().then((db) => db.collection('sales').insertOne({ itensSold }));
+  return result.ops[0];
+};
 
 const updateSale = async (id, itensSold) =>
   (ObjectId.isValid(id)

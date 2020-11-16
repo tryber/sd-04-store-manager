@@ -51,6 +51,13 @@ const addSale = async (itensSold) => {
   return result;
 };
 
+const updateProduct = async (id, name, quantity) => {
+  const result = await connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
+  );
+  return result;
+};
+
 module.exports = {
   findAll,
   findByName,
@@ -60,4 +67,5 @@ module.exports = {
   remove,
   addSale,
   findProductById,
+  updateProduct,
 };

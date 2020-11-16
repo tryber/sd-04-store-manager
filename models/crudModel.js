@@ -8,6 +8,13 @@ const findById = async (collection, id) => {
   return result;
 };
 
+const findProductById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const result = await connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+  return result;
+};
+
 const findAll = async (collection) => {
   const db = await connection();
   const results = await db.collection(collection).find({}).toArray();
@@ -52,4 +59,5 @@ module.exports = {
   update,
   remove,
   addSale,
+  findProductById,
 };

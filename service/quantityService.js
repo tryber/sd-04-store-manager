@@ -2,6 +2,7 @@ const crudModel = require('../models/crudModel');
 
 const updateQuantity = async (action, productId, quantity) => {
   const product = await crudModel.findById(productId);
+  console.log('product by id', product);
   if (!product) return;
   let newQuantity;
   if (action === 'POST') {

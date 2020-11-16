@@ -26,13 +26,14 @@ const quantityValidation = async (req, res, next) => {
 const existingNameValidation = async (req, res, next) => {
   const { name } = req.body;
   const product = await productsModel.findByName(name);
-  console.log(product);
-  if (product) res.status(422).json(buildError('invalid_data', 'Product already exists'));
-
+  if (product) {
+    return res.status(422).json(buildError('invalid_data', 'Product already exists'));
+  }
   next();
 };
 
 module.exports = {
+  buildError,
   nameValidation,
   quantityValidation,
   existingNameValidation,

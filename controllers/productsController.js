@@ -6,8 +6,8 @@ const productsModel = require('../models/productsModel');
 
 // Mostrar todos os produtos
 router.get('/', async (req, res) => {
-  const allProducts = await productsModel.getAllProducts();
-  return res.status(200).json({ allProducts });
+  const products = await productsModel.getAllProducts();
+  return res.status(200).json({ products });
 });
 
 // Cadastrar produtos
@@ -20,5 +20,14 @@ router.post('/',
     const newProduct = await productsModel.registerProducts(name, quantity);
     return res.status(201).json(newProduct);
   });
+
+// Listar produtos por ID
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  const product = await productsModel.findById(id);
+
+  if (!product) return res.status(422).json(validation.buildError('invalid_data', 'Wrong id format'));
+  return res.status(200).json(product);
+});
 
 module.exports = router;

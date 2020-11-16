@@ -8,7 +8,7 @@ const {
   findById,
   insertProduct,
   updateProduct,
-  deleteProduct,
+  deleteOne,
 } = require('../models/dbModel');
 
 router.get('/', async (req, res) => {
@@ -81,7 +81,7 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const product = findById(id, 'products');
   try {
-    const productDeleted = await deleteProduct(id, 'products');
+    const productDeleted = await deleteOne(id, 'products');
     if (!product || !productDeleted) {
       res.status(422);
       return res.json({

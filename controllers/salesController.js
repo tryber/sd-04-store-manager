@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const { findById, getAll, insertSale } = require('../models/dbModel');
+const { findById, getAll, insertSale, deleteOne } = require('../models/dbModel');
 const { insertSaleValidationMiddleware } = require('../services/salesService');
 
 router.post('/', insertSaleValidationMiddleware, async (req, res) => {
@@ -38,6 +38,27 @@ router.get('/:id', async (req, res) => {
         },
       });
     }
+    return res.status(200).json(sale);
+  } catch (err) {
+    console.error(err);
+    throw res.status(500);
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const sale = await findById(id, 'sales');
+  try {
+    if (!sale) {
+      res.status(422);
+      return res.json({
+        err: {
+          code: 'invalid_data',
+          message: 'Wrong sale ID format',
+        },
+      });
+    }
+    await deleteOne(id, 'sales');
     return res.status(200).json(sale);
   } catch (err) {
     console.error(err);

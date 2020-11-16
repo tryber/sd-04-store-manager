@@ -45,7 +45,7 @@ const updateProduct = async (id, name, quantity) =>
     .then(() => ({ _id: id, name, quantity }))
     .catch((err) => console.error(err));
 
-const deleteProduct = async (id, collection) => {
+const deleteOne = async (id, collection) => {
   try {
     if (!ObjectID.isValid(id)) {
       return null;
@@ -64,12 +64,21 @@ const insertSale = async (itensSold) =>
     .then((result) => ({ _id: result.insertedId, itensSold }))
     .catch((err) => console.error(err));
 
+const updateSale = async (id, name, quantity) =>
+  connection()
+    .then((db) =>
+      db.collection('sales').updateOne({ _id: ObjectID(id) }, { $set: { name, quantity } }),
+    )
+    .then(() => ({ _id: id, name, quantity }))
+    .catch((err) => console.error(err));
+
 module.exports = {
   getAll,
   insertProduct,
   findByName,
   findById,
   updateProduct,
-  deleteProduct,
+  deleteOne,
   insertSale,
+  updateSale,
 };

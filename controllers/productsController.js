@@ -1,0 +1,63 @@
+const express = require('express');
+const model = require('../models/commonModel');
+const validations = require('../middlewares/productValidations');
+
+const router = express.Router();
+
+router.get('/', async (_, res) => {
+  const products = await model.getAll('products');
+  res.status(200).json({ products });
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await model.findById('products', id);
+    return res.status(200).json(product);
+  } catch (_e) {
+    res.status(422).json({
+      err: { code: 'invalid_data', message: 'Wrong id format' },
+    });
+  }
+});
+
+router.post(
+  '/',
+  validations.lengthValidation,
+  validations.uniqueNameValidation,
+  validations.quantityValidation,
+  validations.quantityTypeOfValidation,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    const newProducts = await model.add('products', { name, quantity });
+    res.status(201).json(newProducts);
+  },
+);
+
+router.put(
+  '/:id',
+  validations.lengthValidation,
+  validations.quantityValidation,
+  validations.quantityTypeOfValidation,
+  async (req, res) => {
+    const { name, quantity } = req.body;
+    const { id } = req.params;
+    await model.update('products', id, { name, quantity });
+    res.status(200).json(await model.findById('products', id));
+  },
+);
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const removed = await model.findById('products', id);
+    await model.exclude('products', id);
+    res.status(200).json(removed);
+  } catch (err) {
+    res.status(422).json({
+      err: { code: 'invalid_data', message: 'Wrong id format' },
+    });
+  }
+});
+
+module.exports = router;

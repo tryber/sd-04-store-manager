@@ -12,7 +12,6 @@ router.post(
   async (req, res) => {
     const [...itensSold] = req.body;
     const sales = await crudModel.addSale(itensSold);
-    console.log('itensSold', itensSold);
     await quantityService.updateProductQuantity(req.method, itensSold);
     res.status(200).json(sales);
   },
@@ -49,6 +48,9 @@ router.put(
 
 router.delete('/:id', validations.verifySaleById, async (req, res) => {
   await crudModel.remove('sales', req.params.id);
+  const { id } = req.params;
+  const sale = await crudModel.findById('sales', id);
+  await quantityService.updateProductQuantity(req.method, sale.itensSold);
   res.status(200).json(req.sale);
 });
 

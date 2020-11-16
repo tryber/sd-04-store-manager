@@ -22,9 +22,11 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
   beforeEach(async () => {
     await db.collection('products').deleteMany({});
     await db.collection('sales').deleteMany({});
-    const products = [{ name: 'Martelo de Thor', quantity: 10 },
+    const products = [
+      { name: 'Martelo de Thor', quantity: 10 },
       { name: 'Traje de encolhimento', quantity: 20 },
-      { name: 'Escudo do Capitão América', quantity: 30 }];
+      { name: 'Escudo do Capitão América', quantity: 30 },
+    ];
     await db.collection('products').insertMany(products);
   });
 
@@ -50,8 +52,8 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: -1,
@@ -78,8 +80,8 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 0,
@@ -106,8 +108,8 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 'String',
@@ -134,8 +136,8 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 2,
@@ -164,8 +166,8 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 2,
@@ -207,9 +209,11 @@ describe('6 - Crie um endpoint para listar as vendas', () => {
   beforeEach(async () => {
     await db.collection('products').deleteMany({});
     await db.collection('sales').deleteMany({});
-    const products = [{ name: 'Martelo de Thor', quantity: 10 },
+    const products = [
+      { name: 'Martelo de Thor', quantity: 10 },
       { name: 'Traje de encolhimento', quantity: 20 },
-      { name: 'Escudo do Capitão América', quantity: 30 }];
+      { name: 'Escudo do Capitão América', quantity: 30 },
+    ];
     await db.collection('products').insertMany(products);
   });
 
@@ -237,8 +241,8 @@ describe('6 - Crie um endpoint para listar as vendas', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 2,
@@ -255,7 +259,8 @@ describe('6 - Crie um endpoint para listar as vendas', () => {
         resultSalesId = resultSales._id;
       });
 
-    await frisby.get(`${url}/sales/`)
+    await frisby
+      .get(`${url}/sales/`)
       .expect('status', 200)
       .then((responseAll) => {
         const { body } = responseAll;
@@ -287,8 +292,8 @@ describe('6 - Crie um endpoint para listar as vendas', () => {
         result = JSON.parse(body);
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: result.products[0]._id,
           quantity: 2,
@@ -305,7 +310,8 @@ describe('6 - Crie um endpoint para listar as vendas', () => {
         resultSalesId = resultSales._id;
       });
 
-    await frisby.get(`${url}/sales/`)
+    await frisby
+      .get(`${url}/sales/`)
       .expect('status', 200)
       .then((responseOne) => {
         const { body } = responseOne;
@@ -353,9 +359,11 @@ describe('7 - Crie um endpoint para atualizar uma venda', () => {
   beforeEach(async () => {
     await db.collection('products').deleteMany({});
     await db.collection('sales').deleteMany({});
-    const products = [{ name: 'Martelo de Thor', quantity: 10 },
+    const products = [
+      { name: 'Martelo de Thor', quantity: 10 },
       { name: 'Traje de encolhimento', quantity: 20 },
-      { name: 'Escudo do Capitão América', quantity: 30 }];
+      { name: 'Escudo do Capitão América', quantity: 30 },
+    ];
     await db.collection('products').insertMany(products);
   });
 
@@ -383,8 +391,8 @@ describe('7 - Crie um endpoint para atualizar uma venda', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 2,
@@ -397,8 +405,8 @@ describe('7 - Crie um endpoint para atualizar uma venda', () => {
         resultSalesId = resultSales._id;
       });
 
-    await frisby.put(`${url}/sales/${resultSales._id}`,
-      [
+    await frisby
+      .put(`${url}/sales/${resultSales._id}`, [
         {
           productId: resultProductId,
           quantity: -1,
@@ -430,8 +438,8 @@ describe('7 - Crie um endpoint para atualizar uma venda', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 2,
@@ -444,8 +452,8 @@ describe('7 - Crie um endpoint para atualizar uma venda', () => {
         resultSalesId = resultSales._id;
       });
 
-    await frisby.put(`${url}/sales/${resultSalesId}`,
-      [
+    await frisby
+      .put(`${url}/sales/${resultSalesId}`, [
         {
           productId: resultProductId,
           quantity: 0,
@@ -477,8 +485,8 @@ describe('7 - Crie um endpoint para atualizar uma venda', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 2,
@@ -491,8 +499,8 @@ describe('7 - Crie um endpoint para atualizar uma venda', () => {
         resultSalesId = resultSales._id;
       });
 
-    await frisby.put(`${url}/sales/${resultSalesId}`,
-      [
+    await frisby
+      .put(`${url}/sales/${resultSalesId}`, [
         {
           productId: resultProductId,
           quantity: 'String',
@@ -524,8 +532,8 @@ describe('7 - Crie um endpoint para atualizar uma venda', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 2,
@@ -538,8 +546,8 @@ describe('7 - Crie um endpoint para atualizar uma venda', () => {
         resultSalesId = resultSales._id;
       });
 
-    await frisby.put(`${url}/sales/${resultSalesId}`,
-      [
+    await frisby
+      .put(`${url}/sales/${resultSalesId}`, [
         {
           productId: resultProductId,
           quantity: 5,
@@ -576,9 +584,11 @@ describe('8 - Crie um endpoint para deletar uma venda', () => {
   beforeEach(async () => {
     await db.collection('products').deleteMany({});
     await db.collection('sales').deleteMany({});
-    const products = [{ name: 'Martelo de Thor', quantity: 10 },
+    const products = [
+      { name: 'Martelo de Thor', quantity: 10 },
       { name: 'Traje de encolhimento', quantity: 20 },
-      { name: 'Escudo do Capitão América', quantity: 30 }];
+      { name: 'Escudo do Capitão América', quantity: 30 },
+    ];
     await db.collection('products').insertMany(products);
   });
 
@@ -606,8 +616,8 @@ describe('8 - Crie um endpoint para deletar uma venda', () => {
         resultProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: resultProductId,
           quantity: 2,
@@ -620,10 +630,10 @@ describe('8 - Crie um endpoint para deletar uma venda', () => {
         resultSalesId = resultSales._id;
       });
 
-    await frisby.delete(`${url}/sales/${resultSalesId}`)
-      .expect('status', 200);
+    await frisby.delete(`${url}/sales/${resultSalesId}`).expect('status', 200);
 
-    await frisby.get(`${url}/sales/${resultSalesId}`)
+    await frisby
+      .get(`${url}/sales/${resultSalesId}`)
       .expect('status', 404)
       .expect((resultGet) => {
         const { body } = resultGet;
@@ -636,7 +646,8 @@ describe('8 - Crie um endpoint para deletar uma venda', () => {
   });
 
   it('Será validado que não é possível deletar uma venda que não existe', async () => {
-    await frisby.delete(`${url}/sales/${invalidId}`)
+    await frisby
+      .delete(`${url}/sales/${invalidId}`)
       .expect('status', 422)
       .expect((resultDelete) => {
         const { body } = resultDelete;

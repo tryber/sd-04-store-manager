@@ -5,7 +5,9 @@ const mongoClient = require('mongodb').MongoClient;
 
 const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
 const DB_NAME = 'StoreManager';
+
 let bdInstance;
+
 const connection = async () => {
   try {
     if (bdInstance) {

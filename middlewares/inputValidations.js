@@ -56,9 +56,20 @@ const verifyProductById = async (req, res, next) => {
   next();
 };
 
+const validateSales = (req, res, next) => {
+  const { body } = req;
+  for (let i = 0; i < body.length; i += 1) {
+    if (body[i].quantity < 1 || !Number.isInteger(body[i].quantity)) {
+      return res.status(422).json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+    }
+  }
+  next();
+};
+
 module.exports = {
   validateNameForLength,
   verifyProducts,
   validateQuantity,
   verifyProductById,
+  validateSales,
 };

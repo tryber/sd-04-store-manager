@@ -1,25 +1,25 @@
 const { produtoModel } = require('../models');
-const { productValidation } = require('../validations');
+const { produtoValidation } = require('../validations');
 
 const getAllProdutos = async () => produtoModel.getAllProdutos();
 
 const criarProduto = async (name, quantity) => {
-  const invalid = await productValidation(name, quantity);
+  const isValid = await produtoValidation.validaProduto(name, quantity);
 
-  if (invalid.err) return invalid;
+  if (isValid.err) return isValid;
 
-  return produtoModel.createProduct(name, quantity);
+  return produtoModel.criarProduto(name, quantity);
 };
 
 const upProduto = async (id, name, quantity) => {
-  const invalid = await productValidation(name, quantity, true);
+  const isValid = await produtoValidation.validaProduto(name, quantity, true);
 
-  if (invalid.err) return invalid;
+  if (isValid.err) return isValid;
 
-  return produtoModel.updateProduct(id, name, quantity);
+  return produtoModel.upProduto(id, name, quantity);
 };
 
-const getProdutoById = async (id) => {
+const findProdutoById = async (id) => {
   if (id.length < 24) {
     return {
       err: {
@@ -29,7 +29,7 @@ const getProdutoById = async (id) => {
     };
   }
 
-  const produtoId = await produtoModel.getProductById(id);
+  const produtoId = await produtoModel.findProdutoById(id);
 
   if (produtoId.length === 0) {
     return {
@@ -53,13 +53,13 @@ const deleteProduto = async (id) => {
     };
   }
 
-  await produtoModel.deleteProduct(id);
+  await produtoModel.deleteProduto(id);
 };
 
 module.exports = {
   getAllProdutos,
   criarProduto,
-  getProdutoById,
+  findProdutoById,
   upProduto,
   deleteProduto,
 };

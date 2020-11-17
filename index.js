@@ -8,7 +8,7 @@ const app = express();
 const PORT = 3000 || process.env;
 app.use(bodyParser.json());
 
-app.post('/products', rotas.produtosRouter);
+app.use('/products', rotas.produtoRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

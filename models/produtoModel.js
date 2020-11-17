@@ -2,7 +2,7 @@ const { ObjectId } = require('mongodb');
 const connect = require('./connection');
 
 // Mostrar Produtos
-const findAllProdutos = async () =>
+const getAllProdutos = async () =>
   connect().then((db) => db.collection('products').find({}).toArray());
 
 // Cria Produto
@@ -35,7 +35,7 @@ const deleteProduto = async (id) => {
 };
 
 module.exports = {
-  findAllProdutos,
+  getAllProdutos,
   criarProduto,
   findProdutoByName,
   findProdutoById,

@@ -1,16 +1,15 @@
 const { produtoService } = require('../services');
-const produtosModel = require('../models/produtoModel');
 
-const getAll = async (_req, res) => {
-  const produtos = await produtoService.getAllProdutos();
+const getAllProdutos = async (_req, res) => {
+  const products = await produtoService.getAllProdutos();
 
-  return res.status(200).json({ produtos });
+  return res.status(200).json({ products });
 };
 
 // criar produto
 const criarProduto = async (req, res) => {
   const { name, quantity } = req.body;
-  const produto = await produtosModel.criarProdutos(name, quantity);
+  const produto = await produtoService.criarProduto(name, quantity);
   if (produto.err) return res.status(422).json(produto);
 
   return res.status(201).json(produto);
@@ -19,11 +18,11 @@ const criarProduto = async (req, res) => {
 // produto por Id
 const findProdutoById = async (req, res) => {
   const { id } = req.params;
-  const produto = await produtoService.getProductById(id);
+  const products = await produtoService.findProdutoById(id);
 
-  if (produto.err) return res.status(422).json(produto);
+  if (products.err) return res.status(422).json(products);
 
-  return res.status(200).json(...produto);
+  return res.status(200).json(...products);
 };
 
 // Atualiza Produto
@@ -31,26 +30,26 @@ const upProduto = async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
 
-  const produto = await produtoService.updateProduct(id, name, quantity);
+  const products = await produtoService.upProduto(id, name, quantity);
 
-  if (produto.err) return res.status(422).json(produto);
+  if (products.err) return res.status(422).json(products);
 
-  return res.status(200).json(produto);
+  return res.status(200).json(req.products);
 };
 
 // Deleta Produto
 const deleteProduto = async (req, res) => {
   const { id } = req.params;
 
-  const produto = await produtoService.deleteProduct(id);
+  const products = await produtoService.deleteProduto(id);
 
-  if (produto && produto.err) return res.status(422).json(produto);
+  if (products && products.err) return res.status(422).json(products);
 
   return res.status(200).end();
 };
 
 module.exports = {
-  getAll,
+  getAllProdutos,
   criarProduto,
   findProdutoById,
   upProduto,

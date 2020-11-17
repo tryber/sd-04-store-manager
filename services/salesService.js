@@ -52,9 +52,8 @@ const getById = async (id) => {
 
 const deleteSale = async (id) => {
   const sale = await salesModel.findById(id);
-  const err = { err: { code: 'invalid_data', message: 'Wrong sale ID format' }, error: true };
 
-  if (!sale) return err;
+  if (!sale) return null;
 
   await salesModel.deleteSale(id);
 

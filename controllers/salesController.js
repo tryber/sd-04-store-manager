@@ -36,8 +36,9 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const sale = await saleService.deleteSale(id);
+  const err = { err: { code: 'invalid_data', message: 'Wrong sale ID format' } };
 
-  if (!sale) return res.status(422).json({ err: sale.err });
+  if (!sale) return res.status(422).json(err);
   res.status(200).json(sale);
 });
 

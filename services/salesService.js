@@ -28,17 +28,24 @@ const createSale = async (item) => {
 
 // ta errado, arrumar pra passar o req 7 depois!
 const updateSale = async (id, saleUpdate) => {
-  const sale = await salesModel.updateSale(id, saleUpdate);
-  const err = {
-    err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' },
-    error: true,
-  };
+  try {
+    const sale = await salesModel.updateSale(id, saleUpdate);
+    const err = {
+      err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' },
+      error: true,
+    };
 
-  const { productId, quantity } = sale.itensSold;
-  await productsModel.updateProduct(productId, quantity);
+    await Promise.all(
+      saleUpdate.map((item) => {
+        if (item.quantity <= 0 || typeof item.quantity === 'string') throw err;
+        return productsModel.updateProduct(item.productId, item.quantity);
+      }),
+    );
 
-  if (quantity <= 0 || typeof quantity === 'string') return err;
-  return sale;
+    return sale.value;
+  } catch (error) {
+    return error;
+  }
 };
 
 // const updateProduct = async (id, name, quantity) => {

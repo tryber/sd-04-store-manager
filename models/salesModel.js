@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
@@ -11,7 +12,14 @@ const addSale = async (itensSold) => {
 const updateSale = async (id, itensSold) =>
   (ObjectId.isValid(id)
     ? connection().then((db) =>
-      db.collection('sales').updateOne({ _id: ObjectId(id) }, { $set: { itensSold } }))
+      db
+        .collection('sales')
+        .findOneAndUpdate(
+          { _id: ObjectId(id) },
+          { $set: { itensSold } },
+          { returnOriginal: false },
+        ),
+    )
     : null);
 
 const deleteSale = async (id) =>

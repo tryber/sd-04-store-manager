@@ -22,12 +22,12 @@ const findAll = async () =>
   connection()
     .then((db) => db.collection('products').find().toArray());
 
-const updateProduct = async (id, name, quantity) => {
-  await connection().then((db) => db.collection('products').updateOne(
-    { _id: ObjectId(id) },
-    { $set: { name, quantity } },
-  ));
-};
+const updateProduct = async (id, name, quantity) =>
+  connection()
+    .then((db) => db.collection('products').updateOne(
+      { _id: ObjectId(id) },
+      { $set: { name, quantity } },
+    ));
 
 const deleteProduct = async (id) =>
   connection()

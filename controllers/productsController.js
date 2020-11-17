@@ -1,4 +1,5 @@
 const express = require('express');
+const rescue = require('express-rescue');
 const productsModel = require('../models/productsModel');
 const productsValidations = require('../middlewares/productsValidation');
 
@@ -10,29 +11,21 @@ router.post(
   productsValidations.nameExistenceValidation,
   productsValidations.quantityValidation,
   productsValidations.isNumberValidation,
-  async (req, res) => {
-    try {
-      const { name, quantity } = req.body;
-      const product = await productsModel.addProduct(name, quantity);
+  rescue(async (req, res) => {
+    const { name, quantity } = req.body;
+    const product = await productsModel.addProduct(name, quantity);
 
-      res.status(201).json(product);
-    } catch (_e) {
-      res.status(501).json({ message: 'Sorry, something went wrong :(' });
-    }
-  },
+    res.status(201).json(product);
+  }),
 );
 
-router.get('/', async (_req, res) => {
-  try {
+router.get('/', rescue(async (_req, res) => {
     const products = await productsModel.findAll();
 
     res.status(200).json({ products });
-  } catch (_e) {
-    res.status(501).json({ message: 'Sorry, something went wrong :(' });
-  }
-});
+}));
 
-router.get('/:id', productsValidations.idExistsValidation, async (req, res) => {
+router.get('/:id', productsValidations.idExistsValidation, rescue(async (req, res) => {
   try {
     const product = req.product;
 
@@ -40,41 +33,33 @@ router.get('/:id', productsValidations.idExistsValidation, async (req, res) => {
   } catch (_e) {
     res.status(501).json({ message: 'Sorry, something went wrong :(' });
   }
-});
+}));
 
 router.put(
   '/:id',
   productsValidations.nameLengthValidation,
   productsValidations.quantityValidation,
   productsValidations.isNumberValidation,
-  async (req, res) => {
-    try {
-      const { name, quantity } = req.body;
-      const { id } = req.params;
-
-      await productsModel.updateProduct(id, name, quantity);
-
-      const updatedProduct = await productsModel.findById(id);
-
-      res.status(200).json(updatedProduct);
-    } catch (_e) {
-      res.status(501).json({ message: 'Sorry, something went wrong :(' });
-    }
-  },
-);
-
-router.delete('/:id', productsValidations.idExistsValidation, async (req, res) => {
-  try {
+  rescue(async (req, res) => {
+    const { name, quantity } = req.body;
     const { id } = req.params;
 
-    await productsModel.deleteProduct(id);
+    await productsModel.updateProduct(id, name, quantity);
 
-    const deletedProduct = req.product;
+    const updatedProduct = await productsModel.findById(id);
 
-    res.status(200).json(deletedProduct);
-  } catch (_e) {
-    res.status(501).json({ message: 'Sorry, something went wrong :(' });
-  }
-});
+    res.status(200).json(updatedProduct);
+  }),
+);
+
+router.delete('/:id', productsValidations.idExistsValidation, rescue(async (req, res) => {
+  const { id } = req.params;
+
+  await productsModel.deleteProduct(id);
+
+  const deletedProduct = req.product;
+
+  res.status(200).json(deletedProduct);
+}));
 
 module.exports = router;

@@ -5,7 +5,7 @@ const productsValidations = require('../middlewares/productsValidation');
 const router = express.Router();
 
 router.post(
-  '/', 
+  '/',
   productsValidations.nameLengthValidation,
   productsValidations.nameExistenceValidation,
   productsValidations.quantityValidation,
@@ -25,7 +25,7 @@ router.post(
 router.get('/', async (_req, res) => {
   try {
     const products = await productsModel.findAll();
-  
+
     res.status(200).json({ products })
   } catch (_e) {
     res.status(501).json({ message: 'Sorry, something went wrong :(' });
@@ -43,7 +43,7 @@ router.get('/:id', productsValidations.idExistsValidation, async (req, res) => {
 });
 
 router.put(
-  '/:id', 
+  '/:id',
   productsValidations.nameLengthValidation,
   productsValidations.quantityValidation,
   productsValidations.isNumberValidation,

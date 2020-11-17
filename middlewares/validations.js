@@ -32,9 +32,22 @@ const existingNameValidation = async (req, res, next) => {
   next();
 };
 
+// Não cadastra vendas com quantidade menor ou igual a zero
+const saleValidation = async (req, res, next) => {
+  const [...itensSold] = req.body;
+
+  itensSold.forEach((item) => {
+    if (item.quantity < 0 || item.quantity === 0 || !Number.isInteger(item.quantity)) {
+      return res.status(422).json(buildError('invalid_data', 'Wrong product ID or invalid quantity'));
+    }
+  });
+  next();
+};
+
 module.exports = {
   buildError,
   nameValidation,
   quantityValidation,
   existingNameValidation,
+  saleValidation,
 };

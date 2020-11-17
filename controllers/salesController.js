@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const validation = require('../middlewares/validations');
 const salesModel = require('../models/salesModel');
+const productsModel = require('../models/productsModel');
+const { buildError } = require('../middlewares/validations');
 
 // Mostrar todas as vendas
 router.get('/', async (req, res) => {
@@ -14,8 +16,16 @@ router.get('/', async (req, res) => {
 router.post('/',
   validation.saleValidation,
   async (req, res) => {
-    const newSale = await salesModel.registerSale(req.body);
-    return res.status(200).json(newSale);
+    const [{ productId, quantity }] = req.body;
+    const stockQuantity = await productsModel.findById(productId);
+    console.log(req.body, stockQuantity);
+
+    if (quantity === stockQuantity.quantity) await productsModel.deleteProduct(productId);
+    if (stockQuantity.quantity >= quantity) {
+      const newSale = await salesModel.registerSale(req.body);
+      return res.status(200).json(newSale);
+    }
+    return res.status(404).json(buildError('stock_problem', 'Such amount is not permitted to sell'));
   });
 
 // Listar venda por ID

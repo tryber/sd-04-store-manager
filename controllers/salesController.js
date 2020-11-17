@@ -23,15 +23,20 @@ router.get('/:id', async (req, res) => {
   if (sale.error) return res.status(404).json({ err: sale.err });
   res.status(200).json(sale);
 });
+// ------------------------------------------------------------------------------------
+//  req 7
 
 // router.put('/:id', async (req, res) => {
 //   const { id } = req.params;
-//   const { name, quantity } = req.body;
-//   const product = await ProductsServices.updateProduct(id, name, quantity);
+//   const { saleUpdate } = req.body;
+//   const sale = await saleService.updateSale(id, saleUpdate);
 
-//   if (product.error) return res.status(422).json({ err: product.err });
-//   return res.status(200).json(product);
+//   if (sale.error) return res.status(422).json({ err: sale.err });
+//   return res.status(200).json(sale);
 // });
+
+// aqui acaba o req 7
+// --------------------------------------------------------------------------------------
 
 // router.delete('/:id', async (req, res) => {
 //   const { id } = req.params;

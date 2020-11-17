@@ -1,14 +1,14 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const findByName = async (name) => 
+const findByName = async (name) =>
   connection()
     .then((db) => db.collection('products').findOne({ name }));
 
 const findById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
 
-  return await connection()
+  return connection()
     .then((db) => db.collection('products').findOne(ObjectId(id)));
 };
 
@@ -16,7 +16,7 @@ const addProduct = async (name, quantity) => {
   const result = await connection()
     .then((db) => db.collection('products').insertOne({ name, quantity }));
   return result.ops[0];
-}
+};
 
 const findAll = async () =>
   connection()
@@ -25,9 +25,9 @@ const findAll = async () =>
 const updateProduct = async (id, name, quantity) => {
   await connection().then((db) => db.collection('products').updateOne(
     { _id: ObjectId(id) },
-    { $set: { name, quantity } }
+    { $set: { name, quantity } },
   ));
-}
+};
 
 const deleteProduct = async (id) =>
   connection()
@@ -40,4 +40,4 @@ module.exports = {
   findAll,
   updateProduct,
   deleteProduct,
-}
+};

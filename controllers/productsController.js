@@ -1,5 +1,5 @@
 const express = require('express');
-const productsModel = require('../models/productsModel')
+const productsModel = require('../models/productsModel');
 const productsValidations = require('../middlewares/productsValidation');
 
 const router = express.Router();
@@ -26,7 +26,7 @@ router.get('/', async (_req, res) => {
   try {
     const products = await productsModel.findAll();
 
-    res.status(200).json({ products })
+    res.status(200).json({ products });
   } catch (_e) {
     res.status(501).json({ message: 'Sorry, something went wrong :(' });
   }
@@ -60,7 +60,7 @@ router.put(
     } catch (_e) {
       res.status(501).json({ message: 'Sorry, something went wrong :(' });
     }
-  }
+  },
 );
 
 router.delete('/:id', productsValidations.idExistsValidation, async (req, res) => {

@@ -9,9 +9,9 @@ app.use(express.json());
 app.use('/products', productsController);
 // app.use('/sales', salesController);
 
-app.listen(PORT, () => console.log(`Listening on port! ${PORT}`))
-
 // não remova esse endpoint, e para o savaliador funcionar
 app.get('/', (request, response) => {
     response.send();
 });
+
+app.listen(PORT, () => console.log(`Listening on port! ${PORT}`));

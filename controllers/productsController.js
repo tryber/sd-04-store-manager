@@ -19,7 +19,7 @@ router.post(
     } catch (_e) {
       res.status(501).json({ message: 'Sorry, something went wrong :(' });
     }
-  }
+  },
 );
 
 router.get('/', async (_req, res) => {

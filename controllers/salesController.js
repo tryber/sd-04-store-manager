@@ -14,7 +14,8 @@ router.post('/', salesValidation.saleQuantityValidation, rescue(async (req, res)
   console.log(productQuantity);
 
   // if (productQuantity.quantity <= quantity) {
-  //   return res.status(404).json(buildResponse('stock_problem', 'Such amount is not permitted to sell'));
+  //  return res.status(404)
+  // .json(buildResponse('stock_problem', 'Such amount is not permitted to sell'));
   // }
 
   // if (quantity === productQuantity.quantity) {

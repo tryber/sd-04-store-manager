@@ -12,11 +12,11 @@ router.post('/', salesValidation.saleQuantityValidation, rescue(async (req, res)
   const productQuantity = await productsModel.findById(productId);
 
   if (productQuantity.quantity < quantity) {
-    return res.status(404).json(buildResponse('stock_problem', 'Such amount is not permitted to sell'))
+    return res.status(404).json(buildResponse('stock_problem', 'Such amount is not permitted to sell'));
   }
 
   if (quantity === productQuantity.quantity) {
-    return await productsModel.deleteProduct(productId);
+    return productsModel.deleteProduct(productId);
   }
 
   const sale = req.body;

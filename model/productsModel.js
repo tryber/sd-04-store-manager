@@ -4,7 +4,7 @@ const connection = require('./connection');
 // pega o dado pelo nome
 const findByName = async (name) => {
   console.log('findByName');
-  return await connection().then((db) => db.collection('products').findOne({ name }));
+  return connection().then((db) => db.collection('products').findOne({ name }));
 };
 
 // adiciona o produto no db

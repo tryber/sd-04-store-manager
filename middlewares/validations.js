@@ -16,7 +16,7 @@ const verifyIfExists = async (req, res, next) => {
   const { name } = req.body;
   const product = await crudModel.findByName('products', name);
   if (product) {
-    return res.status(422).json(response('invalid_data', 'product already exists'));
+    return res.status(422).json(response('invalid_data', 'Product already exists'));
   }
   next();
 };

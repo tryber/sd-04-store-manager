@@ -15,4 +15,9 @@ router.post('/', validations.validateName, verifyIfExists, validateQuantity, asy
   }
 });
 
+router.get('/', async (_req, res) => {
+  const products = await crudModel.findAll('products');
+  res.status(200).json(products);
+});
+
 module.exports = router;

@@ -9,9 +9,9 @@ const router = express.Router();
 
 router.post('/', salesValidation.saleQuantityValidation, rescue(async (req, res) => {
   const { productId } = req.body;
-  console.log('controller', req.body);
+  // console.log('controller', req.body);
   const productQuantity = await productsModel.findById(productId);
-  console.log(productQuantity);
+  // console.log(productQuantity);
 
   // if (productQuantity.quantity <= quantity) {
   //  return res.status(404)
@@ -28,15 +28,14 @@ router.post('/', salesValidation.saleQuantityValidation, rescue(async (req, res)
   return res.status(200).json(registerSale);
 }));
 
-router.get('/', rescue(async (req, res) => {
+router.get('/', rescue(async (_req, res) => {
   const sales = await salesModel.findAllSales();
 
-  res.status(200).json(sales);
+  res.status(200).json({ sales });
 }));
 
-router.get('/:id', rescue(async (req, res) => {
-  const { id } = req.params;
-  const sale = await salesModel.findSaleById(id);
+router.get('/:id', salesValidation.idExistsValidation, rescue(async (req, res) => {
+  const { sale } = req;
 
   res.status(200).json(sale);
 }));

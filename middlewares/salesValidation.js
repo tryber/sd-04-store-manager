@@ -1,3 +1,4 @@
+const salesModel = require('../models/salesModel');
 const { buildResponse } = require('./buildResponse');
 
 const saleQuantityValidation = async (req, res, next) => {
@@ -17,6 +18,20 @@ const saleQuantityValidation = async (req, res, next) => {
   next();
 };
 
+const idExistsValidation = async (req, res, next) => {
+  const { id } = req.params;
+  const sale = await salesModel.findSaleById(id);
+
+  if (!sale) {
+    return res.status(404).json(buildResponse('not_found', 'Sale not found'));
+  }
+
+  req.sale = sale;
+
+  next();
+};
+
 module.exports = {
   saleQuantityValidation,
+  idExistsValidation,
 };

@@ -25,7 +25,7 @@ router.post(
 
 router.get('/', async (req, res) => {
   const products = await productsModel.getAllProducts();
-  return res.status(200).json({ products: products });
+  return res.status(200).json({ products });
 });
 
 router.get('/:id', async (req, res) => {

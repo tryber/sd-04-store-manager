@@ -23,4 +23,20 @@ router.post(
   },
 );
 
+router.get('/', async (req, res) => {
+    const product = await productsModel.getAllProducts();
+    return res.json({product});
+});
+
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    const getId = await productsModel.getProductById(id);
+    if (!getId) {
+        return res.status(422).json({err: {
+            code: 'invalid_data',
+            message: 'Wrong id format',
+          },})
+    }
+    return res.status(200).json(getId);
+});
 module.exports = router;

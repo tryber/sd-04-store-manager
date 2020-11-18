@@ -4,6 +4,7 @@
   "description": "Simple CRUD to sales and products",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "test": "jest --runInBand",
     "start": "nodemon index.js"
   },

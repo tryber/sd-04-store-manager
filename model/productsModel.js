@@ -9,9 +9,7 @@ const findByName = async (name) => {
 
 // adiciona o produto no db
 const addProd = async (name, quantity) => {
-  const products = await connection().then((db) => {
-    return db.collection('products').insertOne({ name, quantity });
-  });
+  const products = await connection().then((db) => db.collection('products').insertOne({ name, quantity }));
   console.log(products.ops[0]);
   return products.ops[0];
 };

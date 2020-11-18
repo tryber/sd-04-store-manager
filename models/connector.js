@@ -10,14 +10,16 @@ const connection = async () => {
     if (bdInstance) {
       return Promise.resolve(bdInstance);
     }
-    bdInstance = await mongoClient.connect(MONGO_DB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }).then((conn) => conn.db(DB_NAME));
+    bdInstance = await mongoClient
+      .connect(MONGO_DB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then((conn) => conn.db(DB_NAME));
     return bdInstance;
   } catch (error) {
     process.exit(1);
   }
-}
+};
 
 module.exports = connection;

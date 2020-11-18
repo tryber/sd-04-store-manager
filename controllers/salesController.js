@@ -10,7 +10,7 @@ const router = express.Router();
 router.post('/', salesValidation.saleQuantityValidation, rescue(async (req, res) => {
   const { productId } = req.body;
   // console.log('controller', req.body);
-  const productQuantity = await productsModel.findById(productId);
+  // const productQuantity = await productsModel.findById(productId);
   // console.log(productQuantity);
 
   // if (productQuantity.quantity <= quantity) {

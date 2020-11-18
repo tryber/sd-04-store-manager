@@ -46,8 +46,7 @@ const updateProductForSale = async (req, res, next) => {
     if (req.method === 'DELETE') {
       newQuantity = product.quantity + sale.quantity;
     }
-    console.log(newQuantity);
-    updateProduct(product._id, product.name, newQuantity);
+    updateProduct(sale.productId, product.name, newQuantity);
   });
   return next();
 };

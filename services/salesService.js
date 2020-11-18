@@ -9,7 +9,7 @@ const createSale = async (item) => {
   };
 
   const { productId, quantity } = sale.itensSold[0];
-  await productsModel.updateProduct(productId, quantity);
+  await productsModel.updateQuantity(productId, quantity);
 
   if (quantity <= 0 || typeof quantity === 'string') return err;
   return sale;
@@ -58,7 +58,7 @@ const deleteSale = async (id) => {
   await salesModel.deleteSale(id);
 
   const { productId, quantity } = sale.itensSold[0];
-  await productsModel.updateProduct(productId, -quantity);
+  await productsModel.updateQuantity(productId, -quantity);
 
   return sale;
 };

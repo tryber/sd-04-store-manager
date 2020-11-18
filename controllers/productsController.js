@@ -24,8 +24,8 @@ router.post(
 );
 
 router.get('/', async (req, res) => {
-  const product = await productsModel.getAllProducts();
-  return res.json({ product });
+  const products = await productsModel.getAllProducts();
+  return res.status(200).json({products: products });
 });
 
 router.get('/:id', async (req, res) => {
@@ -41,4 +41,5 @@ router.get('/:id', async (req, res) => {
   }
   return res.status(200).json(getId);
 });
+
 module.exports = router;

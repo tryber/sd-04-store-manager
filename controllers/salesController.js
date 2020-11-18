@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const { findById, getAll, insertSale, deleteOne } = require('../models/dbModel');
+const { findById, getAll, insertSale, deleteOne, updateSale } = require('../models/dbModel');
 const { insertSaleValidationMiddleware } = require('../services/salesService');
 
 router.post('/', insertSaleValidationMiddleware, async (req, res) => {
@@ -39,6 +39,18 @@ router.get('/:id', async (req, res) => {
       });
     }
     return res.status(200).json(sale);
+  } catch (err) {
+    console.error(err);
+    throw res.status(500);
+  }
+});
+
+router.put('/:id', insertSaleValidationMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const updatedSales = await updateSale(id, req.body);
+
+  try {
+    return res.status(200).json(updatedSales);
   } catch (err) {
     console.error(err);
     throw res.status(500);

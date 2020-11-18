@@ -20,15 +20,15 @@ router.post(
 );
 
 router.get('/', rescue(async (_req, res) => {
-    const products = await productsModel.findAll();
+  const products = await productsModel.findAll();
 
-    res.status(200).json({ products });
+  res.status(200).json({ products });
 }));
 
 router.get('/:id', productsValidations.idExistsValidation, rescue(async (req, res) => {
-    const product = req.product;
+  const product = req.product;
 
-    res.status(200).json(product);
+  res.status(200).json(product);
 }));
 
 router.put(

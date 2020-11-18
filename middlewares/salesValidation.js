@@ -13,5 +13,5 @@ const saleQuantityValidation = async (req, res, next) => {
 };
 
 module.exports = {
-  saleQuantityValidation
+  saleQuantityValidation,
 };

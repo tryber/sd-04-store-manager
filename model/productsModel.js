@@ -15,9 +15,7 @@ const addProd = async (name, quantity) => {
 };
 
 // pega todos os produtos do db
-const getAllProducts = async () => {
-  return connection().then((db) => db.collection('products').find().toArray());
-};
+const getAllProducts = async () => connection().then((db) => db.collection('products').find().toArray());
 
 // pega produto pelo id no db
 const getProductById = async (id) => {

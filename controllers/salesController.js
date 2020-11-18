@@ -3,7 +3,7 @@ const rescue = require('express-rescue');
 const salesModel = require('../models/salesModel');
 const productsModel = require('../models/productsModel');
 const salesValidation = require('../middlewares/salesValidation');
-const buildResponse = require('../middlewares/buildResponse');
+const { buildResponse } = require('../middlewares/buildResponse');
 
 const router = express.Router();
 

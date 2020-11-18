@@ -1,5 +1,5 @@
 const productsModel = require('../models/productsModel');
-const buildResponse = require('./buildResponse');
+const { buildResponse } = require('./buildResponse');
 
 const nameLengthValidation = (req, res, next) => {
   const { name } = req.body;

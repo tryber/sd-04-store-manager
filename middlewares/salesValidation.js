@@ -1,4 +1,4 @@
-const buildResponse = require('./buildResponse');
+const { buildResponse } = require('./buildResponse');
 
 const saleQuantityValidation = async (req, res, next) => {
   const [...itensSold] = req.body;

@@ -1,6 +1,7 @@
 const express = require('express');
 const productsModel = require('../model/productsModel');
 const validationProcucts = require('../middlewares/validationProducts');
+// const { deleteProduct } = require('../model/productsModel');
 
 const router = express.Router();
 
@@ -40,6 +41,37 @@ router.get('/:id', async (req, res) => {
     });
   }
   return res.status(200).json(getId);
+});
+
+router.put(
+  '/:id',
+  validationProcucts.verifyEmpetyName,
+  validationProcucts.lengthNameVerify,
+  validationProcucts.validationNameProduct,
+  validationProcucts.quantityOfProduct,
+  validationProcucts.stringOfProduct,
+  async (req, res) => {
+    try {
+      const { name, quantity } = req.body;
+      const { id } = req.params;
+      await productsModel.updateProduct(id, name, quantity);
+      const product = await productsModel.getProductById(req.params.id);
+      req.product = product;
+      res.status(200).json(req.product);
+    } catch (_e) {
+      console.log(_e.message);
+    }
+  },
+);
+
+router.delete('/:id',validationProcucts.verifyDeleteProduct, async (req, res)=>{
+  try {
+    const deleteProduct = await productsModel.getProductById(req.params.id);
+    await productsModel.deleteProduct(req.params.id)
+    res.status(200).json(deleteProduct)
+  } catch (_e) {
+    console.log(_e.message);
+  }
 });
 
 module.exports = router;

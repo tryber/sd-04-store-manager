@@ -9,13 +9,16 @@ const findByName = async (name) => {
 
 // adiciona o produto no db
 const addProd = async (name, quantity) => {
-  const products = await connection().then((db) => db.collection('products').insertOne({ name, quantity }));
+  const products = await connection().then((db) =>
+    db.collection('products').insertOne({ name, quantity }),
+  );
   console.log(products.ops[0]);
   return products.ops[0];
 };
 
 // pega todos os produtos do db
-const getAllProducts = async () => connection().then((db) => db.collection('products').find().toArray());
+const getAllProducts = async () =>
+  connection().then((db) => db.collection('products').find().toArray());
 
 // pega produto pelo id no db
 const getProductById = async (id) => {
@@ -25,9 +28,23 @@ const getProductById = async (id) => {
   return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
 };
 
+// atualiaza produto no db
+const updateProduct = async (id, name, quantity) => {
+  await connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
+  );
+};
+
+// deleta produto do db
+const deleteProduct = async(id) =>{
+  await connection().then((db) => db.collection('products').deleteOne({_id:ObjectId(id)}))
+};
+
 module.exports = {
   findByName,
   addProd,
   getAllProducts,
   getProductById,
+  updateProduct,
+  deleteProduct
 };

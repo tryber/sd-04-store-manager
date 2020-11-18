@@ -89,6 +89,21 @@ const stringOfProduct = (req, res, next) => {
   next();
 };
 
+// verifica se produto foi deletado com sucesso
+const verifyDeleteProduct = async (req, res, next) => {
+  const { id } = req.params;
+  const product = await productsModel.getProductById(id);
+  if (!product) {
+    return res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: 'Wrong id format',
+      },
+    });
+  }
+  next();
+};
+
 module.exports = {
   verifyEmpetyName,
   lengthNameVerify,
@@ -96,4 +111,5 @@ module.exports = {
   existNameOfProduct,
   quantityOfProduct,
   stringOfProduct,
+  verifyDeleteProduct,
 };

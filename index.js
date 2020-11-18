@@ -8,7 +8,7 @@ app.use(express.json());
 app.use('/products', productController);
 app.use('/sales', saleController);
 app.get('/', (request, response) => {
-  response.send('teste');
+  response.send();
 });
 const PORT = 3000;
 

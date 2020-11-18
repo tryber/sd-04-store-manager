@@ -64,11 +64,11 @@ router.put(
   },
 );
 
-router.delete('/:id',validationProcucts.verifyDeleteProduct, async (req, res)=>{
+router.delete('/:id', validationProcucts.verifyDeleteProduct, async (req, res) => {
   try {
     const deleteProduct = await productsModel.getProductById(req.params.id);
-    await productsModel.deleteProduct(req.params.id)
-    res.status(200).json(deleteProduct)
+    await productsModel.deleteProduct(req.params.id);
+    res.status(200).json(deleteProduct);
   } catch (_e) {
     console.log(_e.message);
   }

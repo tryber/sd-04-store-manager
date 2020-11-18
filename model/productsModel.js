@@ -36,8 +36,8 @@ const updateProduct = async (id, name, quantity) => {
 };
 
 // deleta produto do db
-const deleteProduct = async(id) =>{
-  await connection().then((db) => db.collection('products').deleteOne({_id:ObjectId(id)}))
+const deleteProduct = async (id) => {
+  await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
 };
 
 module.exports = {
@@ -46,5 +46,5 @@ module.exports = {
   getAllProducts,
   getProductById,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 };

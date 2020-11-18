@@ -13,9 +13,9 @@ const findAllSales = async () =>
     .then((db) => db.collection('sales').find().toArray());
 
 const addSale = async (products) => {
-  connection()
-    .then((db) => db.collection('sales').insertOne({ itensSold: products }))
-    .then(({ insertedId }) => ({ _id: insertedId, itensSold }));
+  const result = await connection()
+    .then((db) => db.collection('sales').insertOne({ itensSold: products }));
+  return result.ops[0];
 };
 
 const updateSale = async (id, product) =>

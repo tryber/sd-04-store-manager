@@ -8,16 +8,18 @@ const { buildResponse } = require('../middlewares/buildResponse');
 const router = express.Router();
 
 router.post('/', salesValidation.saleQuantityValidation, rescue(async (req, res) => {
-  const [{ productId, quantity }] = req.body;
+  const { productId, quantity } = req.body;
+  console.log('controller', req.body);
   const productQuantity = await productsModel.findById(productId);
+  console.log(productQuantity);
 
-  if (productQuantity.quantity < quantity) {
-    return res.status(404).json(buildResponse('stock_problem', 'Such amount is not permitted to sell'));
-  }
+  // if (productQuantity.quantity <= quantity) {
+  //   return res.status(404).json(buildResponse('stock_problem', 'Such amount is not permitted to sell'));
+  // }
 
-  if (quantity === productQuantity.quantity) {
-    return productsModel.deleteProduct(productId);
-  }
+  // if (quantity === productQuantity.quantity) {
+  //   return productsModel.deleteProduct(productId);
+  // }
 
   const sale = req.body;
   const registerSale = await salesModel.addSale(sale);

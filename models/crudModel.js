@@ -7,9 +7,9 @@ const findByName = async (collection, name) => {
   return result;
 };
 
-const createOne = async (collection, name, quantity) => {
+const createOne = async (collection, query) => {
   const db = await connection();
-  const result = await db.connection(collection).insertOne({ name, quantity });
+  const result = await db.connection(collection).insertOne(query);
   return result.ops[0];
 };
 

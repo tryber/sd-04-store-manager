@@ -2,9 +2,13 @@ const express = require('express');
 
 const router = express.Router();
 const { findById, getAll, insertSale, deleteOne, updateSale } = require('../models/dbModel');
-const { insertSaleValidationMiddleware } = require('../services/salesService');
+const {
+  insertSaleValidationMiddleware,
+  updateProductForSale,
+  existSaleValidation,
+} = require('../services/salesService');
 
-router.post('/', insertSaleValidationMiddleware, async (req, res) => {
+router.post('/', insertSaleValidationMiddleware, updateProductForSale, async (req, res) => {
   const insertedSales = await insertSale(req.body);
 
   try {
@@ -45,10 +49,9 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', insertSaleValidationMiddleware, async (req, res) => {
+router.put('/:id', insertSaleValidationMiddleware, updateProductForSale, async (req, res) => {
   const { id } = req.params;
   const updatedSales = await updateSale(id, req.body);
-
   try {
     return res.status(200).json(updatedSales);
   } catch (err) {
@@ -57,19 +60,11 @@ router.put('/:id', insertSaleValidationMiddleware, async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', existSaleValidation, updateProductForSale, async (req, res) => {
   const { id } = req.params;
   const sale = await findById(id, 'sales');
+
   try {
-    if (!sale) {
-      res.status(422);
-      return res.json({
-        err: {
-          code: 'invalid_data',
-          message: 'Wrong sale ID format',
-        },
-      });
-    }
     await deleteOne(id, 'sales');
     return res.status(200).json(sale);
   } catch (err) {

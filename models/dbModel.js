@@ -72,7 +72,6 @@ const insertSale = async (itensSold) =>
     .then((result) => ({ _id: result.insertedId, itensSold }))
     .catch((err) => console.error(err));
 
-
 module.exports = {
   getAll,
   insertProduct,

@@ -3,12 +3,12 @@ const rescue = require('express-rescue');
 
 const { produtosController } = require('../controllers');
 
-const produtos = Router();
+const products = Router();
 
-produtos.get('/', rescue(produtosController.getAllProdutos));
-produtos.post('/', rescue(produtosController.criarProduto));
-produtos.get('/:id', rescue(produtosController.findProdutoById));
-produtos.put('/:id', rescue(produtosController.upProduto));
-produtos.delete('/:id', rescue(produtosController.deleteProduto));
+products.get('/', rescue(produtosController.getAllProdutos));
+products.post('/', rescue(produtosController.criarProduto));
+products.get('/:id', rescue(produtosController.findProdutoById));
+products.put('/:id', rescue(produtosController.upProduto));
+products.delete('/:id', rescue(produtosController.deleteProduto));
 
-module.exports = produtos;
+module.exports = products;

@@ -4,7 +4,7 @@ const { produtoValidation } = require('../validations');
 const getAllProdutos = async () => produtoModel.getAllProdutos();
 
 const criarProduto = async (name, quantity) => {
-  const isValid = await produtoValidation.validaProduto(name, quantity);
+  const isValid = await produtoValidation(name, quantity);
 
   if (isValid.err) return isValid;
 
@@ -12,8 +12,7 @@ const criarProduto = async (name, quantity) => {
 };
 
 const upProduto = async (id, name, quantity) => {
-  const isValid = await produtoValidation.validaProduto(name, quantity, true);
-
+  const isValid = await produtoValidation(name, quantity, true);
   if (isValid.err) return isValid;
 
   return produtoModel.upProduto(id, name, quantity);
@@ -29,9 +28,9 @@ const findProdutoById = async (id) => {
     };
   }
 
-  const produtoId = await produtoModel.findProdutoById(id);
+  const pId = await produtoModel.findProdutoById(id);
 
-  if (produtoId.length === 0) {
+  if (pId.length === 0) {
     return {
       err: {
         code: 'invalid_data',
@@ -40,7 +39,7 @@ const findProdutoById = async (id) => {
     };
   }
 
-  return produtoId;
+  return pId;
 };
 
 const deleteProduto = async (id) => {

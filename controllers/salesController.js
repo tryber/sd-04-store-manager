@@ -8,7 +8,7 @@ const { buildResponse } = require('../middlewares/buildResponse');
 const router = express.Router();
 
 router.post('/', salesValidation.saleQuantityValidation, rescue(async (req, res) => {
-  const { productId, quantity } = req.body;
+  const { productId } = req.body;
   console.log('controller', req.body);
   const productQuantity = await productsModel.findById(productId);
   console.log(productQuantity);

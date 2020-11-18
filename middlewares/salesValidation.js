@@ -10,7 +10,9 @@ const saleQuantityValidation = async (req, res, next) => {
     }
   });
 
-  if (isError) return res.status(422).json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+  if (isError) { 
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+  };
 
   next();
 };

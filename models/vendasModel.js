@@ -6,7 +6,16 @@ const getAllVendas = async () => connect().then((db) => db.collection('sales').f
 const findVendaById = async (id) =>
   connect().then((db) => db.collection('sales').findOne({ _id: ObjectId(id) }));
 
+const criarVenda = async (itensSold) =>
+  connect()
+    .then((db) => db.collection('sales').insertOne({ itensSold }))
+    .then(({ insertedId }) => ({
+      _id: insertedId,
+      itensSold,
+    }));
+
 module.exports = {
   getAllVendas,
   findVendaById,
+  criarVenda,
 };

@@ -26,13 +26,9 @@ router.get('/', rescue(async (_req, res) => {
 }));
 
 router.get('/:id', productsValidations.idExistsValidation, rescue(async (req, res) => {
-  try {
     const product = req.product;
 
     res.status(200).json(product);
-  } catch (_e) {
-    res.status(501).json({ message: 'Sorry, something went wrong :(' });
-  }
 }));
 
 router.put(

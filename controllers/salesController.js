@@ -1,14 +1,14 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const salesModel = require('../models/salesModel');
-const productsModel = require('../models/productsModel');
+// const productsModel = require('../models/productsModel');
 const salesValidation = require('../middlewares/salesValidation');
 const { buildResponse } = require('../middlewares/buildResponse');
 
 const router = express.Router();
 
 router.post('/', salesValidation.saleQuantityValidation, rescue(async (req, res) => {
-  const { productId } = req.body;
+  // const { productId } = req.body;
   // console.log('controller', req.body);
   // const productQuantity = await productsModel.findById(productId);
   // console.log(productQuantity);

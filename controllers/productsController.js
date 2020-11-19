@@ -57,7 +57,8 @@ router.put(
       await productsModel.updateProduct(id, name, quantity);
       const product = await productsModel.getProductById(req.params.id);
       req.product = product;
-      res.status(200).json(req.product);
+      console.log('updateProdct',product)
+      res.status(200).json(product);
     } catch (_e) {
       console.log(_e.message);
     }

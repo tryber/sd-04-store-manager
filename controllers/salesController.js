@@ -1,11 +1,35 @@
 const express = require('express');
 const validationSalles = require('../middlewares/validationSales');
 const salesModel = require('../model/salesModel');
+const productModel = require('../model/productsModel');
 
 const router = express.Router();
 const buildResult = (_id, itensSold) => ({
   _id,
   itensSold,
+});
+
+router.put('/:id', async (req, res) => {
+  const filterSale = req.body.filter(
+    (value) => value.quantity <= 0 || typeof value.quantity === 'string',
+  );
+
+  validate(res, filterSale);
+
+  const obj = await salesModel.addSale(req.body);
+  const { productId, quantity } = obj.itensSold[0];
+  const result = await productModel.getProductById(productId);
+  const qtdOldProduct = result.quantity;
+
+  if (result) {
+    if (quantity < qtdOldProduct) {
+      const newQty = qtdOldProduct - quantity;
+      await productModel.updateProduct(productId, result.name, newQty);
+    } else {
+      res.status(404).json({message:'erro Julio'});
+    }
+  }
+  res.status(200).json(obj);
 });
 
 router.post(

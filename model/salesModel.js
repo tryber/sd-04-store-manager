@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
+const productModel = require('../model/productsModel');
 
 // add produto no db de vendas
 const addSale = async (itensSold) => {
@@ -43,8 +44,9 @@ const getSaleById = async (id) => {
 // deleta venda do db
 const deleteSale = async (id) => {
   await connection().then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) })); // const { value } =
+  // console.log(value)
   // const { itensSold } = value;
-  // await productModel.updateProduct(itensSold[0].productId, itensSold[0].quantity);
+  // await productModel.modifyQuantityProduct(itensSold[0].productId, itensSold[0].quantity);
   // return value;
 };
 

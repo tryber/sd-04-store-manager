@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const sale = await crud.read('id', id, 'sales');
   if (!sale) {
-    return res.status().json({ err: { code: 'not_found', message: 'Sale not found' } });
+    return res.status(404).json({ err: { code: 'not_found', message: 'Sale not found' } });
   }
   res.status(200).json(sale);
 });

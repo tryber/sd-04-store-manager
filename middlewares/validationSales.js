@@ -57,7 +57,6 @@ const updateQuatity = async (req, res, next) => {
 
   itensSold.map(async ({ productId, quantity }) => {
     const product = await productModel.getProductById(productId);
-
     if (product.quantity < quantity) {
       return res.status(404).json({
         err: {
@@ -67,7 +66,7 @@ const updateQuatity = async (req, res, next) => {
       });
     }
 
-    // productsModel.updateProductQuantity(productId, quantity, true);
+    productModel.updateProduct(productId, quantity, true);
   });
 
   next();

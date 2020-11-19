@@ -22,7 +22,9 @@ const getAllProducts = async () =>
 
 // pega produto pelo id no db
 const getProductById = async (id) => {
+  console.log('aqui');
   if (!ObjectId.isValid(id)) {
+    console.log('la');
     return null;
   }
   return connection().then((db) => db.collection('products').findOne(ObjectId(id)));

@@ -1,5 +1,6 @@
 const express = require('express');
 const validationSalles = require('../middlewares/validationSales');
+const productsModel = require('../model/productsModel');
 const salesModel = require('../model/salesModel');
 
 const router = express.Router();
@@ -34,13 +35,20 @@ router.get('/:id', async (req, res) => {
   console.log('controller-id', id);
   try {
     const specificSale = await salesModel.findSale(id);
-    console.log('controller', specificSale);
+    console.log('controller specific sale', specificSale);
     if (specificSale) {
       return res.status(200).json({ sales: specificSale });
+    } else {
+      return res.status(404).json({
+        err: {
+          code: 'not_found',
+          message: 'Sale not found',
+        },
+      });
     }
   } catch (_e) {
     console.log(_e);
-    res.status(404).json({
+    return res.status(404).json({
       err: {
         code: 'not_found',
         message: 'Sale not found',
@@ -59,6 +67,33 @@ router.put('/:id', validationSalles.quantityProduct, async (req, res) => {
   } catch (_e) {
     console.log(_e);
     res.status(422).json({ message: 'Falha ao encontrar' });
+  }
+});
+
+// router.delete('/:id', validationSalles.verifyDeleteSale, async (req, res) => {
+//   try {
+//     //const {id} =req.params;
+//     const deleteSale = await salesModel.getSaleById(req.params.id); // modicara para prodmodel ou salesmodel
+//     console.log('delete',deleteSale)
+//     await productsModel.deleteProduct(req.params.id,'sales'); // modicara para prodmodel ou salesmodel
+
+//     if (!deleteSale) return res.status(404).json({ message: 'Falha ao deletar' });
+//     await productsModel.deleteProduct(req.params.id,'sales'); // modicara para prodmodel ou salesmodel
+//     console.log('deletou')
+//     return res.status(200).json(deleteSale);
+//   } catch (_e) {
+//     console.log(_e.message);
+//   }
+// });
+
+router.delete('/:id', validationSalles.verifyDeleteSale, async (req, res) => {
+  try {
+    const deleteSale = await salesModel.getSaleById(req.params.id);
+    await salesModel.deleteSale(req.params.id);
+    return res.status(200).json(deleteSale);
+  } catch (_e) {
+    console.log(_e.message);
+    res.status(404).json(message);
   }
 });
 

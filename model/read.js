@@ -3,15 +3,17 @@ const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const findBy = async (by, query = '', collection) => {
-    switch (by) {
-        case 'id':
-            return findById(collection, query);
-        case 'name':
-            return findByName(collection, query);
-        case 'all':
-            return getAll(collection)
-    }
-}
+  switch (by) {
+    case 'id':
+      return findById(collection, query);
+    case 'name':
+      return findByName(collection, query);
+    case 'all':
+      return getAll(collection);
+    default:
+      return null;
+  }
+};
 
 const findById = async (collection, id) => {
   if (!ObjectId.isValid(id)) return null;
@@ -21,9 +23,9 @@ const findById = async (collection, id) => {
 };
 
 const findByName = async (collection, name) => {
-    const db = await connection();
-    const result = await db.collection(collection).findOne({ name });
-    return result;
+  const db = await connection();
+  const result = await db.collection(collection).findOne({ name });
+  return result;
 };
 
 const getAll = async (collection) => {

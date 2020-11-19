@@ -73,10 +73,10 @@ const salesProductIdAndQuantity = (req, res, next) => {
 };
 
 module.exports = {
-    nameLongerThan5,
-    quantityIsNot0OrLess,
-    quantityIsNumber,
-    salesQuantityIsNot0OrLess,
-    salesQuantityIsNumber,
-    salesProductIdAndQuantity
-}
+  nameLongerThan5,
+  quantityIsNot0OrLess,
+  quantityIsNumber,
+  salesQuantityIsNot0OrLess,
+  salesQuantityIsNumber,
+  salesProductIdAndQuantity,
+};

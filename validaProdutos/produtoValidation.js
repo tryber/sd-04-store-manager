@@ -1,11 +1,11 @@
 const produtoModel = require('../models/produtoModel');
 
 // Valida Nome do produto
-const validaName = async (update = false, pName) => {
-  const name = update ? [] : await produtoModel.findProdutoByName(pName);
+const validaName = async (update = false, productName) => {
+  const name = update ? [] : await produtoModel.findProdutoByName(productName);
 
   switch (true) {
-    case pName.length < 5:
+    case productName.length < 5:
       return {
         err: {
           code: 'invalid_data',

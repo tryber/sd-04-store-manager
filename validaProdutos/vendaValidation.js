@@ -1,7 +1,7 @@
 const { produtoModel } = require('../models');
 
-const validaQty = async ({ pId, quantity }) => {
-  const product = await produtoModel.findProdutoById(pId);
+const validaQuantity = async ({ productId, quantity }) => {
+  const product = await produtoModel.findProdutoById(productId);
 
   if (product[0].quantity - quantity <= 0) return 404;
 
@@ -10,10 +10,10 @@ const validaQty = async ({ pId, quantity }) => {
   return true;
 };
 
-const validaVenda = async (sales) => {
-  const valida = await Promise.all(sales.map(validaQty));
+const vendaValidation = async (sales) => {
+  const validation = await Promise.all(sales.map(validaQuantity));
 
-  if (valida.includes(422)) {
+  if (validation.includes(422)) {
     return {
       err: {
         code: 'invalid_data',
@@ -22,7 +22,7 @@ const validaVenda = async (sales) => {
     };
   }
 
-  if (valida.includes(404)) {
+  if (validation.includes(404)) {
     return {
       err: {
         code: 'stock_problem',
@@ -34,6 +34,4 @@ const validaVenda = async (sales) => {
   return true;
 };
 
-module.exports = {
-  validaVenda,
-};
+module.exports = vendaValidation;

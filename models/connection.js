@@ -1,5 +1,3 @@
-require('dotenv/config');
-
 const mongoClient = require('mongodb').MongoClient;
 
 const DB_NAME = 'StoreManager';

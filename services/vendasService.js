@@ -1,21 +1,7 @@
 const { vendasModel, produtoModel } = require('../models');
-const { isValid } = require('../validations/index');
+const { vendaValidation } = require('../validaProdutos/index');
 
-const getAllVendas = async () => vendasModel.getAllVendas();
-
-const criarVenda = async (sales) => {
-  const sale = await isValid.vendaValidation(sales);
-
-  if (sale.err) return sale;
-
-  await Promise.all(sales.map(async ({ pId, quantity }) => {
-    const product = await produtoModel.findProdutoById(pId);
-    const newStock = product[0].quantity - quantity;
-    await vendasModel.upProduto(pId, product.name, newStock);
-  }));
-
-  return vendasModel.criarVenda(sales);
-};
+const getAllVendas = async () => vendasModel.getAllvendas();
 
 const findVendaById = async (id) => {
   if (id.length < 24) {
@@ -41,8 +27,53 @@ const findVendaById = async (id) => {
   return saleId;
 };
 
+const criarVenda = async (sales) => {
+  const sale = await vendaValidation(sales);
+
+  if (sale.err) return sale;
+
+  await Promise.all(sales.map(async ({ productId, quantity }) => {
+    const product = await produtoModel.findProdutoById(productId);
+    console.log(product);
+    const newStock = product[0].quantity - quantity;
+    await produtoModel.upProduto(productId, product.name, newStock);
+  }));
+
+  return vendasModel.criarVenda(sales);
+};
+
+const upVenda = async (id, itensSale) => {
+  const itensSaleValidation = await vendaValidation(itensSale);
+
+  if (itensSaleValidation.err) return itensSaleValidation;
+
+  return vendasModel.upVenda(id, itensSale);
+};
+
+const deleteVenda = async (id) => {
+  const found = await vendasModel.findVendaById(id);
+  if (id.length < 24) {
+    return {
+      err: {
+        code: 'invalid_data',
+        message: 'Wrong sale ID format',
+      },
+    };
+  }
+
+  await Promise.all(found.itensSold.map(async ({ productId, quantity }) => {
+    const product = await produtoModel.findProdutoById(productId);
+    const newStock = product[0].quantity + quantity;
+    await produtoModel.upProduto(productId, product.name, newStock);
+  }));
+
+  await vendasModel.deleteVenda(id);
+};
+
 module.exports = {
   getAllVendas,
-  findVendaById,
   criarVenda,
+  findVendaById,
+  upVenda,
+  deleteVenda,
 };

@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const routes = require('./routers/index');
+const routes = require('./routers');
 
 const app = express();
 
-const PORT = 3000 || process.env;
+const PORT = 3000;
 app.use(bodyParser.json());
 
 app.use('/products', routes.produtoRouter);
@@ -17,5 +17,5 @@ app.get('/', (request, response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.log(`Listening on port ${PORT} :)`);
 });

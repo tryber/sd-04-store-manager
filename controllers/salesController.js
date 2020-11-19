@@ -26,7 +26,7 @@ router.put('/:id', async (req, res) => {
       const newQty = qtdOldProduct - quantity;
       await productModel.updateProduct(productId, result.name, newQty);
     } else {
-      res.status(404).json({message:'erro Julio'});
+      res.status(404).json({ message: 'erro Julio' });
     }
   }
   res.status(200).json(obj);

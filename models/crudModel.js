@@ -43,6 +43,33 @@ const addSale = async (itensSold) => {
   return result;
 };
 
+const updateProduct = async (id, name, quantity) => {
+  const result = await connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
+  );
+  return result;
+};
+
+const updateQuantity = async (action, productId, quantity) => {
+  const product = await findById('products', productId);
+  if (!product) return;
+  let newQuantity = 0;
+  if (action === 'POST') {
+    newQuantity = product.quantity - quantity;
+  }
+  if (action === 'DELETE') {
+    newQuantity = product.quantity + quantity;
+  }
+  await updateProduct(productId, product.name, newQuantity);
+};
+
+const updateProductQuantity = async (action, itensSold) => {
+  if (itensSold === {}) return;
+  const promisses = itensSold.map(({ productId, quantity }) =>
+    updateQuantity(action, productId, quantity));
+  await Promise.all(promisses);
+};
+
 module.exports = {
   findByName,
   findAll,
@@ -51,4 +78,5 @@ module.exports = {
   update,
   remove,
   addSale,
+  updateProductQuantity,
 };

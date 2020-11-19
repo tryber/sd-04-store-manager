@@ -30,4 +30,17 @@ const getOneProductName = async (name) => {
   return await connection().then((db) => db.collection('products').findOne({ name }));
 };
 
-module.exports = { add, getAllProducts, getOneProductId, getOneProductName };
+const update = async (id, name, quantity) => {
+  if (!getOneProductId(id)) return false;
+  await connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
+  );
+};
+
+const remove = async (id) => {
+  if (!getOneProductId(id)) return false;
+  await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
+  return true;
+};
+
+module.exports = { add, getAllProducts, getOneProductId, getOneProductName, update, remove };

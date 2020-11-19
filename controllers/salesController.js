@@ -11,8 +11,8 @@ const buildResult = (_id, itensSold) => ({
 
 router.put('/:id', async (req, res) => {
   // const filterSale = req.body.filter(
-    (value) => value.quantity <= 0 || typeof value.quantity === 'string',
-  );
+    // (value) => value.quantity <= 0 || typeof value.quantity === 'string',
+  
 
   // validate(res, filterSale);
 

@@ -1,12 +1,15 @@
+const { get } = require('frisby');
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const findBy = async (by, query, collection) => {
+const findBy = async (by, query = '', collection) => {
     switch (by) {
         case 'id':
             return findById(collection, query);
         case 'name':
             return findByName(collection, query);
+        case 'all':
+            return getAll(collection)
     }
 }
 
@@ -29,4 +32,4 @@ const getAll = async (collection) => {
   return results;
 };
 
-module.exports = { findBy, getAll };
+module.exports = findBy;

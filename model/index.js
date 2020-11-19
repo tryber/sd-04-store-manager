@@ -6,6 +6,6 @@ const update = require('./update');
 module.exports = {
   create,
   delete: remove,
-  read: read.findBy,
+  read,
   update,
 };

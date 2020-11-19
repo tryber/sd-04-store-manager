@@ -1,7 +1,4 @@
-const salesModel = require('../model/salesModel');
-const validationProduct = require('../middlewares/validationProducts');
-
-//const buildResponse = validationProducts.buildResponse;
+// const buildResponse = validationProducts.buildResponse;
 
 // verifica se a quantidade é menor que zero ou diferente de numero
 const quantityProduct = async (req, res, next) => {

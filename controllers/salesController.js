@@ -10,7 +10,6 @@ const buildResult = (_id, itensSold) => ({
 
 router.post('/', validationSalles.quantityProduct, async (req, res) => {
   try {
-    const { productId, quantity } = req.body[0];
     const productSale = await salesModel.addSale(req.body);
     const { _id, itensSold } = productSale.ops[0];
     res.status(200).json(buildResult(_id, itensSold));

@@ -53,7 +53,7 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const sale = await crud.read('id', id, 'sales');
   if (!sale) {
-    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong id format' } });
+    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
   }
   await quantityService.updateProductQuantity(req.method, sale.itensSold);
   await crud.remove('sales', id);

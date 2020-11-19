@@ -28,6 +28,7 @@ const quantityIsNumber = (req, res, next) => {
   const { quantity } = req.body;
 
   if (!Number.isInteger(quantity)) {
+    console.log(quantity);
     return res.status(422).json(buildResponse('invalid_data', '"quantity" must be a number'));
   }
 

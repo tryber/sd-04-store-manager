@@ -23,11 +23,11 @@ const getAllProducts = async () => {
 
 const getOneProductId = async (id) => {
   if (!ObjectId.isValid(id)) return null;
-  return await connection().then((db) => db.collection('products').findOne(ObjectId(id)));
+  return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
 };
 
 const getOneProductName = async (name) => {
-  return await connection().then((db) => db.collection('products').findOne({ name }));
+  return connection().then((db) => db.collection('products').findOne({ name }));
 };
 
 const update = async (id, name, quantity) => {

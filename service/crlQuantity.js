@@ -1,5 +1,5 @@
 const produModel = require('../models/productModel');
-const saleModel = require('../models/salesModel');
+//  const saleModel = require('../models/salesModel');
 
 const maxQuantity = async (req, res, next) => {
   let actProduct = 0;
@@ -23,15 +23,14 @@ const returnQuant = async (id, obj) => {
   let actProduct = 0;
   let quantBack = 0;
 
-  quantBack = obj;//await saleModel.getOneSaleId(id);
+  quantBack = obj;  //  await saleModel.getOneSaleId(id);
   actProduct = await produModel.getOneProductId(id);
-  console.log("back: " + quantBack + " act: " + actProduct);
-  /*await produModel.update(
+  //  console.log("back: " + quantBack + " act: " + actProduct);
+  /*  await produModel.update(
     actProduct._id,
     actProduct.name,
     actProduct.quantity + quantBack.quantity,
-  );*/
-
+  );  */
 };
 
 module.exports = { maxQuantity, returnQuant };

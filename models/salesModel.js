@@ -21,7 +21,7 @@ const getAllSales = async () => {
 
 const getOneSaleId = async (id) => {
   if (!ObjectId.isValid(id)) return null;
-  return await connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
+  return connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
 };
 
 const update = async (id, itensSold) => {

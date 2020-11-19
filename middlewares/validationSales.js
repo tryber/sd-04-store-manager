@@ -1,4 +1,5 @@
 const salesModel = require('../model/salesModel');
+const productModel = require('../model/productsModel');
 
 // verifica se a quantidade é menor que zero ou diferente de numero
 const quantityProduct = async (req, res, next) => {
@@ -9,6 +10,13 @@ const quantityProduct = async (req, res, next) => {
       err: {
         code: 'invalid_data',
         message: 'Wrong product ID or invalid quantity',
+      },
+    });
+  } else if (quantity < 0) {
+    return res.status(404).json({
+      err: {
+        code: 'stock_problem',
+        message: 'Such amount is not permitted to sell',
       },
     });
   }
@@ -44,4 +52,26 @@ const verifyDeleteSale = async (req, res, next) => {
   next();
 };
 
-module.exports = { quantityProduct, showSales, verifyDeleteSale };
+//req9
+const updateQuatity = async (req, res, next) => {
+  const [...itensSold] = req.body;
+
+  itensSold.map(async ({ productId, quantity }) => {
+    const product = await productModel.getProductById(productId);
+
+    if (product.quantity < quantity) {
+      return res.status(404).json({
+        err: {
+          code: 'stock_problem',
+          message: 'Such amount is not permitted to sell',
+        },
+      });
+    }
+
+    productsModel.updateProductQuantity(productId, quantity, true);
+  });
+
+  next();
+};
+
+module.exports = { quantityProduct, showSales, verifyDeleteSale, updateQuatity };

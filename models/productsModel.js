@@ -18,6 +18,18 @@ const addProduct = async (name, quantity) => {
   return result.ops[0];
 };
 
+const updateProductQuantity = async (id, quantidade, isSales = false) => {
+  if (isSales) {
+    await connection().then((db) =>
+      db.collection('products').updateOne({ _id: ObjectId(id) }, { $inc: { quantity: -quantidade } }),
+    );
+  } else {
+    await connection().then((db) =>
+      db.collection('products').updateOne({ _id: ObjectId(id) }, { $inc: { quantity: +quantidade } }),
+    );
+  }
+};
+
 const findAll = async () =>
   connection()
     .then((db) => db.collection('products').find().toArray());
@@ -39,5 +51,6 @@ module.exports = {
   addProduct,
   findAll,
   updateProduct,
+  updateProductQuantity,
   deleteProduct,
 };

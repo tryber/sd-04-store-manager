@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
+const productsModel = require('./productsModel');
 
 const findSaleById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
@@ -25,9 +26,15 @@ const updateSale = async (id, product) =>
       { $set: { itensSold: product } },
     ));
 
-const deleteSale = async (id) =>
-  connection()
-    .then((db) => db.collection('sales').deleteOne({ _id: ObjectId(id) }));
+const deleteSale = async (id) => {
+  const { value } = await connection()
+    .then((db) => db.collection('sales').findOneAndDelete({ _id: ObjectId(id) }));
+
+  const { itensSold } = value;
+  await productsModel.updateProductQuantity(itensSold[0].productId, itensSold[0].quantity);
+
+  return value;
+}
 
 module.exports = {
   findSaleById,

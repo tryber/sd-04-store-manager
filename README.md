@@ -83,10 +83,10 @@ Você deve utilizar o banco MongoDB para a gestão de dados. Além disso, a API 
 
 - Para **todos os endpoints** garanta que:
   - Caso o recurso não seja encontrado, sua API retorne o status HTTP adequado com o body `{ message: '<recurso> não encontrado' }`
-  - Em caso de erro, sua API retorne o status HTTP adequado com o body `{ err: { message: <mensagem de erro>, code: <código do erro> } }`
+  - Em caso de erro, sua API retorne o status HTTP adequado com o body `{ error: { message: <mensagem de erro>, code: <código do erro> } }`
     - O código do erro deve ser determinado por você e deve seguir o mesmo padrão para toda a aplicação. Por exemplo: `'not_found'`, `'invalid_data'` e afins
-  - Em caso de dados inválidos, sua API retorne o status HTTP adequado, com o body `{ err: { message: 'Dados inválidos', code: <código do erro> } }`.
-  - Todos os retornos de erro devem seguir o mesmo formato. Para erros que requerem dados adicionais (por exemplo, para informar quais campos estão incorretos) utilize a propriedade `data` dentro do objeto `err`.
+  - Em caso de dados inválidos, sua API retorne o status HTTP adequado, com o body `{ error: { message: 'Dados inválidos', code: <código do erro> } }`.
+  - Todos os retornos de erro devem seguir o mesmo formato. Para erros que requerem dados adicionais (por exemplo, para informar quais campos estão incorretos) utilize a propriedade `data` dentro do objeto `error`.
   - Para gerar os objetos de erro personalizados, você pode utilizar uma biblioteca de erros, como o [`boom`](https://www.npmjs.com/package/@hapi/boom).
 
 - Você pode utilizar middlewares e objetos de erro personalizados para que não tenha que repetir a lógica de tratamento de erro em vários lugares. Não se esqueça também do [express-rescue](https://www.npmjs.com/package/express-rescue), ele pode facilitar muito o trabalho de tratar erros
@@ -104,6 +104,8 @@ O projeto tem até a seguinte data: `DD/MM/YYYY - 14:00h`. Para ser entregue a a
 ---
 
 ## Requisitos Obrigatórios:
+
+### 💡Veja o exemplo a seguir de como o projeto pode se parecer depois de pronto. Lembre-se que você pode ~~e deve~~ ir além para deixar o projeto com a sua cara e impressionar à todos e a todas!
 
 ## ⚠️ Leia-os atentamente e siga à risca o que for pedido. ⚠️
 
@@ -145,7 +147,7 @@ const DB_NAME = 'StoreManager';
 ```
 
  ###  Tabelas
-O banco terá duas tabelas: produtos e vendas 
+O banco terá duas tabelas: produtos e vendas
 
 A tabela de produtos deverá ter o seguinte nome: `products`
 
@@ -449,11 +451,6 @@ Se a venda esta sendo listada, o resultado retornado deverá ser conforme exibid
 
 ![Listar uma venda](./public/listaumavenda.png)
 
-**[Será validado que não é possível listar uma venda inexistente]**
-
-Se a venda não esta sendo listada, o resultado retornado deverá ser conforme exibido abaixo, com status http `404`:
-
-![Listar uma venda que não existe](./public/vendanaoexiste.png)
 
 ### 7 - Crie um endpoint para atualizar uma venda
 

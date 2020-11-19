@@ -1,6 +1,5 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
-const productModel = require('../model/productsModel');
 
 // add produto no db de vendas
 const addSale = async (itensSold) => {

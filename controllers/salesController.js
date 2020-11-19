@@ -35,16 +35,13 @@ router.get('/:id', async (req, res) => {
   try {
     const specificSale = await salesModel.findSale(id);
     console.log('controller specific sale', specificSale);
-    if (specificSale) {
-      return res.status(200).json({ sales: specificSale });
-    } else {
-      res.status(404).json({
-        err: {
-          code: 'not_found',
-          message: 'Sale not found',
-        },
-      });
-    }
+    if (specificSale) return res.status(200).json({ sales: specificSale });
+    res.status(404).json({
+      err: {
+        code: 'not_found',
+        message: 'Sale not found',
+      },
+    });
   } catch (_e) {
     console.log(_e);
     return res.status(404).json({
@@ -69,7 +66,6 @@ router.put('/:id', validationSalles.quantityProduct, async (req, res) => {
   }
 });
 
-
 router.delete('/:id', validationSalles.verifyDeleteSale, async (req, res) => {
   try {
     const deleteSale = await salesModel.getSaleById(req.params.id);
@@ -77,7 +73,7 @@ router.delete('/:id', validationSalles.verifyDeleteSale, async (req, res) => {
     return res.status(200).json(deleteSale);
   } catch (_e) {
     console.log(_e.message);
-    res.status(404).json(message);
+    res.status(404).json({ message: 'Falha ao deletar' });
   }
 });
 

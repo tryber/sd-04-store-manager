@@ -48,4 +48,18 @@ router.get('/:id', async (req, res) => {
     });
   }
 });
+
+router.put('/:id', validationSalles.quantityProduct, async (req, res) => {
+  try {
+    const { quantity, productId } = req.body[0];
+
+    await salesModel.updateSale(req.params.id, productId, quantity);
+    const saleChanged = await salesModel.findSale(req.params.id);
+    res.status(200).json(saleChanged);
+  } catch (_e) {
+    console.log(_e);
+    res.status(422).json({ message: 'Falha ao encontrar' });
+  }
+});
+
 module.exports = router;

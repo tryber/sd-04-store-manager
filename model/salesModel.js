@@ -22,8 +22,18 @@ const findSale = async (id) => {
   );
   return specificSale;
 };
+
+// atualizar pedido
+const updateSale = async (id, productId, quantity) => {
+  await connection().then((db) =>
+    db
+      .collection('sales')
+      .updateOne({ _id: ObjectId(id) }, { $set: { itensSold: [{ productId, quantity }] } }),
+  );
+};
 module.exports = {
   addSale,
   listAllSales,
   findSale,
+  updateSale,
 };

@@ -43,12 +43,12 @@ const getSaleById = async (id) => {
 
 // deleta venda do db
 const deleteSale = async (id) => {
-  const { value } = await connection().then((db) =>
+  /*const { value } =*/ await connection().then((db) =>
     db.collection('sales').deleteOne({ _id: ObjectId(id) }),
   );
-  const { itensSold } = value;
-  await productModel.updateProduct(itensSold[0].productId, itensSold[0].quantity);
-  return value;
+  // const { itensSold } = value;
+  // await productModel.updateProduct(itensSold[0].productId, itensSold[0].quantity);
+  // return value;
 };
 
 module.exports = {

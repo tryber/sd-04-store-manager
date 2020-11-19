@@ -5,10 +5,16 @@ const validateName = async (req, res, next) => {
   const product = await produModel.getOneProductName(name);
 
   if (name.length < 5) {
-    return res.status(422)
-      .json({err: {code: 'invalid_data', message: "\"name\" length must be at least 5 characters long" }});
+    return res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: '"name" length must be at least 5 characters long',
+      },
+    });
   } else if (product) {
-    return res.status(422).json({err: {code: 'invalid_data', message: 'Product already exists' }});
+    return res
+      .status(422)
+      .json({ err: { code: 'invalid_data', message: 'Product already exists' } });
   }
 
   return next();
@@ -19,8 +25,12 @@ const validateUpdate = async (req, res, next) => {
   const product = await produModel.getOneProductName(name);
 
   if (name.length < 5) {
-    return res.status(422)
-      .json({err: {code: 'invalid_data', message: "\"name\" length must be at least 5 characters long" }});
+    return res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: '"name" length must be at least 5 characters long',
+      },
+    });
   }
 
   return next();
@@ -30,13 +40,31 @@ const validateQuantity = (req, res, next) => {
   const { quantity } = req.body;
 
   if (quantity <= 0) {
-    return res.status(422)
-      .json({err: {code: 'invalid_data', message: "\"quantity\" must be larger than or equal to 1" }});
+    return res.status(422).json({
+      err: {
+        code: 'invalid_data',
+        message: '"quantity" must be larger than or equal to 1',
+      },
+    });
   } else if (!Number.isInteger(quantity)) {
-    return res.status(422).json({err: {code: 'invalid_data', message: "\"quantity\" must be a number" }});
+    return res
+      .status(422)
+      .json({ err: { code: 'invalid_data', message: '"quantity" must be a number' } });
   }
 
   return next();
 };
 
-module.exports = { validateName, validateQuantity, validateUpdate };
+const validateSale = (req, res, next) => {
+  const { body } = req;
+  for (let ordem = 0; ordem < body.length; ordem += 1) {
+    if (!Number.isInteger(body[ordem].quantity) || body[ordem].quantity <= 0) {
+      return res
+        .status(422)
+        .json({ err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' } });
+    }
+  }
+  return next();
+};
+
+module.exports = { validateName, validateQuantity, validateUpdate, validateSale };

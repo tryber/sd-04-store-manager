@@ -26,9 +26,9 @@ const getOneProductId = async (id) => {
   return connection().then((db) => db.collection('products').findOne(ObjectId(id)));
 };
 
-const getOneProductName = async (name) => {
-  return connection().then((db) => db.collection('products').findOne({ name }));
-};
+const getOneProductName = async (name) => (
+  connection().then((db) => db.collection('products').findOne({ name }))
+);
 
 const update = async (id, name, quantity) => {
   if (!getOneProductId(id)) return false;

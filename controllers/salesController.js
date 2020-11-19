@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const saleModel = require('../models/salesModel');
 const validation = require('../service/validation');

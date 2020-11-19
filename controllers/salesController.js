@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const saleModel = require('../models/salesModel');
 const validation = require('../service/validation');
+const crtQuantity = require('../service/crlQuantity');
 
-router.post('/', validation.validateSale, async (req, res) => {
+router.post('/', validation.validateSale, crtQuantity.maxQuantity, async (req, res) => {
   try {
     const [...itensSold] = req.body;
 
@@ -59,9 +60,10 @@ router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const obgDeleted = await saleModel.remove(id);
+    //crtQuantity.returnQuant(id, await saleModel.getOneSaleId(id));
+    const objDeleted = await saleModel.remove(id);
 
-    return res.status(200).json(obgDeleted);
+    return res.status(200).json(objDeleted);
   } catch (_e) {
     return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
   }

@@ -42,10 +42,9 @@ const deleteProduct = async (id) => {
   await connection().then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
 };
 
-// req9
 // decrementa ou incrementa quantidade no produto no db
 const modifyQuantityProduct = async (id, quantity) => {
-  quant = false;
+  const quant = false;
   if (quant) {
     await connection().then((db) =>
       db.collection('products').updateOne({ _id: ObjectId(id) }, { $inc: { quantity: -quantity } }),

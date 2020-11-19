@@ -52,7 +52,6 @@ const verifyDeleteSale = async (req, res, next) => {
   next();
 };
 
-//req9
 const updateQuatity = async (req, res, next) => {
   const [...itensSold] = req.body;
 
@@ -68,7 +67,7 @@ const updateQuatity = async (req, res, next) => {
       });
     }
 
-    productsModel.updateProductQuantity(productId, quantity, true);
+    // productsModel.updateProductQuantity(productId, quantity, true);
   });
 
   next();

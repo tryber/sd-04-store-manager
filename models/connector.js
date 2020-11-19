@@ -20,7 +20,7 @@ const connection = async () => {
       })
       .then((conn) => conn.db(DB_NAME));
     return bdInstance;
-  } catch (error) {
+  } catch (_) {
     process.exit(1);
   }
 };

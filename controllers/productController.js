@@ -12,7 +12,7 @@ router.post(
   async (req, res) => {
     const { name, quantity } = req.body;
     try {
-      const insertedProduct = await crudModel.createOne('products', { name, quantity });
+      const insertedProduct = await crudModel.createOne('products', name, quantity );
       res.status(201).json(insertedProduct);
     } catch (err) {
       res.status(500).json({ err });

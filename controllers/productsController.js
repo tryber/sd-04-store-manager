@@ -25,4 +25,8 @@ router.post(
   },
 );
 
+router.get('/:id', validations.verifyProductById, async (req, res) => {
+  res.status(200).json(req.product);
+});
+
 module.exports = router;

@@ -28,4 +28,27 @@ router.get('/:id', async (req, res) => {
   res.status(200).json(sale);
 });
 
+router.put(
+  '/:id',
+  validations.validateSales,
+  validations.validateSalesQuantity,
+  validations.validateQuantityIsNumber,
+  validations.verifySaleById,
+  async (req, res) => {
+    const { id } = req.params;
+    const document = {
+      itensSold: req.body,
+    };
+    await crudModel.update('sales', id, document);
+    crudModel.findById('sales', id).then((sale) => res.status(200).json(sale));
+  },
+);
+
+router.delete('/:id', validations.verifySaleById, async (req, res) => {
+  const { id } = req.params;
+  await crudModel.findById('sales', id);
+  await crudModel.remove('sales', id);
+  res.status(200).json(req.sale);
+});
+
 module.exports = router;

@@ -70,6 +70,25 @@ const validateSalesQuantity = (req, res, next) => {
   next();
 };
 
+const validateSales = (req, res, next) => {
+  const { body } = req;
+  for (let i = 0; i < body.length; i += 1) {
+    if (body[i].quantity < 1 || !Number.isInteger(body[i].quantity)) {
+      return res.status(422).json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+    }
+  }
+  next();
+};
+
+const verifySaleById = async (req, res, next) => {
+  const sale = await crudModel.findById('sales', req.params.id);
+  if (!sale) {
+    return res.status(422).json(buildResponse('invalid_data', 'Wrong sale ID format'));
+  }
+  req.sale = sale;
+  next();
+};
+
 module.exports = {
   validateName,
   verifyProducts,
@@ -77,4 +96,6 @@ module.exports = {
   verifyProductById,
   validateQuantityIsNumber,
   validateSalesQuantity,
+  validateSales,
+  verifySaleById,
 };

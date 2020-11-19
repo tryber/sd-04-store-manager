@@ -31,10 +31,16 @@ const update = async (collection, id, query) => {
   await db.collection(collection).updateOne({ _id: ObjectId(id) }, { $set: query });
 };
 
+const remove = async (collection, id) => {
+  const db = await connection();
+  await db.collection(collection).deleteOne({ _id: ObjectId(id) });
+};
+
 module.exports = {
   findByName,
   findAll,
   createOne,
   findById,
   update,
+  remove,
 };

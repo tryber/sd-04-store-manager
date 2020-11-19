@@ -15,7 +15,7 @@ const listAllSales = async () => {
 // lista uma venda
 const findSale = async (id) => {
   console.log(id);
-  //if (!ObjectId.isValid(id)) return null
+  // if (!ObjectId.isValid(id)) return null
 
   const specificSale = await connection().then((db) =>
     db.collection('sales').findOne(ObjectId(id)),

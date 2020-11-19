@@ -31,21 +31,21 @@ router.get('/', validationSalles.showSales, async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  console.log('controller-id',id)
+  console.log('controller-id', id);
   try {
     const specificSale = await salesModel.findSale(id);
-    console.log("controller",specificSale)
+    console.log('controller', specificSale);
     if (specificSale) {
-      return res.status(200).json({sales:specificSale});
+      return res.status(200).json({ sales: specificSale });
     }
   } catch (_e) {
-      console.log(_e);
-      res.status(404).json({
-        err: {
-          code: 'not_found',
-          message: 'Sale not found',
-        },
-      })
+    console.log(_e);
+    res.status(404).json({
+      err: {
+        code: 'not_found',
+        message: 'Sale not found',
+      },
+    });
   }
 });
 module.exports = router;

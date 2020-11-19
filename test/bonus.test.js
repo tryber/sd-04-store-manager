@@ -21,9 +21,11 @@ describe('9 - Atualize a quantidade de produtos', () => {
   beforeEach(async () => {
     await db.collection('products').deleteMany({});
     await db.collection('sales').deleteMany({});
-    const products = [{ name: 'Martelo de Thor', quantity: 10 },
+    const products = [
+      { name: 'Martelo de Thor', quantity: 10 },
       { name: 'Traje de encolhimento', quantity: 20 },
-      { name: 'Escudo do Capitão América', quantity: 30 }];
+      { name: 'Escudo do Capitão América', quantity: 30 },
+    ];
     await db.collection('products').insertMany(products);
   });
 
@@ -49,8 +51,8 @@ describe('9 - Atualize a quantidade de produtos', () => {
         responseProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: responseProductId,
           quantity: 2,
@@ -58,7 +60,8 @@ describe('9 - Atualize a quantidade de produtos', () => {
       ])
       .expect('status', 200);
 
-    await frisby.get(`${url}/products/${responseProductId}`)
+    await frisby
+      .get(`${url}/products/${responseProductId}`)
       .expect('status', 200)
       .expect((responseProducts) => {
         const { body } = responseProducts;
@@ -83,8 +86,8 @@ describe('9 - Atualize a quantidade de produtos', () => {
         responseProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: responseProductId,
           quantity: 2,
@@ -99,7 +102,8 @@ describe('9 - Atualize a quantidade de produtos', () => {
 
     await frisby.delete(`${url}/sales/${responseSalesId}`).expect('status', 200);
 
-    await frisby.get(`${url}/products/${responseProductId}`)
+    await frisby
+      .get(`${url}/products/${responseProductId}`)
       .expect('status', 200)
       .expect((responseProducts) => {
         const { body } = responseProducts;
@@ -127,9 +131,11 @@ describe('10 - Valide a quantidade de produtos', () => {
   beforeEach(async () => {
     await db.collection('products').deleteMany({});
     await db.collection('sales').deleteMany({});
-    const products = [{ name: 'Martelo de Thor', quantity: 10 },
+    const products = [
+      { name: 'Martelo de Thor', quantity: 10 },
       { name: 'Traje de encolhimento', quantity: 20 },
-      { name: 'Escudo do Capitão América', quantity: 30 }];
+      { name: 'Escudo do Capitão América', quantity: 30 },
+    ];
     await db.collection('products').insertMany(products);
   });
 
@@ -155,8 +161,8 @@ describe('10 - Valide a quantidade de produtos', () => {
         responseProductId = result.products[0]._id;
       });
 
-    await frisby.post(`${url}/sales/`,
-      [
+    await frisby
+      .post(`${url}/sales/`, [
         {
           productId: responseProductId,
           quantity: 100,

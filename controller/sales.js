@@ -36,7 +36,6 @@ router.put(
   validate.salesProductIdAndQuantity,
   validate.salesQuantityIsNumber,
   validate.salesQuantityIsNot0OrLess,
-  validate.quantityIsNumber,
   validate.quantityIsNot0OrLess,
   async (req, res) => {
     const { id } = req.params;

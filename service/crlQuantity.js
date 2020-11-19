@@ -1,4 +1,5 @@
 const produModel = require('../models/productModel');
+
 //  const saleModel = require('../models/salesModel');
 
 const maxQuantity = async (req, res, next) => {

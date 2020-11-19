@@ -1,6 +1,5 @@
 const express = require('express');
 const validationSalles = require('../middlewares/validationSales');
-const productsModel = require('../model/productsModel');
 const salesModel = require('../model/salesModel');
 
 const router = express.Router();
@@ -39,7 +38,7 @@ router.get('/:id', async (req, res) => {
     if (specificSale) {
       return res.status(200).json({ sales: specificSale });
     } else {
-      return res.status(404).json({
+      res.status(404).json({
         err: {
           code: 'not_found',
           message: 'Sale not found',
@@ -70,21 +69,6 @@ router.put('/:id', validationSalles.quantityProduct, async (req, res) => {
   }
 });
 
-// router.delete('/:id', validationSalles.verifyDeleteSale, async (req, res) => {
-//   try {
-//     //const {id} =req.params;
-//     const deleteSale = await salesModel.getSaleById(req.params.id); // modicara para prodmodel ou salesmodel
-//     console.log('delete',deleteSale)
-//     await productsModel.deleteProduct(req.params.id,'sales'); // modicara para prodmodel ou salesmodel
-
-//     if (!deleteSale) return res.status(404).json({ message: 'Falha ao deletar' });
-//     await productsModel.deleteProduct(req.params.id,'sales'); // modicara para prodmodel ou salesmodel
-//     console.log('deletou')
-//     return res.status(200).json(deleteSale);
-//   } catch (_e) {
-//     console.log(_e.message);
-//   }
-// });
 
 router.delete('/:id', validationSalles.verifyDeleteSale, async (req, res) => {
   try {

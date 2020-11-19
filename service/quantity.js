@@ -1,13 +1,13 @@
 const crud = require('../model');
 
 const updateQuantity = async (action, productId, quantity) => {
-  const product = await crud.findById('products', productId);
+  const product = await crud.read('id', productId, 'products');
   if (!product) return;
   if (action !== 'POST' && action !== 'DELETE') return;
 
   const newQuantity = action === 'POST' ? product.quantity - quantity : product.quantity + quantity;
 
-  await crud.updateProduct(productId, product.name, newQuantity);
+  await crud.update(productId, product.name, newQuantity);
 };
 
 const updateProductQuantity = async (action, itensSold) => {

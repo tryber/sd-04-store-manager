@@ -24,4 +24,18 @@ const getOneSaleId = async (id) => {
   return await connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
 };
 
-module.exports = { addSale, getAllSales, getOneSaleId };
+const update = async (id, itensSold) => {
+  if (!getOneSaleId(id)) return false;
+  await connection().then((db) =>
+    db.collection('sales').updateOne({ _id: ObjectId(id) }, { $set: { itensSold } }),
+  );
+};
+
+const remove = async (id) => {
+  if (!getOneSaleId(id)) return null;
+  const db = await connection();
+  const deleted = await db.collection('sales').deleteOne({ _id: ObjectId(id) });
+  return deleted;
+};
+
+module.exports = { addSale, getAllSales, getOneSaleId, update, remove };

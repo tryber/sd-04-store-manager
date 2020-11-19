@@ -41,4 +41,30 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.put('/:id', validation.validateSale, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [...itensSold] = req.body;
+
+    await saleModel.update(id, itensSold);
+    const sale = await saleModel.getOneSaleId(id);
+
+    return res.status(200).json(sale);
+  } catch (_e) {
+    return res.status(500).json({ message: 'Erro ao alterar!' });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const obgDeleted = await saleModel.remove(id);
+
+    return res.status(200).json(obgDeleted);
+  } catch (_e) {
+    return res.status(422).json({ err: { code: 'invalid_data', message: 'Wrong sale ID format' } });
+  }
+});
+
 module.exports = router;

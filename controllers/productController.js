@@ -59,7 +59,7 @@ router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const product = await produModel.getOneProductId(id);
-    const result = await produModel.remove(id);
+    await produModel.remove(id);
 
     return res.status(200).json(product);
   } catch (_e) {

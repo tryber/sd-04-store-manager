@@ -22,7 +22,6 @@ const validateName = async (req, res, next) => {
 
 const validateUpdate = async (req, res, next) => {
   const { name } = req.body;
-  const product = await produModel.getOneProductName(name);
 
   if (name.length < 5) {
     return res.status(422).json({
@@ -67,4 +66,9 @@ const validateSale = (req, res, next) => {
   return next();
 };
 
-module.exports = { validateName, validateQuantity, validateUpdate, validateSale };
+module.exports = {
+  validateName,
+  validateQuantity,
+  validateUpdate,
+  validateSale,
+};

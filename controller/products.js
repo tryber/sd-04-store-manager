@@ -17,7 +17,7 @@ router.post(
       if (alreadyInDBProduct) {
         return res
           .status(422)
-          .json({ err: { code: 'invalid_data', message: 'product already in database' } });
+          .json({ err: { code: 'invalid_data', message: 'Product already exists' } });
       }
 
       const insertedProduct = await crud.create('products', { name, quantity });

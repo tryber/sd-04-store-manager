@@ -34,7 +34,7 @@ const deleteSale = async (id) => {
   await productsModel.updateProductQuantity(itensSold[0].productId, itensSold[0].quantity);
 
   return value;
-}
+};
 
 module.exports = {
   findSaleById,

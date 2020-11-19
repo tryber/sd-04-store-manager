@@ -32,7 +32,7 @@ const updateQuatity = async (req, res, next) => {
 
     productsModel.updateProductQuantity(productId, quantity, true);
   });
-  
+
   next();
 };
 

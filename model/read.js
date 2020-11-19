@@ -4,7 +4,6 @@ const connection = require('./connection');
 const findById = async (collection, id) => {
   if (!ObjectId.isValid(id)) return null;
   const db = await connection();
-  console.log('FINDBY', id);
   const result = await db.collection(collection).findOne(ObjectId(id));
   return result;
 };

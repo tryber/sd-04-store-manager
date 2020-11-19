@@ -7,7 +7,7 @@ const updateQuantity = async (action, productId, quantity) => {
 
   const newQuantity = action === 'POST' ? product.quantity - quantity : product.quantity + quantity;
 
-  await crud.update(productId, product.name, newQuantity);
+  await crud.update('products', productId, { name: product.name, quantity: newQuantity });
 };
 
 const updateProductQuantity = async (action, itensSold) => {

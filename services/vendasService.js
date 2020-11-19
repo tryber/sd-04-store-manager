@@ -7,8 +7,8 @@ const findVendaById = async (id) => {
   if (id.length < 24) {
     return {
       err: {
-        code: 'invalid_data',
-        message: 'Wrong id format',
+        code: 'not_found',
+        message: 'Sale not found',
       },
     };
   }
@@ -32,12 +32,14 @@ const criarVenda = async (sales) => {
 
   if (sale.err) return sale;
 
-  await Promise.all(sales.map(async ({ productId, quantity }) => {
-    const product = await produtoModel.findProdutoById(productId);
-    console.log(product);
-    const newStock = product[0].quantity - quantity;
-    await produtoModel.upProduto(productId, product.name, newStock);
-  }));
+  await Promise.all(
+    sales.map(async ({ productId, quantity }) => {
+      const product = await produtoModel.findProdutoById(productId);
+      console.log(product);
+      const newStock = product[0].quantity - quantity;
+      await produtoModel.upProduto(productId, product.name, newStock);
+    }),
+  );
 
   return vendasModel.criarVenda(sales);
 };
@@ -55,17 +57,19 @@ const deleteVenda = async (id) => {
   if (id.length < 24) {
     return {
       err: {
-        code: 'invalid_data',
-        message: 'Wrong sale ID format',
+        code: 'not_found',
+        message: 'Sale not found',
       },
     };
   }
 
-  await Promise.all(found.itensSold.map(async ({ productId, quantity }) => {
-    const product = await produtoModel.findProdutoById(productId);
-    const newStock = product[0].quantity + quantity;
-    await produtoModel.upProduto(productId, product.name, newStock);
-  }));
+  await Promise.all(
+    found.itensSold.map(async ({ productId, quantity }) => {
+      const product = await produtoModel.findProdutoById(productId);
+      const newStock = product[0].quantity + quantity;
+      await produtoModel.upProduto(productId, product.name, newStock);
+    }),
+  );
 
   await vendasModel.deleteVenda(id);
 };

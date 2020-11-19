@@ -44,9 +44,37 @@ const verifyProductById = async (req, res, next) => {
   next();
 };
 
+const validateQuantityIsNumber = (req, res, next) => {
+  const [...itensSold] = req.body;
+  const quantities = itensSold.map(({ quantity }) => quantity);
+
+  if (quantities.some((item) => isNaN(item))) {
+    return res
+      .status(422)
+      .json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+  }
+
+  next();
+};
+
+const validateSalesQuantity = (req, res, next) => {
+  const [...itensSold] = req.body;
+  const quantities = itensSold.map(({ quantity }) => quantity);
+
+  if (quantities.some((item) => item <= 0)) {
+    return res
+      .status(422)
+      .json(buildResponse('invalid_data', 'Wrong product ID or invalid quantity'));
+  }
+
+  next();
+};
+
 module.exports = {
   validateName,
   verifyProducts,
   validateQuantity,
   verifyProductById,
+  validateQuantityIsNumber,
+  validateSalesQuantity,
 };

@@ -36,6 +36,13 @@ const remove = async (collection, id) => {
   await db.collection(collection).deleteOne({ _id: ObjectId(id) });
 };
 
+const addSale = async (itensSold) => {
+  const sales = await connection().then((db) => db.collection('sales').insertOne({ itensSold }));
+  const { insertedId: _id } = sales;
+  const result = { _id, itensSold };
+  return result;
+};
+
 module.exports = {
   findByName,
   findAll,
@@ -43,4 +50,5 @@ module.exports = {
   findById,
   update,
   remove,
+  addSale,
 };

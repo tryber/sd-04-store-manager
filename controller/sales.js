@@ -9,7 +9,6 @@ router.post(
   '/',
   validate.salesQuantityIsNumber,
   validate.salesQuantityIsNot0OrLess,
-  validate.quantityIsNumber,
   validate.quantityIsNot0OrLess,
   async (req, res) => {
     const [...itensSold] = req.body;
